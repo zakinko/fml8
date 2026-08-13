@@ -239,6 +239,11 @@ sub language_to_internal_charset
 {
     my ($self, $language) = @_;
 
+    # XXX $language may be undef when the caller has no hint at all
+    # XXX (e.g. the CGI path has no "language_hint" in the PCB);
+    # XXX lc(undef) warns under -w.  See fml8 issue #8.
+    return '' unless defined $language;
+
     return( $internal_charset_map{ lc($language) } || '' );
 }
 
@@ -251,6 +256,11 @@ sub language_to_message_charset
 {
     my ($self, $language) = @_;
 
+    # XXX $language may be undef when the caller has no hint at all
+    # XXX (e.g. the CGI path has no "language_hint" in the PCB);
+    # XXX lc(undef) warns under -w.  See fml8 issue #8.
+    return '' unless defined $language;
+
     return( $message_charset_map{ lc($language) } || '' );
 }
 
@@ -262,6 +272,11 @@ sub language_to_message_charset
 sub message_charset_to_language
 {
     my ($self, $charset) = @_;
+
+    # XXX $charset may be undef when the caller has no hint at all
+    # XXX (e.g. the CGI path has no "language_hint" in the PCB);
+    # XXX lc(undef) warns under -w.  See fml8 issue #8.
+    return '' unless defined $charset;
 
     return( $rev_message_charset_map{ lc($charset) } || '' );
 }

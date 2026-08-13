@@ -71,12 +71,16 @@ sub rewrite_prompt
     my ($self, $curproc, $command_context, $rbuf) = @_;
     my $command = undef;
     my $comname = $command_context->get_cooked_subcommand();
-    my $pkg     = "FML::Command::Admin::${comname}";
+    # XXX $comname is user supplied; validate before it reaches eval().
+    my $pkg     = FML::Command->_command_package("Admin", $comname);
 
-    eval qq{ use $pkg; \$command = new $pkg;};
-    unless ($@) {
-	if ($command->can('rewrite_prompt')) {
-	    return $command->rewrite_prompt($curproc, $command_context, $rbuf);
+    if (defined $pkg) {
+	eval qq{ use $pkg; \$command = new $pkg;};
+	unless ($@) {
+	    if ($command->can('rewrite_prompt')) {
+		return $command->rewrite_prompt($curproc,
+						$command_context, $rbuf);
+	    }
 	}
     }
 
@@ -111,12 +115,15 @@ sub verify_syntax
     my ($self, $curproc, $command_context) = @_;
     my $command = undef;
     my $comname = $command_context->get_cooked_subcommand();
-    my $pkg     = "FML::Command::Admin::${comname}";
+    # XXX $comname is user supplied; validate before it reaches eval().
+    my $pkg     = FML::Command->_command_package("Admin", $comname);
 
-    eval qq{ use $pkg; \$command = new $pkg;};
-    unless ($@) {
-	if ($command->can('verify_syntax')) {
-	    return $command->verify_syntax($curproc, $command_context);
+    if (defined $pkg) {
+	eval qq{ use $pkg; \$command = new $pkg;};
+	unless ($@) {
+	    if ($command->can('verify_syntax')) {
+		return $command->verify_syntax($curproc, $command_context);
+	    }
 	}
     }
 

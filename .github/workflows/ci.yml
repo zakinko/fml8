@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  compile:
+    name: "compile check (perl ${{ matrix.perl }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: [ '5.26', '5.32', '5.36', '5.38', '5.40' ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up perl ${{ matrix.perl }}
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+
+      - name: perl version
+        run: perl -V:version -V:archname
+
+      # Every module under fml/lib must at least compile.  The bundled
+      # cpan/lib is appended, never prepended: the shipped File::Spec is
+      # 0.7 and lacks splitdir()/splitpath() that fml8 calls, so putting
+      # it first shadows the core one and breaks at runtime.
+      - name: compile every module
+        run: |
+          set -u
+          fail=0
+          for f in $(find fml/lib -name '*.pm' | sort); do
+            if ! out=$(perl -Ifml/lib -I. -Icpan/lib -c "$f" 2>&1); then
+              case "$out" in
+                *"Can't locate GD.pm"*) echo "SKIP (optional GD): $f" ;;
+                *) echo "::error file=$f::$out"; fail=$((fail+1)) ;;
+              esac
+            fi
+          done
+          echo "failed: $fail"
+          test "$fail" -eq 0
+
+  test:
+    name: "unit tests (perl ${{ matrix.perl }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: [ '5.26', '5.36', '5.40' ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up perl ${{ matrix.perl }}
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+
+      - name: run t/*.t
+        run: prove -v t/
+
+  removed-syntax:
+    name: "guard against perl syntax removed upstream"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # These constructs are fatal on modern perl.  They keep creeping
+      # back in from the fml4 era, so fail the build on sight.
+      - name: scan for defined(@array) / defined(%hash) / $*
+        run: |
+          set -u
+          rc=0
+          if grep -rnE 'defined\s*\(?\s*[@%][A-Za-z_$]' --include='*.pm' --include='*.pl' fml/ cpan/lib/ ; then
+            echo "::error::defined(@array)/defined(%hash) is fatal since perl 5.22"
+            rc=1
+          fi
+          if grep -rnE '(^|[^$\\])\$\*\s*=' --include='*.pm' --include='*.pl' fml/ ; then
+            echo "::error::\$* was removed in perl 5.30"
+            rc=1
+          fi
+          exit $rc

@@ -2118,7 +2118,17 @@ sub langinfo_get_charset
 	    use Mail::Message::Charset;
 	    my $c    = new Mail::Message::Charset;
 	    my $hint = $curproc->langinfo_get_language_hint($category);
-	    $charset = $c->language_to_message_charset($hint);
+
+	    # XXX the PCB has no "language_hint" for this category in some
+	    # XXX contexts (the CGI path is one, see fml8 issue #8), so
+	    # XXX $hint is undef here.  Fall back to $default instead of
+	    # XXX passing undef down into lc().
+	    if (defined $hint && $hint ne '') {
+		$charset = $c->language_to_message_charset($hint);
+	    }
+	    else {
+		$charset = $default;
+	    }
 	}
     }
 

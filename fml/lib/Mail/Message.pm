@@ -1284,7 +1284,7 @@ sub _print_messsage_on_memory
     my $has_error = $fd->can('error') && $fd->can('clearerr') ? 1 : 0;
 
     # \n -> \r\n
-    my $raw_print_mode = 1 if $override_print_mode eq 'raw';
+    my $raw_print_mode = ($override_print_mode eq 'raw') ? 1 : 0;
 
     # set up offset for the buffer
     my $data  = $self->{ data };
@@ -1423,7 +1423,7 @@ sub _print_messsage_on_disk
     my $has_error = $fd->can('error') && $fd->can('clearerr') ? 1 : 0;
 
     # \n -> \r\n
-    my $raw_print_mode = 1 if $override_print_mode eq 'raw';
+    my $raw_print_mode = ($override_print_mode eq 'raw') ? 1 : 0;
     my $header   = $self->{ header }   || undef;
     my $filename = $self->{ filename } || undef;
     my $logfp    = $override_log_function || $self->{ _log_function };
@@ -1653,7 +1653,7 @@ sub parse_and_build_mime_multipart_chain
 
     # fix the end of multipart block against broken MIME/multipart.
     # If close-delimeter not found, $broken_close_delimiter = 1.
-    my $broken_close_delimiter = 1 if $mpb_end < 0;
+    my $broken_close_delimiter = ($mpb_end < 0) ? 1 : 0;
     {
 	# oops, no delimiter is not found !!!
 	if ($mpb_begin < 0) {

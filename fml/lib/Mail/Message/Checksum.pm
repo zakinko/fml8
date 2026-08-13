@@ -389,8 +389,14 @@ sub cksum2
 
     # XXX-TODO: style
     $crc = $total = 0;
-    if (open($file, $file)) {
-        while (($nr = sysread($file, $buf, 1024)) > 0) {
+
+    # XXX $file was used both as the file handle and as the file name,
+    # XXX so open() took it as a symbolic filehandle ref and died under
+    # XXX "strict refs".  Use a lexical handle and a 3-arg open() so a
+    # XXX name starting with ">" or "|" cannot be misread as a mode.
+    my $fh;
+    if (open($fh, "<", $file)) {
+        while (($nr = sysread($fh, $buf, 1024)) > 0) {
             my ($i) = 0;
             $total += $nr;
 
@@ -399,7 +405,7 @@ sub cksum2
                 $crc += ord($r);
             }
         }
-        close($file);
+        close($fh);
         $crc = ($crc & 0xffff) + ($crc >> 16);
         $crc = ($crc & 0xffff) + ($crc >> 16);
     }

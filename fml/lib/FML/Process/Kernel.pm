@@ -1903,9 +1903,12 @@ sub _analyze_recipients
     my ($curproc, $rm_args) = @_;
     my $recipient      = [];
     my $recipient_maps = [];
-    my $rcpt = $rm_args->{ recipient }      if defined $rm_args->{ recipient };
-    my $map  = $rm_args->{ recipient_map }  if defined $rm_args->{ recipient_map };
-    my $maps = $rm_args->{ recipient_maps } if defined $rm_args->{ recipient_maps };
+    # XXX "my $x = ... if ..." is explicitly undefined behaviour in perl
+    # XXX (perlsyn); the variable is not re-initialised when the modifier
+    # XXX is false.  Assign unconditionally instead.
+    my $rcpt = $rm_args->{ recipient };
+    my $map  = $rm_args->{ recipient_map };
+    my $maps = $rm_args->{ recipient_maps };
 
     if (defined($rcpt)) {
 	if (ref($rcpt) eq 'ARRAY') {

@@ -14,7 +14,7 @@ use Carp;
 
 
 use FML::Command::User::unsubscribe;
-@ISA = qw(FML::Command::User::unsubscribe use);
+@ISA = qw(FML::Command::User::unsubscribe);
 
 
 # Descriptions: unsubscribe request, forwarded to "unsubscribe" command.

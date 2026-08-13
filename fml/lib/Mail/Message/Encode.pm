@@ -396,7 +396,7 @@ sub decode_base64_string
 
 	# XXX-TODO: use Mail::Message::Charset ?
 	$in_code   = $self->detect_code($str_out);
-	$out_code |= 'euc-jp'; # euc-jp by default.
+	$out_code ||= 'euc-jp'; # euc-jp by default. XXX was |= (string bit-or).
     }
     else {
 	croak("Mail::Message::Encode: unknown language");
@@ -425,7 +425,7 @@ sub decode_qp_string
 
 	# XXX-TODO: use Mail::Message::Charset ?
 	$in_code   = $self->detect_code($str_out);
-	$out_code |= 'euc-jp'; # euc-jp by default.
+	$out_code ||= 'euc-jp'; # euc-jp by default. XXX was |= (string bit-or).
     }
     else {
 	croak("Mail::Message::Encode: unknown language");

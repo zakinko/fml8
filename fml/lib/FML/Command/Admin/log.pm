@@ -139,7 +139,7 @@ sub _show_log_grep
 {
     my ($self, $curproc, $log_file, $sl_args, $when) = @_;
     my $regexp  = '';
-    my $is_cgi  = 1 if $sl_args->{ printing_style } eq 'html';
+    my $is_cgi  = ($sl_args->{ printing_style } eq 'html') ? 1 : 0;
     my $charset = $curproc->langinfo_get_charset($is_cgi ? "cgi" : "log_file");
 
     if ($when =~ /^\d+$/) {
@@ -193,7 +193,7 @@ sub _show_log_grep
 sub _show_log_tail
 {
     my ($self, $curproc, $log_file, $sl_args) = @_;
-    my $is_cgi     = 1 if $sl_args->{ printing_style } eq 'html';
+    my $is_cgi     = ($sl_args->{ printing_style } eq 'html') ? 1 : 0;
     my $line_count = 0;
     my $line_max   = 0;
     my $charset    =
