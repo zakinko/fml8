@@ -81,11 +81,14 @@ jobs:
         run: |
           set -u
           rc=0
-          if grep -rnE 'defined\s*\(?\s*[@%][A-Za-z_$]' --include='*.pm' --include='*.pl' fml/ cpan/lib/ ; then
+          if grep -rnE 'defined\s*\(?\s*[@%][A-Za-z_$]' \
+               --include='*.pm' --include='*.pl' --include='*.t' fml/ cpan/lib/ t/ 2>/dev/null \
+               | grep -vE ':[[:space:]]*#'; then
             echo "::error::defined(@array)/defined(%hash) is fatal since perl 5.22"
             rc=1
           fi
-          if grep -rnE '(^|[^$\\])\$\*\s*=' --include='*.pm' --include='*.pl' fml/ ; then
+          if grep -rnE '(^|[^$\\])\$\*\s*=' --include='*.pm' --include='*.pl' fml/ 2>/dev/null \
+               | grep -vE ':[[:space:]]*#'; then
             echo "::error::\$* was removed in perl 5.30"
             rc=1
           fi
