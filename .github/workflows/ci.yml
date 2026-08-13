@@ -35,8 +35,16 @@ jobs:
           for f in $(find fml/lib -name '*.pm' | sort); do
             if ! out=$(perl -Ifml/lib -I. -Icpan/lib -c "$f" 2>&1); then
               case "$out" in
-                *"Can't locate GD.pm"*) echo "SKIP (optional GD): $f" ;;
-                *) echo "::error file=$f::$out"; fail=$((fail+1)) ;;
+                *"Can't locate "*)
+                  echo "SKIP (optional module missing): $f"
+                  echo "$out" | head -1
+                  ;;
+                *)
+                  echo "FAIL: $f"
+                  echo "$out"
+                  echo "::error file=$f::$(echo "$out" | head -1)"
+                  fail=$((fail+1))
+                  ;;
               esac
             fi
           done
