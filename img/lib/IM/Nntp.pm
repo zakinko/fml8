@@ -5,17 +5,18 @@
 ###
 ### Author:  Internet Message Group <img@mew.org>
 ### Created: Apr 23, 1997
-### Revised: Feb 28, 2000
+### Revised: Apr 23, 2007
 ###
 
-my $PM_VERSION = "IM::Nntp.pm version 20000228(IM140)";
+my $PM_VERSION = "IM::Nntp.pm version 20161010(IM153)";
 
 package IM::Nntp;
 require 5.003;
 require Exporter;
 
 use Fcntl;
-use IM::Config qw(nntphistoryfile nntpservers nntpauthuser nntp_timeout);
+use IM::Config qw(nntphistoryfile nntpservers nntpauthuser set_nntpauthuser 
+	nntp_timeout);
 use IM::TcpTransaction;
 use IM::Util;
 use integer;
@@ -38,20 +39,6 @@ use vars qw(@ISA @EXPORT);
     nntp_spec
 );
 
-=head1 NAME
-
-NNTP - NNTP interface package
-
-=head1 SYNOPSIS
-
-$return_code = &nntp_transaction(server_list, newsgroups,
-    part_current, part_total);
-$return_code = &nntp_close;
-
-=head1 DESCRIPTION
-
-=cut
-
 use vars qw($Nntp_opened *NNTPd $NntpErrTitle);
 
 ##### NNTP SESSION OPENING #####
@@ -63,8 +50,8 @@ use vars qw($Nntp_opened *NNTPd $NntpErrTitle);
 #		 1: recoverable error (should be retried)
 #		-1: unrecoverable error
 #
-sub nntp_open ($$) {
-    my ($servers, $logging) = @_;
+sub nntp_open($$) {
+    my($servers, $logging) = @_;
     my $rc;
 
     if ($Nntp_opened) {
@@ -78,7 +65,7 @@ sub nntp_open ($$) {
     if ($rc = &tcp_command(\*NNTPd, '', '')) {
 	return $rc;
     }
-    my (@resp) = &command_response;
+    my(@resp) = &command_response;
     if ($resp[0] =~ /InterNetNews server INN/) {
 	return 1 if (&tcp_command(\*NNTPd, 'MODE reader', ''));
     }
@@ -94,7 +81,7 @@ sub nntp_open ($$) {
 #		 1: recoverable error (should be retried)
 #		-1: unrecoverable error
 #
-sub nntp_close () {
+sub nntp_close() {
     return 0 unless ($Nntp_opened);
     $Nntp_opened = 0;
     im_notice("closing NNTP session.\n");
@@ -105,25 +92,27 @@ sub nntp_close () {
 
 ##### NNTP TRANSACTION MANAGEMENT #####
 #
-# nntp_transaction(server_list, header, body, group, part, total)
+# nntp_transaction(server_list, header, body, group, part, total, authuser)
 #	server_list: list of NNTP servers
 #	group: news group to be posted in
 #	part: part number to be sent in partial message mode
 #	total: total number of partial messages
+#	authuser: User name for NNTP authentication
 #	return value:
 #		 0: success
 #		 1: recoverable error (should be retried)
 #		-1: unrecoverable error
 #
-sub nntp_transaction ($$$$$$) {
-    my ($servers, $Header, $Body, $group, $part, $total) = @_;
+sub nntp_transaction($$$$$$$) {
+    my($servers, $Header, $Body, $group, $part, $total, $authuser) = @_;
     my $rc;
 
     require IM::Log && import IM::Log;
 
+    &set_nntpauthuser($authuser);
     do {
 	$rc = &nntp_transact_sub($servers, $Header, $Body, $part, $total);
-	my (@resp) = &command_response;
+	my(@resp) = &command_response;
 	if ($rc) {
 	    &im_warn($NntpErrTitle . join("\n", @resp) . "\n");
 	    $NntpErrTitle = '';
@@ -150,8 +139,8 @@ sub nntp_transaction ($$$$$$) {
 #		 1: recoverable error (should be retried)
 #		-1: unrecoverable error
 #
-sub nntp_transact_sub ($$$$$) {
-    my ($servers, $Header, $Body, $part, $total) = @_;
+sub nntp_transact_sub($$$$$) {
+    my($servers, $Header, $Body, $part, $total) = @_;
     my $rc;
 
     return $rc if ($rc = &nntp_open($servers, 1));
@@ -174,30 +163,22 @@ sub nntp_transact_sub ($$$$$) {
     return 0;
 }
 
-sub nntp_head_as_string ($) {
+sub nntp_head_as_string($) {
     my $i = shift;
-    my ($rc, $count) = ('', 0);
+    my($rc, $count) = ('', 0);
     local $_;
 
     im_notice("getting article $i.\n");
     $rc = &tcp_command(\*NNTPd, "HEAD $i", '');
-    next if ($rc > 0);
-    if ($rc < 0) {
+    if ($rc != 0) {
 	im_warn("HEAD command failed.\n");
 	return -1;
     }
     $count++;
-    my ($found, $f) = (0, '');
+    my($found, $f) = (0, '');
     alarm(nntp_timeout()) unless win95p();
-    $! = 0;
     while (<NNTPd>) {
-	unless (win95p()) {
-	    alarm(0);
-	    if ($!) {   # may be channel truoble
-		im_warn("lost connection for HEAD.\n");
-		return -1;
-	    }
-	}
+	alarm(0) unless win95p();
 	s/\r\n$/\n/;
 	last if ($_ =~ /^\.\n$/);
 	s/^\.//;
@@ -205,11 +186,16 @@ sub nntp_head_as_string ($) {
 	$f .= $_;
     }
     alarm(0) unless win95p();
+    if (!defined($_)) {
+	# may be channel trouble
+	im_warn("lost connection for HEAD.\n");
+	return -1;
+    }
     return $f;
 }
 
-sub nntp_head ($$) {
-    my ($art_start, $art_end) = @_;
+sub nntp_head($$) {
+    my($art_start, $art_end) = @_;
     local $_;
     my $count = 0;
 
@@ -223,17 +209,10 @@ sub nntp_head ($$) {
 	    return -1;
 	}
 	$count++;
-	my ($found, $f) = (0, '');
+	my($found, $f) = (0, '');
 	alarm(nntp_timeout()) unless win95p();
-	$! = 0;
 	while (<NNTPd>) {
-	    unless (win95p()) {
-		alarm(0);
-		if ($!) {   # may be channel truoble
-		    im_warn("lost connection for HEAD.\n");
-		    return -1;
-		}
-	    }
+	    alarm(0) unless win95p();
 	    s/\r\n$/\n/;
 	    last if ($_ =~ /^\.\n$/);
 	    s/^\.//;
@@ -247,6 +226,12 @@ sub nntp_head ($$) {
 		$found = 0;
 	    }
 	}
+	alarm(0) unless win95p();
+	if (!defined($_)) {
+	    # may be channel trouble
+	    im_warn("lost connection for HEAD.\n");
+	    return -1;
+	}
 	$f =~ s/\n[ \t]*/ /g;
 	$f = '(sender unknown)' unless ($f);
 	print "From $f\n";
@@ -254,8 +239,8 @@ sub nntp_head ($$) {
     return $count;
 }
 
-sub nntp_xover ($$) {
-    my ($art_start, $art_end) = @_;
+sub nntp_xover($$) {
+    my($art_start, $art_end) = @_;
     my $rc = &tcp_command(\*NNTPd, "XOVER $art_start-$art_end", '');
 
     if ($rc) {
@@ -263,7 +248,7 @@ sub nntp_xover ($$) {
 	return -1;
     }
     my $count = 0;
-    my ($resp);
+    my($resp);
     while (($resp = &next_response(\*NNTPd)) !~ /^\.$/) {
 	$count++;
 	my @overview = split('\t', $resp);
@@ -282,29 +267,22 @@ sub nntp_xover ($$) {
     return $count;
 }
 
-sub nntp_article ($) {
+sub nntp_article($) {
     my $num = shift;
     local $_;
-#   local (@Article);
+#   local(@Article);
 
     im_debug("getting article $num.\n") if (&debug('nntp'));
     my $rc = &tcp_command(\*NNTPd, "ARTICLE $num", '');
-    return (1, '') if ($rc > 0);
+    return(1, '') if ($rc > 0);
     if ($rc < 0) {
 	im_warn("ARTICLE command failed.\n");
-	return (-1, '');
+	return(-1, '');
     }
     my @Article = ();
     alarm(nntp_timeout()) unless win95p();
-    $! = 0;
     while (<NNTPd>) {
-	unless (win95p()) {
-	    alarm(0);
-	    if ($!) {   # may be channel truoble
-		im_warn("lost connection for ARTICLE.\n");
-		return (-1, '');
-	    }
-	}
+	alarm(0) unless win95p();
 	s/\r\n$/\n/;
 	last if ($_ =~ /^\.\n$/);
 	s/^\.//;
@@ -312,12 +290,17 @@ sub nntp_article ($) {
 	im_debug($_) if (&debug('nntp'));
     }
     alarm(0) unless win95p();
-    return (0, \@Article);
+    if (!defined($_)) {
+	# may be channel trouble
+	im_warn("lost connection for ARTICLE.\n");
+	return(-1, '');
+    }
+    return(0, \@Article);
 }
 
-sub nntp_articles ($$$$) {
-    my ($art_start, $art_end, $dst, $limit) = @_;
-    my ($rc, $article);
+sub nntp_articles($$$$) {
+    my($art_start, $art_end, $dst, $limit) = @_;
+    my($rc, $article);
     my $count = 0;
     my $last = 0;
 
@@ -340,10 +323,10 @@ sub nntp_articles ($$$$) {
 	last if ($limit && --$limit == 0);
     }
     &exec_getsbrfile($dst);
-    return ($count, $last);
+    return($count, $last);
 }
 
-sub nntp_list ($) {
+sub nntp_list($) {
     my $group = shift;
     local $_;
     my $rc;
@@ -363,13 +346,13 @@ sub nntp_list ($) {
     return $count;
 }
 
-sub nntp_command ($) {
+sub nntp_command($) {
     my $cmd = shift;
     my $rc = &tcp_command(\*NNTPd, $cmd, '');
 
     return -1 if ($rc < 0);
     if ($rc > 0) {
-	my ($res) = &command_response();
+	my($res) = &command_response();
 	if ($res =~ /^480/) {
 	    require IM::GetPass && import IM::GetPass;
 
@@ -379,7 +362,7 @@ sub nntp_command ($) {
 	    my $user = &nntpauthuser() || 
 		$ENV{'USER'} || $ENV{'LOGNAME'} || im_getlogin();
 	    my $host = get_cur_server();
-	    my ($pass, $agtfound, $interact)
+	    my($pass, $agtfound, $interact)
 		= getpass('nntp', 'PASS', $host, $user);
 
 	    # authenticate for posting
@@ -395,29 +378,29 @@ sub nntp_command ($) {
     return $rc;
 }
 
-sub nntp_command_response () {
+sub nntp_command_response() {
     return &command_response;
 }
 
-sub nntp_next_response () {
+sub nntp_next_response() {
     return &next_response(\*NNTPd);
 }
 
-sub set_last_article_number ($$$) {
-    my ($server, $group, $number) = @_;
-    my ($pos, $last, $size) = (0, 0, 0);
+sub set_last_article_number($$$) {
+    my($server, $group, $number) = @_;
+    my($pos, $last, $size) = (0, 0, 0);
 
     $server =~ s!\%\d+$!!;
     $server =~ s!/\d+$!!;
     my $nntphist = &nntphistoryfile() . '-' . $server;
-    if ( -f $nntphist ) {
+    if (-f $nntphist) {
 	im_open(\*NEWSHIST, "+<$nntphist");
 	while ($pos = tell(NEWSHIST), $_ = <NEWSHIST>) {
 	    /^([^:]+):\s*(\d+)/;
 	    if ($group eq $1) {
 		$last = $2;
 		im_debug("$last articles in $group ($nntphist)\n")
-		  if(&debug('nntp'));
+		  if (&debug('nntp'));
 		seek(NEWSHIST, $pos, 0);
 		$size = length($_) - length("$group: 0000000\n");
 		if ($size < 0) {
@@ -442,8 +425,8 @@ sub set_last_article_number ($$$) {
     return $last;
 }
 
-sub get_last_article_number ($$) {
-    my ($server, $group) = @_;
+sub get_last_article_number($$) {
+    my($server, $group) = @_;
     local $_;
     my $number = 0;
 
@@ -464,33 +447,33 @@ sub get_last_article_number ($$) {
 }
 
 
-sub nntp_get_message ($$) {
-    my ($src, $msg) = @_;
-    my ($rc, $art);
-    my ($group, $srvs) = nntp_spec($src, nntpservers());
+sub nntp_get_message($$) {
+    my($src, $msg) = @_;
+    my($rc, $art);
+    my($group, $srvs) = nntp_spec($src, nntpservers());
     my @servers = split(',', $srvs);
     im_notice("accessing to $group on $srvs.\n");
     do {
 	if (($rc = nntp_open(\@servers, 0)) < 0) {
-	    return (-1, "can not connect $srvs.\n");
+	    return(-1, "cannot connect $srvs.\n");
 	}
 	if (($group ne '') && ($rc = nntp_command("GROUP $group")) < 0) {
-	    return (-1, "can not access $group.\n");
+	    return(-1, "cannot access $group.\n");
 	}
     } while (@servers > 0 && $rc > 0);
-    return (-1, "can not access $group on $srvs.\n") if ($rc);
+    return(-1, "cannot access $group on $srvs.\n") if ($rc);
     ($rc, $art) = nntp_article($msg);
     nntp_close();
-    return (-1, "no message $msg in -$group.\n") if ($rc);
-    return (0, $art);
+    return(-1, "no message $msg in -$group.\n") if ($rc);
+    return(0, $art);
 }
  
 # returns number of got articles
 # -1 if error
-sub nntp_get_msg ($$$$) {
-    my ($src, $dst, $how, $limit) = @_;
-    my ($rc, $group, $error, $art_start, $art_end);
-    my ($servers, @servers);
+sub nntp_get_msg($$$$) {
+    my($src, $dst, $how, $limit) = @_;
+    my($rc, $group, $error, $art_start, $art_end);
+    my($servers, @servers);
 
     if ($src =~ /^nntp:(.*)/i || $src =~ /^news:(.*)/i) {
 	($group, $servers) = &nntp_spec($1, nntpservers());
@@ -511,7 +494,7 @@ sub nntp_get_msg ($$$$) {
     } while (@servers > 0 && $rc > 0);
     return -1 if ($rc);
 
-    my (@resp) = &command_response;
+    my(@resp) = &command_response;
     $error = 0;
     my $i;
     for ($i = 0; $i <= $#resp; $i++) {
@@ -532,7 +515,7 @@ sub nntp_get_msg ($$$$) {
 	return -1;
     }
 
-    my ($art_last, $msgs);
+    my($art_last, $msgs);
     $art_last = &get_last_article_number($servers, $group);
     if ($art_end > $art_last) {
 	# new articles
@@ -569,13 +552,13 @@ sub nntp_get_msg ($$$$) {
 
     if ($how eq 'from') {
 	if ($msgs > 0) {
-	    $msgs = &nntp_xover ($art_start, $art_end);
-	    $msgs = &nntp_head ($art_start, $art_end) if ($msgs < 0);
+	    $msgs = &nntp_xover($art_start, $art_end);
+	    $msgs = &nntp_head($art_start, $art_end) if ($msgs < 0);
 	    if ($msgs < 0) {
-		im_warn("can not get article poster information.\n");
+		im_warn("cannot get article poster information.\n");
 		return -1;
 	    }
-	im_info("$msgs article(s) in $group at $servers.\n");
+	    im_info("$msgs article(s) in $group at $servers.\n");
 	} else {
 	    im_info("no news in $group at $servers.\n");
 	}
@@ -584,13 +567,12 @@ sub nntp_get_msg ($$$$) {
     }
 
     if ($how eq 'get') {
-	my ($last);
+	my($last);
 	if ($msgs > 0) {
-	    im_info("Getting new messages from $group at $servers "
-	      . "into $dst....\n");
+	    im_info("Getting new messages from $group at $servers into $dst...\n");
 	    ($msgs, $last) = &nntp_articles($art_start, $art_end, $dst, $limit);
 	    if ($msgs < 0) {
-		im_warn("can not get articles.\n");
+		im_warn("cannot get articles.\n");
 		return -1;
 	    }
 	    im_info("$msgs message(s).\n");
@@ -606,8 +588,8 @@ sub nntp_get_msg ($$$$) {
 }
 
 # News group (-group[@server])
-sub nntp_spec ($$) {
-    my ($spec, $server) = @_;
+sub nntp_spec($$) {
+    my($spec, $server) = @_;
     my $group;
 
     if ($spec =~ /^-(.*)/) {
@@ -618,10 +600,50 @@ sub nntp_spec ($$) {
     } else {
 	$group = $spec;
     }
-    return ($group, $server);
+    return($group, $server);
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+IM::Nntp - NNTP hanlder
+
+=head1 SYNOPSIS
+
+ use IM::Nntp;
+
+ $return_code = &nntp_transaction(server_list, newsgroups,
+     part_current, part_total, authuser);
+ $return_code = &nntp_close;
+
+Other subroutines:
+nntp_open
+nntp_article
+nntp_list
+nntp_command
+nntp_command_response
+nntp_next_response
+nntp_get_message
+nntp_get_msg
+nntp_head_as_string
+nntp_spec
+
+=head1 DESCRIPTION
+
+The I<IM::Nntp> module handles NNTP.
+
+This modules is provided by IM (Internet Message).
+
+=head1 COPYRIGHT
+
+IM (Internet Message) is copyrighted by IM developing team.
+You can redistribute it and/or modify it under the modified BSD
+license.  See the copyright file for more details.
+
+=cut
 
 ### Copyright (C) 1997, 1998, 1999 IM developing team
 ### All rights reserved.

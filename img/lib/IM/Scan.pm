@@ -5,10 +5,10 @@
 ###
 ### Author:  Internet Message Group <img@mew.org>
 ### Created: Apr 23, 1997
-### Revised: Feb 28, 2000
+### Revised: May 25, 2011
 ###
 
-my $PM_VERSION = "IM::Scan.pm version 20000228(IM140)";
+my $PM_VERSION = "IM::Scan.pm version 20161010(IM153)";
 
 package IM::Scan;
 require 5.003;
@@ -28,97 +28,6 @@ use vars qw(@ISA @EXPORT);
 @EXPORT = qw(set_scan_form get_header store_header parse_body parse_header
 	     disp_msg read_petnames);
 
-=head1 NAME
-
-  Scan - Scan listing from mail
-
-=head1 SYNOPSIS
-
-  use IM::Scan;
-
-  &set_scan_form($scan_form, $width, $use_jis);
-  &read_petnames();
-  %Head = &get_header($mail_file);
-  &disp_msg(\%Head);
-
-=head1 DESCRIPTION
-
-=head1 FILES
-
-  $HOME/.im/Config		the user profile
-
-=head1 PROFILE COMPONENTS
-
-  Component     Explanation                     Example
-
-  MailDir:      your mail directory             Mail
-  Width:        one line width                  80
-  JisSafe:      safely substr for ISO-2022-JP   on
-  Form:         scan format                     %+5n %m%d %8f %-30S %b
-  PetnameFile:  nickname file			~/.im/Petname
-  Address:      your mail addresses             kazu@mew.org, kazu@wide.ad.jp
-  AddrRegex:    regexp of your addresses        ^kazu@.*$
-                if necessary
-
-=head1 SCAN FORMAT
-
-  '%{width}{header-type}' format is available. You can define any
-  header-type as you want. Default valid header-types are
-
-      %n    message number
-      %d    raw Date: field
-      %f    MIME decoded From: field
-      %t    MIME decoded To: filed
-      %g    raw Newsgroups: field
-      %a    friendly From: field
-      %A    If this message is originated by yourself, friendly To: 
-	    or raw Newsgroups: is displayed in 'To:xxx' or 'Ng:xxx' 
-	    format, respectively. Otherwise, friendly From: field is 
-	    displayed.
-      %P    Similar to %A, but diplay raw address of mail sender
-            instead of friendly From: field, just like mh-e.            
-      %i    indent to display thread
-      %s    MIME decoded Subject: field
-      %S    indented MIME decoded Subject (same as %i+%s)
-      %b    a part of body extracted with heuristic
-      %m    Multipart type
-		'S'igned, 'E'ncrypt, 'M'ultipart, 'P'artial or none
-      %p    mark '*' if the message is destined to you
-      %D    mark 'D' if the message is duplicated
-      %M    %p+%D
-      %F    folder path
-#      %B    file size
-      %K    file block size (1024 bytes/block)
-
-      %y    year
-      %c    month (digit)
-      %C    month (string)
-      %e    mday
-      %h    hour
-      %E    min
-      %G    sec
-
-  {width} is a integer with/without '-' sign. if a '-' sign exists, content
-  of a header-type will be displaied with left adjustment. If the integer
-  have leading '0', the field will be padded with leading '0's.
-
-  To improve processing speed, needless process on JIS character should be
-  avoided. Even if 'JisSafe' is on, only %f, %t, %A, %s, %S and %b are
-  processed with 'substr' routine for JIS characters by default. If you want
-  to process other header-types with JIS version of 'substr', specify '!'
-  just after '%' like: %!-8S.
-
-  ScanForm "%+5n %m%d %-14A %-18S %b" works as same as IM default scaning.
-
-=head1 PETNAMES FORMAT
-
-  Following format is valid in petnames file.
-  A line beginning with '#' is ignored.
-      # This is comments
-      Kazu@Mew.org      "Mr.Kazu"
-      nom@Mew.org       "Nomsun"
-
-=cut
 use vars qw($WIDTH $JIS_SAFE $HEADLINELIMIT $BODYLINELIMIT
 	    $MSTR2NUM @MSTR @WSTR %symbol_table
 	    %multipart_mark @NEEDSAFE %NEEDSAFE_HASH
@@ -188,8 +97,8 @@ BEGIN {
 		       'sig' => 'S',
 		       );
 
-    @NEEDSAFE = qw (from: to: cc: address: Address:
-		    subject: indent-subject: body: );
+    @NEEDSAFE = qw(from: to: cc: address: Address:
+		   subject: indent-subject: body:);
 
     %NEEDSAFE_HASH = ();
 
@@ -203,8 +112,8 @@ BEGIN {
 ## If user specifies a scan format, convert that to 'eval-form'.
 ##
 
-sub set_scan_form ($$$) {
-    my ($scan_form, $width, $jis_safe) = @_;
+sub set_scan_form($$$) {
+    my($scan_form, $width, $jis_safe) = @_;
 
     $ALLOW_CRLF = allowcrlf();
 
@@ -212,11 +121,13 @@ sub set_scan_form ($$$) {
     $JIS_SAFE= $jis_safe;
 
     my $scan_hook = scansbr_file();
-    if ($scan_hook =~ /^(\S+)$/) {
+    if ($scan_hook =~ /(.+)/) {
 	if ($main::INSECURE) {
 	    im_warn("Sorry, ScanSbr is ignored for SUID root script.\n");
 	} else {
-	    $scan_hook = $1;	# to pass through taint check
+	    if ($> != 0) {
+		$scan_hook = $1;	# to pass through taint check
+	    }
 	    if (-f $scan_hook) {
 		require $scan_hook;
 	    } else {
@@ -233,7 +144,7 @@ sub set_scan_form ($$$) {
 ##   get_header
 ##
 
-sub get_header ($) {
+sub get_header($) {
     my $path = shift;
     my %Head = ();
     my $folder;
@@ -301,8 +212,8 @@ foreach (@STRUCTURED) {
     $STRUCTURED_HASH{$_} = 1;
 }
 
-sub store_header ($$) {
-    my ($href, $header) = @_;
+sub store_header($$) {
+    my($href, $header) = @_;
     local $_;
     my $lines = 0;
 
@@ -334,10 +245,10 @@ sub store_header ($$) {
 #        mode: 1 if HANDLER is File Handler, otherwise HANDLER is Array
 #        return value: substring from body
 #
-sub parse_body (*$) {
+sub parse_body(*$) {
     local *HANDLE = shift;
     my $mode = shift;
-    my ($content, $lines) = ('', 0);
+    my($content, $lines) = ('', 0);
 
     while (1) {
 	if ($mode == 0) {
@@ -347,17 +258,22 @@ sub parse_body (*$) {
 	}
 	last unless defined($_);
 
-	next if /^#/;
 	next if /^\s*\n/;
 	next if /^--/;
 	next if /^- --/;
-	next if /^\s+[\w-*]+=/;		# eg. "boundary="; * = RFC2231
+	next if /^=2D/;
+	next if /^\s+[\w*-]+=/;		# eg. "boundary="; * = RFC2231
 	next if /^\s*[\w-]+: /;		# Headers and header style citation
-	next if /^\s*[\w-]*[>|]/;	# other citation
-	next if /:\n$/;
-	next if /^This is a multi-part message in MIME format./i;
+	next if /^\s*[>:|\#;\/_}]/;
+	next if /^\s*[[<\/(.]+ *snip/;
+	next if /^   /;
+	next if /^\s*\w+([\'._-]+\w+)*>/;
+	next if /^\s*(On|At) .*[^.!\s\n]\s*$/;
+	next if /(:|;|\/)\s*\n$/;
+	next if /(wrote|writes?|said|says?)[^.!\n]?\s*\n$/;
+	next if /^This is a multi-part message in MIME format/i;
 
-	if (/^In message/ || /^In article/ || /^In <.*>/) {
+	if (/^\s*In (message|article|mail|news|<|\"|\[|\()/i) {
 	    if ($mode == 0) {
 		$_ = <HANDLE>;
 	    } else {
@@ -385,7 +301,7 @@ sub parse_body (*$) {
     return substr_safe($content, $WIDTH);
 }
 
-sub parse_header ($) {
+sub parse_header($) {
     my $href = shift;
     
     ##
@@ -409,10 +325,10 @@ sub parse_header ($) {
     if ($href->{'date'}) {
 	$href->{'date:'} = $href->{'date'};
     } else {
-	my ($sec, $min, $hour, $mday, $mon, $year,
-            $wday, $yday, $isdst) = localtime((stat($href->{'path'}))[9]);
-	my ($gsec, $gmin, $ghour, $gmday, $gmon, $gyear,
-	    $gwday, $gyday, $gisdst) = gmtime((stat($href->{'path'}))[9]);
+	my($sec, $min, $hour, $mday, $mon, $year,
+	   $wday, $yday, $isdst) = localtime((stat($href->{'path'}))[9]);
+	my($gsec, $gmin, $ghour, $gmday, $gmon, $gyear,
+	   $gwday, $gyday, $gisdst) = gmtime((stat($href->{'path'}))[9]);
 
 	my $off = ($hour - $ghour) * 60 + $min - $gmin;
 	if ($year < $gyear) {
@@ -439,11 +355,11 @@ sub parse_header ($) {
     }
 
     $href->{'date:'} =~ /(\d\d?)\s+([A-Za-z]+)\s+(\d+)\s/;
-    my ($mday, $monthstr, $year) = ($1, "\u\L$2", $3);
+    my($mday, $monthstr, $year) = ($1, "\u\L$2", $3);
     my $mon = $MSTR2NUM->{$monthstr};
 
     $href->{'date:'} =~ /\s(\d\d?):(\d\d?)/;
-    my ($hour, $min, $sec) = ($1, $2, 0);
+    my($hour, $min, $sec) = ($1, $2, 0);
     if ($href->{'date:'} =~ /\s\d\d?:\d\d?:(\d\d?)\s/) {
 	$sec = $1;
     }
@@ -510,7 +426,7 @@ sub parse_header ($) {
     if ($REF_SYMBOL{'pureaddr:'}) {
 	if (my_addr($href->{'from'})) {
 	    if ($href->{'to'}) {
-		my ($to, $rest) = &fetch_addr($href->{'to'}, 1);
+		my($to, $rest) = &fetch_addr($href->{'to'}, 1);
 		if ($to) {
 		    $href->{'pureaddr:'} = 'To:' . $to;
 		}
@@ -552,8 +468,8 @@ sub parse_header ($) {
     &scan_sub($href) if (defined(&scan_sub));
 }
 
-sub disp_msg ($;$) {
-    my ($href, $vscan) = @_;
+sub disp_msg($;$) {
+    my($href, $vscan) = @_;
 
     $href->{'indent:'} = '' unless defined($href->{'indent:'});
     $href->{'subject:'} = '' unless defined($href->{'subject:'});
@@ -586,16 +502,13 @@ sub disp_msg ($;$) {
 ## Convert into Friendly Address
 ##
 
-sub friendly_addr ($$) {
-    my ($addr, $need_addr) = @_;
+sub friendly_addr($$) {
+    my($addr, $need_addr) = @_;
     return '' unless $addr;
     my $friendly = '';
-    my ($a, $f, $p);
+    my($a, $f, $p);
     while (($a, $addr, $f) = &fetch_addr($addr, 1), $a ne '') {
 	$a =~ s/\/[^@]*//;
-	# XXX defined(%hash) has been fatal since perl 5.22. The test it
-	# XXX meant is whether the hash has anything in it, which is what
-	# XXX the hash in boolean context already says.
 	if (%petnames && $petnames{lc($a)}) {
 	    $p = $petnames{lc($a)};
 	} elsif (!$need_addr && $f) {
@@ -619,17 +532,17 @@ sub friendly_addr ($$) {
 
 %ADDRESS_HASH = ();
 
-sub my_addr (@) {
+sub my_addr(@) {
     my @addrs = @_;
     my $addr;
 
     unless (defined($ADDRESS_HASH{'init'})) {
 	$ADDRESS_HASH{'addr'} = addresses_regex();
 	unless ($ADDRESS_HASH{'addr'}) {
-	    $ADDRESS_HASH{'addr'} = '^' . quotemeta(address()) . '$';
-            $ADDRESS_HASH{'addr'} =~ s/(\\\s)*\\,(\\\s)*/\$|\^/g;
+	    $ADDRESS_HASH{'addr'} = '^' . quotemeta(address()) . "\$";
+	    $ADDRESS_HASH{'addr'} =~ s/(\\\s)*\\,(\\\s)*/\$|\^/g;
 	}
-	    $ADDRESS_HASH{'init'} = 1;
+	$ADDRESS_HASH{'init'} = 1;
     }
     return 0 if ($ADDRESS_HASH{'addr'} eq "");
     foreach $addr (@addrs) {
@@ -646,7 +559,7 @@ sub my_addr (@) {
 ## Convert scan_form() to 'eval-form'
 ##
 
-sub convert_scan_form ($) {
+sub convert_scan_form($) {
     my $SCANFORM = shift;
 
     if (!$main::INSECURE && $SCANFORM && $SCANFORM !~ /%/) {
@@ -655,7 +568,7 @@ sub convert_scan_form ($) {
     }
 
     my @symbols = ();
-    my ($format, $jis_safe, $plus, $hyphen, $size, $type, $arg);
+    my($format, $jis_safe, $plus, $hyphen, $size, $type, $arg);
 
     if (scan_header_pick()) {
 	my $elem;
@@ -717,7 +630,7 @@ sub convert_scan_form ($) {
 
     $arg  = join(',', @symbols);
     my $EVAL_SCAN_FORM = "sprintf('$format', $arg)";
-    eval "sub scan_form { my (\$href) = shift; $EVAL_SCAN_FORM }";
+    eval "sub scan_form { my(\$href) = shift; $EVAL_SCAN_FORM }";
     if ($@) {
 	im_die("Form seems to be wrong.\nPerl error message is: $@");
     }
@@ -737,7 +650,7 @@ BEGIN {
      $SS3 = "\x1b\x4f";		# <ISO 2022 Single_shift three>
 }
 
-sub substr_safe ($$) {
+sub substr_safe($$) {
     ($_, my $len) = @_;
 
     # This hack makes the code a few percent faster but it's kinda ugly.
@@ -784,7 +697,7 @@ sub substr_safe ($$) {
 		my $i;
 
 		if ($room % 2 and $charset =~
-		    /^(jisx0208|jisx0212|ksc5601|cns11643-plane-2)/) {
+		    /^(jisx0208|jisx0212|jisx0213|ksc5601|cns11643-plane-2|big5-1|big5-2)/) {
 		    $room--;
 		    $last_char = ' ';
 		}
@@ -813,6 +726,9 @@ sub substr_safe ($$) {
 	elsif (s/(^\e\$\(C)//)	{ $G1 = $charset = 'ksc5601-1987';
 				  $G0 = 'ascii'; }
 
+	elsif (s/(^\e\$\(O)//)	{ $G0 = $charset = 'jisx0213-1'; }
+	elsif (s/(^\e\$\(P)//)	{ $G0 = $charset = 'jisx0213-2'; }
+
 	elsif (s/(^\e-A)//)	{ $G1 = $charset = 'iso8859-1'; }
 	elsif (s/(^\e-B)//)	{ $G1 = $charset = 'iso8859-2'; }
 	elsif (s/(^\e-C)//)	{ $G1 = $charset = 'iso8859-3'; }
@@ -837,6 +753,10 @@ sub substr_safe ($$) {
 				  $G0 = 'ascii'; }
 	elsif (s/(^\e\$\*H)//)	{ $G2 = $charset = 'cns11643-plane-2';
 				  $G0 = 'ascii';}
+
+	elsif (s/(^\e\$\(0)//)	{ $G0 = $charset = 'big5-1';}
+	elsif (s/(^\e\$\(1)//)	{ $G0 = $charset = 'big5-2';}
+
 	elsif (s/(^\e)//) {
 	    ;
 	}
@@ -848,7 +768,7 @@ sub substr_safe ($$) {
 
     join ('',
 	@res,
-	$charset =~ /^jisx02/ ? "\e(B" : '',
+	($G0 ne 'ascii') ? "\e(B" : '',
 	$shift_in,
 	$last_char,
 	$fill_char x ($len - $count),
@@ -860,20 +780,19 @@ sub substr_safe ($$) {
 ## Read petnames entry
 ##
 
-sub w2n ($) {
+sub w2n($) {
     my $line = shift;
     $line =~ tr/\x20/\x0/;
 
     return $line;
 }
 
-sub read_petnames () {
-
+sub read_petnames() {
     if (addrbook_file() && open(ADDRBOOK, addrbook_file())) {
 	my $key; my $addr; my $petname; my $a; my @addrs;
 	my $code;
 
-	while(<ADDRBOOK>) {
+	while (<ADDRBOOK>) {
 	    my $line = '';
 	    do {
 		chomp;
@@ -889,7 +808,7 @@ sub read_petnames () {
 		$line .= $_;
 	    } while (/[,\\]$/ && defined($_ = <ADDRBOOK>));
 	    $_ = $line;
-	    s/"([^"]+)"/w2n($1)/geo;
+	    s/"([^"]+)"/w2n($1)/geo;  #"
 	    s/,\s+/,/g;
 	    if (s/^(\S+)\s+(\S+)\s+(\S+)//) {
 		$key = $1;
@@ -917,11 +836,11 @@ sub read_petnames () {
 	im_warn("can't open petname file $file\n");
 	return;
     } 
-    while(<PETNAMES>) {
+    while (<PETNAMES>) {
 	next if (/^$/);
 	next if (/^#/);
 	chomp;
-	my ($name, $petname);
+	my($name, $petname);
 	if (/(\S+)\s+(.*)/) {
 	    $name = $1;
 	    $petname = $2;
@@ -933,6 +852,111 @@ sub read_petnames () {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+IM::Scan - scan listing from mail/news message
+
+=head1 SYNOPSIS
+
+ use IM::Scan;
+
+ &set_scan_form($scan_form, $width, $use_jis);
+ &read_petnames();
+ %Head = &get_header($mail_file);
+ &disp_msg(\%Head);
+
+=head1 DESCRIPTION
+
+The I<IM::Scan> module handles scan format and petnames format
+for mail/news message.
+
+This modules is provided by IM (Internet Message).
+
+=head1 FILES
+
+ $HOME/.im/Config	the user profile
+
+=head1 PROFILE COMPONENTS
+
+ Component     Explanation                     Example
+
+ MailDir:      your mail directory             Mail
+ Width:        one line width                  80
+ JisSafe:      safely substr for ISO-2022-JP   on
+ Form:         scan format                     %+5n %m%d %8f %-30S %b
+ PetnameFile:  nickname file			~/.im/Petname
+ Address:      your mail addresses             kazu@mew.org, kazu@wide.ad.jp
+ AddrRegex:    regexp of your addresses        ^kazu@.*$
+               if necessary
+
+=head1 SCAN FORMAT
+
+'%{width}{header-type}' format is available. You can define any
+header-type as you want. Default valid header-types are
+
+    %n    message number
+    %d    raw Date: field
+    %f    MIME decoded From: field
+    %t    MIME decoded To: filed
+    %g    raw Newsgroups: field
+    %a    friendly From: field
+    %A    If this message is originated by yourself, friendly To: 
+          or raw Newsgroups: is displayed in 'To:xxx' or 'Ng:xxx' 
+          format, respectively. Otherwise, friendly From: field is 
+          displayed.
+    %P    Similar to %A, but display raw address of mail sender
+          instead of friendly From: field, just like mh-e.            
+    %i    indent to display thread
+    %s    MIME decoded Subject: field
+    %S    indented MIME decoded Subject (same as %i+%s)
+    %b    a part of body extracted with heuristic
+    %m    Multipart type
+              'S'igned, 'E'ncrypt, 'M'ultipart, 'P'artial or none
+    %p    mark '*' if the message is destined to you
+    %D    mark 'D' if the message is duplicated
+    %M    %p+%D
+    %F    folder path
+    %K    file block size (1024 bytes/block)
+
+    %y    year
+    %c    month (digit)
+    %C    month (string)
+    %e    mday
+    %h    hour
+    %E    min
+    %G    sec
+
+{width} is a integer with/without '-' sign. if a '-' sign exists, content
+of a header-type will be displaied with left adjustment. If the integer
+have leading '0', the field will be padded with leading '0's.
+
+To improve processing speed, needless process on JIS character should be
+avoided. Even if 'JisSafe' is on, only %f, %t, %A, %s, %S and %b are
+processed with 'substr' routine for JIS characters by default. If you want
+to process other header-types with JIS version of 'substr', specify '!'
+just after '%' like: %!-8S.
+
+ScanForm "%+5n %m%d %-14A %-18S %b" works as same as IM default scaning.
+
+=head1 PETNAMES FORMAT
+
+Following format is valid in petnames file.
+A line beginning with '#' is ignored.
+
+    # This is comments
+    Kazu@Mew.org      "Mr.Kazu"
+    nom@Mew.org       "Nomsun"
+
+=head1 COPYRIGHT
+
+IM (Internet Message) is copyrighted by IM developing team.
+You can redistribute it and/or modify it under the modified BSD
+license.  See the copyright file for more details.
+
+=cut
 
 ### Copyright (C) 1997, 1998, 1999 IM developing team
 ### All rights reserved.

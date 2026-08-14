@@ -5,10 +5,10 @@
 ###
 ### Author:  Internet Message Group <img@mew.org>
 ### Created: Apr 23, 1997
-### Revised: Feb 28, 2000
+### Revised: Apr 23, 2007
 ###
 
-my $PM_VERSION = "IM::LocalMbox.pm version 20000228(IM140)";
+my $PM_VERSION = "IM::LocalMbox.pm version 20161010(IM153)";
 
 package IM::LocalMbox;
 require 5.003;
@@ -25,22 +25,6 @@ use vars qw(@ISA @EXPORT $getchk_hook);
 @ISA = qw(Exporter);
 @EXPORT = qw(local_get_msg);
 
-=head1 NAME
-
-LocalMbox - local mailbox managing package
-
-=head1 SYNOPSIS
-
-$num_msgs = &local_get_msg(source_mailbox, destination_folder, access_mode);
-
-=head1 DESCRIPTION
-
-$mbox = 'local:/var/mail/motonori';
-$folder = '+inbox'
-$num_msgs = &local_get_msg($mbox, $folder, 'get');
-
-=cut
-
 use vars qw($locked_by_file $locked_by_flock);
 #################################
 # local mailbox access routines #
@@ -51,10 +35,10 @@ use vars qw($locked_by_file $locked_by_flock);
 # local_get_msg(src, dst, how)
 #		check, from, get
 #
-sub local_get_msg ($$$$$) {
-    my ($src, $dst, $how, $lock_type, $noscan) = @_;
-    my ($need_lock, $qmail_ok, $msgs, $l, $file, $p);
-    my (@MailDrops);
+sub local_get_msg($$$$$) {
+    my($src, $dst, $how, $lock_type, $noscan) = @_;
+    my($need_lock, $qmail_ok, $msgs, $l, $file, $p);
+    my(@MailDrops);
 
     if ($how eq 'get') {
 	$need_lock = 1;
@@ -89,7 +73,7 @@ sub local_get_msg ($$$$$) {
 	    push(@MailDrops, $ENV{'MAIL'}) if ($ENV{'MAIL'});
 	    push(@MailDrops, "$home/Maildir");
 	    foreach $p (@MailDrops) {
-		if (( -d $p && -d "$p/new" && -d "$p/cur") || -f $p ) {
+		if ((-d $p && -d "$p/new" && -d "$p/cur") || -f $p) {
 		    $mbox = $p;
 		    last;
 		}
@@ -104,7 +88,7 @@ sub local_get_msg ($$$$$) {
 	    );
 	    unshift(@MailDrops, "$home/Mailbox") if ($qmail_ok);
 	    foreach $p (@MailDrops) {
-		if ( -f $p ) {
+		if (-f $p) {
 		    $mbox = $p;
 		    last;
 		}
@@ -119,11 +103,13 @@ sub local_get_msg ($$$$$) {
 
     $getchk_hook = getchksbr_file();
     if ($getchk_hook) {
-	if ($getchk_hook =~ /^(\S+)$/) {
+	if ($getchk_hook =~ /(.+)/) {
 	    if ($main::INSECURE) {
 		im_warn("Sorry, GetChkSbr is ignored for SUID root script.\n");
 	    } else {
-		$getchk_hook = $1;    # to pass through taint check
+		if ($> != 0) {
+		    $getchk_hook = $1;    # to pass through taint check
+		}
 		if (-f $getchk_hook) {
 		    require $getchk_hook;
 		} else {
@@ -135,7 +121,7 @@ sub local_get_msg ($$$$$) {
 
     if (-d $mbox) {
 	# DIRECTORY
-	im_info("Getting new messages from maildir into $dst....\n")
+	im_info("Getting new messages from maildir into $dst...\n")
 	  if ($how eq 'get');
 
 	my $msgs = 0;
@@ -153,8 +139,10 @@ sub local_get_msg ($$$$$) {
 			return -1;
 		    }
 		    if ($how eq 'get' && $main::opt_keep == 0) {
-			$f =~ /(.+)/;	# $f is tainted yet
-			$f = $1;	# clean up
+			if ($> != 0) {
+			    $f =~ /(.+)/;	# may be tainted
+			    $f = $1;	# clean up
+			}
 			unlink("$mbox/$f");
 		    }
 		    $msgs++;
@@ -221,7 +209,7 @@ sub local_get_msg ($$$$$) {
 		}
 	    }
 
-	    truncate (SAVE, tell(SAVE));
+	    truncate(SAVE, tell(SAVE));
 	    unlink($tmpmbox);
 	} else {
 	    if (($msgs = process_mbox($mbox, $dst, $how, '', $noscan)) < 0) {
@@ -246,8 +234,8 @@ sub local_get_msg ($$$$$) {
     }
 }
 
-sub local_copymbox ($$) {
-    my ($src, $dst) = @_;
+sub local_copymbox($$) {
+    my($src, $dst) = @_;
 
     im_debug("copy from $src to $dst\n") if (&debug('local'));
     unless (im_open(\*SRC, "<$src")) {
@@ -274,15 +262,15 @@ sub local_copymbox ($$) {
 	    return -1;
 	}
     }
-    truncate (DST, -s SRC);
-    close (DST);
-    close (SRC);
+    truncate(DST, -s SRC);
+    close(DST);
+    close(SRC);
     return 0;
 }
 
-sub process_maildir ($$$$) {
-    my ($maildir, $dst, $how, $noscan) = @_;
-    my ($msgs, $f, $dir);
+sub process_maildir($$$$) {
+    my($maildir, $dst, $how, $noscan) = @_;
+    my($msgs, $f, $dir);
 
     unless (-d "$maildir/new" && -r "$maildir/new" && -x "$maildir/new"
          && -d "$maildir/cur" && -r "$maildir/cur" && -x "$maildir/cur") {
@@ -297,7 +285,7 @@ sub process_maildir ($$$$) {
 	    return -1;
 	}
 	foreach $f (sort {(-M $b) <=> (-M $a) || $a cmp $b} readdir(FLDR)) {
-	    if ($f =~ /^\d+\.(\d+|\d+_\d+)\..+/ && -s "$dir/$f") {
+	    if ($f =~ /^\d+\.[^.:\/]+\./ && -s "$dir/$f") {
 		my $ret = process_file("$dir/$f", $dst, $how, $noscan);
 		next if ($ret > 0);	# skip by rule
 		if ($ret < 0) {
@@ -305,8 +293,12 @@ sub process_maildir ($$$$) {
 		    return -1;
 		}
 		if ($how eq 'get' && $main::opt_keep == 0) {
-		    $f =~ /(.+)/;	# $f is tainted yet
-		    $f = $1;		# clean up
+		    if ($> != 0) {
+			$dir =~ /(.+)/;	# may be tainted
+			$dir = $1;	# clean up
+			$f =~ /(.+)/;	# may be tainted
+			$f = $1;		# clean up
+		    }
 		    unlink("$dir/$f");
 		}
 		$msgs++;
@@ -317,12 +309,12 @@ sub process_maildir ($$$$) {
     return $msgs;
 }
 
-sub process_file ($$$$) {
-    my ($mbox, $dst, $how, $noscan) = @_;
-    my ($format, $msgs, $rp, $length, $inheader, @Message);
-    local (*MBOX);
+sub process_file($$$$) {
+    my($mbox, $dst, $how, $noscan) = @_;
+    my($format, $msgs, $rp, $length, $inheader, @Message);
+    local(*MBOX);
 
-    im_notice("opening MBOX ($mbox)\n");
+    im_notice("opening file ($mbox)\n");
     unless (im_open(\*MBOX, "<$mbox")) {
 	# XXX not found or unreadable...
 	return -1;
@@ -331,8 +323,9 @@ sub process_file ($$$$) {
 	push (@Message, $_);
     }
     if ($getchk_hook ne '') {
-	my $head = lcl_store_header(\@Message);
-	unless (eval { &getchk_sub($head); }) {
+	my %head;
+	lcl_store_header(\%head, \@Message);
+	unless (eval { &getchk_sub(\%head); }) {
 	    close(MBOX);
 	    return 1
 	}
@@ -348,18 +341,42 @@ sub process_file ($$$$) {
     return 0;
 }
 
-sub process_mbox ($$$$$) {
-    my ($mbox, $dst, $how, $save, $noscan) = @_;
-    my ($format, $msgs, $length, $inheader, @Message);
-    local (*MBOX);
-    my ($first_line, $FIRST_LINE);
+sub process_mbox($$$$$) {
+    my($mbox, $dst, $how, $save, $noscan) = @_;
+    my($format, $msgs, $length, $inheader, @Message);
+    local(*MBOX);
+    my($first_line, $FIRST_LINE);
+    my($mbox_filter);
 
-    im_info("Getting new messages from local mailbox into $dst....\n")
-	if ($how eq 'get');
-    im_warn("opening MBOX ($mbox)\n") if (&verbose);
-    unless (im_open(\*MBOX, "<$mbox")) {
-	# XXX not found or unreadable...
-	return -1;
+    if ($how eq 'get') {
+	im_info("Getting new messages from local mailbox into $dst...\n");
+    }
+    $mbox_filter = &mbox_filter();
+    if ($mbox_filter ne '') {
+	if ($mbox_filter =~ /(.+)/) {
+	    if ($main::INSECURE) {
+		im_warn("Sorry, MboxFilter is ignored for SUID root script.\n");
+		$mbox_filter = '';
+	    } else {
+		if ($> != 0) {
+		    $mbox_filter = $1; # to pass through taint check
+		}
+		im_warn("opening MBOX ($mbox_filter $mbox)\n") if (&verbose);
+		unless (im_open(\*MBOX, "$mbox_filter $mbox |")) {
+		    im_err("MboxFilter failed ($!).\n");
+		    return -1;
+		}
+	    }
+	} else {
+	    $mbox_filter = '';
+	}
+    }
+    if ($mbox_filter eq '') {
+	im_warn("opening MBOX ($mbox)\n") if (&verbose);
+	unless (im_open(\*MBOX, "<$mbox")) {
+	    # XXX not found or unreadable...
+	    return -1;
+	}
     }
     chomp($first_line = <MBOX>);
     if ($first_line =~ /^From /) {
@@ -416,7 +433,7 @@ sub process_mbox ($$$$$) {
 		  && /^From / && $Message[$#Message] eq "\n") {
 		chomp($first_line = $_);
 		last;
-	    } elsif ($format eq 'RMAIL' && /^\x1f/ ) {
+	    } elsif ($format eq 'RMAIL' && /^\x1f/) {
 		chomp($first_line = <MBOX>);
 		last;
 	    } elsif ($inheader) {
@@ -424,7 +441,7 @@ sub process_mbox ($$$$$) {
 		    print "$_" if (/^From:/i);
 		}
 		# XXX continuous line processing needed
-		push (@Message, $_)
+		push(@Message, $_)
 		    unless (/^Return-Path:/i && $main::opt_rpath eq 'replace');
 		# for Solaris 2.x or ...
 		# XXX option
@@ -433,13 +450,13 @@ sub process_mbox ($$$$$) {
 		}
 		$inheader = 0 if (/^\n$/);
 	    } else {
-		push (@Message, $_);
+		push(@Message, $_);
 		$length -= length($_) if ($length > 0);
 	    }
 	}
 
 	if ($Message[$#Message] eq "\n") {
-	    pop (@Message);
+	    pop(@Message);
 	}
 
 	if ($getchk_hook) {
@@ -475,8 +492,8 @@ sub process_mbox ($$$$$) {
     return $msgs;
 }
 
-sub save_message ($$$$) {
-    my ($msg, $save, $mode, $fline) = @_;
+sub save_message($$$$) {
+    my($msg, $save, $mode, $fline) = @_;
 
     im_debug("saving to $save\n") if (&debug('local'));
     if ($mode eq 'UNIX') {
@@ -527,11 +544,11 @@ sub save_message ($$$$) {
     return 0;
 }
 
-sub local_empty ($) {
+sub local_empty($) {
     my $mbox = shift;
     unless (truncate($mbox, 0)) {
 	unless (im_open(\*MBOX, ">$mbox")) {
-	    im_warn("mailbox can not be zeroed.\n");
+	    im_warn("mailbox cannot be zeroed.\n");
 	    return;
 	}
 	close(MBOX);
@@ -544,17 +561,17 @@ sub LOCK_EX { 2 }
 sub LOCK_NB { 4 }
 sub LOCK_UN { 8 }
 
-sub local_lockmbox ($$) {
-    my ($base, $type) = @_;
+sub local_lockmbox($$) {
+    my($base, $type) = @_;
     my $retry = 0;
     im_warn("creating lock file with uid=$> gid=$)\n") if (&debug('local'));
 
     $locked_by_file = 0;
     $locked_by_flock = 0;
     if ($type =~ /file/) {
-#	while (! sysopen(LOCK, "$base.lock", O_RDWR()|O_CREAT()|O_EXCL())) {
+#	while (!sysopen(LOCK, "$base.lock", O_RDWR()|O_CREAT()|O_EXCL())) {
 #	    if ($retry >= 10) {
-#		im_warn("can't create $base.lock: $!\n");
+#		im_warn("can't create $base.lock ($!).\n");
 #		return -1;
 #	    }
 #	    im_warn("mailbox is processed by another process, waiting...\n")
@@ -564,7 +581,7 @@ sub local_lockmbox ($$) {
 #	}
 
 	unless (im_open(\*LOCKFILE, ">$base.$$")) {
-	    im_warn("can't create lock file $base.$$: $!\n");
+	    im_warn("can't create lock file $base.$$ ($!).\n");
 	    im_warn("use 'flock' instead of 'file' if possible.\n");
 	    return -1;
 	}
@@ -572,7 +589,7 @@ sub local_lockmbox ($$) {
 	close(LOCKFILE);
 	while (!link("$base.$$", "$base.lock")) {
 	    if ($retry >= 10) {
-		im_warn("can't create $base.lock: $!\n");
+		im_warn("can't create $base.lock ($!).\n");
 		unlink("$base.$$");
 		return -1;
 	    }
@@ -586,12 +603,12 @@ sub local_lockmbox ($$) {
     }
     if ($type =~ /flock/) {
 	unless (im_open(\*LOCK_FH, "+<$base")) {
-	    im_err "can't open $base :$!\n";
+	    im_err "can't open $base ($!).\n";
 	    return -1;
 	}
-	if (! &win95p ){
+	if (! &win95p) {
 	unless (flock (LOCK_FH, LOCK_EX|LOCK_NB)) {
-	    im_warn "can't flock $base: $!\n";
+	    im_warn "can't flock $base ($!).\n";
 	    return -1;
 	}
 	}
@@ -600,19 +617,19 @@ sub local_lockmbox ($$) {
     return 0;
 }
 
-sub local_unlockmbox ($) {
+sub local_unlockmbox($) {
     my $base = shift;
     my $rcode = 0;
     im_debug("removing lock file with uid=$> gid=$)\n") if (&debug('local'));
     if ($locked_by_file) {
 	if (-f "$base.lock" && unlink("$base.lock") <= 0) {
-	    im_warn("can't unlink lock file $base.lock: $!\n");
+	    im_warn("can't unlink lock file $base.lock ($!).\n");
 	    $rcode = -1;
 	}
 	$locked_by_file = 0;
     }
     if ($locked_by_flock) {
-        if (! &win95p ){
+        if (! &win95p) {
 	flock(LOCK_FH, LOCK_UN);
         }
 	$locked_by_flock = 0;
@@ -620,9 +637,9 @@ sub local_unlockmbox ($) {
     return $rcode;
 }
 
-sub lcl_store_header ($$) {
-    my ($href, $msg) = @_;
-    my ($line);
+sub lcl_store_header($$) {
+    my($href, $msg) = @_;
+    my($line);
 
     foreach (@$msg) {
 	my $l = $_;
@@ -640,8 +657,8 @@ sub lcl_store_header ($$) {
     lcl_set_line($href, $line);
 }
 
-sub lcl_set_line ($$) {
-    my ($href, $line) = @_;
+sub lcl_set_line($$) {
+    my($href, $line) = @_;
 
     return unless ($line =~ /^([^:]*):\s*(.*)$/);
     my $label = lc($1);
@@ -659,6 +676,39 @@ sub lcl_set_line ($$) {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+IM::LocalMbox - local mailbox managing
+
+=head1 SYNOPSIS
+
+ use IM::LocalMbox;
+
+ $num_msgs = &local_get_msg(source_mailbox, destination_folder, access_mode);
+
+=head1 DESCRIPTION
+
+The I<IM::LocalMbox> module handles local mailbox.
+MH folder, MMDF file, mbox, and Maildir are supported.
+
+This modules is provided by IM (Internet Message).
+
+=head1 EXAMPLES
+
+ $mbox = 'local:/var/mail/motonori';
+ $folder = '+inbox'
+ $num_msgs = &local_get_msg($mbox, $folder, 'get');
+
+=head1 COPYRIGHT
+
+IM (Internet Message) is copyrighted by IM developing team.
+You can redistribute it and/or modify it under the modified BSD
+license.  See the copyright file for more details.
+
+=cut
 
 ### Copyright (C) 1997, 1998, 1999 IM developing team
 ### All rights reserved.

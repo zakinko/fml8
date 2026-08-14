@@ -5,10 +5,10 @@
 ###
 ### Author:  Internet Message Group <img@mew.org>
 ### Created: Apr 23, 1997
-### Revised: Feb 28, 2000
+### Revised: Apr 23, 2007
 ###
 
-my $PM_VERSION = "IM::Log.pm version 20000228(IM140)";
+my $PM_VERSION = "IM::Log.pm version 20161010(IM153)";
 
 package IM::Log;
 require 5.003;
@@ -23,16 +23,6 @@ use vars qw(@ISA @EXPORT);
 @ISA = qw(Exporter);
 @EXPORT = qw(log_action);
 
-=head1 NAME
-
-Log - IM log_action
-
-=head1 SYNOPSIS
-
-=head1 DESCRIPTION
-
-=cut
-
 use vars qw($initialized);
 ##### WRITE DISPATCHING ACTION HISTORY #####
 #
@@ -43,9 +33,9 @@ use vars qw($initialized);
 #	to: list of recipients
 #	return value: none
 #
-sub log_action ($$$$;@) {
-    my ($proto, $server, $to, $stat, @resp) = @_;
-#    my ($proto, $server, $id, $to, $stat, @resp) = @_;
+sub log_action($$$$;@) {
+    my($proto, $server, $to, $stat, @resp) = @_;
+#    my($proto, $server, $id, $to, $stat, @resp) = @_;
 
     return if ($main::Log_file eq '' && !$main::opt_syslog);
 
@@ -73,7 +63,7 @@ sub log_action ($$$$;@) {
 	}
     }
 
-    my ($tm_sec, $tm_min, $tm_hour, $tm_mday, $tm_mon, $tm_year)
+    my($tm_sec, $tm_min, $tm_hour, $tm_mday, $tm_mon, $tm_year)
 	= localtime(time);
     my $msg = '';
     $msg = sprintf "%d/%02d/%02d %02d:%02d:%02d ",
@@ -100,8 +90,10 @@ sub log_action ($$$$;@) {
     }
 
     my $file = expand_path($main::Log_file);
-    return unless ($file =~ /^(\S+)$/);
-    $file = $1;	# to pass through taint check
+    return unless ($file =~ /(.+)/);
+    if ($> != 0) {
+	$file = $1;	# to pass through taint check
+    }
     &msg_mode(1);
     unless (im_open(\*HISTORY, ">>$file")) {
 	im_warn("can't open history file: $file ($!)\n");
@@ -118,6 +110,33 @@ sub log_action ($$$$;@) {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+IM::Log - IM log handler
+
+=head1 SYNOPSIS
+
+ use IM::Log;
+
+ $main::Log_file = "putlog";
+ log_action($proto, $server, $to, $stat, @resp);
+
+=head1 DESCRIPTION
+
+The I<IM::Log> module handles log file of IM.
+
+This modules is provided by IM (Internet Message).
+
+=head1 COPYRIGHT
+
+IM (Internet Message) is copyrighted by IM developing team.
+You can redistribute it and/or modify it under the modified BSD
+license.  See the copyright file for more details.
+
+=cut
 
 ### Copyright (C) 1997, 1998, 1999 IM developing team
 ### All rights reserved.

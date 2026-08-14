@@ -5,10 +5,10 @@
 ###
 ### Author:  Internet Message Group <img@mew.org>
 ### Created: Apr 23, 1997
-### Revised: Feb 28, 2000
+### Revised: Apr 23, 2007
 ###
 
-my $PM_VERSION = "IM::MD5.pm version 20000228(IM140)";
+my $PM_VERSION = "IM::MD5.pm version 20161010(IM153)";
 
 package IM::MD5;
 require 5.003;
@@ -21,30 +21,6 @@ use vars qw(@ISA @EXPORT);
 @ISA = qw(Exporter);
 @EXPORT = qw(md5_str);
 
-=head1 NAME
-
-MD5 - The MD5 Message-Digesting package
-
-=head1 SYNOPSIS
-
-  use IM::MD5;
-
-  $digest = &md5_str($text);
-
-=head1 DESCRIPTION
-
-  &md5_str("") returns d41d8cd98f00b204e9800998ecf8427e.
-  &md5_str("a") returns 0cc175b9c0f1b6a831c399e269772661.
-  &md5_str("abc") returns 900150983cd24fb0d6963f7d28e17f72.
-  &md5_str("message digest") returns f96b697d7cb7938d525a2f31aaf161d0.
-  &md5_str("abcdefghijklmnopqrstuvwxyz") returns c3fcd3d76192e4007dfb496cca67e13b.
-  &md5_str("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") returns d174ab98d277d9f5a5611c2c9f419d9f.
-  &md5_str("12345678901234567890123456789012345678901234567890123456789012345678901234567890") returns 57edf4a22be3c955ac49da2e2107b67a.
-
-  % perl -MIM::MD5 -e 'IM::MD5::MD5_TEST()'
-
-=cut
-
 use vars qw($MD5_S11 $MD5_S12 $MD5_S13 $MD5_S14
 	    $MD5_S21 $MD5_S22 $MD5_S23 $MD5_S24
 	    $MD5_S31 $MD5_S32 $MD5_S33 $MD5_S34
@@ -54,11 +30,11 @@ use vars qw($MD5_S11 $MD5_S12 $MD5_S13 $MD5_S14
 # MD5 routines #
 ################
 
-sub md5_str ($) {
+sub md5_str($) {
     my($str) = @_;
     my($len);
-    my (@context_count, @context_state, @context_buffer);
-    my (@digest);
+    my(@context_count, @context_state, @context_buffer);
+    my(@digest);
 
     $len = length($str);
     my @string = unpack('C*', $str);
@@ -69,47 +45,16 @@ sub md5_str ($) {
     &MD5Final(\@digest, \@context_count, \@context_state, \@context_buffer);
 
     return unpack('H*', pack('C*', @digest));
-    }
+}
 
 ###############################################################################
 
-###
-###  md5.pl -- MD5 message-digest algorithm converted to Perl4 from C version
-###
-###  Copyright (C) 1996 by NAKAMURA, Motonori <motonori@econ.kyoto-u.ac.jp>.
-###  All rights reserved.
-###  [August 16, 1996]
-
-#    MD5C.C - RSA Data Security, Inc., MD5 message-digest algorithm
-
-# Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All
-# rights reserved.
-
-# License to copy and use this software is granted provided that it
-# is identified as the "RSA Data Security, Inc. MD5 Message-Digest
-# Algorithm" in all material mentioning or referencing this software
-# or this function.
-
-# License is also granted to make and use derivative works provided
-# that such works are identified as "derived from the RSA Data
-# Security, Inc. MD5 Message-Digest Algorithm" in all material
-# mentioning or referencing the derived work.
-
-# RSA Data Security, Inc. makes no representations concerning either
-# the merchantability of this software or the suitability of this
-# software for any particular purpose. It is provided "as is"
-# without express or implied warranty of any kind.
-
-# These notices must be retained in any copies of any part of this
-# documentation and/or software.
-
-
 # F, G, H and I are basic MD5 functions.
 
-sub MD5_F {my($x, $y, $z) = @_; ((($x) & ($y)) | ((~$x) & ($z))); }
-sub MD5_G {my($x, $y, $z) = @_; ((($x) & ($z)) | (($y) & (~$z))); }
+sub MD5_F {my($x, $y, $z) = @_; ((($x) & ($y)) | (&MD5_trunc(~$x) & ($z))); }
+sub MD5_G {my($x, $y, $z) = @_; ((($x) & ($z)) | (($y) & &MD5_trunc(~$z))); }
 sub MD5_H {my($x, $y, $z) = @_; (($x) ^ ($y) ^ ($z)); }
-sub MD5_I {my($x, $y, $z) = @_; (($y) ^ (($x) | (~$z))); }
+sub MD5_I {my($x, $y, $z) = @_; (($y) ^ (($x) | &MD5_trunc(~$z))); }
 
 # ROTATE_LEFT rotates x left n bits.
 
@@ -130,19 +75,19 @@ sub MD5_FF {
     $a = &MD5_trunc($a + &MD5_F($b, $c, $d) + $x + $ac);
     $a = &MD5_ROTATE_LEFT($a, $s);
     $a = &MD5_trunc($a + $b);
-    }
+}
 sub MD5_GG {
     my($a, $b, $c, $d, $x, $s, $ac) = @_;
     $a = &MD5_trunc($a + &MD5_G($b, $c, $d) + $x + $ac);
     $a = &MD5_ROTATE_LEFT($a, $s);
     $a = &MD5_trunc($a + $b);
-    }
+}
 sub MD5_HH {
     my($a, $b, $c, $d, $x, $s, $ac) = @_;
     $a = &MD5_trunc($a + &MD5_H($b, $c, $d) + $x + $ac);
     $a = &MD5_ROTATE_LEFT($a, $s);
     $a = &MD5_trunc($a + $b);
-    }
+}
 sub MD5_II {
     my($a, $b, $c, $d, $x, $s, $ac) = @_;
     $a = &MD5_trunc($a + &MD5_I($b, $c, $d) + $x + $ac);
@@ -155,16 +100,21 @@ sub MD5_II {
 
 sub MD5_trunc {
     my($x) = @_;
-    while ($x >= 4294967296) {
-	$x -= 4294967296;
+
+    if (($x | 0) == $x) {
+	$x &= 0xffffffff;
+    } else {
+	while ($x >= 4294967296) {
+	    $x -= 4294967296;
+	}
     }
     return $x;
 }
 
 # MD5 initialization. Begins an MD5 operation, writing a new context.
 
-sub MD5Init ($$$) {
-    my ($context_count, $context_state, $context_buffer) = @_;
+sub MD5Init($$$) {
+    my($context_count, $context_state, $context_buffer) = @_;
 
     # Constants for MD5Transform routine.
     $MD5_S11 = 7;
@@ -203,10 +153,10 @@ sub MD5Init ($$$) {
 # operation, processing another message block, and updating the
 # context.
 
-sub MD5Update ($$$$$) {
-    my ($context_count, $context_state, $context_buffer,
+sub MD5Update($$$$$) {
+    my($context_count, $context_state, $context_buffer,
 	$input, $inputLen) = @_;
-    my (@arg1, @arg2);
+    my(@arg1, @arg2);
     my($i, $index, $partLen);
 
     # Compute number of bytes mod 64
@@ -250,9 +200,9 @@ sub MD5Update ($$$$$) {
 # MD5 finalization. Ends an MD5 message-digest operation, writing the
 # the message digest and zeroizing the context.
 
-sub MD5Final ($$$$) {
-    my ($digest, $context_count, $context_state, $context_buffer) = @_;
-    my (@bits);
+sub MD5Final($$$$) {
+    my($digest, $context_count, $context_state, $context_buffer) = @_;
+    my(@bits);
     my($index, $padLen);
     @bits = ((0) x 8);
 
@@ -279,13 +229,13 @@ sub MD5Final ($$$$) {
 
 # MD5 basic transformation. Transforms state based on block.
 
-sub MD5Transform ($$) {
-    my ($state, $block) = @_;
+sub MD5Transform($$) {
+    my($state, $block) = @_;
     my($a) = $state->[0];
     my($b) = $state->[1];
     my($c) = $state->[2];
     my($d) = $state->[3];
-    my (@x);
+    my(@x);
 
     &MD5_Decode(\@x, $block, 64);
 
@@ -373,8 +323,8 @@ sub MD5Transform ($$) {
 # Encodes input (UINT4) into output (unsigned char). Assumes len is
 # a multiple of 4.
 
-sub MD5_Encode ($$$) {
-    my ($output, $input, $len) = @_;
+sub MD5_Encode($$$) {
+    my($output, $input, $len) = @_;
     my($i, $j);
 
     for ($i = 0, $j = 0; $j < $len; $i++, $j += 4) {
@@ -388,11 +338,8 @@ sub MD5_Encode ($$$) {
 # Decodes input (unsigned char) into output (UINT4). Assumes len is
 # a multiple of 4.
 
-sub MD5_Decode ($$$) {
-    # XXX the third element said "my $len", making this a "my" inside a
-    # XXX "my" list. Modern perl rejects that outright, so the whole file
-    # XXX failed to compile. $len was lexical either way.
-    my ($output, $input, $len) = @_;
+sub MD5_Decode($$$) {
+    my($output, $input, $len) = @_;
     my($i, $j);
 
     for ($i = 0, $j = 0; $j < $len; $i++, $j += 4) {
@@ -403,8 +350,8 @@ sub MD5_Decode ($$$) {
 
 # Note: Replace "for loop" with standard memcpy if possible.
 
-sub MD5_memcpy ($$$) {
-    my ($output, $input, $len) = @_;
+sub MD5_memcpy($$$) {
+    my($output, $input, $len) = @_;
     my($i);
 
     for ($i = 0; $i < $len; $i++) {
@@ -414,8 +361,8 @@ sub MD5_memcpy ($$$) {
 
 # Note: Replace "for loop" with standard memset if possible.
 
-sub MD5_memset ($$$) {
-    my ($output, $value, $len) = @_;
+sub MD5_memset($$$) {
+    my($output, $value, $len) = @_;
     my($i);
 
     for ($i = 0; $i < $len; $i++) {
@@ -428,8 +375,8 @@ use SelfLoader;
 __DATA__
 
 sub MD5_CHECK {
-    my ($str, $should) = @_;
-    my ($r) = &md5_str($str);
+    my($str, $should) = @_;
+    my($r) = &md5_str($str);
 
     printf "MD5 (\"%s\") = %s", $str, $r;
     if ($r eq $should) {
@@ -440,7 +387,7 @@ sub MD5_CHECK {
 }
 
 sub MD5_TEST {
-    my (%v);
+    my(%v);
     $v{""} = "d41d8cd98f00b204e9800998ecf8427e";
     $v{"a"} = "0cc175b9c0f1b6a831c399e269772661";
     $v{"abc"} = "900150983cd24fb0d6963f7d28e17f72";
@@ -455,6 +402,78 @@ sub MD5_TEST {
     }
 }
 
+1;
+
+__END__
+
+=head1 NAME
+
+IM::MD5 - MD5 message-digesting
+
+=head1 SYNOPSIS
+
+ use IM::MD5;
+
+ $digest = &md5_str($text);
+
+=head1 DESCRIPTION
+
+The I<IM::MD5> module handles MD5 message-digest algorithm.
+
+This modules is provided by IM (Internet Message).
+
+=head1 EXAMPLES
+
+ &md5_str("") returns d41d8cd98f00b204e9800998ecf8427e.
+ &md5_str("a") returns 0cc175b9c0f1b6a831c399e269772661.
+ &md5_str("abc") returns 900150983cd24fb0d6963f7d28e17f72.
+ &md5_str("message digest") returns f96b697d7cb7938d525a2f31aaf161d0.
+ &md5_str("abcdefghijklmnopqrstuvwxyz") returns c3fcd3d76192e4007dfb496cca67e13b.
+ &md5_str("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") returns d174ab98d277d9f5a5611c2c9f419d9f.
+ &md5_str("12345678901234567890123456789012345678901234567890123456789012345678901234567890") returns 57edf4a22be3c955ac49da2e2107b67a.
+
+ % perl -MIM::MD5 -e 'IM::MD5::MD5_TEST()'
+
+=head1 COPYRIGHT
+
+This modules is derived from md5.pl copyrighted by NAKAMURA, Motonori
+<motonori@econ.kyoto-u.ac.jp>.  It is converted to Perl4 from C version
+derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm.
+
+IM (Internet Message) is copyrighted by IM developing team.
+You can redistribute it and/or modify it under the modified BSD
+license.  See the copyright file for more details.
+
+=cut
+
+###  md5.pl -- MD5 message-digest algorithm converted to Perl4 from C version
+###
+###  Copyright (C) 1996 by NAKAMURA, Motonori <motonori@econ.kyoto-u.ac.jp>.
+###  All rights reserved.
+###  [August 16, 1996]
+### 
+###    MD5C.C - RSA Data Security, Inc., MD5 message-digest algorithm
+### 
+### Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All
+### rights reserved.
+### 
+### License to copy and use this software is granted provided that it
+### is identified as the "RSA Data Security, Inc. MD5 Message-Digest
+### Algorithm" in all material mentioning or referencing this software
+### or this function.
+### 
+### License is also granted to make and use derivative works provided
+### that such works are identified as "derived from the RSA Data
+### Security, Inc. MD5 Message-Digest Algorithm" in all material
+### mentioning or referencing the derived work.
+### 
+### RSA Data Security, Inc. makes no representations concerning either
+### the merchantability of this software or the suitability of this
+### software for any particular purpose. It is provided "as is"
+### without express or implied warranty of any kind.
+### 
+### These notices must be retained in any copies of any part of this
+### documentation and/or software.
 
 ### Copyright (C) 1997, 1998, 1999 IM developing team
 ### All rights reserved.
