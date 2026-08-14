@@ -151,4 +151,40 @@ subtest 'non-Japanese octets are not silently rewritten' => sub {
 	 'Korean UTF-8 is currently mis-detected (documented behaviour)');
 };
 
+# ---------------------------------------------------------------------
+# 7. the external ("printable") form
+#
+# as_external_form() is what gets written to local files such as
+# "summary" and "log"; it is not used for mail transfer.  Its charset was
+# hard-coded to EUC-JP with an XXX-TODO saying it should become UTF-8.
+# The charset is now overridable per object, so pin both the unchanged
+# default and the override.
+# ---------------------------------------------------------------------
+subtest 'external form charset is the default unless enforced' => sub {
+    use Mail::Message::Subject;
+
+    my $mime = "=?UTF-8?B?W2VsZW5hOjAwMDAxXSDml6XmnKzoqp4=?=";  # [elena:00001] 日本語
+    my $tag  = "[elena:%05d]";
+
+    my $strip = sub {
+	my ($s) = @_;
+	$s->mime_header_decode();
+	$s->delete_tag($tag);
+	my $out = $s->as_external_form();
+	$out =~ s/^\s+//;
+	return $out;
+    };
+
+    my $default = $strip->(new Mail::Message::Subject $mime);
+    is($default, $JP{euc}, 'default is still EUC-JP (unchanged behaviour)');
+
+    my $sbj = new Mail::Message::Subject $mime;
+    $sbj->set_mime_charset('UTF-8');
+    is($strip->($sbj), $JP{utf8}, 'set_mime_charset("UTF-8") is honoured');
+
+    # set_mime_charset() used to be an empty stub, so this would have
+    # silently returned EUC-JP.
+    isnt($strip->($sbj), $default, 'the override actually changes the output');
+};
+
 done_testing();

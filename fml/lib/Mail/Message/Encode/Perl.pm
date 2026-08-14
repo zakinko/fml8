@@ -14,6 +14,17 @@ use Carp;
 use Encode;
 use Encode::MIME::Header;
 
+# The charset of the "external printable form", which is what gets written
+# to local files such as "summary" and "log".  It is NOT used for mail
+# transfer.
+#
+# XXX-TODO: this should become UTF-8.  Existing installations have EUC-JP
+# XXX-TODO: files on disk already, so flipping it mixes encodings in one
+# XXX-TODO: archive; that migration has to be decided separately.  Callers
+# XXX-TODO: that know better can override per object with
+# XXX-TODO: Mail::Message::String::set_mime_charset().
+my $default_external_charset = "EUC-JP";
+
 =head1 NAME
 
 Mail::Message::Encode::Perl - Perl (character-oriented) based Encoding
@@ -132,17 +143,19 @@ sub mime_header_decode
 }
 
 
-# Descriptions: decode mime header format string and return it as 
+# Descriptions: decode mime header format string and return it as
 #               printable format not the Perl internal one.
-#    Arguments: OBJ($self) STR($pef_str)
+#               $code is the charset to emit. it defaults to
+#               $default_external_charset if not given.
+#    Arguments: OBJ($self) STR($pef_str) STR($code)
 # Side Effects: none
 # Return Value: STR
 sub mime_header_decode_as_octets
 {
-    my ($self, $pef_str) = @_;
+    my ($self, $pef_str, $code) = @_;
 
-    # XXX-TODO hard-coded now anyway.
-    my $code = "EUC-JP";
+    # XXX-TODO: see the note on $default_external_charset above.
+    $code ||= $default_external_charset;
     encode($code, decode("MIME-Header", $pef_str));
 }
 
@@ -154,17 +167,20 @@ convert the given Perl internal form to the external printable one.
 =cut
 
 
-# Descriptions: convert the given Perl internal form 
+# Descriptions: convert the given Perl internal form
 #               to the external printable one.
-#    Arguments: OBJ($self) STR($pif_str)
+#               $code is the charset to emit. it defaults to
+#               $default_external_charset if not given.
+#    Arguments: OBJ($self) STR($pif_str) STR($code)
 # Side Effects: none
 # Return Value: STR
 sub convert_from_internal_to_external_form
 {
-    my ($self, $pif_str) = @_;
+    my ($self, $pif_str, $code) = @_;
 
-    # XXX-TODO hard-coded now anyway.
-    my $code = "EUC-JP";
+    # XXX-TODO: the default should become UTF-8, see the note on
+    # XXX-TODO: $default_external_charset above.
+    $code ||= $default_external_charset;
     utf8::is_utf8($pif_str) ? encode($code, $pif_str) : $pif_str;
 }
 
