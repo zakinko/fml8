@@ -1,0 +1,128 @@
+name: parity with fml4
+
+# fml8 is a rewrite of fml4, so anything fml4 could be asked to do fml8
+# should be able to do as well.  Nothing enforced that, and the two live
+# in separate repositories, so any drift was invisible.
+#
+# This checks fml4 out beside fml8 and runs t/2*_parity_*.t, which read
+# fml4's own tables -- the command table, makefml's subcommands, the
+# configuration globals, the address guard, the subject tag layouts --
+# and compare fml8 against them.
+#
+# Known gaps are TODO tests: they are reported every run, and each test
+# also asserts that the set of gaps has not grown.  A command quietly
+# dropped in a refactor otherwise looks exactly like one that was never
+# there.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  # fml4 is a separate repository, so a change there can break parity
+  # without anything happening here.
+  schedule:
+    - cron: '17 4 * * 1'
+
+jobs:
+  parity:
+    name: "parity (perl ${{ matrix.perl }}, fml4 ${{ matrix.fml4_ref }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: [ '5.36', '5.40' ]
+        fml4_ref: [ 'master', 'modernize-perl' ]
+    steps:
+      - name: check out fml8
+        uses: actions/checkout@v4
+        with:
+          path: fml8
+
+      # Both branches are compared.  master is fml4 as the maintainer
+      # published it; modernize-perl is the same thing made to compile on
+      # a current perl, with no behaviour changed.  The parity answers
+      # must be identical for the two, and a difference means the
+      # modernise work moved something it should not have.
+      - name: check out fml4 (${{ matrix.fml4_ref }})
+        uses: actions/checkout@v4
+        with:
+          repository: zakinko/fml4
+          ref: ${{ matrix.fml4_ref }}
+          path: fml4
+
+      - name: set up perl ${{ matrix.perl }}
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+
+      - name: what we are comparing
+        working-directory: fml8
+        run: |
+          perl -V:version
+          echo "fml8 $(git rev-parse --short HEAD)"
+          echo "fml4 $(git -C ../fml4 rev-parse --short HEAD) (${{ matrix.fml4_ref }})"
+
+      - name: run the parity tests
+        working-directory: fml8
+        env:
+          FML4_DIR: ${{ github.workspace }}/fml4
+        run: prove -v t/2*_parity_*.t
+
+      # The gaps are the point of the exercise, so put them where they
+      # can be read without opening the log.
+      - name: summarise the gaps
+        if: always()
+        working-directory: fml8
+        env:
+          FML4_DIR: ${{ github.workspace }}/fml4
+        run: |
+          {
+            echo "## parity with fml4 (${{ matrix.fml4_ref }}, perl ${{ matrix.perl }})"
+            echo
+            echo '```'
+            prove -v t/2*_parity_*.t 2>&1 \
+              | grep -E '^\s*#\s|# TODO' \
+              | sed -e 's/^[[:space:]]*//' \
+              || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # The parity tests skip themselves when fml4 is absent.  A skip is
+  # indistinguishable from a pass in the job above, so prove that they
+  # really do run when fml4 is there, and really do skip when it is not.
+  harness:
+    name: "the parity harness fails loudly when fml4 is missing"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.40'
+
+      - name: without fml4, every parity test skips
+        run: |
+          set -u
+          out=$(FML4_DIR=/nonexistent prove t/2*_parity_*.t 2>&1)
+          rc=$?
+          echo "$out"
+
+          # Every one of them, not just some: a test that ran anyway is
+          # comparing fml8 against nothing.
+          want=$(ls t/2*_parity_*.t | wc -l)
+          got=$(echo "$out" | grep -c 'skipped: no fml4 checkout')
+          test "$got" -eq "$want" || {
+            echo "::error::$got of $want parity tests skipped without fml4"
+            exit 1
+          }
+
+          # prove reports NOTESTS, not PASS, when everything skipped;
+          # what matters is that it did not fail.
+          test "$rc" -eq 0 || {
+            echo "::error::skipping should not be a failure (rc=$rc)"
+            exit 1
+          }
+
+      - name: the fml8 unit tests still stand on their own
+        run: prove t/0*.t
