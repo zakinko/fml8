@@ -31,6 +31,21 @@ BEGIN {
 use FML::Header::Subject;
 use Mail::Message::Encode::Obsolete;
 
+# The obsolete path calls into the bundled IM package: decode_mime_string()
+# goes through IM::EncDec and encode_mime_string() through IM::Iso2022jp.
+# Both calls sit inside eval q{...}, so a load failure is swallowed and the
+# string is handed back untouched -- a subject that quietly stays MIME
+# encoded, which is the mojibake being chased here.
+#
+# Probe before any call site runs.  Once one of those evals has failed,
+# %INC holds a false entry and every later require reports "Attempt to
+# reload IM/EncDec.pm aborted", which says nothing about the real cause.
+my %IM_ERROR = ();
+for my $m (qw(IM::EncDec IM::Iso2022jp)) {
+    (my $file = $m) =~ s{::}{/}g;
+    eval { require "$file.pm"; 1 } or $IM_ERROR{ $m } = $@;
+}
+
 my $TAG = "[elena:%05d]";
 
 # "日本語" in EUC-JP, which is the internal charset cleanup() returns.
@@ -89,17 +104,12 @@ subtest 'cleanup() decodes and de-tags' => sub {
     my $jis = eval { FML::Header::Subject->cleanup($SBJ_JIS, $TAG) };
     ok(!$@, 'ISO-2022-JP does not die') or diag($@);
 
-    # The ISO-2022-JP branch of decode_mime_string() goes through
-    # IM::EncDec, which is bundled under img/lib but is a package from
-    # 2000 and does not load everywhere.  decode_mime_string() swallows
-    # the failure and hands the string back untouched, so without IM the
-    # subject silently stays MIME encoded.  Say so rather than failing on
+    # Without IM::EncDec this branch is a no-op and $jis comes back still
+    # encoded.  Say which module is missing and why rather than failing on
     # a machine that simply cannot load it.
-    my $has_im = eval { require IM::EncDec; 1 } ? 1 : 0;
-    my $im_err = $has_im ? '' : $@;
   SKIP: {
-	skip("IM::EncDec does not load here, so this branch is a no-op: $im_err",
-	     1) unless $has_im;
+	skip("IM::EncDec does not load here, so this branch is a no-op: " .
+	     $IM_ERROR{'IM::EncDec'}, 1) if $IM_ERROR{'IM::EncDec'};
 	is($trim->($jis), $JP_EUC, 'ISO-2022-JP: decoded to internal EUC-JP');
     }
 
@@ -124,6 +134,34 @@ subtest 'decode() reports the wire and internal charsets' => sub {
 	FML::Header::Subject->decode("plain subject", $TAG);
     is($in2,  '', 'no encoded word: in_code empty');
     is($out2, '', 'no encoded word: out_code empty');
+};
+
+
+# ---------------------------------------------------------------------
+# 5. encode_mime_string(): the other half, and the other IM module
+#
+# XXX IM::Util picks the OS with $^O =~ /win/i, and "darwin" matches, so
+# XXX on macOS it calls Win32::IsWinNT() and dies at compile time.
+# XXX Everything that uses IM::Util -- IM::Iso2022jp among them -- is
+# XXX unloadable there, and encode_mime_string() then returns the subject
+# XXX with raw ISO-2022-JP octets in the header instead of an encoded
+# XXX word.  img/ is a vendor drop synced from IM releases, and nothing
+# XXX outside this obsolete path uses IM, so record it here rather than
+# XXX patching a tree that the next sync overwrites.
+# ---------------------------------------------------------------------
+subtest 'encode_mime_string() produces an encoded word' => sub {
+    my $obj = new Mail::Message::Encode::Obsolete;
+
+  SKIP: {
+	skip("IM::Iso2022jp does not load here, so this branch is a no-op: " .
+	     $IM_ERROR{'IM::Iso2022jp'}, 2) if $IM_ERROR{'IM::Iso2022jp'};
+
+	my $out = $obj->encode_mime_string($JP_EUC, 'base64', 'jis', 'euc-jp');
+	like($out, qr/^=\?ISO-2022-JP\?B\?/i, 'base64 encoded word');
+
+	# The point of encoding: no raw octet may reach the header.
+	unlike($out, qr/[\x80-\xff\e]/, 'no raw octets left in the header');
+    }
 };
 
 done_testing();
