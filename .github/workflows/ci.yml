@@ -24,6 +24,18 @@ jobs:
       - name: perl version
         run: perl -V:version -V:archname
 
+      # CGI.pm left the core in 5.22 and GD was never in it.  Without
+      # them the compile check reports "optional module missing" and walks
+      # past the whole FML/CGI subsystem -- 16 modules that then get no
+      # syntax check at all.  Install them so the skip list stays short
+      # enough to read.
+      - name: install the modules fml8 needs but perl no longer ships
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libgd-dev
+          command -v cpanm >/dev/null || curl -sL https://cpanmin.us | perl - App::cpanminus
+          cpanm --notest --quiet CGI GD
+
       # Every module under fml/lib must at least compile.  The bundled
       # cpan/lib is appended, never prepended: the shipped File::Spec is
       # 0.7 and lacks splitdir()/splitpath() that fml8 calls, so putting
@@ -32,12 +44,14 @@ jobs:
         run: |
           set -u
           fail=0
+          skipped=""
           for f in $(find fml/lib -name '*.pm' | sort); do
             if ! out=$(perl -Ifml/lib -I. -Icpan/lib -Iimg/lib -c "$f" 2>&1); then
               case "$out" in
                 *"Can't locate "*)
                   echo "SKIP (optional module missing): $f"
                   echo "$out" | head -1
+                  skipped="$skipped $f"
                   ;;
                 *)
                   echo "FAIL: $f"
@@ -48,6 +62,11 @@ jobs:
               esac
             fi
           done
+          # A skip is a module nobody compiled.  Say which, so the blind
+          # spot cannot grow quietly.
+          if [ -n "$skipped" ]; then
+            echo "::warning::not compile checked:$skipped"
+          fi
           echo "failed: $fail"
           test "$fail" -eq 0
 
