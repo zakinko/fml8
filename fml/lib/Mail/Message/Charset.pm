@@ -183,16 +183,41 @@ my %message_charset_map  = (
 			    'english'  => 'us-ascii',
 			    );
 
+# XXX the keys here must include the names that actually turn up in
+# XXX Content-Type: and in =?...?= encoded words, not only the short
+# XXX internal ones.  "Shift_JIS" is the registered name and is what
+# XXX mail says; "sjis" is our own shorthand.  A name missing here
+# XXX resolves to no language at all, so the message gets no language
+# XXX hint and falls back to the default charset.
+#
+# XXX utf-8 is deliberately absent: it says nothing about the language,
+# XXX and mapping it to "ja" would push non-Japanese mail through the
+# XXX euc-jp conversion.  Representing it needs the charset model to
+# XXX stop being language-keyed.
 my %rev_message_charset_map  = (
-				'euc-jp'      => 'ja',
-				'euc'         => 'ja',
-				'sjis-jp'     => 'ja',
-				'sjis'        => 'ja',
-				'jis-jp'      => 'ja',
-				'jis'         => 'ja',
-				'iso-2022-jp' => 'ja',
+				'euc-jp'        => 'ja',
+				'euc_jp'        => 'ja',
+				'x-euc-jp'      => 'ja',
+				'euc'           => 'ja',
 
-				'us-ascii'    => 'en',
+				'shift_jis'     => 'ja',
+				'shift-jis'     => 'ja',
+				'x-sjis'        => 'ja',
+				'cp932'         => 'ja',
+				'windows-31j'   => 'ja',
+				'sjis-jp'       => 'ja',
+				'sjis'          => 'ja',
+
+				'iso-2022-jp'   => 'ja',
+				'iso-2022-jp-1' => 'ja',
+				'iso-2022-jp-2' => 'ja',
+				'iso-2022-jp-3' => 'ja',
+				'csiso2022jp'   => 'ja',
+				'jis-jp'        => 'ja',
+				'jis'           => 'ja',
+
+				'us-ascii'      => 'en',
+				'ascii'         => 'en',
 				);
 
 

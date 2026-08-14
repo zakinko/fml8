@@ -92,13 +92,26 @@ subtest 'message_charset_to_language() knows the IANA charset names' => sub {
     is($cs->message_charset_to_language('euc-jp'),      'ja', 'euc-jp');
     is($cs->message_charset_to_language('us-ascii'),    'en', 'us-ascii');
 
-    # KNOWN GAP: "Shift_JIS" is the registered name that actually shows up
-    # in Content-Type: and in =?...?= encoded words, but the map only has
-    # "sjis" / "sjis-jp".
-    {
-	local $TODO = 'Shift_JIS (the IANA name) is not in the charset map';
-	is($cs->message_charset_to_language('shift_jis'), 'ja', 'shift_jis');
+    # The names that actually turn up in Content-Type: and in =?...?=
+    # encoded words, as opposed to fml's own shorthands.  A name missing
+    # from the map resolves to no language, so the message gets no
+    # language hint at all and silently falls back to the default.
+    for my $name (qw(shift_jis shift-jis x-sjis cp932 windows-31j
+		     euc_jp x-euc-jp
+		     iso-2022-jp-1 iso-2022-jp-2 csiso2022jp)) {
+	is($cs->message_charset_to_language($name), 'ja', $name);
     }
+    is($cs->message_charset_to_language('Shift_JIS'), 'ja',
+       'Shift_JIS resolves whatever the case');
+    is($cs->message_charset_to_language('ascii'), 'en', 'ascii');
+
+    # A Japanese charset must carry through to both the internal and the
+    # wire charset, which is what the callers actually ask for.
+    my $lang = $cs->message_charset_to_language('Shift_JIS');
+    is($cs->language_to_internal_charset($lang), 'euc-jp',
+       'Shift_JIS -> internal euc-jp');
+    is($cs->language_to_message_charset($lang), 'iso-2022-jp',
+       'Shift_JIS -> wire iso-2022-jp');
 
     # KNOWN GAP: utf-8 is absent entirely.  fml8 has no language-neutral
     # notion of a charset, so utf-8 cannot be mapped to "ja" without
@@ -185,6 +198,51 @@ subtest 'external form charset is the default unless enforced' => sub {
     # set_mime_charset() used to be an empty stub, so this would have
     # silently returned EUC-JP.
     isnt($strip->($sbj), $default, 'the override actually changes the output');
+};
+
+# ---------------------------------------------------------------------
+# 8. guess_encoding()
+#
+# This used to call Unicode::Japanese, which was the only reason
+# Mail::Message::Encode::Perl needed anything outside the perl core.
+# Encode::Guess replaces it and must agree on every case, and must say
+# "unknown" rather than inventing an answer when it cannot decide.
+# ---------------------------------------------------------------------
+subtest 'guess_encoding() needs nothing outside the core' => sub {
+    use Mail::Message::Encode::Perl;
+    my $e = new Mail::Message::Encode::Perl;
+
+    is($e->guess_encoding($JP{utf8}), 'utf8',  'UTF-8');
+    is($e->guess_encoding($JP{euc}),  'euc',   'EUC-JP');
+    is($e->guess_encoding($JP{sjis}), 'sjis',  'Shift_JIS');
+    is($e->guess_encoding($JP{jis}),  'jis',   'ISO-2022-JP');
+    is($e->guess_encoding("plain ascii"), 'ascii', 'ASCII');
+
+    # Unicode::Japanese answered "utf16" for this; an honest "unknown"
+    # is what the rest of fml8 checks for.
+    is($e->guess_encoding("\xff\xfe\x00\x01"), 'unknown',
+       'undecidable input is reported as unknown');
+
+    # %INC cannot answer this: the old Mail::Message::Encode is loaded by
+    # other tests in this file and drags Jcode, and therefore
+    # Unicode::Japanese, in behind it.  Ask the source instead.
+    my $src = '';
+    for my $dir (@INC) {
+	my $path = "$dir/Mail/Message/Encode/Perl.pm";
+	next unless -f $path;
+	open(my $fh, '<', $path) or next;
+	local $/ = undef;
+	$src = <$fh>;
+	close($fh);
+	last;
+    }
+    ok($src, 'found the module source');
+
+    # Comments are documentation: the XXX note explaining the removal
+    # mentions the module by name on purpose. Only look at code.
+    my $code = join("\n", grep { !/^\s*#/ } split(/\n/, $src));
+    unlike($code, qr/Unicode::Japanese/,
+	   'Mail::Message::Encode::Perl no longer uses Unicode::Japanese');
 };
 
 done_testing();

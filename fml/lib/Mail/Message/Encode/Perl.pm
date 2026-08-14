@@ -70,15 +70,33 @@ sub new
 
 =head2 guess_encoding($str)
 
-speculate the encoding of $str string. $str is checked by
-Unicode::Japanese. Unicode::Japanes::getcode() can detect the following
-code: jis, sjis, euc, utf8, ucs2, ucs4, utf16, utf16-ge, utf16-le,
-utf32, utf32-ge, utf32-le, ascii, binary, sjis-imode, sjis-doti,
-sjis-jsky.
+speculate the encoding of $str string. it returns one of
+C<utf8>, C<euc>, C<sjis>, C<jis>, C<ascii>,
+or C<unknown> if the encoding cannot be decided.
+
+$str is checked by C<Encode::Guess>, which is in the perl core.
+Since C<Encode::Guess> cannot tell euc-jp from shiftjis unless it is
+told which encodings to consider, the candidates are fixed to
+euc-jp, shiftjis and 7bit-jis here.
 
 C<CAUTION>: Hmm, we suppose we handle only Japanese and English here...
 
 =cut
+
+
+# XXX Encode::Guess needs to be told which encodings to consider, it
+# XXX cannot tell euc-jp from shiftjis on its own.  The names it returns
+# XXX are Encode's, so map them back to the ones this package has always
+# XXX returned.
+my @guess_suspects = qw(euc-jp shiftjis 7bit-jis);
+
+my %guess_name_map = (
+		      'utf8'     => 'utf8',
+		      'euc-jp'   => 'euc',
+		      'shiftjis' => 'sjis',
+		      '7bit-jis' => 'jis',
+		      'ascii'    => 'ascii',
+		      );
 
 
 # Descriptions: speculate code of $str string.
@@ -89,9 +107,18 @@ sub guess_encoding
 {
     my ($self, $str) = @_;
 
-    use Unicode::Japanese;
-    my $obj = new Unicode::Japanese;
-    return $obj->getcode($str);
+    # XXX this used to call Unicode::Japanese, which is the only reason
+    # XXX this package needed anything outside the perl core.  Encode
+    # XXX and Encode::Guess are both core and agree with it on utf8,
+    # XXX euc-jp, shiftjis, iso-2022-jp and ascii.
+    use Encode::Guess;
+    my $guess = Encode::Guess->guess($str, @guess_suspects);
+
+    # guess() returns an error string, not an object, when it cannot
+    # decide. "unknown" is what the rest of fml8 expects in that case.
+    return 'unknown' unless ref $guess;
+
+    return( $guess_name_map{ $guess->name } || 'unknown' );
 }
 
 
