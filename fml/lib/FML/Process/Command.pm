@@ -292,7 +292,11 @@ sub _command_process_loop
 	$curproc->logerror("cannot find plain/text part");
 	return undef;
     }
-    my $comlines  = $msg->message_text_as_array_ref();
+    # XXX message_text() hands back the part as it stands on the wire, so
+    # XXX a mail sent with Content-Transfer-Encoding: base64 used to give
+    # XXX us one line of base64 as "the command".  Nothing matched, and
+    # XXX the mail was isolated instead of obeyed.  See fml8 issue #5.
+    my $comlines  = $curproc->_command_lines($msg);
     my $context   = {};
 
     # firstly, prompt (for politeness :) to show processing ...
@@ -359,6 +363,39 @@ sub _command_process_loop
 	    last COMMAND;
 	}
     }
+}
+
+
+# Descriptions: return the command lines in $msg as ARRAY_REF.
+#               the body is decoded first if it is mime encoded, since
+#               message_text() returns the part as it stands on the wire.
+#    Arguments: OBJ($curproc) OBJ($msg)
+# Side Effects: none
+# Return Value: ARRAY_REF
+sub _command_lines
+{
+    my ($curproc, $msg) = @_;
+    my $encoding = $msg->encoding_mechanism() || '';
+    my $buf      = $msg->message_text();
+
+    return [] unless defined $buf;
+
+    # 7bit, 8bit and binary are not transformations, so nothing to undo.
+    if ($encoding eq 'base64' || $encoding eq 'quoted-printable') {
+	$curproc->logdebug("command: decode $encoding body");
+
+	use Mail::Message::Encode;
+	my $encode = new Mail::Message::Encode;
+	if ($encoding eq 'base64') {
+	    $buf = $encode->raw_decode_base64($buf);
+	}
+	else {
+	    $buf = $encode->raw_decode_qp($buf);
+	}
+    }
+
+    my (@buf) = split(/\n/, $buf);
+    return \@buf;
 }
 
 
