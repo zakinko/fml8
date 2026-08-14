@@ -230,12 +230,22 @@ sub __log
     eval q{
 	use File::Spec;
 	use FileHandle;
+
+	# XXX main.cf defines $default_ml_home_prefix and no ML is chosen
+	# XXX yet at bootstrap, so $ml_home_prefix was always undef here.
+	# XXX catfile() then warned "Use of uninitialized value in
+	# XXX subroutine entry" and returned "/@log.crit@", which is not
+	# XXX writable, so the reason why bootstrap failed was lost and
+	# XXX the caller saw an empty page with no explanation.
 	my $dir  = $main_cf->{ ml_home_prefix };
-	my $logf = File::Spec->catfile($dir, '@log.crit@');
-	my $wh   = new FileHandle ">> $logf";
-	if (defined $wh) {
-	    print $wh time, "\t", $s, "\n";
-	    $wh->close;
+	$dir   ||= $main_cf->{ default_ml_home_prefix };
+	if ($dir) {
+	    my $logf = File::Spec->catfile($dir, '@log.crit@');
+	    my $wh   = new FileHandle ">> $logf";
+	    if (defined $wh) {
+		print $wh time, "\t", $s, "\n";
+		$wh->close;
+	    }
 	}
     };
 }
