@@ -89,10 +89,16 @@ sub rewrite_article_subject_tag_obsolete
     # $subject IS DECODED ALREADY.
     $self->_cutoff_reply(\$subject);
 
-    use Mail::Message::Encode;
-    my $obj = new Mail::Message::Encode;
+    # XXX encode_mime_string() lives in Encode::Obsolete now, not in
+    # XXX Mail::Message::Encode, so this used to die with "Can't locate
+    # XXX object method".
+    use Mail::Message::Encode::Obsolete;
+    my $obj = new Mail::Message::Encode::Obsolete;
 
     # add(prepend) the rewrited tag with mime encoding.
+    # XXX $in_code is the charset the subject arrived in, and it is
+    # XXX passed as the charset to convert *to*, which is what we want
+    # XXX here: put the subject back into the wire charset.
     $tag = sprintf($tag, $rw_args->{ id });
     my $new_subject = sprintf("%s %s", $tag, $subject);
     $new_subject = $obj->encode_mime_string($new_subject, 'base64', $in_code);
@@ -143,8 +149,11 @@ sub decode
     }
 
     # decode mime
-    use Mail::Message::Encode;
-    my $obj  = new Mail::Message::Encode;
+    # XXX decode_mime_string() lives in Encode::Obsolete now, not in
+    # XXX Mail::Message::Encode, so this used to die with "Can't locate
+    # XXX object method" for every input, plain ASCII included.
+    use Mail::Message::Encode::Obsolete;
+    my $obj  = new Mail::Message::Encode::Obsolete;
     $subject = $obj->decode_mime_string($subject, $out_code);
 
     return ($subject, $tag, $in_code, $out_code);

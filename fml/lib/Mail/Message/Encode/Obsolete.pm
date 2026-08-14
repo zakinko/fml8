@@ -12,6 +12,14 @@ use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
+# XXX these routines were moved here out of Mail::Message::Encode but
+# XXX they still call new(), convert(), detect_code(), raw_decode_base64()
+# XXX and raw_decode_qp() on $self, and read $self->{ _language }.  None
+# XXX of that came along, so this package was not usable on its own.
+# XXX Inherit from where they came from until the routines are dropped.
+use Mail::Message::Encode;
+@ISA = qw(Mail::Message::Encode);
+
 =head1 NAME
 
 Mail::Message::Encode::Obsolete - obsolete encode/decode routines.
