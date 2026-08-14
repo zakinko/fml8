@@ -246,7 +246,10 @@ sub cn_gb_to_ctext ($) {
 sub hz_to_ctext($) {
     my $str = shift;
     $str =~ s/(~~)/~/g;
-    $str =~ s/(~{)/\e\$(A/g;
+    # XXX the "{" is HZ's own, not a quantifier, but perl 5.26 rejects an
+    # XXX unescaped one here and the whole module then fails to compile.
+    # XXX Later perl only warns; 5.26 is the version that refuses.
+    $str =~ s/(~\{)/\e\$(A/g;
     $str =~ s/(~})/\e(B/g;
     return $str;
 }

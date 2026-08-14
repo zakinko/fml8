@@ -48,7 +48,11 @@ $EXIT_ERROR = 1;
 
 my $osname = $^O;
 
-if ($osname =~ /win/i) {
+# XXX /win/i also matches "darwin", so on macOS this took the Windows
+# XXX branch and called Win32::IsWinNT(), which is not there: IM::Util
+# XXX died while compiling and took every module that uses it with it.
+# XXX Only perl's own Windows $^O values start with "MSWin".
+if ($osname =~ /^MSWin/i) {
     if (Win32::IsWinNT()) {
 	$OS = 'WNT';
     } elsif (Win32::IsWin95()) {

@@ -389,7 +389,10 @@ sub MD5_Encode ($$$) {
 # a multiple of 4.
 
 sub MD5_Decode ($$$) {
-    my ($output, $input, my $len) = @_;
+    # XXX the third element said "my $len", making this a "my" inside a
+    # XXX "my" list. Modern perl rejects that outright, so the whole file
+    # XXX failed to compile. $len was lexical either way.
+    my ($output, $input, $len) = @_;
     my($i, $j);
 
     for ($i = 0, $j = 0; $j < $len; $i++, $j += 4) {

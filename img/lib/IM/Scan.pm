@@ -593,7 +593,10 @@ sub friendly_addr ($$) {
     my ($a, $f, $p);
     while (($a, $addr, $f) = &fetch_addr($addr, 1), $a ne '') {
 	$a =~ s/\/[^@]*//;
-	if (defined(%petnames) && $petnames{lc($a)}) {
+	# XXX defined(%hash) has been fatal since perl 5.22. The test it
+	# XXX meant is whether the hash has anything in it, which is what
+	# XXX the hash in boolean context already says.
+	if (%petnames && $petnames{lc($a)}) {
 	    $p = $petnames{lc($a)};
 	} elsif (!$need_addr && $f) {
 	    $p = &mime_decode_string($f);
