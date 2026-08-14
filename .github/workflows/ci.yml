@@ -33,7 +33,7 @@ jobs:
           set -u
           fail=0
           for f in $(find fml/lib -name '*.pm' | sort); do
-            if ! out=$(perl -Ifml/lib -I. -Icpan/lib -c "$f" 2>&1); then
+            if ! out=$(perl -Ifml/lib -I. -Icpan/lib -Iimg/lib -c "$f" 2>&1); then
               case "$out" in
                 *"Can't locate "*)
                   echo "SKIP (optional module missing): $f"
