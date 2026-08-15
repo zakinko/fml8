@@ -1,110 +1,67 @@
+# Copyrights 1995-2024 by [Mark Overmeer <markov@cpan.org>].
+#  For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 2.03.
+# This code is part of the bundle MailTools.  Meta-POD processed with
+# OODoc into POD and HTML manual-pages.  See README.md for Copyright.
+# Licensed under the same terms as Perl itself.
 
-package Mail::Send;
+package Mail::Send;{
+our $VERSION = '2.22';
+}
 
-# $Id$
 
 use strict;
-use Carp;
-use vars qw($VERSION);
-require Mail::Mailer;
 
-$VERSION = "1.09";
+use Mail::Mailer ();
 
-sub Version { $VERSION }
+sub Version { our $VERSION }
 
-sub new {
-    my $pkg = shift;
-    my %attr = @_;
-    my($key, $value);
-    my $me = bless {}, $pkg;
-    while( ($key, $value) = each %attr ) {
-	$key = lc($key);
-	$me->$key($value);
+#------------------
+
+sub new(@)
+{   my ($class, %attr) = @_;
+    my $self = bless {}, $class;
+
+    while(my($key, $value) = each %attr)
+    {	$key = lc $key;
+        $self->$key($value);
     }
-    $me;
+
+    $self;
 }
 
-sub set {
-    my($me, $hdr, @values) = @_;
-    $me->{$hdr} = [ @values ] if @values;
-    @{$me->{$hdr} || []};	# return new (or original) values
+#---------------
+
+sub set($@)
+{   my ($self, $hdr, @values) = @_;
+    $self->{$hdr} = [ @values ] if @values;
+    @{$self->{$hdr} || []};	# return new (or original) values
 }
 
-sub add {
-    my($me, $hdr, @values) = @_;
-    $me->{$hdr} = [] unless $me->{$hdr};
-    push(@{$me->{$hdr}}, @values);
+
+sub add($@)
+{   my ($self, $hdr, @values) = @_;
+    push @{$self->{$hdr}}, @values;
 }
 
-sub delete {
-    my($me, $hdr) = @_;
-    delete $me->{$hdr};
+
+sub delete($)
+{   my($self, $hdr) = @_;
+    delete $self->{$hdr};
 }
 
-sub to		{ my $me=shift; $me->set('To', @_); }
-sub cc		{ my $me=shift; $me->set('Cc', @_); }
-sub bcc		{ my $me=shift; $me->set('Bcc', @_); }
-sub subject	{ my $me=shift; $me->set('Subject', join (' ', @_)); }
 
+sub to		{ my $self=shift; $self->set('To', @_); }
+sub cc		{ my $self=shift; $self->set('Cc', @_); }
+sub bcc		{ my $self=shift; $self->set('Bcc', @_); }
+sub subject	{ my $self=shift; $self->set('Subject', join (' ', @_)); }
 
-sub open {
-    my $me = shift;
-    Mail::Mailer->new(@_)->open($me);
+#---------------
+
+sub open(@)
+{   my $self = shift;
+    Mail::Mailer->new(@_)->open($self);
 }
 
 1;
-
-__END__
-
-=head1 NAME
-
-Mail::Send - Simple electronic mail interface
-
-=head1 SYNOPSIS
-
-    require Mail::Send;
-
-    $msg = new Mail::Send;
-
-    $msg = new Mail::Send Subject=>'example subject', To=>'timbo';
-
-    $msg->to('user@host');
-    $msg->subject('example subject');
-    $msg->cc('user@host');
-    $msg->bcc('someone@else');
-
-    $msg->set($header, @values);
-    $msg->add($header, @values);
-    $msg->delete($header);
-
-    # Launch mailer and set headers. The filehandle returned
-    # by open() is an instance of the Mail::Mailer class.
-
-    $fh = $msg->open;
-
-    print $fh "Body of message";
-
-    $fh->close;         # complete the message and send it
-
-    $fh->cancel;        # not yet implemented
-
-=head1 DESCRIPTION
-
-=head1 SEE ALSO
-
-Mail::Mailer
-
-=head1 AUTHORS
-
-Maintained by Graham Barr E<lt>F<gbarr@pobox.com>E<gt>
-
-Original code written by Tim Bunce E<lt>F<Tim.Bunce@ig.co.uk>E<gt>,
-with a kick start from Graham Barr E<lt>F<gbarr@pobox.com>E<gt>. With
-contributions by Gerard Hickey E<lt>F<hickey@ctron.com>E<gt>
-
-For support please contact comp.lang.perl.misc or Graham Barr
-E<lt>F<gbarr@pobox.com>E<gt>
-
-=cut
-
-

@@ -1,10 +1,14 @@
-<SOFTPKG NAME="MailTools" VERSION="1,15,0,0">
-	<TITLE>MailTools</TITLE>
-	<ABSTRACT>Various Mail related modules</ABSTRACT>
-	<AUTHOR>Graham Barr &lt;gbarr@pobox.com&gt;</AUTHOR>
-	<IMPLEMENTATION>
-		<OS NAME="linux" />
-		<ARCHITECTURE NAME="i586-linux" />
-		<CODEBASE HREF="" />
-	</IMPLEMENTATION>
+<SOFTPKG NAME="MailTools" VERSION="2.20">
+    <ABSTRACT>Various ancient e-mail related modules</ABSTRACT>
+    <AUTHOR>Mark Overmeer</AUTHOR>
+    <IMPLEMENTATION>
+        <REQUIRE NAME="Date::Format" />
+        <REQUIRE NAME="Date::Parse" />
+        <REQUIRE NAME="IO::Handle" />
+        <REQUIRE NAME="Net::Domain" VERSION="1.05" />
+        <REQUIRE NAME="Net::SMTP" VERSION="1.03" />
+        <REQUIRE NAME="Test::More" />
+        <ARCHITECTURE NAME="x86_64-linux-5.16" />
+        <CODEBASE HREF="" />
+    </IMPLEMENTATION>
 </SOFTPKG>

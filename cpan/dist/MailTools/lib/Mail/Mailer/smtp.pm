@@ -1,14 +1,18 @@
-# Copyrights 1995-2017 by [Mark Overmeer <perl@overmeer.net>].
+# Copyrights 1995-2024 by [Mark Overmeer <markov@cpan.org>].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 2.02.
-use strict;
+# Pod stripped from pm file by OODoc 2.03.
+# This code is part of the bundle MailTools.  Meta-POD processed with
+# OODoc into POD and HTML manual-pages.  See README.md for Copyright.
+# Licensed under the same terms as Perl itself.
 
-package Mail::Mailer::smtp;
-use vars '$VERSION';
-$VERSION = '2.19';
+package Mail::Mailer::smtp;{
+our $VERSION = '2.22';
+}
 
 use base 'Mail::Mailer::rfc822';
+
+use strict;
 
 use Net::SMTP;
 use Mail::Util qw(mailaddress);
@@ -23,7 +27,12 @@ sub exec {
     $opt{Debug} ||= 0;
 
     my $smtp = Net::SMTP->new($host, %opt)
-	or return undef;
+        or return undef;
+
+    if($opt{StartTLS})
+    {   $smtp->starttls
+            or return undef;
+    }
 
     if($opt{Auth})
     {   $smtp->auth(@{$opt{Auth}})
@@ -83,9 +92,9 @@ sub close(@)
     $ok;
 }
 
-package Mail::Mailer::smtp::pipe;
-use vars '$VERSION';
-$VERSION = '2.19';
+package Mail::Mailer::smtp::pipe;{
+our $VERSION = '2.22';
+}
 
 
 sub TIEHANDLE
