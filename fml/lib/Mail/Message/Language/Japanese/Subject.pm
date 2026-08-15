@@ -17,7 +17,27 @@ package Mail::Message::Language::Japanese::Subject;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK);
 use Carp;
-use Jcode;
+# XXX this module reached Jcode directly, which was the last call
+# XXX to it outside Mail::Message::Encode itself.  Encode is core
+# XXX and Mail::Message::Encode already speaks it, so go through
+# XXX that rather than adding a second charset path.
+use Mail::Message::Encode;
+
+my $_encode = undef;
+
+
+# Descriptions: convert $$str_ref in place, as Jcode::convert() did.
+#               $code is fml's own name: 'euc' or 'jis'.
+#    Arguments: STR_REF($str_ref) STR($code)
+# Side Effects: update $$str_ref.
+# Return Value: none
+sub _convert
+{
+    my ($str_ref, $code) = @_;
+
+    $_encode ||= new Mail::Message::Encode;
+    $_encode->convert_str_ref($str_ref, $code);
+}
 
 =head1 NAME
 
@@ -90,7 +110,7 @@ sub is_reply
 
     return 0 unless $x;
 
-    &Jcode::convert(\$x, 'euc');
+    _convert(\$x, 'euc');
     return ($x =~ /^((\s|(¡¡))*($pattern)\s*)+/ ? 1 : 0);
 }
 
@@ -129,10 +149,10 @@ sub cutoff_reply_tag
     my ($self, $subject) = @_;
     my ($y, $limit);
 
-    Jcode::convert(\$subject, 'euc');
+    _convert(\$subject, 'euc');
 
     if ($CUT_OFF_RERERE_PATTERN) {
-	Jcode::convert(\$CUT_OFF_RERERE_PATTERN, 'euc');
+	_convert(\$CUT_OFF_RERERE_PATTERN, 'euc');
     }
 
     $pattern .= '|' . $CUT_OFF_RERERE_PATTERN if ($CUT_OFF_RERERE_PATTERN);
@@ -146,7 +166,7 @@ sub cutoff_reply_tag
 	&Log($@) if $@;
     }
 
-    Jcode::convert(\$subject, 'jis');
+    _convert(\$subject, 'jis');
     $subject;
 }
 
