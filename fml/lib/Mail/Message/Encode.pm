@@ -12,6 +12,19 @@ use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
+# XXX these were MIME::Base64::Perl and MIME::QuotedPrint::Perl, the
+# XXX pure perl fallbacks for hosts that could not build the XS ones.
+# XXX MIME::Base64 has been in the core since 5.7.3 and brings
+# XXX MIME::QuotedPrint with it, so the fallback is what is unusual now,
+# XXX and it is the slower of the two by a wide margin on a busy list.
+# XXX
+# XXX They were also loaded through eval q{ use ... } at each call site,
+# XXX which was deferring a decision there is no longer anything to
+# XXX decide; loading them here means a missing one is a startup error
+# XXX rather than a header that silently stays encoded.
+use MIME::Base64;
+use MIME::QuotedPrint;
+
 =head1 NAME
 
 Mail::Message::Encode - encode/decode/charset conversion routines.
@@ -502,12 +515,8 @@ sub decode_base64_string
     my $str_out = undef;
 
     if ($lang eq 'japanese') {
-	eval q{
-	    use MIME::Base64::Perl;
-	    $str_out = decode_base64( $str );
-	};
-
-	return $str if $@;
+	$str_out = eval { decode_base64($str) };
+	return $str if $@ || ! defined $str_out;
 
 	# XXX-TODO: use Mail::Message::Charset ?
 	$in_code   = $self->detect_code($str_out);
@@ -532,11 +541,8 @@ sub decode_qp_string
     my $str_out = undef;
 
     if ($lang eq 'japanese') {
-	eval q{
-	    use MIME::QuotedPrint::Perl;
-	    $str_out = decode_qp( $str );
-	};
-	return $str if $@;
+	$str_out = eval { decode_qp($str) };
+	return $str if $@ || ! defined $str_out;
 
 	# XXX-TODO: use Mail::Message::Charset ?
 	$in_code   = $self->detect_code($str_out);
@@ -559,10 +565,7 @@ sub raw_decode_base64
     my ($self, $buf) = @_;
     my $rbuf = '';
 
-    eval q{
-	use MIME::Base64::Perl;
-	$rbuf = decode_base64($buf);
-    };
+    $rbuf = eval { decode_base64($buf) };
 
     return( $rbuf || $buf );
 }
@@ -577,10 +580,7 @@ sub raw_decode_qp
     my ($self, $buf) = @_;
     my $rbuf = '';
 
-    eval q{
-	use MIME::QuotedPrint::Perl;
-	$rbuf = decode_qp($buf);
-    };
+    $rbuf = eval { decode_qp($buf) };
 
     return( $rbuf || $buf );
 }
