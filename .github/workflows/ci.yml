@@ -36,10 +36,12 @@ jobs:
           command -v cpanm >/dev/null || curl -sL https://cpanmin.us | perl - App::cpanminus
           cpanm --notest --quiet CGI GD
 
-      # Every module under fml/lib must at least compile.  The bundled
-      # cpan/lib is appended, never prepended: the shipped File::Spec is
-      # 0.7 and lacks splitdir()/splitpath() that fml8 calls, so putting
-      # it first shadows the core one and breaks at runtime.
+      # Every module under fml/lib must at least compile.  cpan/lib goes
+      # after the core on -I, so that a module the host has installed
+      # wins over the bundled copy.  It used to matter more than that:
+      # cpan/lib carried File::Spec 0.7, which lacks splitdir() and
+      # splitpath(), and putting it first broke fml8 at runtime.  That
+      # copy is gone now, but the order is still the right way round.
       - name: compile every module
         run: |
           set -u

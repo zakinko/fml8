@@ -8,8 +8,6 @@ Email-Find			0.10		perl itself
 
 Exporter-Lite			0.08		perl itself
 
-File-Spec			3.62		perl itself
-				PathTools-3.62
 				
 
 HTML-CalendarMonthSimple	1.25		? (freesoftware, unlimited)

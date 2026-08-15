@@ -15,10 +15,11 @@ use warnings;
 use Test::More;
 use vars qw($TODO);
 
-# The bundled cpan/lib must be APPENDED, never prepended: it ships
-# File::Spec 0.7, which lacks splitdir()/splitpath()/rel2abs() that both
-# fml8 and prove(1) call.  Putting it in front of the core library breaks
-# the test harness itself.
+# cpan/lib goes on the end of @INC, so that a module the host has
+# installed wins over the bundled copy.  It used to matter more than
+# that: cpan/lib carried File::Spec 0.7, which lacks splitdir() and
+# splitpath(), and putting it first broke the harness itself.  That copy
+# is gone now, but the order is still the right way round.
 BEGIN {
     for my $d (qw(fml/lib cpan/lib)) {
 	push @INC, $d if -d $d;
