@@ -2038,15 +2038,24 @@ sub langinfo_set_language_hint
 
 
 # Descriptions: get the current charset hint.
+#               return undef if there is no PCB yet.
 #    Arguments: OBJ($curproc) STR($category)
 # Side Effects: none
-# Return Value: none
+# Return Value: STR or undef
 sub langinfo_get_language_hint
 {
     my ($curproc, $category) = @_;
     my $pcb = $curproc->pcb();
 
-    $pcb->get("language_hint", $category);
+    # XXX this called $pcb->get() with no check, so it died with "Can't
+    # XXX call method get on an undefined value" whenever there was no
+    # XXX PCB yet.  langinfo_get_charset() is the caller and guards its
+    # XXX own use of the PCB with defined($pcb), then reaches this one
+    # XXX in the branch it takes when that guard fails -- so the routine
+    # XXX defended against a missing PCB and died of it two lines later.
+    return undef unless defined $pcb;
+
+    return $pcb->get("language_hint", $category);
 }
 
 
