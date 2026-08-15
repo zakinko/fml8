@@ -62,11 +62,19 @@ jobs:
           echo "fml8 $(git rev-parse --short HEAD)"
           echo "fml4 $(git -C ../fml4 rev-parse --short HEAD) (${{ matrix.fml4_ref }})"
 
+      # t/2* compare what the two can be asked; t/3* run fml4 and fml8
+      # on the same input and compare the answers byte for byte.
       - name: run the parity tests
         working-directory: fml8
         env:
           FML4_DIR: ${{ github.workspace }}/fml4
         run: prove -v t/2*_parity_*.t
+
+      - name: run the behaviour comparison
+        working-directory: fml8
+        env:
+          FML4_DIR: ${{ github.workspace }}/fml4
+        run: prove -v t/3*_behaviour_*.t
 
       # The gaps are the point of the exercise, so put them where they
       # can be read without opening the log.
@@ -80,7 +88,7 @@ jobs:
             echo "## parity with fml4 (${{ matrix.fml4_ref }}, perl ${{ matrix.perl }})"
             echo
             echo '```'
-            prove -v t/2*_parity_*.t 2>&1 \
+            prove -v t/2*_parity_*.t t/3*_behaviour_*.t 2>&1 \
               | grep -E '^\s*#\s|# TODO' \
               | sed -e 's/^[[:space:]]*//' \
               || true
@@ -104,13 +112,13 @@ jobs:
       - name: without fml4, every parity test skips
         run: |
           set -u
-          out=$(FML4_DIR=/nonexistent prove t/2*_parity_*.t 2>&1)
+          out=$(FML4_DIR=/nonexistent prove t/2*_parity_*.t t/3*_behaviour_*.t 2>&1)
           rc=$?
           echo "$out"
 
           # Every one of them, not just some: a test that ran anyway is
           # comparing fml8 against nothing.
-          want=$(ls t/2*_parity_*.t | wc -l)
+          want=$(ls t/2*_parity_*.t t/3*_behaviour_*.t | wc -l)
           got=$(echo "$out" | grep -c 'skipped: no fml4 checkout')
           test "$got" -eq "$want" || {
             echo "::error::$got of $want parity tests skipped without fml4"
