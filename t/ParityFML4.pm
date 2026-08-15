@@ -374,4 +374,65 @@ sub fml8_user_aliases
 }
 
 
+# Descriptions: run $code in a separate perl with the fml4 tree as its
+#               working directory, and return what it printed.
+#
+#               fml4 is Perl 4: its libraries put everything in main::,
+#               assign package globals at load time and expect &Log() and
+#               friends to exist.  Loading them into the test process
+#               would collide with fml8, which is in the same process, so
+#               they get a process of their own and answer over stdout.
+#
+#               $code is perl source; it may require() fml4 libraries by
+#               relative path and should print its results.
+#    Arguments: STR($code)
+# Side Effects: forks a perl(1).
+# Return Value: STR (empty if fml4 is not available or the child failed)
+sub run_in_fml4
+{
+    my ($code) = @_;
+    my $dir    = fml4_dir() || return '';
+
+    # fml4 logs and mails from inside the routines under test.  Give it
+    # somewhere harmless to do that and record it, so a side effect can
+    # be asserted rather than merely avoided.
+    my $preamble = q{
+	our (@FML4_LOG, @FML4_WARN);
+	*main::Log   = sub { push @FML4_LOG,  join(" ", @_); 1 };
+	*main::WarnE = sub { push @FML4_WARN, join(" ", @_); 1 };
+	*main::Mesg  = sub { 1 };
+	*main::Debug = sub { 1 };
+    };
+
+    my $pid = open(my $fh, '-|');
+    return '' unless defined $pid;
+
+    unless ($pid) {
+	# child: fml4 libraries require() each other by relative path.
+	chdir($dir) or exit 1;
+	open(STDERR, '>', '/dev/null');
+	exec('perl', '-e', $preamble . "\n" . $code);
+	exit 1;
+    }
+
+    local $/ = undef;
+    my $out = <$fh>;
+    close($fh);
+
+    return defined $out ? $out : '';
+}
+
+
+# Descriptions: is a separate-process fml4 usable at all?
+#    Arguments: none
+# Side Effects: forks a perl(1).
+# Return Value: NUM(1 or 0)
+sub fml4_is_runnable
+{
+    my $out = run_in_fml4(q{print "ok\n"});
+
+    return $out =~ /^ok$/m ? 1 : 0;
+}
+
+
 1;
