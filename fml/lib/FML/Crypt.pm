@@ -285,6 +285,40 @@ sub is_short
 }
 
 
+=head2 blocklist_reason($password, $args)
+
+is $password one that should not be used?  Returns a short reason if it
+is, and the empty string if nothing objected.
+
+NIST SP 800-63B says a verifier "SHALL compare the prospective secret
+against a blocklist that contains known commonly used, expected, or
+compromised passwords".  Three kinds of thing, and this checks them in
+that order, cheapest first.
+
+I<expected> is the context: the name of the list, the address the
+password belongs to, the domain it is in.  These cost nothing to check
+and are the first thing anyone guessing would try.  Pass them in
+$args->{ terms }.
+
+I<commonly used> is a file of one password per line, at
+$args->{ file }.  A site can point that at whatever list it likes.
+
+I<compromised> is the Pwned Passwords range service, used only when
+$args->{ use_service } is set.  It is off by default because reaching
+the network while handling a mail is a decision for whoever runs the
+list, not one to make on their behalf.
+
+The password is not sent anywhere.  The service takes the first five
+hexadecimal digits of its SHA-1 and answers with every suffix it holds
+under that prefix -- some thousands of them -- and the comparison
+happens here.  What leaves the host is five characters that some
+half-million passwords share.
+
+If the service cannot be reached the password is accepted and the
+caller is told nothing objected: a list that stopped being able to
+change its passwords because a web service was down would be worse off
+than one that accepted a weak one.
+
 =head2 is_legacy($stored)
 
 was $stored written by the old scheme?
@@ -298,6 +332,144 @@ guess and lock the real owner out.  Migration has to go through a
 password the owner chose, in full.
 
 =cut
+
+
+# Descriptions: is $password one that should not be used?
+#               returns a reason, or the empty string.
+#    Arguments: OBJ($self) STR($password) HASH_REF($args)
+# Side Effects: may talk to the network when $args->{ use_service }.
+# Return Value: STR
+sub blocklist_reason
+{
+    my ($self, $password, $args) = @_;
+
+    return '' unless defined $password && length $password;
+    $args ||= {};
+
+    my $r = '';
+
+    $r = $self->_reason_context($password, $args->{ terms });
+    return $r if $r;
+
+    $r = $self->_reason_file($password, $args->{ file });
+    return $r if $r;
+
+    if ($args->{ use_service }) {
+	$r = $self->_reason_service($password, $args);
+	return $r if $r;
+    }
+
+    return '';
+}
+
+
+# Descriptions: does $password give away where it is from?
+#               the comparison is case insensitive: "Elena" is no more
+#               of a secret than "elena".
+#    Arguments: OBJ($self) STR($password) ARRAY_REF($terms)
+# Side Effects: none
+# Return Value: STR
+sub _reason_context
+{
+    my ($self, $password, $terms) = @_;
+
+    return '' unless ref($terms) eq 'ARRAY';
+
+    my $p = lc($password);
+
+    for my $t (@$terms) {
+	next unless defined $t && length($t) >= 3;
+	my $lc = lc($t);
+
+	# equal to it, or the whole of it with something stuck on: both
+	# are the guess anybody would make first.
+	return "it is built from \"$t\"" if index($p, $lc) >= 0;
+    }
+
+    return '';
+}
+
+
+# Descriptions: is $password in the site's own list of ones not to use?
+#    Arguments: OBJ($self) STR($password) STR($file)
+# Side Effects: none
+# Return Value: STR
+sub _reason_file
+{
+    my ($self, $password, $file) = @_;
+
+    return '' unless defined $file && length $file;
+    return '' unless -f $file;
+
+    open(my $fh, '<', $file) or return '';
+    binmode($fh);
+
+    my $p    = lc($password);
+    my $seen = 0;
+
+    while (my $line = <$fh>) {
+	chomp($line);
+	$line =~ s/\r$//;
+	next unless length $line;
+	next if $line =~ /^\s*#/;
+
+	if (lc($line) eq $p) { $seen = 1; last }
+    }
+    close($fh);
+
+    return $seen ? "it is in this site's list of passwords not to use" : '';
+}
+
+
+# Descriptions: has $password turned up in a breach?
+#               only the first five hexadecimal digits of its SHA-1 are
+#               sent; the answer is a list of suffixes to compare here.
+#    Arguments: OBJ($self) STR($password) HASH_REF($args)
+# Side Effects: one HTTPS request.
+# Return Value: STR
+sub _reason_service
+{
+    my ($self, $password, $args) = @_;
+
+    my $base    = $args->{ service_url } ||
+	          'https://api.pwnedpasswords.com/range';
+    my $timeout = $args->{ timeout } || 10;
+
+    my $ok = eval {
+	require Digest::SHA;
+	require HTTP::Tiny;
+	1;
+    };
+    return '' unless $ok;
+
+    my $sha = uc(Digest::SHA::sha1_hex($password));
+    my ($prefix, $suffix) = (substr($sha, 0, 5), substr($sha, 5));
+
+    my $res = eval {
+	HTTP::Tiny->new(timeout => $timeout,
+			agent   => 'fml8')->get("$base/$prefix");
+    };
+
+    # XXX unreachable, refused, timed out, anything: accept the password.
+    # XXX A list that could not change its passwords because a web
+    # XXX service was down would be worse off than one that accepted a
+    # XXX weak password.
+    return '' unless ref($res) eq 'HASH' && $res->{ success };
+    return '' unless defined $res->{ content };
+
+    for my $line (split(/\r?\n/, $res->{ content })) {
+	my ($tail, $count) = split(/:/, $line, 2);
+	next unless defined $tail;
+	next unless uc($tail) eq $suffix;
+
+	$count = 0 unless defined $count;
+	$count =~ s/\D//g;
+
+	return "it appears in known breaches ($count times)";
+    }
+
+    return '';
+}
 
 
 # Descriptions: was $stored written by the old scheme?

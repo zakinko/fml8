@@ -461,4 +461,114 @@ subtest 'guessing eight characters must not become the password' => sub {
     ok(!$crypt->verify($eight, $migrated), 'and the guess no longer works');
 };
 
+# ---------------------------------------------------------------------
+# 13. the blocklist
+#
+# SP 800-63B: a verifier "SHALL compare the prospective secret against a
+# blocklist that contains known commonly used, expected, or compromised
+# passwords".  Three kinds, checked cheapest first.
+#
+# The network one is not exercised here; see the subtest after this.
+# ---------------------------------------------------------------------
+subtest 'expected and commonly used passwords are refused' => sub {
+    my $crypt = new FML::Crypt;
+
+    # "expected": anything printed in every message the list sends.
+    my $terms = [ 'elena', 'example.jp', 'taro' ];
+
+    for my $p ('elena', 'elena2026', 'MyTaroPassword', 'x-example.jp-x') {
+	ok($crypt->blocklist_reason($p, { terms => $terms }),
+	   "refused: $p");
+    }
+
+    for my $p ('quiet lamp orbit tuesday', 'zzzz9999zzzz') {
+	is($crypt->blocklist_reason($p, { terms => $terms }), '',
+	   "accepted: $p");
+    }
+
+    # Case does not make it a secret.
+    ok($crypt->blocklist_reason('ELENA-forever', { terms => $terms }),
+       'the comparison is case insensitive');
+
+    # A term too short to mean anything is ignored, or every password
+    # with an "a" in it would be refused.
+    is($crypt->blocklist_reason('a password', { terms => [ 'a', 'ml' ] }), '',
+       'terms under three characters are not used');
+
+    # "commonly used": the site's own file.
+    my $file = "/tmp/fml8-blocklist.$$";
+    open(my $fh, '>', $file) or do { fail("cannot write $file"); return };
+    print $fh "# lines beginning with # are comments\n";
+    print $fh "P\@ssw0rd123\n";
+    print $fh "letmein12345\n";
+    print $fh "\n";
+    close($fh);
+
+    ok($crypt->blocklist_reason('P@ssw0rd123', { file => $file }),
+       'refused: in the file');
+    ok($crypt->blocklist_reason('p@ssw0rd123', { file => $file }),
+       'and case does not help');
+    is($crypt->blocklist_reason('# lines beginning with # are comments',
+				{ file => $file }), '',
+       'a comment line is not a password');
+    is($crypt->blocklist_reason('not in the file at all', { file => $file }),
+       '', 'accepted: not in the file');
+
+    unlink($file);
+
+    # A file that is not there is not an error.
+    is($crypt->blocklist_reason('anything', { file => '/nonexistent' }), '',
+       'a missing file is not an obstacle');
+
+    # And nothing configured means nothing objected.
+    is($crypt->blocklist_reason('anything', {}), '', 'no checks, no refusal');
+    is($crypt->blocklist_reason('', {}), '', 'an empty password is not for this to judge');
+};
+
+
+# ---------------------------------------------------------------------
+# 14. the breach service, and what it does when it cannot be reached
+#
+# The lookup is off unless a site turns it on, so the default path is
+# checked here and the service itself only when the network is there.
+# ---------------------------------------------------------------------
+subtest 'the breach lookup is optional and fails open' => sub {
+    my $crypt = new FML::Crypt;
+
+    # off by default: "password" is the most breached string there is,
+    # and without use_service nothing asks.
+    is($crypt->blocklist_reason('password', {}), '',
+       'not consulted unless the site turns it on');
+
+    # unreachable must not stop a password being changed.
+    my $r = $crypt->blocklist_reason('password', {
+	use_service => 1,
+	service_url => 'https://127.0.0.1:1/range',
+	timeout     => 2,
+    });
+    is($r, '', 'an unreachable service accepts rather than blocks');
+
+    # The real thing, when there is a network to reach it over.
+    my $live = $crypt->blocklist_reason('password', {
+	use_service => 1,
+	timeout     => 10,
+    });
+
+  SKIP: {
+	skip("no network, or the service did not answer", 2) unless $live;
+
+	like($live, qr/breach/, "refused: $live");
+	like($live, qr/\d/,     'and says how often it has been seen');
+    }
+
+    # Something nobody has ever used should not be in breach data.  If
+    # it is, that is worth knowing rather than worth failing over.
+    my $unique = 'fml8-' . join('-', map { $_ * 7919 } (1 .. 6));
+    my $u = $crypt->blocklist_reason($unique, {
+	use_service => 1,
+	timeout     => 10,
+    });
+    is($u, '', "not in breach data: $unique");
+};
+
 done_testing();
