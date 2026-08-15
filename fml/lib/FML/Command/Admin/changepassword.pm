@@ -199,6 +199,23 @@ sub _change_password
     };
     my $r = '';
 
+    # XXX Refuse a password too short to be worth storing, before
+    # XXX anything is written.  NIST SP 800-63B puts eight characters at
+    # XXX the bottom of the range for any password at all; below that
+    # XXX there is no reading of the requirement that permits it.  The
+    # XXX remark about fifteen comes later, after the change succeeds,
+    # XXX because that one is advice rather than a refusal.
+    use FML::Crypt;
+    my $crypt = new FML::Crypt;
+    if ($crypt->is_too_short($password)) {
+	my $n  = $crypt->password_length_hard_limit();
+	my $r1 = "password too short: at least $n characters are required.";
+	$curproc->reply_message_nl('error.password_too_short', $r1,
+				   { _arg_limit => $n });
+	$curproc->logerror("changepassword: $r1");
+	croak($r1);
+    }
+
     my $member_map = $config->{ primary_admin_member_map };
     unless ($cred->has_address_in_map($member_map, $config, $address)) {
 	my $r  = "no such admin member";
@@ -217,6 +234,22 @@ sub _change_password
     };
     if ($r = $@) {
 	croak($r);
+    }
+
+    # XXX the password is now stored.  Say so if it is shorter than NIST
+    # XXX SP 800-63B asks of a password used on its own, which is what
+    # XXX this one is.  It is a remark rather than a refusal: the
+    # XXX command interface is mail, so there is nothing to answer, and
+    # XXX refusing here would break whatever already calls "makefml
+    # XXX changepassword".  See FML::Crypt.
+    if ($crypt->is_short($password)) {
+	my $n  = $crypt->password_length_lower_limit();
+	my $r0 = "Your new password is shorter than $n characters. " .
+	         "NIST SP 800-63B asks for at least $n for a password " .
+	         "used on its own. Please consider setting a longer one.";
+	$curproc->reply_message_nl('command.password_is_short', $r0,
+				   { _arg_limit => $n });
+	$curproc->log("changepassword: stored a password shorter than $n");
     }
 }
 

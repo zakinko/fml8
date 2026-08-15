@@ -188,6 +188,103 @@ sub verify
 }
 
 
+=head2 password_length_hard_limit()
+
+the length below which a password is not stored at all.
+
+=head2 password_length_lower_limit()
+
+the length below which a password is stored, but remarked on.
+
+Two lines, drawn from two places.
+
+NIST SP 800-63B puts a password used as one factor among several at
+"a minimum of eight characters in length", and one used on its own --
+which is what an fml8 administrator password is -- at "a minimum of 15
+characters".  NISC's own handbook, which is what the people running a
+Japanese mailing list are more likely to have read, treats ten
+characters as the point at which a password is in the safe range.
+
+So fml8 refuses anything under ten, and remarks on anything under
+fifteen.
+
+Ten rather than eight for the refusal, for a reason particular to this
+program: every password an existing installation holds was stored by
+the old scheme, which hashed the first eight characters and threw the
+rest away.  Setting the line at eight would let somebody told to change
+their password set another eight-character one and gain nothing at all,
+which is the situation the change was made to leave.
+
+Fifteen is a remark rather than a refusal because the command interface
+is mail: there is no prompt to answer, so the choice is between
+accepting with a remark and refusing outright, and refusing would break
+whatever already calls makefml changepassword.
+
+Note that no composition rule is imposed -- no required mixture of
+letters, digits and symbols.  SP 800-63B says a verifier "SHALL NOT
+impose other composition rules", and length is what this checks.
+
+=head2 is_too_short($password)
+
+is $password below the hard limit, and so not to be stored?
+
+=head2 is_short($password)
+
+is $password below the lower limit, and so worth remarking on?
+
+=cut
+
+
+# Descriptions: the length below which a password is not stored at all.
+#    Arguments: OBJ($self)
+# Side Effects: none
+# Return Value: NUM
+sub password_length_hard_limit
+{
+    my ($self) = @_;
+
+    return 10;
+}
+
+
+# Descriptions: the length below which a password is worth remarking on.
+#    Arguments: OBJ($self)
+# Side Effects: none
+# Return Value: NUM
+sub password_length_lower_limit
+{
+    my ($self) = @_;
+
+    return 15;
+}
+
+
+# Descriptions: is $password below the hard limit?
+#    Arguments: OBJ($self) STR($password)
+# Side Effects: none
+# Return Value: NUM(1 or 0)
+sub is_too_short
+{
+    my ($self, $password) = @_;
+
+    return 1 unless defined $password;
+    return length($password) < $self->password_length_hard_limit() ? 1 : 0;
+}
+
+
+# Descriptions: is $password below the lower limit?
+#    Arguments: OBJ($self) STR($password)
+# Side Effects: none
+# Return Value: NUM(1 or 0)
+sub is_short
+{
+    my ($self, $password) = @_;
+
+    return 1 unless defined $password;
+    return length($password) < $self->password_length_lower_limit() ? 1 : 0;
+}
+
+
 =head2 is_legacy($stored)
 
 was $stored written by the old scheme?
