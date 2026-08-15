@@ -28,7 +28,8 @@ require Exporter;
 		fml4_fmlserv_commands
 		fml4_config_variables fml4_secure_class
 		fml4_subject_tag_modes
-		fml8_user_commands fml8_admin_commands fml8_user_aliases);
+		fml8_user_commands fml8_admin_commands fml8_user_aliases
+		run_in_fml4 fml4_is_runnable fml4_load_error);
 
 
 # Descriptions: return the fml4 checkout to compare against, or undef.
@@ -432,6 +433,42 @@ sub fml4_is_runnable
     my $out = run_in_fml4(q{print "ok\n"});
 
     return $out =~ /^ok$/m ? 1 : 0;
+}
+
+
+# Descriptions: will this fml4 library load on the perl running the
+#               tests?  Returns the empty string if it will, or the
+#               reason it will not.
+#
+#               fml4 as published does not compile on a perl newer than
+#               5.30: $* was removed there and defined(@array) became
+#               fatal in 5.22, and both are still in the tree.  The
+#               modernize-perl branch fixes exactly that and changes
+#               nothing else, so the behaviour tests can run against it
+#               and only skip against master.
+#
+#               That difference is the point rather than an annoyance:
+#               it is what the modernise work was for, said by a machine.
+#    Arguments: STR($file)
+# Side Effects: forks a perl(1).
+# Return Value: STR (empty when loadable)
+sub fml4_load_error
+{
+    my ($file) = @_;
+
+    my $out = run_in_fml4(qq{
+	my \$ok = eval { require "./$file"; 1 };
+	if (\$ok) { print "ok\\n" }
+	else { my \$e = \$\@; \$e =~ s/\\s+/ /g; print "no\\t\$e\\n" }
+    });
+
+    return '' if $out =~ /^ok$/m;
+
+    my ($reason) = $out =~ /^no\t(.*)$/m;
+    $reason = 'fml4 produced no answer at all' unless defined $reason;
+    $reason =~ s/\s+$//;
+
+    return "$file does not load on this perl: $reason";
 }
 
 
