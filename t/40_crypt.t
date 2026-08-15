@@ -529,16 +529,19 @@ subtest 'expected and commonly used passwords are refused' => sub {
 # ---------------------------------------------------------------------
 # 14. the breach service, and what it does when it cannot be reached
 #
-# The lookup is off unless a site turns it on, so the default path is
-# checked here and the service itself only when the network is there.
+# fml8 asks it by default; FML::Crypt does not, since a library should
+# not reach the network merely because it was called.  Both halves are
+# checked: that the flag is what decides, and that a service which is
+# not there stops nothing.
 # ---------------------------------------------------------------------
-subtest 'the breach lookup is optional and fails open' => sub {
+subtest 'the breach lookup is asked for, and fails open' => sub {
     my $crypt = new FML::Crypt;
 
-    # off by default: "password" is the most breached string there is,
-    # and without use_service nothing asks.
+    # The library itself does not go out unless told to.  "password" is
+    # the most breached string there is, and without use_service nothing
+    # asks about it.
     is($crypt->blocklist_reason('password', {}), '',
-       'not consulted unless the site turns it on');
+       'the library does not reach the network unasked');
 
     # unreachable must not stop a password being changed.
     my $r = $crypt->blocklist_reason('password', {
@@ -569,6 +572,209 @@ subtest 'the breach lookup is optional and fails open' => sub {
 	timeout     => 10,
     });
     is($u, '', "not in breach data: $unique");
+
+    # And how fml8 itself decides.  A configuration setting wins;
+    # otherwise the answer given at a terminal; otherwise it does not
+    # ask the service at all.  Nothing turns it on by defaulting.
+    my $file = 'fml/lib/FML/Command/Admin/changepassword.pm';
+    open(my $fh, '<', $file) or do { fail("cannot read $file"); return };
+    local $/ = undef;
+    my $src = <$fh>;
+    close($fh);
+
+    like($src, qr/_use_blocklist_service/,
+	 'the decision is made in one place');
+
+    my ($sub) = $src =~ /(sub _use_blocklist_service.*?\n\})/s;
+    ok($sub, 'found it');
+
+    like($sub || '', qr/return 1 if \$set eq 'yes'/,  'a config yes wins');
+    like($sub || '', qr/return 0 if \$set eq 'no'/,   'and a config no wins');
+    like($sub || '', qr/blocklist_service_decision/,
+	 'otherwise the answer given at a terminal decides');
+    unlike($sub || '', qr/\|\|\s*'yes'/,
+	   'and nothing turns it on merely by defaulting');
+};
+
+
+# ---------------------------------------------------------------------
+# 15. the length checks alone would not have been enough
+#
+# The reason the blocklist is on by default, stated as a test rather
+# than as an assertion in a commit message.
+# ---------------------------------------------------------------------
+subtest 'a long password can still be one everybody has used' => sub {
+    my $crypt = new FML::Crypt;
+
+    my $famous = 'correct horse battery staple';
+
+    cmp_ok(length($famous), '>', $crypt->password_length_lower_limit(),
+	   sprintf("%d characters, past both length lines", length($famous)));
+    ok(!$crypt->is_too_short($famous), 'so it is not refused for length');
+    ok(!$crypt->is_short($famous),     'nor even remarked on');
+
+    my $r = $crypt->blocklist_reason($famous, {
+	use_service => 1,
+	timeout     => 10,
+    });
+
+  SKIP: {
+	skip("no network, or the service did not answer", 1) unless $r;
+	like($r, qr/breach/, "and yet: $r");
+    }
+};
+
+# ---------------------------------------------------------------------
+# 16. the one question fml asks
+#
+# The breach lookup is the only thing here that leaves the host, so it
+# is not turned on by a default.  The question is put once, at a
+# terminal, the first time a command line tool runs after this release
+# is installed, and the answer is kept.  Mail arrives without a
+# terminal, so nothing is ever asked while handling a message, and an
+# installation nobody has answered for does not use the service.
+# ---------------------------------------------------------------------
+subtest 'the breach lookup is asked about before it is used' => sub {
+    my $crypt = new FML::Crypt;
+
+    my $dir = "/tmp/fml8-crypt-decision.$$";
+    mkdir($dir) or do { fail("cannot make $dir"); return };
+
+    my $file = "$dir/password_blocklist_service";
+
+    is($crypt->blocklist_service_decision($dir), '',
+       'nobody has been asked yet');
+
+    # With no terminal and no handle to read from, nothing is asked and
+    # nothing is written.  This is the path mail takes.
+    is($crypt->ask_blocklist_service($dir), '', 'no terminal, no question');
+    ok(!-f $file, 'and nothing was recorded');
+
+    # The answers it takes.  Return on its own is the default, which is
+    # yes; turning it off has to be said.
+    for my $t ([ "\n",    'yes' ], [ "   \n", 'yes' ],
+	       [ "yes\n", 'yes' ], [ "y\n",   'yes' ],
+	       [ "no\n",  'no'  ], [ "N\n",   'no'  ],
+	       [ "NO\n",  'no'  ]) {
+	my ($input, $want) = @$t;
+
+	unlink($file);
+	open(my $in, '<', \$input) or next;
+
+	# The prompt itself is not what is under test.
+	open(my $null, '>', '/dev/null') or next;
+	my $old = select($null);
+	my $got = $crypt->ask_blocklist_service($dir, $in);
+	select($old);
+	close($null);
+
+	(my $shown = $input) =~ s/\n/\\n/g;
+	is($got, $want, "answered \"$shown\" -> $want");
+	is($crypt->blocklist_service_decision($dir), $want, 'and remembered');
+    }
+
+    # Once answered it is not asked again, whatever is on the handle.
+    {
+	my $input = "no\n";
+	open(my $in, '<', \$input);
+	is($crypt->ask_blocklist_service($dir, $in), 'no',
+	   'the recorded answer is returned without asking');
+    }
+
+    # Nothing usable said: not recorded, so the question comes back.
+    unlink($file);
+    for my $input ("maybe\nperhaps\nwho knows\n", "") {
+	open(my $in, '<', \$input) or next;
+	open(my $null, '>', '/dev/null') or next;
+	my $old = select($null);
+	my $got = $crypt->ask_blocklist_service($dir, $in);
+	select($old);
+	close($null);
+
+	is($got, '', 'no usable answer, so none recorded');
+	ok(!-f $file, 'and the file was not created');
+    }
+
+    # Only yes and no can be written.
+    ok(!$crypt->record_blocklist_service_decision($dir, 'maybe'),
+       'a decision that is neither is refused');
+    ok($crypt->record_blocklist_service_decision($dir, 'yes'), 'yes is kept');
+    is($crypt->blocklist_service_decision($dir), 'yes', 'and read back');
+
+    # A file with something unreadable in it counts as undecided rather
+    # than as permission.
+    if (open(my $fh, '>', $file)) {
+	print $fh "# comment only\n";
+	close($fh);
+    }
+    is($crypt->blocklist_service_decision($dir), '',
+       'a file that says nothing is not a yes');
+
+    unlink($file);
+    rmdir($dir);
+
+    is($crypt->blocklist_service_decision('/nonexistent'), '',
+       'no config directory, no decision');
+    is($crypt->blocklist_service_decision(undef), '', 'and undef is safe');
+
+    # The config directory usually belongs to root or to the fml owner,
+    # and whoever runs makefml may be neither.  The answer still holds
+    # for this run; what cannot happen is it being lost silently.
+  SKIP: {
+	skip("running as root, so everything is writable", 3) if $> == 0;
+
+	my $ro = "/tmp/fml8-crypt-readonly.$$";
+	mkdir($ro) or skip("cannot make $ro", 3);
+	chmod(0500, $ro) or do { rmdir($ro); skip("cannot chmod $ro", 3) };
+
+	my $input = "yes\n";
+	open(my $in, '<', \$input) or do { rmdir($ro); skip("no handle", 3) };
+	open(my $null, '>', '/dev/null') or do { rmdir($ro); skip("no null", 3) };
+	my $old = select($null);
+	my $got = $crypt->ask_blocklist_service($ro, $in);
+	select($old);
+	close($null);
+
+	is($got, 'yes', 'the answer is honoured for this run');
+	ok(!-f "$ro/password_blocklist_service", 'but could not be written');
+	is($crypt->blocklist_service_decision($ro), '',
+	   'so the question comes back rather than being assumed');
+
+	chmod(0700, $ro);
+	rmdir($ro);
+    }
+};
+
+
+# ---------------------------------------------------------------------
+# 17. and the question is only ever put at a terminal
+#
+# Asking during mail handling would hang the process holding somebody's
+# message.  Both halves of the guard are in the source rather than
+# reachable from here, so this reads them.
+# ---------------------------------------------------------------------
+subtest 'nothing asks while a message is being handled' => sub {
+    my $file = 'fml/lib/FML/Process/Switch.pm';
+    ok(-f $file, "$file exists");
+
+    open(my $fh, '<', $file) or do { fail("cannot read $file"); return };
+    local $/ = undef;
+    my $src = <$fh>;
+    close($fh);
+
+    like($src, qr/ask_blocklist_service/, 'the question is put at startup');
+    like($src, qr/-t STDIN && -t STDOUT/,  'only when there is a terminal');
+    like($src, qr/myname eq 'makefml' \|\| \$myname eq 'fml'/,
+	 'and only from the command line tools');
+
+    # The mail paths are named "command" and "fml.pl"; neither may
+    # appear in the condition that decides whether to ask.
+    my ($guard) = $src =~ /(if \(\(\$myname eq 'makefml'.*?\)\s*\{)/s;
+    ok($guard, 'found the condition');
+    unlike($guard || '', qr/'command'|'fml\.pl'/,
+	   'the mail paths are not in it');
+    like($guard || '', qr/_is_usage_request/,
+	 'and asking for usage is not the moment either');
 };
 
 done_testing();

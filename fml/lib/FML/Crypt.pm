@@ -303,21 +303,33 @@ $args->{ terms }.
 I<commonly used> is a file of one password per line, at
 $args->{ file }.  A site can point that at whatever list it likes.
 
-I<compromised> is the Pwned Passwords range service, used only when
-$args->{ use_service } is set.  It is off by default because reaching
-the network while handling a mail is a decision for whoever runs the
-list, not one to make on their behalf.
+I<compromised> is the Pwned Passwords range service, used when
+$args->{ use_service } is set.  This method does not set it -- a
+library should not reach the network because it was called -- but
+fml8's own caller does, unless the site has said
+use_password_blocklist_service = no.
+
+It is on because it is the only one of the three that can tell a
+password has already been stolen, and because length does not rescue
+one that has: "correct horse battery staple" is twenty-nine characters
+and is in the data 391 times.
 
 The password is not sent anywhere.  The service takes the first five
 hexadecimal digits of its SHA-1 and answers with every suffix it holds
 under that prefix -- some thousands of them -- and the comparison
 happens here.  What leaves the host is five characters that some
-half-million passwords share.
+half-million passwords share, which is the point of the arrangement:
+the service cannot tell which password was asked about.
+
+It does mean fml talks to a third party while handling a password
+change, and a site that would rather it did not has one setting to turn
+off.
 
 If the service cannot be reached the password is accepted and the
 caller is told nothing objected: a list that stopped being able to
 change its passwords because a web service was down would be worse off
-than one that accepted a weak one.
+than one that accepted a weak one.  The failure belongs in the log, not
+in the way.
 
 =head2 is_legacy($stored)
 
@@ -469,6 +481,194 @@ sub _reason_service
     }
 
     return '';
+}
+
+
+=head2 blocklist_service_decision($dir)
+
+has this site said whether fml may ask the breach service?  Returns
+"yes", "no", or the empty string if nobody has been asked yet.
+
+=head2 ask_blocklist_service($dir)
+
+ask, if there is somebody there to answer, and remember what they said.
+
+The question is put once, the first time a command line tool runs after
+this release is installed, and only when standard input and output are
+a terminal.  Mail arrives without one, so nothing is ever asked while
+handling a message; an installation that has not answered simply does
+not use the service.
+
+That is the whole of the arrangement: fml does not reach a third party
+until somebody at a keyboard has said it may.
+
+The answer is written to $dir/password_blocklist_service.  Deleting
+that file asks again.
+
+=cut
+
+
+# The file the answer is kept in, under the site's config directory.
+my $BLOCKLIST_DECISION_FILE = 'password_blocklist_service';
+
+# What the question says.  Deliberately ASCII: this goes to a terminal
+# whose encoding nothing here knows, and a prompt about protecting
+# passwords is a poor place to produce mojibake.
+my $BLOCKLIST_PROMPT = <<'EOT';
+
+fml can check a new password against Have I Been Pwned's list of
+passwords found in published breaches, and refuse one that is on it.
+This catches what a length check cannot: "correct horse battery staple"
+is twenty-nine characters long and appears in that data 391 times.
+
+Doing so means this host makes an HTTPS request when an administrator
+changes their password.  The password is not sent.  Five hexadecimal
+digits of its SHA-1 are, and some half a million different passwords
+share any five, so the service is not told which password was asked
+about.
+
+If this host has no route out, or you would rather it did not talk to
+anyone, answer "no".  Nothing else changes; the other blocklist checks
+do not use the network.
+
+Pressing return accepts the default, which is yes.
+
+You will not be asked again.  To change your mind later, edit
+%s
+or set use_password_blocklist_service in your configuration.
+
+EOT
+
+
+# Descriptions: what has this site said about the breach service?
+#    Arguments: OBJ($self) STR($dir)
+# Side Effects: none
+# Return Value: STR ("yes", "no" or "")
+sub blocklist_service_decision
+{
+    my ($self, $dir) = @_;
+
+    return '' unless defined $dir && length $dir;
+
+    my $file = "$dir/$BLOCKLIST_DECISION_FILE";
+    return '' unless -f $file;
+
+    open(my $fh, '<', $file) or return '';
+    my $answer = '';
+    while (my $line = <$fh>) {
+	next if $line =~ /^\s*#/;
+	next unless $line =~ /\S/;
+	$answer = ($line =~ /^\s*(yes|no)\s*$/i) ? lc($1) : '';
+	last;
+    }
+    close($fh);
+
+    return $answer;
+}
+
+
+# Descriptions: write down what this site said.
+#    Arguments: OBJ($self) STR($dir) STR($answer)
+# Side Effects: creates $dir/password_blocklist_service.
+# Return Value: NUM(1 or 0)
+sub record_blocklist_service_decision
+{
+    my ($self, $dir, $answer) = @_;
+
+    return 0 unless defined $dir && length $dir && -d $dir;
+    return 0 unless defined $answer && $answer =~ /^(yes|no)$/;
+
+    my $file = "$dir/$BLOCKLIST_DECISION_FILE";
+    open(my $fh, '>', $file) or return 0;
+
+    print $fh "# Whether fml may ask the Pwned Passwords service about a\n";
+    print $fh "# new password before storing it.  Written when the\n";
+    print $fh "# question was answered at a terminal; remove this file to\n";
+    print $fh "# be asked again.\n";
+    print $fh "$answer\n";
+
+    close($fh);
+    return 1;
+}
+
+
+# Descriptions: ask, if anyone is there, and remember the answer.
+#               $in is where to read the answer from and defaults to
+#               STDIN; the tests pass a handle of their own rather than
+#               needing a terminal.
+#    Arguments: OBJ($self) STR($dir) HANDLE($in)
+# Side Effects: may write $dir/password_blocklist_service.
+# Return Value: STR ("yes", "no" or "")
+sub ask_blocklist_service
+{
+    my ($self, $dir, $in) = @_;
+
+    my $known = $self->blocklist_service_decision($dir);
+    return $known if $known;
+
+    # No terminal, no question.  This is the path mail takes, and the
+    # answer there is to do nothing until somebody has been asked.
+    unless (defined $in) {
+	return '' unless -t STDIN && -t STDOUT;
+	$in = \*STDIN;
+    }
+    return '' unless defined $dir && length $dir && -d $dir;
+
+    printf $BLOCKLIST_PROMPT, "$dir/$BLOCKLIST_DECISION_FILE";
+
+    my $answer = '';
+    for (1 .. 3) {
+	print "Check new passwords against known breaches? [Yes/no] ";
+	my $line = <$in>;
+
+	# XXX End of input is not an answer.  Somebody pressing return
+	# XXX has answered, and takes the default; a script that closed
+	# XXX the handle has not, and gets asked again next time rather
+	# XXX than having the default recorded on its behalf.
+	last unless defined $line;
+
+	$line =~ s/^\s+//;
+	$line =~ s/\s+$//;
+
+	if    ($line eq '')          { $answer = 'yes'; last }
+	elsif ($line =~ /^y(es)?$/i) { $answer = 'yes'; last }
+	elsif ($line =~ /^n(o)?$/i)  { $answer = 'no';  last }
+
+	print "Please answer yes or no.\n";
+    }
+
+    # Nothing usable said: leave it unanswered rather than guessing, so
+    # the question comes back next time.
+    return '' unless $answer;
+
+    my $what = $answer eq 'yes'
+	? "fml will ask the service.\n"
+	: "fml will not use the service.\n";
+
+    if ($self->record_blocklist_service_decision($dir, $answer)) {
+	print "Recorded. $what";
+	return $answer;
+    }
+
+    # XXX Could not write it.  $config_dir usually belongs to root or to
+    # XXX the fml owner, and whoever is running makefml may be neither,
+    # XXX in which case the answer cannot be kept and the question would
+    # XXX come back every time.  Say so and name the setting, so it can
+    # XXX be answered once in a file the person can actually write.
+    print <<"EOT";
+
+Could not write $dir/$BLOCKLIST_DECISION_FILE, so this answer cannot be
+remembered and you will be asked again.
+
+To settle it, put
+
+	use_password_blocklist_service	=	$answer
+
+in your configuration, or create that file as the owner of $dir.
+
+EOT
+
+    return $answer;
 }
 
 
