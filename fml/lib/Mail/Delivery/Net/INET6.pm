@@ -15,6 +15,19 @@ use Carp;
 use IO::Handle;
 use IO::Socket;
 
+# XXX this used to come from Socket6, a separate XS distribution that
+# XXX had to be bundled and built.  Socket has carried getaddrinfo(),
+# XXX getnameinfo() and the AF_INET6 constants since Socket 1.94, which
+# XXX is perl 5.14, so the core answers everything asked here.
+# XXX
+# XXX The two are not interchangeable: Socket6::getaddrinfo() returns a
+# XXX flat list of five fields per address, Socket::getaddrinfo()
+# XXX returns ($err, @res) with one hash reference per address.  See
+# XXX connect6() below.
+use Socket qw(AF_INET6 AF_UNSPEC SOCK_STREAM
+	      getaddrinfo getnameinfo
+	      NI_NUMERICHOST NI_NUMERICSERV);
+
 require Exporter;
 @ISA    = qw(Exporter);
 @EXPORT = qw(is_ipv6_ready
@@ -31,9 +44,12 @@ require Exporter;
 	     connect6);
 
 
-# Descriptions: we have Socket6.pm or not ?
+# Descriptions: can this perl speak IPv6 ?
+#               the question used to be whether Socket6 was installed.
+#               It is now whether Socket carries the address-family
+#               independent name resolution, which it has since 1.94.
 #    Arguments: OBJ($self)
-# Side Effects: none
+# Side Effects: update $self.
 # Return Value: none
 sub check_ipv6_module_available
 {
@@ -44,19 +60,18 @@ sub check_ipv6_module_available
     }
     $is_module_checked = 1;
 
-    if (defined \&pack_sockaddr_in6) {
-	return;
-    }
+    # XXX ask Socket rather than testing for an imported symbol: a
+    # XXX perl too old to have these still has the module, so the old
+    # XXX "defined \&pack_sockaddr_in6" shortcut would answer yes on a
+    # XXX perl that cannot resolve an IPv6 address at all.
+    my $ok = Socket->can('getaddrinfo') && Socket->can('AF_INET6');
 
-    eval q{
-	use Socket6;
-    };
-    if ($@ =~ /Can\'t locate Socket6.pm/o) {
-	$self->set_ipv6_ready("no");
-    }
-    else {
+    if ($ok) {
 	$self->logdebug("IPv6 ready");
 	$self->set_ipv6_ready("yes");
+    }
+    else {
+	$self->set_ipv6_ready("no");
     }
 }
 
@@ -187,12 +202,26 @@ sub connect6
     }
 
     my $fh = undef;
-    eval q{
+    eval {
 	my ($family, $type, $proto, $saddr, $canonname);
 
-	# resolve socket info by getaddrinfo()
-	my @res = getaddrinfo($host, $port, AF_UNSPEC, SOCK_STREAM);
+	# resolve socket info by getaddrinfo().
+	#
+	# XXX Socket6 returned five fields per address in one flat list,
+	# XXX which is why the loop below used to shift five at a time.
+	# XXX Socket returns ($err, @res) with a hash reference per
+	# XXX address, and reports failure through $err rather than by
+	# XXX returning a short list.
+	my ($err, @res) = getaddrinfo($host, $port,
+				      { family   => AF_UNSPEC,
+					socktype => SOCK_STREAM });
 	$family = -1;
+
+	if ($err) {
+	    $self->logerror("connect6: getaddrinfo($host, $port): $err");
+	    $self->set_error("connect6: cannot resolve $host");
+	    @res = ();
+	}
 
 	# reset.
 	if (defined $self->get_socket()) {
@@ -200,14 +229,21 @@ sub connect6
 	}
 
       ADDR_ENTRY:
-	while (scalar(@res) >= 5) {
-	    ($family, $type, $proto, $saddr, $canonname, @res) = @res;
-
-	    my ($host, $port) =
-		getnameinfo($saddr, NI_NUMERICHOST | NI_NUMERICSERV);
+	for my $ai (@res) {
+	    ($family, $type, $proto, $saddr, $canonname) =
+		($ai->{ family }, $ai->{ socktype }, $ai->{ protocol },
+		 $ai->{ addr },   $ai->{ canonname });
 
 	    # check only IPv6 case here.
 	    next ADDR_ENTRY if $family != AF_INET6;
+
+	    # XXX getnameinfo() likewise leads with an error string now.
+	    my ($nierr, $host, $port) =
+		getnameinfo($saddr, NI_NUMERICHOST | NI_NUMERICSERV);
+	    if ($nierr) {
+		$self->logerror("connect6: getnameinfo: $nierr");
+		next ADDR_ENTRY;
+	    }
 
 	    # XXX-TODO: timeout customizable
 	    $fh = new IO::Socket;
@@ -271,8 +307,12 @@ over IPv6. It is used within L<Mail::Delivery::SMTP> module.
 
 =head2 is_ipv6_ready()
 
-It checks whether your environment has Socket6.pm or not?
-If Socket6 module exists, we assume your operating system is IPv6 ready!
+It checks whether this perl's L<Socket> provides the address family
+independent name resolution, getaddrinfo() and AF_INET6, which it has
+carried since Socket 1.94 (perl 5.14).  If it does, we assume the
+operating system is IPv6 ready.
+
+This used to ask whether Socket6.pm was installed instead.
 
 =head2 connect6()
 
@@ -291,7 +331,7 @@ $mta is a hostname or [raw_ipv6_addr]:port form, for example,
 =head1 SEE ALSO
 
 L<Mail::Delivery::SMTP>,
-L<Socket6>,
+L<Socket>,
 L<IO::Handle>,
 L<IO::Socket>
 
