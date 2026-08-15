@@ -130,6 +130,22 @@ sub process
 	$myname eq 'command' || $myname eq 'fml.pl') {
 	my ($address, $password);
 
+	# XXX A password cannot contain whitespace, and the reason is the
+	# XXX command interface rather than the storage.  Both sides of
+	# XXX it are line oriented and split on whitespace: this one
+	# XXX would read "quiet lamp orbit" as three arguments, and
+	# XXX FML::Command::Admin::password, which is how a password is
+	# XXX presented when logging in, takes only the first word of
+	# XXX what follows.
+	# XXX
+	# XXX So a password with a space in it could be set and could
+	# XXX never be used again.  Refusing it here is the only version
+	# XXX of this that does not lock somebody out; the check is in
+	# XXX _change_password with the other refusals.
+	# XXX
+	# XXX NIST SP 800-63B asks that a verifier accept the space
+	# XXX character, and fml does not.  That is a limitation worth
+	# XXX stating rather than working around by halves.
 	if ($options->[2]) {
 	    croak("wrong arguments");
 	}
@@ -155,6 +171,7 @@ sub process
 
 	use FML::Restriction::Base;
 	my $safe = new FML::Restriction::Base;
+
 	if ($safe->regexp_match('address', $address)) {
 	    $self->_change_password($curproc,
 				    $command_context,
@@ -199,14 +216,43 @@ sub _change_password
     };
     my $r = '';
 
+    use FML::Crypt;
+    my $crypt = new FML::Crypt;
+
+    # XXX Refuse whitespace, and only whitespace.
+    # XXX
+    # XXX Command lines are split on it, on both sides of this: setting
+    # XXX a password reads the words after the address as separate
+    # XXX arguments, and FML::Command::Admin::password, which is how a
+    # XXX password is presented when logging in, takes only the first
+    # XXX word after the command.  A password with a space in it could
+    # XXX be set and never used again, and being locked out of your own
+    # XXX list is not a thing to let somebody do to themselves.
+    # XXX
+    # XXX Characters outside ASCII used to be refused here too, because
+    # XXX nothing converted a command body and the same characters
+    # XXX arrived as different octets depending on what the sender's
+    # XXX mail program chose.  _canonical_form() in FML::Process::Command
+    # XXX settles that: every command body is now read as the charset it
+    # XXX declares and brought to NFKC UTF-8, so a password set from a
+    # XXX message written in UTF-8 is the same password presented from
+    # XXX one written in ISO-2022-JP, EUC-JP or Shift_JIS.
+    # XXX
+    # XXX So SP 800-63B's "SHALL accept ... Unicode characters" holds,
+    # XXX and its "SHALL accept ... the space character" still does not.
+    if ($password =~ /\s/) {
+	my $r1 = "password may not contain a space or a tab.";
+	$curproc->reply_message_nl('error.password_charset', $r1);
+	$curproc->logerror("changepassword: $r1");
+	croak($r1);
+    }
+
     # XXX Refuse a password too short to be worth storing, before
     # XXX anything is written.  NIST SP 800-63B puts eight characters at
     # XXX the bottom of the range for any password at all; below that
     # XXX there is no reading of the requirement that permits it.  The
     # XXX remark about fifteen comes later, after the change succeeds,
     # XXX because that one is advice rather than a refusal.
-    use FML::Crypt;
-    my $crypt = new FML::Crypt;
     if ($crypt->is_too_short($password)) {
 	my $n  = $crypt->password_length_hard_limit();
 	my $r1 = "password too short: at least $n characters are required.";
