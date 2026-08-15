@@ -41,6 +41,12 @@ plan skip_all => "no fml4 checkout (set FML4_DIR, or put one at ../fml4)"
 plan skip_all => "fml4 will not run here"
     unless ParityFML4::fml4_is_runnable();
 
+# fml4 as published does not compile on a perl newer than 5.30, so this
+# comparison can only be made against a tree that has been made to.  The
+# modernize-perl branch is exactly that and changes nothing else.
+my $LOAD_ERROR = ParityFML4::fml4_load_error("kern/libkernsubr.pl");
+plan skip_all => $LOAD_ERROR if $LOAD_ERROR;
+
 my $SAFE = new FML::Restriction::Base;
 
 
