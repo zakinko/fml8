@@ -14,7 +14,6 @@ HTML-CalendarMonthSimple	1.25		? (freesoftware, unlimited)
 HTML-FromText			2.05		perl itself
 
 
-MIME-Base64-Perl		1.0		perl itself
 MIME-Lite			2.108		perl itself
 MIME-Lite-HTML			1.2		?
 MIME-Types			2.14		perl itself

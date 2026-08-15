@@ -1,9 +1,0 @@
-Changes
-MANIFEST
-Makefile.PL
-README
-t/base64.t
-t/quoted-print.t
-t/unicode.t
-lib/MIME/Base64/Perl.pm
-lib/MIME/QuotedPrint/Perl.pm
