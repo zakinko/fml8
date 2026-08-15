@@ -378,7 +378,59 @@ subtest 'the cost of one verification' => sub {
 };
 
 # ---------------------------------------------------------------------
-# 11. the old scheme is never migrated behind the owner's back
+# 11. the length remark, and that it is only a remark
+#
+# SP 800-63B requires 15 characters for a password used as a single
+# factor, which an fml8 administrator password is.  fml8 tells the
+# owner rather than refusing: the command interface is mail, so there
+# is nothing to answer, and refusing would break whatever already calls
+# makefml changepassword.
+# ---------------------------------------------------------------------
+subtest 'the two length lines, and what each one does' => sub {
+    my $crypt = new FML::Crypt;
+
+    is($crypt->password_length_hard_limit(),  10,
+       'below ten is refused, which is where NISC puts the safe range');
+    is($crypt->password_length_lower_limit(), 15,
+       'below fifteen is remarked on, which SP 800-63B asks of a single factor');
+
+    # refused
+    ok($crypt->is_too_short('short'),        '5 characters is too short');
+    ok($crypt->is_too_short('abcdefgh'),     '8 is too short');
+    ok($crypt->is_too_short('abcdefghi'),    '9 is too short');
+    ok(!$crypt->is_too_short('abcdefghij'),  '10 is not');
+    ok($crypt->is_too_short(undef),          'no password at all is too short');
+    ok($crypt->is_too_short(''),             'nor is an empty one accepted');
+
+    # Ten rather than eight, because the old scheme stopped at eight:
+    # an eight character password is exactly what changing it was
+    # supposed to move away from.
+    cmp_ok($crypt->password_length_hard_limit(), '>', 8,
+	   'and the line is above what the old scheme could hold');
+
+    # remarked on
+    ok($crypt->is_short('abcdefghij'),        '10 is worth a remark');
+    ok($crypt->is_short('abcdefghijklmn'),    '14 is');
+    ok(!$crypt->is_short('abcdefghijklmno'),  '15 is not');
+    ok(!$crypt->is_short('a' x 200),          'and neither is 200');
+
+    # The middle band is stored, which is the point of it being a
+    # remark rather than a refusal.
+    my $ten = 'abcdefghij';
+    my $h   = $crypt->hash($ten);
+    ok($crypt->verify($ten, $h), 'a ten character password still works');
+    ok(!$crypt->is_legacy($h),   'and is stored in the new scheme');
+
+    # No composition rule: SP 800-63B says a verifier SHALL NOT impose
+    # one, so length is the only thing asked about.
+    for my $p ('aaaaaaaaaaaaaaa', '123456789012345', '               ') {
+	ok(!$crypt->is_too_short($p), "accepted whatever it is made of");
+    }
+};
+
+
+# ---------------------------------------------------------------------
+# 12. the old scheme is never migrated behind the owner's back
 #
 # Tempting, and wrong.  Verification against an old hash passes on the
 # first eight characters, so someone who guessed those and no more
