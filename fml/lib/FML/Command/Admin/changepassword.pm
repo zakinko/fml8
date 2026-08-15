@@ -231,8 +231,19 @@ sub _change_password
 		   'fml',
 		   'password' ],
 	file  => $config->{ password_blocklist_file } || '',
-	use_service =>
-	    (($config->{ use_password_blocklist_service } || 'no') eq 'yes'),
+
+	# XXX Whether to ask the breach service is answered in one of two
+	# XXX places, and if neither has answered it, fml does not ask.
+	# XXX
+	# XXX A configuration setting wins, since a site that has written
+	# XXX one has said what it wants.  Otherwise the answer given to
+	# XXX the question put at a terminal the first time a command line
+	# XXX tool ran after this release was installed; see FML::Crypt.
+	# XXX
+	# XXX Undecided means no.  Reaching a third party while handling
+	# XXX somebody's password is not something to start doing because
+	# XXX nobody has said otherwise.
+	use_service => $self->_use_blocklist_service($curproc),
 	service_url => $config->{ password_blocklist_service_url } || '',
 	timeout     => $config->{ password_blocklist_service_timeout } || 10,
     };
@@ -281,6 +292,29 @@ sub _change_password
 				   { _arg_limit => $n });
 	$curproc->log("changepassword: stored a password shorter than $n");
     }
+}
+
+
+# Descriptions: may fml ask the breach service about a new password?
+#               a configuration setting wins; otherwise the answer
+#               given at a terminal; otherwise no.
+#    Arguments: OBJ($self) OBJ($curproc)
+# Side Effects: none
+# Return Value: NUM(1 or 0)
+sub _use_blocklist_service
+{
+    my ($self, $curproc) = @_;
+    my $config = $curproc->config();
+
+    my $set = $config->{ use_password_blocklist_service } || '';
+    return 1 if $set eq 'yes';
+    return 0 if $set eq 'no';
+
+    use FML::Crypt;
+    my $crypt = new FML::Crypt;
+    my $dir   = $config->{ config_dir } || '';
+
+    return $crypt->blocklist_service_decision($dir) eq 'yes' ? 1 : 0;
 }
 
 
