@@ -216,6 +216,36 @@ sub _change_password
 	croak($r1);
     }
 
+    # XXX SP 800-63B: a verifier "SHALL compare the prospective secret
+    # XXX against a blocklist that contains known commonly used,
+    # XXX expected, or compromised passwords".  The context terms cost
+    # XXX nothing and catch the guess anybody would make first; the file
+    # XXX is whatever list the site points at; the breach service is off
+    # XXX unless the site turns it on, because reaching the network
+    # XXX while handling a mail is their decision to make.
+    my ($local_part) = split(/\@/, $address);
+    my $blk_args = {
+	terms => [ $config->{ ml_name },
+		   $config->{ ml_domain },
+		   $local_part,
+		   'fml',
+		   'password' ],
+	file  => $config->{ password_blocklist_file } || '',
+	use_service =>
+	    (($config->{ use_password_blocklist_service } || 'no') eq 'yes'),
+	service_url => $config->{ password_blocklist_service_url } || '',
+	timeout     => $config->{ password_blocklist_service_timeout } || 10,
+    };
+
+    my $why = $crypt->blocklist_reason($password, $blk_args);
+    if ($why) {
+	my $r1 = "password refused: $why";
+	$curproc->reply_message_nl('error.password_is_blocklisted', $r1,
+				   { _arg_reason => $why });
+	$curproc->logerror("changepassword: $r1");
+	croak($r1);
+    }
+
     my $member_map = $config->{ primary_admin_member_map };
     unless ($cred->has_address_in_map($member_map, $config, $address)) {
 	my $r  = "no such admin member";
@@ -263,9 +293,32 @@ sub rewrite_prompt
     my ($self, $curproc, $command_context, $rbuf) = @_;
 
     if (defined $rbuf) {
-	$$rbuf =~ s/^(.*(password|pass)\s+\S+).*/$1 ********/;
-	unless ($$rbuf =~ /\*\*\*\*\*\*\*\*/o) {
-	    $$rbuf =~ s/^(.*(password|pass)\s+).*/$1 ********/;
+	# XXX the first pattern keeps the word after the keyword, since in
+	# XXX "changepassword ADDRESS PASSWORD" that word is the address
+	# XXX and the password is what follows it.
+	# XXX
+	# XXX It was applied unconditionally, and process() above documents
+	# XXX a form with no address in it: a command mail may say
+	# XXX "admin changepassword PASSWORD" and the address is then taken
+	# XXX from From:.  For that form the word it kept was the password
+	# XXX itself, so the password was written out in full -- and the
+	# XXX " ********" it appended afterwards satisfied the guard below,
+	# XXX so the pattern that would have hidden it never ran.
+	# XXX
+	# XXX Decide which form this is before rewriting, rather than
+	# XXX rewriting and then asking whether it worked.
+	# XXX "passwd" has to be listed in its own right.  The alternation
+	# XXX was (password|pass) and the keyword is followed by \s+, so
+	# XXX "pass" cannot match inside "passwd" -- the next character is
+	# XXX "w".  makefml passwd $ML $ADDR $PASSWORD therefore reached
+	# XXX the log with the password in it and nothing blanked at all.
+	# XXX Longest alternative first, or "pass" matches the front of
+	# XXX "password" and the rest is kept.
+	if ($$rbuf =~ /^.*(?:password|passwd|pass)\s+\S+\s+\S/) {
+	    $$rbuf =~ s/^(.*(password|passwd|pass)\s+\S+).*/$1 ********/;
+	}
+	else {
+	    $$rbuf =~ s/^(.*(password|passwd|pass)\s+).*/$1 ********/;
 	}
     }
 }
