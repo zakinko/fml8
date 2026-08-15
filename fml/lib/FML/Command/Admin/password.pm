@@ -84,7 +84,12 @@ sub rewrite_prompt
     my ($self, $curproc, $command_context, $rbuf) = @_;
 
     if (defined $rbuf) {
-	$$rbuf =~ s/^(.*(password|pass)\s+).*/$1 ********/;
+	# XXX "passwd" has to be listed in its own right: the keyword is
+	# XXX followed by \s+, so "pass" cannot match inside "passwd" --
+	# XXX the next character is "w" -- and the buffer was then left
+	# XXX entirely alone, password and all.  Longest alternative
+	# XXX first, or "pass" matches the front of "password".
+	$$rbuf =~ s/^(.*(password|passwd|pass)\s+).*/$1 ********/;
     }
 }
 
