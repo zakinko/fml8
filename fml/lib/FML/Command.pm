@@ -123,8 +123,13 @@ sub _command_package
 {
     my ($self, $mode, $comname) = @_;
 
-    return undef unless defined $mode    && $mode    =~ /^(?:User|Admin)$/;
-    return undef unless defined $comname && $comname =~ /^[A-Za-z0-9_\-]+$/;
+    # XXX anchor with \z, not $.  $ also matches just before a trailing
+    # XXX newline, so "subscribe\n" passed this guard and reached the
+    # XXX eval with the newline still in the package name.  A command
+    # XXX name arrives from mail, where a trailing newline is the normal
+    # XXX case, so that is the input the guard is most likely to see.
+    return undef unless defined $mode    && $mode    =~ /\A(?:User|Admin)\z/;
+    return undef unless defined $comname && $comname =~ /\A[A-Za-z0-9_\-]+\z/;
 
     return "FML::Command::${mode}::${comname}";
 }
