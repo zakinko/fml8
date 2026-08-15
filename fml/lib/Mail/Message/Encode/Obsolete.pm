@@ -172,8 +172,22 @@ sub decode_mime_utf8_to_euc
     }
 
     $str =~ s/\n//g;
-    use Jcode;
-    return Jcode->new($str,"utf8")->euc;
+
+    # XXX this was Jcode->new($str, "utf8")->euc, the last call to Jcode
+    # XXX left in the tree.  Encode is core and does the same thing; the
+    # XXX decode is guarded because the string arrived in a mail header
+    # XXX claiming to be UTF-8 and may not be, in which case handing the
+    # XXX caller what it gave us beats handing it a row of question
+    # XXX marks.
+    use Encode ();
+    my $euc = eval {
+	Encode::encode('euc-jp',
+		       Encode::decode('utf8', my $copy = $str,
+				      Encode::FB_CROAK()),
+		       Encode::FB_CROAK());
+    };
+
+    return defined $euc ? $euc : $str;
 }
 
 

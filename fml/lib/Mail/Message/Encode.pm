@@ -48,15 +48,14 @@ sub new
     my ($type) = ref($self) || $self;
     my $me     = {};
 
-    # XXX we do not use Encode yet, so disabled anyway.
-    if (0 && $] > 5.008) {
-	eval q{ use Encode;};
-	croak("cannot load Encode") if $@;
-    }
-    elsif (1 && $] <= 5.006001) {
-	eval q{ use Jcode;};
-	croak("cannot load Jcode") if $@;
-    }
+    # XXX this used to choose between Encode and Jcode by perl version,
+    # XXX with the Encode branch disabled by a literal 0 so that Jcode
+    # XXX was always the answer -- and the Jcode branch was guarded by
+    # XXX $] <= 5.006001, so on any perl this century neither ran and
+    # XXX the load was left to the "use Jcode" further down.  Encode has
+    # XXX been in the core since 5.7.3; there is nothing left to choose.
+    eval q{ use Encode; use Encode::Guess; };
+    croak("cannot load Encode") if $@;
 
     # default language
     # XXX 'japanese' includes both Japanese and English.
@@ -68,11 +67,20 @@ sub new
 
 =head2 detect_code($str)
 
-speculate the code of $str string. $str is checked by
-Unicode::Japanese. Unicode::Japanes::getcode() can detect the follogin
-code: jis, sjis, euc, utf8, ucs2, ucs4, utf16, utf16-ge, utf16-le,
-utf32, utf32-ge, utf32-le, ascii, binary, sjis-imode, sjis-doti,
-sjis-jsky.
+speculate the code of $str string. $str is checked by C<Encode::Guess>,
+which is in the perl core. It returns one of C<jis>, C<sjis>, C<euc>,
+C<utf8>, C<ascii>, or C<unknown> when it cannot decide.
+
+Since C<Encode::Guess> cannot tell euc-jp from shiftjis unless it is
+told which encodings to consider, the candidates are fixed to euc-jp,
+shiftjis and 7bit-jis here.
+
+This used to call C<Unicode::Japanese::getcode()>, which named more
+encodings -- UTF-16 and the mobile phone Shift_JIS variants among them
+-- but could not decline: shown French or Korean written in UTF-8 it
+answered C<euc> and C<sjis> respectively. Nothing here asks about the
+encodings that were lost, and a wrong answer is what leads something
+downstream to convert a message that was never Japanese.
 
 C<CAUTION>: we handle only Japanese and English.
 
@@ -90,18 +98,74 @@ sub detect_code
 
     # XXX Japanese includes English.
     if ($lang eq 'japanese' || $lang eq 'english') {
-	# getcode() can detect the follogin code:
-	# jis, sjis, euc, utf8, ucs2, ucs4, utf16, utf16-ge, utf16-le,
-	# utf32, utf32-ge, utf32-le, ascii, binary, sjis-imode,
-	# sjis-doti, sjis-jsky.
-	use Unicode::Japanese;
-	my $obj = new Unicode::Japanese;
-	return $obj->getcode($str);
+	# XXX this used to call Unicode::Japanese::getcode(), which is
+	# XXX the only reason this module needed anything outside the
+	# XXX perl core.  Encode::Guess agrees with it on every Japanese
+	# XXX encoding -- euc, sjis, jis, utf8 and ascii all come back
+	# XXX the same -- and is better on everything else.
+	# XXX
+	# XXX getcode() answered "euc" for French written in UTF-8 and
+	# XXX "sjis" for Korean, because it has no way to say it does not
+	# XXX know: it always names a Japanese encoding.  Acting on that
+	# XXX and "converting" the message destroys it.  Encode::Guess
+	# XXX reads the French as undecidable and the Korean correctly as
+	# XXX utf8, and says "unknown" when it cannot tell.
+	# XXX
+	# XXX What is lost is the ability to name UTF-16 and the mobile
+	# XXX phone Shift_JIS variants; nothing here asks about either.
+	return $self->_guess_code($str);
     }
     else {
 	carp("Mail::Message::Encode: unknown language");
 	return 'unknown';
     }
+}
+
+
+# XXX Encode::Guess has to be told which encodings to consider: it
+# XXX cannot tell euc-jp from shiftjis on its own, since a string of
+# XXX either is a valid string of the other.  utf8 and ascii it decides
+# XXX without being asked.
+my @guess_suspects = qw(euc-jp shiftjis 7bit-jis);
+
+# XXX Encode's names for them against the ones this module has always
+# XXX returned, and which Mail::Message::Charset and the callers below
+# XXX still expect.
+my %guess_name_map = (
+		      'utf8'     => 'utf8',
+		      'euc-jp'   => 'euc',
+		      'shiftjis' => 'sjis',
+		      '7bit-jis' => 'jis',
+		      'ascii'    => 'ascii',
+		      );
+
+# XXX and the same table the other way, for handing a name to Encode.
+my %encode_name_map = (
+		       'utf8' => 'utf8',
+		       'euc'  => 'euc-jp',
+		       'sjis' => 'shiftjis',
+		       'jis'  => '7bit-jis',
+		       'ascii'=> 'ascii',
+		       );
+
+
+# Descriptions: speculate the encoding of $str, in the names this
+#               module has always used.
+#    Arguments: OBJ($self) STR($str)
+# Side Effects: none
+# Return Value: STR
+sub _guess_code
+{
+    my ($self, $str) = @_;
+
+    use Encode::Guess;
+    my $guess = Encode::Guess->guess($str, @guess_suspects);
+
+    # guess() hands back an error string, not an object, when it cannot
+    # decide.  "unknown" is what the rest of fml8 checks for.
+    return 'unknown' unless ref $guess;
+
+    return( $guess_name_map{ $guess->name } || 'unknown' );
 }
 
 
@@ -198,19 +262,70 @@ sub _jp_str_ref
 	my $code = $1 || $2;
 	$code    =~ tr/A-Z/a-z/;
 
-	use Jcode;
-	&Jcode::convert($str_ref, $code, $in_code);
-
-	return 1;
+	return $self->_recode($str_ref, $code, $in_code);
     }
     elsif ($out_code =~ /^(iso2022jp|iso-2022-jp)$/i) {
-	use Jcode;
-	&Jcode::convert($str_ref, 'jis', $in_code);
-
-	return 1;
+	return $self->_recode($str_ref, 'jis', $in_code);
     }
 
     return 0;
+}
+
+
+# Descriptions: convert $$str_ref from $in_code to $out_code in place.
+#               $in_code is a hint; when it is missing or not one we
+#               know, the string is examined instead.
+#
+#               XXX this replaces Jcode::convert(), which was the last
+#               XXX reason this module needed anything outside the perl
+#               XXX core.  Encode is core from 5.7.3 and agrees with
+#               XXX Jcode byte for byte on every conversion between
+#               XXX euc-jp, Shift_JIS and ISO-2022-JP; that is asserted
+#               XXX against fml4's own jcode.pl in t/30.
+#    Arguments: OBJ($self) STR_REF($str_ref) STR($out_code) STR($in_code)
+# Side Effects: update $$str_ref.
+# Return Value: NUM(1 or 0)
+sub _recode
+{
+    my ($self, $str_ref, $out_code, $in_code) = @_;
+
+    my $to = $encode_name_map{ $out_code } || return 0;
+
+    my $from = '';
+    $from = $encode_name_map{ lc($in_code) } if $in_code;
+    $from ||= $encode_name_map{ $self->_guess_code($$str_ref) } || '';
+
+    # XXX Jcode guessed too, and guessed a Japanese encoding whatever it
+    # XXX was looking at.  Leaving the string alone is the safer answer:
+    # XXX re-encoding from the wrong charset is how a French or Korean
+    # XXX message gets destroyed, and there is nothing to gain by it.
+    return 0 unless $from;
+
+    # ASCII survives every one of these unchanged, so there is nothing
+    # to do and nothing to get wrong.
+    return 1 if $from eq 'ascii';
+
+    use Encode;
+
+    # XXX decode() with a CHECK argument consumes what it converted out
+    # XXX of the buffer it was handed, so it must never be given the
+    # XXX caller's string: a conversion that then turns out to be
+    # XXX impossible would leave the caller holding an empty one.
+    my $octets  = $$str_ref;
+    my $decoded = eval { Encode::decode($from, $octets, Encode::FB_CROAK()) };
+    return 0 if $@;
+
+    # XXX and refuse a conversion the target charset cannot represent.
+    # XXX Korean or Russian read correctly as UTF-8 and then written as
+    # XXX euc-jp comes out as a row of question marks, which is worse
+    # XXX than leaving it: the reader with the right mail client could
+    # XXX have read the original, and nobody can read "???".  Jcode
+    # XXX substituted silently here.
+    my $encoded = eval { Encode::encode($to, $decoded, Encode::FB_CROAK()) };
+    return 0 if $@;
+
+    $$str_ref = $encoded;
+    return 1;
 }
 
 

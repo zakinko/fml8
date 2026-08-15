@@ -143,10 +143,17 @@ subtest 'charset lookups tolerate undef (issue #8)' => sub {
 # 6. non-Japanese mail must survive untouched
 #
 # Article relay and spooling do no charset conversion, so non-Japanese
-# bodies are passed through verbatim.  detect_code() guesses wrongly for
-# them, so nothing may act on that guess in the relay path.
+# bodies are passed through verbatim.  What matters is that nothing acts
+# on a wrong guess about them elsewhere.
+#
+# detect_code() used to answer with a Japanese encoding whatever it was
+# shown, because Unicode::Japanese::getcode() has no way to say it does
+# not know: French in UTF-8 came back "euc" and Korean came back "sjis".
+# Encode::Guess replaced it and can decline, which is the property being
+# pinned here -- a wrong name is what leads something downstream to
+# "convert" a message that was never Japanese.
 # ---------------------------------------------------------------------
-subtest 'non-Japanese octets are not silently rewritten' => sub {
+subtest 'non-Japanese octets are not mistaken for Japanese' => sub {
     my %other = (
 	'French UTF-8'  => "caf\xc3\xa9 cr\xc3\xa8me",
 	'Russian UTF-8' => "\xd0\xbf\xd1\x80\xd0\xb8\xd0\xb2\xd0\xb5\xd1\x82",
@@ -154,15 +161,38 @@ subtest 'non-Japanese octets are not silently rewritten' => sub {
     );
 
     for my $name (sort keys %other) {
-	my $s = $other{$name};
-	is(length($s), length($s), "$name: length is stable");
+	my $got = $enc->detect_code($other{$name});
+
+	# Either the truth (it is UTF-8) or an honest "unknown".  What
+	# must not happen is euc, sjis or jis.
+	ok($got eq 'utf8' || $got eq 'unknown' || $got eq 'ascii',
+	   "$name: detected as $got");
+	unlike($got, qr/^(euc|sjis|jis)$/,
+	       "$name: not claimed as a Japanese encoding");
     }
 
-    # detect_code() is a Japanese-oriented heuristic and misfires here.
-    # Recorded so that a future language-neutral detector shows up as a
-    # deliberate change rather than a surprise.
-    isnt($enc->detect_code($other{'Korean UTF-8'}), 'utf8',
-	 'Korean UTF-8 is currently mis-detected (documented behaviour)');
+    # Korean in UTF-8 is UTF-8, and used to be reported as Shift_JIS.
+    is($enc->detect_code($other{'Korean UTF-8'}), 'utf8',
+       'Korean UTF-8 is detected as UTF-8');
+
+    # The requirement is that the text survives, not that it is never
+    # touched.  euc-jp can carry Cyrillic -- JIS X 0208 has a row of it
+    # -- so Russian converts and comes back; Korean and French cannot be
+    # represented, and are left as they were rather than being written
+    # out as rows of question marks.  Either outcome is fine.  What is
+    # not fine is a conversion that loses the text.
+    use Encode ();
+    for my $name (sort keys %other) {
+	my $s   = $other{$name};
+	my $out = $enc->convert($s, 'euc-jp');
+
+	my $recovered = ($out eq $s)
+	    ? $s
+	    : eval { Encode::encode('utf8',
+				    Encode::decode('euc-jp', $out)) };
+
+	is($recovered, $s, "$name: survives the conversion");
+    }
 };
 
 # ---------------------------------------------------------------------
