@@ -14,6 +14,17 @@ use Carp;
 use Encode;
 use Encode::MIME::Header;
 
+# The charset of the "external printable form", which is what gets written
+# to local files such as "summary" and "log".  It is NOT used for mail
+# transfer.
+#
+# XXX-TODO: this should become UTF-8.  Existing installations have EUC-JP
+# XXX-TODO: files on disk already, so flipping it mixes encodings in one
+# XXX-TODO: archive; that migration has to be decided separately.  Callers
+# XXX-TODO: that know better can override per object with
+# XXX-TODO: Mail::Message::String::set_mime_charset().
+my $default_external_charset = "EUC-JP";
+
 =head1 NAME
 
 Mail::Message::Encode::Perl - Perl (character-oriented) based Encoding
@@ -59,15 +70,33 @@ sub new
 
 =head2 guess_encoding($str)
 
-speculate the encoding of $str string. $str is checked by
-Unicode::Japanese. Unicode::Japanes::getcode() can detect the following
-code: jis, sjis, euc, utf8, ucs2, ucs4, utf16, utf16-ge, utf16-le,
-utf32, utf32-ge, utf32-le, ascii, binary, sjis-imode, sjis-doti,
-sjis-jsky.
+speculate the encoding of $str string. it returns one of
+C<utf8>, C<euc>, C<sjis>, C<jis>, C<ascii>,
+or C<unknown> if the encoding cannot be decided.
+
+$str is checked by C<Encode::Guess>, which is in the perl core.
+Since C<Encode::Guess> cannot tell euc-jp from shiftjis unless it is
+told which encodings to consider, the candidates are fixed to
+euc-jp, shiftjis and 7bit-jis here.
 
 C<CAUTION>: Hmm, we suppose we handle only Japanese and English here...
 
 =cut
+
+
+# XXX Encode::Guess needs to be told which encodings to consider, it
+# XXX cannot tell euc-jp from shiftjis on its own.  The names it returns
+# XXX are Encode's, so map them back to the ones this package has always
+# XXX returned.
+my @guess_suspects = qw(euc-jp shiftjis 7bit-jis);
+
+my %guess_name_map = (
+		      'utf8'     => 'utf8',
+		      'euc-jp'   => 'euc',
+		      'shiftjis' => 'sjis',
+		      '7bit-jis' => 'jis',
+		      'ascii'    => 'ascii',
+		      );
 
 
 # Descriptions: speculate code of $str string.
@@ -78,9 +107,18 @@ sub guess_encoding
 {
     my ($self, $str) = @_;
 
-    use Unicode::Japanese;
-    my $obj = new Unicode::Japanese;
-    return $obj->getcode($str);
+    # XXX this used to call Unicode::Japanese, which is the only reason
+    # XXX this package needed anything outside the perl core.  Encode
+    # XXX and Encode::Guess are both core and agree with it on utf8,
+    # XXX euc-jp, shiftjis, iso-2022-jp and ascii.
+    use Encode::Guess;
+    my $guess = Encode::Guess->guess($str, @guess_suspects);
+
+    # guess() returns an error string, not an object, when it cannot
+    # decide. "unknown" is what the rest of fml8 expects in that case.
+    return 'unknown' unless ref $guess;
+
+    return( $guess_name_map{ $guess->name } || 'unknown' );
 }
 
 
@@ -132,17 +170,19 @@ sub mime_header_decode
 }
 
 
-# Descriptions: decode mime header format string and return it as 
+# Descriptions: decode mime header format string and return it as
 #               printable format not the Perl internal one.
-#    Arguments: OBJ($self) STR($pef_str)
+#               $code is the charset to emit. it defaults to
+#               $default_external_charset if not given.
+#    Arguments: OBJ($self) STR($pef_str) STR($code)
 # Side Effects: none
 # Return Value: STR
 sub mime_header_decode_as_octets
 {
-    my ($self, $pef_str) = @_;
+    my ($self, $pef_str, $code) = @_;
 
-    # XXX-TODO hard-coded now anyway.
-    my $code = "EUC-JP";
+    # XXX-TODO: see the note on $default_external_charset above.
+    $code ||= $default_external_charset;
     encode($code, decode("MIME-Header", $pef_str));
 }
 
@@ -154,17 +194,20 @@ convert the given Perl internal form to the external printable one.
 =cut
 
 
-# Descriptions: convert the given Perl internal form 
+# Descriptions: convert the given Perl internal form
 #               to the external printable one.
-#    Arguments: OBJ($self) STR($pif_str)
+#               $code is the charset to emit. it defaults to
+#               $default_external_charset if not given.
+#    Arguments: OBJ($self) STR($pif_str) STR($code)
 # Side Effects: none
 # Return Value: STR
 sub convert_from_internal_to_external_form
 {
-    my ($self, $pif_str) = @_;
+    my ($self, $pif_str, $code) = @_;
 
-    # XXX-TODO hard-coded now anyway.
-    my $code = "EUC-JP";
+    # XXX-TODO: the default should become UTF-8, see the note on
+    # XXX-TODO: $default_external_charset above.
+    $code ||= $default_external_charset;
     utf8::is_utf8($pif_str) ? encode($code, $pif_str) : $pif_str;
 }
 

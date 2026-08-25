@@ -292,7 +292,11 @@ sub _command_process_loop
 	$curproc->logerror("cannot find plain/text part");
 	return undef;
     }
-    my $comlines  = $msg->message_text_as_array_ref();
+    # XXX message_text() hands back the part as it stands on the wire, so
+    # XXX a mail sent with Content-Transfer-Encoding: base64 used to give
+    # XXX us one line of base64 as "the command".  Nothing matched, and
+    # XXX the mail was isolated instead of obeyed.  See fml8 issue #5.
+    my $comlines  = $curproc->_command_lines($msg);
     my $context   = {};
 
     # firstly, prompt (for politeness :) to show processing ...
@@ -359,6 +363,106 @@ sub _command_process_loop
 	    last COMMAND;
 	}
     }
+}
+
+
+# Descriptions: return the command lines in $msg as ARRAY_REF.
+#               the body is decoded first if it is mime encoded, since
+#               message_text() returns the part as it stands on the wire,
+#               and then brought to one charset, so that the same command
+#               written twice is the same command.
+#    Arguments: OBJ($curproc) OBJ($msg)
+# Side Effects: none
+# Return Value: ARRAY_REF
+sub _command_lines
+{
+    my ($curproc, $msg) = @_;
+    my $encoding = $msg->encoding_mechanism() || '';
+    my $buf      = $msg->message_text();
+
+    return [] unless defined $buf;
+
+    # 7bit, 8bit and binary are not transformations, so nothing to undo.
+    if ($encoding eq 'base64' || $encoding eq 'quoted-printable') {
+	$curproc->logdebug("command: decode $encoding body");
+
+	use Mail::Message::Encode;
+	my $encode = new Mail::Message::Encode;
+	if ($encoding eq 'base64') {
+	    $buf = $encode->raw_decode_base64($buf);
+	}
+	else {
+	    $buf = $encode->raw_decode_qp($buf);
+	}
+    }
+
+    $buf = _canonical_form($curproc, $msg, $buf);
+
+    my (@buf) = split(/\n/, $buf);
+    return \@buf;
+}
+
+
+# Descriptions: bring $buf to one charset, so that the same command
+#               written twice is the same command.
+#
+#               Nothing used to convert a command body: the octets were
+#               used as they arrived.  That is fine while a command is
+#               ASCII and wrong as soon as it is not, because the same
+#               characters arrive as different octets depending on what
+#               the sender's mail program chose -- and two mails from
+#               one person are not required to agree.  A password set
+#               from a message written in UTF-8 could not be presented
+#               from one written in ISO-2022-JP, which is a way to be
+#               locked out of your own list.
+#
+#               Decoding from the charset the part declares and encoding
+#               as UTF-8 makes those the same.  NFKC is applied as well,
+#               which is what SP 800-63B asks of a verifier that accepts
+#               characters outside ASCII.
+#
+#               A part that lies about its charset, or does not say,
+#               keeps the octets it arrived with: that is what happened
+#               before this and is the safe thing to fall back to.
+#    Arguments: OBJ($curproc) OBJ($msg) STR($buf)
+# Side Effects: none
+# Return Value: STR
+sub _canonical_form
+{
+    my ($curproc, $msg, $buf) = @_;
+
+    return $buf unless defined $buf && length $buf;
+
+    # Nothing to do for a body that is already ASCII, which is almost
+    # all of them; and no reason to risk a conversion on it either.
+    return $buf unless $buf =~ /[^\x00-\x7f]/;
+
+    my $charset = eval { $msg->charset() } || '';
+    $charset =~ s/^\s+//;
+    $charset =~ s/\s+$//;
+    unless ($charset) {
+	$curproc->logdebug("command: no charset declared, using octets as they are");
+	return $buf;
+    }
+
+    my $out = eval {
+	require Encode;
+	require Unicode::Normalize;
+
+	# XXX decode() with a CHECK argument consumes the buffer it is
+	# XXX handed, so it must never be given the caller's string.
+	my $octets = $buf;
+	my $chars  = Encode::decode($charset, $octets, Encode::FB_CROAK());
+	Encode::encode('utf-8', Unicode::Normalize::NFKC($chars));
+    };
+
+    if ($@ || ! defined $out) {
+	$curproc->logdebug("command: cannot read body as $charset, using octets as they are");
+	return $buf;
+    }
+
+    $curproc->logdebug("command: body read as $charset");
+    return $out;
 }
 
 

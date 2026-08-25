@@ -1,0 +1,271 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  compile:
+    name: "compile check (perl ${{ matrix.perl }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: [ '5.26', '5.32', '5.36', '5.38', '5.40' ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up perl ${{ matrix.perl }}
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+
+      - name: perl version
+        run: perl -V:version -V:archname
+
+      # CGI.pm left the core in 5.22 and GD was never in it.  Without
+      # them the compile check reports "optional module missing" and walks
+      # past the whole FML/CGI subsystem -- 16 modules that then get no
+      # syntax check at all.  Install them so the skip list stays short
+      # enough to read.
+      - name: install the modules fml8 needs but perl no longer ships
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libgd-dev
+          command -v cpanm >/dev/null || curl -sL https://cpanmin.us | perl - App::cpanminus
+          cpanm --notest --quiet CGI GD
+
+      # Every module under fml/lib must at least compile.  cpan/lib goes
+      # after the core on -I, so that a module the host has installed
+      # wins over the bundled copy.  It used to matter more than that:
+      # cpan/lib carried File::Spec 0.7, which lacks splitdir() and
+      # splitpath(), and putting it first broke fml8 at runtime.  That
+      # copy is gone now, but the order is still the right way round.
+      - name: compile every module
+        run: |
+          set -u
+          fail=0
+          skipped=""
+          for f in $(find fml/lib -name '*.pm' | sort); do
+            if ! out=$(perl -Ifml/lib -I. -Icpan/lib -Iimg/lib -c "$f" 2>&1); then
+              case "$out" in
+                *"Can't locate "*)
+                  echo "SKIP (optional module missing): $f"
+                  echo "$out" | head -1
+                  skipped="$skipped $f"
+                  ;;
+                *)
+                  echo "FAIL: $f"
+                  echo "$out"
+                  echo "::error file=$f::$(echo "$out" | head -1)"
+                  fail=$((fail+1))
+                  ;;
+              esac
+            fi
+          done
+          # A skip is a module nobody compiled.  Say which, so the blind
+          # spot cannot grow quietly.
+          if [ -n "$skipped" ]; then
+            echo "::warning::not compile checked:$skipped"
+          fi
+          echo "failed: $fail"
+          test "$fail" -eq 0
+
+  test:
+    name: "unit tests (perl ${{ matrix.perl }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: [ '5.26', '5.36', '5.40' ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up perl ${{ matrix.perl }}
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+
+      - name: run t/*.t
+        run: prove -v t/
+
+  removed-syntax:
+    name: "guard against perl syntax removed upstream"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # grep(1) decides a file is binary as soon as it meets an octet
+      # that is not valid in the locale's encoding, and then skips it
+      # without saying so.  Three modules under fml/lib are EUC-JP, and
+      # this guard has never looked at any of them.
+      #
+      # That is not hypothetical.  When the bundled Jcode was removed,
+      # the one module still carrying "use Jcode" was
+      # Mail::Message::Language::Japanese::Subject -- EUC-JP, and
+      # therefore invisible here.  A guard that silently cannot see part
+      # of the tree is worse than no guard, because it reports success.
+      #
+      # -a makes grep read every file as text.  The step below asserts
+      # that nothing is being skipped, so the day a fourth such file
+      # appears this does not quietly go back to being partial.
+      - name: check that the scan can see the whole tree
+        run: |
+          set -u
+          all=$(find fml/ cpan/lib/ t/ \
+                  \( -name '*.pm' -o -name '*.pl' -o -name '*.t' \) | sort)
+          seen=$(grep -rlI '' \
+                  --include='*.pm' --include='*.pl' --include='*.t' \
+                  fml/ cpan/lib/ t/ 2>/dev/null | sort)
+          skipped=$(comm -23 <(echo "$all") <(echo "$seen"))
+          n=$(printf '%s' "$skipped" | grep -c . || true)
+          echo "files grep(1) would skip as binary: $n"
+          if [ "$n" -gt 0 ]; then
+            echo "$skipped" | sed 's/^/  /'
+            echo "::notice::$n files are not plain text; the scans below use grep -a"
+          fi
+
+      # These constructs are fatal on modern perl.  They keep creeping
+      # back in from the fml4 era, so fail the build on sight.
+      - name: scan for defined(@array) / defined(%hash) / $* / $[
+        run: |
+          set -u
+          rc=0
+          if grep -arnE 'defined\s*\(?\s*[@%][A-Za-z_$]' \
+               --include='*.pm' --include='*.pl' --include='*.t' fml/ cpan/lib/ t/ 2>/dev/null \
+               | grep -vE ':[[:space:]]*#'; then
+            echo "::error::defined(@array)/defined(%hash) is fatal since perl 5.22"
+            rc=1
+          fi
+          if grep -arnE '(^|[^$\\])\$\*\s*=' --include='*.pm' --include='*.pl' fml/ 2>/dev/null \
+               | grep -vE ':[[:space:]]*#'; then
+            echo "::error::\$* was removed in perl 5.30"
+            rc=1
+          fi
+          if grep -arnE '(^|[^$\\])\$\[[[:space:]]*=' --include='*.pm' --include='*.pl' fml/ 2>/dev/null \
+               | grep -vE ':[[:space:]]*#'; then
+            echo "::error::\$[ was removed in perl 5.30"
+            rc=1
+          fi
+          exit $rc
+
+      # The shape of one of the bugs fixed here: "$x |= 'literal'" is a
+      # string bitwise or, not a default assignment, so 'jis' | 'euc-jp'
+      # became 'o}s-jp' and the charset conversion was silently skipped.
+      # ||= was meant.  The lookbehind is the whole trick -- ||= contains
+      # |= -- and here it is a character class, since this has to work in
+      # a POSIX ERE.
+      #
+      # The other shape, open($fh, $fh), needs a backreference and so is
+      # not expressible portably in ERE; t/08 scans for it in perl, along
+      # with "my $x = ... if COND", and does it over source with POD and
+      # string literals stripped rather than over raw lines.
+      - name: scan for the string bitwise-or that was meant to be a default
+        run: |
+          set -u
+          if grep -arnE "[^|$]\|=[[:space:]]*['\"]" \
+               --include='*.pm' --include='*.pl' fml/ 2>/dev/null \
+               | grep -vE ':[[:space:]]*#'; then
+            echo "::error::|= against a string literal is a bitwise or, not a default; use ||="
+            exit 1
+          fi
+
+  bundled-modules:
+    name: "the bundled copies are the ones that get used"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.40'
+
+      # Everywhere else cpan/lib goes last on @INC, so a module the host
+      # installed wins.  An installation with no MailTools of its own
+      # gets the bundled copy instead, and that is the case nothing
+      # exercises unless it is asked for: put cpan/lib first and run the
+      # tests that read it.
+      #
+      # cpan/lib held MailTools 1.17 while cpan/dist held 2.19 beside
+      # it, so fml8 ran 1998 code for nineteen years without anyone
+      # noticing, because nothing ever loaded the bundled copy in anger.
+      - name: compile every bundled module
+        run: |
+          set -u
+          fail=0
+          for f in $(find cpan/lib -name '*.pm' | sort); do
+            if ! out=$(perl -Icpan/lib -Ifml/lib -I. -c "$f" 2>&1); then
+              echo "FAIL: $f"
+              echo "$out" | head -3
+              echo "::error file=$f::$(echo "$out" | head -1)"
+              fail=$((fail+1))
+            fi
+          done
+          echo "failed: $fail"
+          test "$fail" -eq 0
+
+      - name: run the tests with the bundled copies first on @INC
+        run: |
+          set -u
+          PERL5LIB=cpan/lib prove t/
+
+  euc-jp:
+    name: "the EUC-JP files are still EUC-JP"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Some of this tree is EUC-JP and must stay that way: fml/doc/ja
+      # and a handful of modules with Japanese comments.  An editor that
+      # transcodes on save turns those into UTF-8 replacement characters
+      # and rewrites lines that had no business changing -- 46 of them in
+      # one file, once.
+      #
+      # A file that is neither valid UTF-8 nor valid EUC-JP is the sign
+      # that a conversion went half way.
+      - name: check the Japanese files decode as EUC-JP
+        run: |
+          set -u
+          perl -e '
+            use strict;
+            use warnings;
+            use Encode qw(decode);
+
+            my @bad = ();
+            my @euc = ();
+
+            my @f = `find fml/ cpan/lib/ t/ -type f \\( -name "*.pm" -o -name "*.pl" -o -name "*.t" \\)`;
+            chomp @f;
+
+            for my $p (@f) {
+                open(my $fh, "<", $p) or next;
+                binmode($fh);
+                local $/ = undef;
+                my $s = <$fh>;
+                close($fh);
+                next unless defined $s;
+                next unless $s =~ /[\x80-\xff]/;
+
+                my $is_utf8 = eval { decode("UTF-8", $s, Encode::FB_CROAK); 1 } ? 1 : 0;
+                my $is_euc  = eval { decode("EUC-JP", $s, Encode::FB_CROAK); 1 } ? 1 : 0;
+
+                push @euc, $p if $is_euc && !$is_utf8;
+                push @bad, $p unless $is_utf8 || $is_euc;
+
+                # The replacement character is what a bad transcode
+                # leaves behind, and it is valid UTF-8, so nothing else
+                # here would notice it.
+                push @bad, "$p (contains U+FFFD)" if $s =~ /\xef\xbf\xbd/;
+            }
+
+            printf "EUC-JP files: %d\n", scalar(@euc);
+            print "  $_\n" for @euc;
+
+            if (@bad) {
+                print "::error::not decodable as UTF-8 or EUC-JP:\n";
+                print "  $_\n" for @bad;
+                exit 1;
+            }
+          '

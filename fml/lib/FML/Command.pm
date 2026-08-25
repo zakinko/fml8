@@ -111,6 +111,30 @@ sub get_mode
 }
 
 
+# Descriptions: build "FML::Command::${mode}::${comname}" safely.
+#               $comname comes from the incoming mail, so it must never
+#               reach the eval qq{ use $pkg } below unvalidated: a name
+#               such as 'subscribe;system("...");1;#' would otherwise be
+#               compiled and run as perl code.
+#    Arguments: OBJ($self) STR($mode) STR($comname)
+# Side Effects: none
+# Return Value: STR or undef
+sub _command_package
+{
+    my ($self, $mode, $comname) = @_;
+
+    # XXX anchor with \z, not $.  $ also matches just before a trailing
+    # XXX newline, so "subscribe\n" passed this guard and reached the
+    # XXX eval with the newline still in the package name.  A command
+    # XXX name arrives from mail, where a trailing newline is the normal
+    # XXX case, so that is the input the guard is most likely to see.
+    return undef unless defined $mode    && $mode    =~ /\A(?:User|Admin)\z/;
+    return undef unless defined $comname && $comname =~ /\A[A-Za-z0-9_\-]+\z/;
+
+    return "FML::Command::${mode}::${comname}";
+}
+
+
 =head1 METHODS
 
 =head2 rewrite_prompt($curproc, $command_context, $rbuf)
@@ -137,7 +161,7 @@ sub rewrite_prompt
     my $command = undef;
     my $comname = $command_context->get_cooked_command();
     my $mode    = $self->get_mode($curproc, $command_context);
-    my $pkg     = "FML::Command::${mode}::${comname}";
+    my $pkg     = $self->_command_package($mode, $comname) || return;
 
     eval qq{ use $pkg; \$command = new $pkg;};
     unless ($@) {
@@ -178,7 +202,7 @@ sub notice_cc_recipient
     my $command = undef;
     my $comname = $command_context->get_cooked_command();
     my $mode    = $self->get_mode($curproc, $command_context);
-    my $pkg     = "FML::Command::${mode}::${comname}";
+    my $pkg     = $self->_command_package($mode, $comname) || return [];
 
     eval qq{ use $pkg; \$command = new $pkg;};
     unless ($@) {
@@ -209,12 +233,14 @@ sub verify_syntax
     my $command = undef;
     my $comname = $command_context->get_cooked_command();
     my $mode    = $self->get_mode($curproc, $command_context);
-    my $pkg     = "FML::Command::${mode}::${comname}";
+    my $pkg     = $self->_command_package($mode, $comname);
 
-    eval qq{ use $pkg; \$command = new $pkg;};
-    unless ($@) {
-	if ($command->can('verify_syntax')) {
-	    return $command->verify_syntax($curproc, $command_context);
+    if (defined $pkg) {
+	eval qq{ use $pkg; \$command = new $pkg;};
+	unless ($@) {
+	    if ($command->can('verify_syntax')) {
+		return $command->verify_syntax($curproc, $command_context);
+	    }
 	}
     }
 
@@ -294,7 +320,11 @@ sub AUTOLOAD
 
     my $comname = $AUTOLOAD;
     $comname =~ s/.*:://;
-    my $pkg = "FML::Command::${mode}::${comname}";
+    my $pkg = $self->_command_package($mode, $comname);
+    unless (defined $pkg) {
+	$curproc->logerror("insecure command name: <$comname>");
+	croak("insecure command name");
+    }
 
     $curproc->log("load $pkg") if $myname eq 'loader'; # debug
 

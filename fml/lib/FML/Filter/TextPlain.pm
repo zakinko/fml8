@@ -35,8 +35,16 @@ constructor.
 
 
 # default rules for convenience.
-my (@default_rules) = qw(reject_not_iso2022jp_japanese_string
-			 reject_null_mail_body
+#
+# XXX reject_not_iso2022jp_japanese_string is NOT enabled by default any
+# XXX more.  Despite its name it rejects *every* non-ASCII body, not just
+# XXX non-ISO-2022-JP Japanese, so it also blocked e.g. UTF-8 French mail.
+# XXX Nowadays virtually all Japanese mail is UTF-8, so the rule rejected
+# XXX almost everything.  Article relay and spooling do no charset
+# XXX conversion at all, so accepting other charsets is safe.
+# XXX An ML that really wants ISO-2022-JP only can put it back with
+# XXX   article_text_plain_filter_rules += reject_not_iso2022jp_japanese_string
+my (@default_rules) = qw(reject_null_mail_body
 			 reject_one_line_message
 			 reject_old_fml_command_syntax
 			 reject_invalid_fml_command_syntax

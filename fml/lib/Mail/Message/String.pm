@@ -125,17 +125,21 @@ return the internal data as the external form string.
 =cut
 
 # Descriptions: return the internal data as the external form string.
+#               the charset is the one set by set_mime_charset() if any,
+#               the default of Mail::Message::Encode::Perl otherwise.
 #    Arguments: OBJ($self)
 # Side Effects: none
 # Return Value: STR
 sub as_external_form
 {
     my ($self) = @_;
-    
-    my $str = $self->{ _string } || '';
+
+    my $str     = $self->{ _string } || '';
+    my $charset = $self->{ _enforced_mime_charset } || '';
+
     use Mail::Message::Encode::Perl;
     my $encoder = new Mail::Message::Encode::Perl;
-    $encoder->convert_from_internal_to_external_form($str);
+    $encoder->convert_from_internal_to_external_form($str, $charset);
 }
 
 
@@ -143,7 +147,9 @@ sub as_external_form
 
 =head2 set_mime_charset($charset)
 
-dummy now.
+enforce the charset of the external form.
+if not set, as_external_form() uses the default charset of
+C<Mail::Message::Encode::Perl>.
 
 =head2 get_mime_charset()
 
@@ -152,15 +158,20 @@ return charset information.
 =cut
 
 
-# Descriptions: dummy now.
-#               enforce charset to handle.
+# Descriptions: enforce charset to handle.
 #    Arguments: OBJ($self) STR($charset)
-# Side Effects: none
+# Side Effects: update $self.
 # Return Value: none
 sub set_mime_charset
 {
     my ($self, $charset) = @_;
 
+    # XXX this used to be a dummy, so as_external_form() had no way to
+    # XXX emit anything but the hard-coded default.  We only remember
+    # XXX the value here; the charset speculated from the MIME encoded
+    # XXX word by get_mime_charset() is the charset of the *incoming*
+    # XXX string and must not be confused with this one.
+    $self->{ _enforced_mime_charset } = $charset || '';
 }
 
 

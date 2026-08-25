@@ -2038,15 +2038,24 @@ sub langinfo_set_language_hint
 
 
 # Descriptions: get the current charset hint.
+#               return undef if there is no PCB yet.
 #    Arguments: OBJ($curproc) STR($category)
 # Side Effects: none
-# Return Value: none
+# Return Value: STR or undef
 sub langinfo_get_language_hint
 {
     my ($curproc, $category) = @_;
     my $pcb = $curproc->pcb();
 
-    $pcb->get("language_hint", $category);
+    # XXX this called $pcb->get() with no check, so it died with "Can't
+    # XXX call method get on an undefined value" whenever there was no
+    # XXX PCB yet.  langinfo_get_charset() is the caller and guards its
+    # XXX own use of the PCB with defined($pcb), then reaches this one
+    # XXX in the branch it takes when that guard fails -- so the routine
+    # XXX defended against a missing PCB and died of it two lines later.
+    return undef unless defined $pcb;
+
+    return $pcb->get("language_hint", $category);
 }
 
 
@@ -2118,7 +2127,17 @@ sub langinfo_get_charset
 	    use Mail::Message::Charset;
 	    my $c    = new Mail::Message::Charset;
 	    my $hint = $curproc->langinfo_get_language_hint($category);
-	    $charset = $c->language_to_message_charset($hint);
+
+	    # XXX the PCB has no "language_hint" for this category in some
+	    # XXX contexts (the CGI path is one, see fml8 issue #8), so
+	    # XXX $hint is undef here.  Fall back to $default instead of
+	    # XXX passing undef down into lc().
+	    if (defined $hint && $hint ne '') {
+		$charset = $c->language_to_message_charset($hint);
+	    }
+	    else {
+		$charset = $default;
+	    }
 	}
     }
 

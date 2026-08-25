@@ -183,16 +183,41 @@ my %message_charset_map  = (
 			    'english'  => 'us-ascii',
 			    );
 
+# XXX the keys here must include the names that actually turn up in
+# XXX Content-Type: and in =?...?= encoded words, not only the short
+# XXX internal ones.  "Shift_JIS" is the registered name and is what
+# XXX mail says; "sjis" is our own shorthand.  A name missing here
+# XXX resolves to no language at all, so the message gets no language
+# XXX hint and falls back to the default charset.
+#
+# XXX utf-8 is deliberately absent: it says nothing about the language,
+# XXX and mapping it to "ja" would push non-Japanese mail through the
+# XXX euc-jp conversion.  Representing it needs the charset model to
+# XXX stop being language-keyed.
 my %rev_message_charset_map  = (
-				'euc-jp'      => 'ja',
-				'euc'         => 'ja',
-				'sjis-jp'     => 'ja',
-				'sjis'        => 'ja',
-				'jis-jp'      => 'ja',
-				'jis'         => 'ja',
-				'iso-2022-jp' => 'ja',
+				'euc-jp'        => 'ja',
+				'euc_jp'        => 'ja',
+				'x-euc-jp'      => 'ja',
+				'euc'           => 'ja',
 
-				'us-ascii'    => 'en',
+				'shift_jis'     => 'ja',
+				'shift-jis'     => 'ja',
+				'x-sjis'        => 'ja',
+				'cp932'         => 'ja',
+				'windows-31j'   => 'ja',
+				'sjis-jp'       => 'ja',
+				'sjis'          => 'ja',
+
+				'iso-2022-jp'   => 'ja',
+				'iso-2022-jp-1' => 'ja',
+				'iso-2022-jp-2' => 'ja',
+				'iso-2022-jp-3' => 'ja',
+				'csiso2022jp'   => 'ja',
+				'jis-jp'        => 'ja',
+				'jis'           => 'ja',
+
+				'us-ascii'      => 'en',
+				'ascii'         => 'en',
 				);
 
 
@@ -239,6 +264,11 @@ sub language_to_internal_charset
 {
     my ($self, $language) = @_;
 
+    # XXX $language may be undef when the caller has no hint at all
+    # XXX (e.g. the CGI path has no "language_hint" in the PCB);
+    # XXX lc(undef) warns under -w.  See fml8 issue #8.
+    return '' unless defined $language;
+
     return( $internal_charset_map{ lc($language) } || '' );
 }
 
@@ -251,6 +281,11 @@ sub language_to_message_charset
 {
     my ($self, $language) = @_;
 
+    # XXX $language may be undef when the caller has no hint at all
+    # XXX (e.g. the CGI path has no "language_hint" in the PCB);
+    # XXX lc(undef) warns under -w.  See fml8 issue #8.
+    return '' unless defined $language;
+
     return( $message_charset_map{ lc($language) } || '' );
 }
 
@@ -262,6 +297,11 @@ sub language_to_message_charset
 sub message_charset_to_language
 {
     my ($self, $charset) = @_;
+
+    # XXX $charset may be undef when the caller has no hint at all
+    # XXX (e.g. the CGI path has no "language_hint" in the PCB);
+    # XXX lc(undef) warns under -w.  See fml8 issue #8.
+    return '' unless defined $charset;
 
     return( $rev_message_charset_map{ lc($charset) } || '' );
 }

@@ -109,6 +109,34 @@ sub main::Bootstrap2
     #     installer should merget the changes except for $default_*.
     $main_cf = _overload_main_cf($main_cf);
 
+    # 0.4 the one question fml asks.
+    #
+    # XXX Whether it may check a new password against Have I Been
+    # XXX Pwned's breach list, which means an HTTPS request from this
+    # XXX host.  Put once, the first time a command line tool runs
+    # XXX after this release is installed, and only at a terminal --
+    # XXX mail arrives without one, so nothing is ever asked while
+    # XXX handling a message, and an installation nobody has answered
+    # XXX for simply does not use the service.
+    # XXX
+    # XXX That is the point of asking here rather than defaulting: fml
+    # XXX does not reach a third party until somebody at a keyboard has
+    # XXX said it may.
+    # XXX This runs before the options are parsed and before the command
+    # XXX is dispatched, so it would otherwise interrogate somebody who
+    # XXX only typed "makefml help".  Asking for usage is not the moment
+    # XXX to be asked a question, and neither is asking for the version.
+    if (($myname eq 'makefml' || $myname eq 'fml') &&
+	(-t STDIN && -t STDOUT) &&
+	! _is_usage_request(\@ARGV)) {
+	eval q{
+	    use FML::Crypt;
+	    my $crypt = new FML::Crypt;
+	    $crypt->ask_blocklist_service($main_cf->{ config_dir });
+	};
+	print STDERR $@ if $@;
+    }
+
     # 1.0 $main_cf is already o.k. here.
     # 1.1 parse command line options (preliminary)
     {
@@ -223,6 +251,29 @@ sub main::Bootstrap2
 #    Arguments: HASH_REF($main_cf) STR($s)
 # Side Effects: save message to a log file if could
 # Return Value: none
+# Descriptions: is this invocation only asking what the program does?
+#               "makefml" with nothing after it prints usage, and so do
+#               help, --help, -h and the version options.  None of them
+#               is a moment to put a question to somebody.
+#    Arguments: ARRAY_REF($argv)
+# Side Effects: none
+# Return Value: NUM(1 or 0)
+sub _is_usage_request
+{
+    my ($argv) = @_;
+
+    return 1 unless ref($argv) eq 'ARRAY';
+    return 1 unless @$argv;
+
+    for my $a (@$argv) {
+	next unless defined $a;
+	return 1 if $a =~ /^(?:help|-h|--help|-v|--version|--usage)$/i;
+    }
+
+    return 0;
+}
+
+
 sub __log
 {
     my ($main_cf, $s) = @_;
@@ -230,12 +281,22 @@ sub __log
     eval q{
 	use File::Spec;
 	use FileHandle;
+
+	# XXX main.cf defines $default_ml_home_prefix and no ML is chosen
+	# XXX yet at bootstrap, so $ml_home_prefix was always undef here.
+	# XXX catfile() then warned "Use of uninitialized value in
+	# XXX subroutine entry" and returned "/@log.crit@", which is not
+	# XXX writable, so the reason why bootstrap failed was lost and
+	# XXX the caller saw an empty page with no explanation.
 	my $dir  = $main_cf->{ ml_home_prefix };
-	my $logf = File::Spec->catfile($dir, '@log.crit@');
-	my $wh   = new FileHandle ">> $logf";
-	if (defined $wh) {
-	    print $wh time, "\t", $s, "\n";
-	    $wh->close;
+	$dir   ||= $main_cf->{ default_ml_home_prefix };
+	if ($dir) {
+	    my $logf = File::Spec->catfile($dir, '@log.crit@');
+	    my $wh   = new FileHandle ">> $logf";
+	    if (defined $wh) {
+		print $wh time, "\t", $s, "\n";
+		$wh->close;
+	    }
 	}
     };
 }

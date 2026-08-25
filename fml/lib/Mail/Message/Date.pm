@@ -80,6 +80,17 @@ sub new
     }
 
     my $date_set = _date($time);
+
+    # XXX remember the time we were built for, as set() does.  Without
+    # XXX it the two documented ways of reading this object disagreed:
+    # XXX the hash form ($date->{ log_file_style }) held the strings
+    # XXX _date() had just built for $time, but every accessor method
+    # XXX recomputes from "$time || $self->{ _default_unixtime } || time"
+    # XXX and that key was never set here, so $date->log_file_style()
+    # XXX silently answered for the current time instead.  The SYNOPSIS
+    # XXX shows exactly that call after "new Mail::Message::Date time".
+    $date_set->{ _default_unixtime } = $time;
+
     return bless $date_set, $self;
 }
 

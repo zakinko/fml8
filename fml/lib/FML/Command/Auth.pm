@@ -215,11 +215,43 @@ sub check_admin_member_password
 		    $user_entry_found = 1;
 
 		    # 1.2 password match ?
-		    my $p_input = $crypt->unix_crypt($password, $p_infile);
-		    if ($p_infile eq $p_input) {
+		    #
+		    # XXX verify() reads the scheme out of the stored
+		    # XXX string, so this answers both for passwords
+		    # XXX hashed by this version and for the traditional
+		    # XXX crypt(3) ones every earlier fml8 wrote.  It
+		    # XXX used to hash and compare here directly, which
+		    # XXX only worked for the latter.
+		    if ($crypt->verify($password, $p_infile)) {
 			if ($debug) {
 			    $curproc->log("$function: password matched");
 			}
+
+			# XXX This password is stored in the scheme every
+			# XXX fml8 before this one used, which hashes the
+			# XXX first eight characters and discards the
+			# XXX rest.  So whatever its owner set, only
+			# XXX eight of it is in use, and the eight are
+			# XXX all an attacker has to find.  Say so.
+			# XXX
+			# XXX It is not re-stored here on purpose: the
+			# XXX check above passes on the first eight
+			# XXX characters, so someone who guessed those
+			# XXX and no more would have their guess written
+			# XXX back as the password.  It has to be
+			# XXX changed, not migrated behind the owner.
+			if ($crypt->is_legacy($p_infile)) {
+			    my $r0 =
+				"Your password is stored in the format " .
+				"used by earlier versions of fml, which " .
+				"uses only its first eight characters. " .
+				"Please change it: the new one will be " .
+				"stored in full.";
+			    $curproc->reply_message_nl('command.password_is_legacy',
+						       $r0);
+			    $curproc->log("$function: password is stored in the old format");
+			}
+
 			$password_match = 1;
 			$status         = 1;
 			last PASSWORD_ENTRY;
@@ -277,10 +309,18 @@ sub change_password
     my $password = $up_args->{ password };
     my $status   = 0;
 
-    # crypt-fy password.
+    # hash the password for storage.
+    #
+    # XXX this was unix_crypt($password, $$), which took the salt from
+    # XXX the process id.  crypt(3) uses the first two characters of the
+    # XXX salt and ignores the rest, so the salt was the first two
+    # XXX digits of a pid -- fewer than a hundred values, arrived at in
+    # XXX order.  It also hashed only the first eight characters of the
+    # XXX password.  hash() salts from /dev/urandom and reads the
+    # XXX password in full; see FML::Crypt.
     use FML::Crypt;
     my $crypt = new FML::Crypt;
-    my $cp    = $crypt->unix_crypt($password, $$);
+    my $cp    = $crypt->hash($password);
 
     $curproc->lock($lock_channel);
 

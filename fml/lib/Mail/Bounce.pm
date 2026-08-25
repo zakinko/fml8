@@ -308,6 +308,17 @@ sub address_cleanup
 	$prev_addr = $addr;
 	print STDERR "    address_cleanup.in: $prev_addr\n" if $debug;
 
+	# XXX strip whitespace first, and inside the loop, so that a
+	# XXX bracket or a quote with a newline after it is still seen as
+	# XXX trailing.  It was not stripped at all, and Mail::Header::get()
+	# XXX hands back the field with its newline on the end, so
+	# XXX Mail::Bounce::Exim -- which reads X-Failed-Recipients: and
+	# XXX passes it straight here -- produced "rudo\@nuinui.net\n" as
+	# XXX the address.  That matches nothing in a member map, so an
+	# XXX exim bounce never removed anybody.
+	$addr      =~ s/^\s+//o;
+	$addr      =~ s/\s+$//o;
+
 	$addr      =~ s/\.$//o;
 	$addr      =~ s/^\<//o;
 	$addr      =~ s/\>$//o;

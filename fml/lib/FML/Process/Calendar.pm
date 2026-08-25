@@ -128,9 +128,10 @@ sub run
     use FML::Demo::Calendar;
 
     # prepare new() argument
+    # XXX "my $x = ... if ..." is undefined behaviour in perl (perlsyn).
     $mode             = $option->{ m } if defined $option->{ m };
-    my $schedule_dir  = $option->{ D } if defined $option->{ D };
-    my $schedule_file = $option->{ F } if defined $option->{ F };
+    my $schedule_dir  = $option->{ D };
+    my $schedule_file = $option->{ F };
     my $schargs       = {
 	schedule_dir  => $schedule_dir,
 	schedule_file => undef,

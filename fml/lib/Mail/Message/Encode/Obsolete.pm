@@ -12,6 +12,14 @@ use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
+# XXX these routines were moved here out of Mail::Message::Encode but
+# XXX they still call new(), convert(), detect_code(), raw_decode_base64()
+# XXX and raw_decode_qp() on $self, and read $self->{ _language }.  None
+# XXX of that came along, so this package was not usable on its own.
+# XXX Inherit from where they came from until the routines are dropped.
+use Mail::Message::Encode;
+@ISA = qw(Mail::Message::Encode);
+
 =head1 NAME
 
 Mail::Message::Encode::Obsolete - obsolete encode/decode routines.
@@ -134,7 +142,7 @@ sub decode_mime_string
 
 	# XXX-TODO: use Mail::Message::Charset ?
 	$in_code   = $self->detect_code($str_out);
-	$out_code |= 'euc-jp'; # euc-jp by default.
+	$out_code ||= 'euc-jp'; # euc-jp by default.
     }
     else {
 	croak("Mail::Message::Encode: unknown language");
@@ -164,8 +172,22 @@ sub decode_mime_utf8_to_euc
     }
 
     $str =~ s/\n//g;
-    use Jcode;
-    return Jcode->new($str,"utf8")->euc;
+
+    # XXX this was Jcode->new($str, "utf8")->euc, the last call to Jcode
+    # XXX left in the tree.  Encode is core and does the same thing; the
+    # XXX decode is guarded because the string arrived in a mail header
+    # XXX claiming to be UTF-8 and may not be, in which case handing the
+    # XXX caller what it gave us beats handing it a row of question
+    # XXX marks.
+    use Encode ();
+    my $euc = eval {
+	Encode::encode('euc-jp',
+		       Encode::decode('utf8', my $copy = $str,
+				      Encode::FB_CROAK()),
+		       Encode::FB_CROAK());
+    };
+
+    return defined $euc ? $euc : $str;
 }
 
 
