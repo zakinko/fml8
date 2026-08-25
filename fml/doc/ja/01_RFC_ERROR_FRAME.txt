@@ -5,8 +5,8 @@ $curproc->logwarn();
 
 
 $curproc->logerror();
-	���顼�򤭤������롣
-	����fatal error �ȤϤ�����ʤ���
+	えらーをきろくする。
+	が、fatal error とはかぎらない。
 
 
 $curproc->error_set($hash);
@@ -24,16 +24,16 @@ $curproc->error_set($hash);
 	};
 
 
-	error_queue = [  $hash_01, $hash_02, ... ]; �ˤ����
+	error_queue = [  $hash_01, $hash_02, ... ]; にいれる
 
 	$curproc->logerror( string ); 
 
-	croak( __�ʤ󤫡����Τ����Ƥ��Ĥ��äƤ�Ȥ������뤷��__ ) ����
+	croak( __なんか、このしすてむをつかってるというしるしを__ ) をよぶ
 
-   �Ǥ褤�����������Ф��礫�� croak �����뤱�ɡ�
+   でよい？＃ちがうばしょから croak あがるけど？
 
 
 $hash = $curproc->error_get();
 
-	�����Ф󡢤Ȥäפ�٤�ǡ����֡������ޤä� fatal error �ξ���
-	����Ф�����ˤ��롣
+	いちばん、とっぷれべるで、一番、おくまった fatal error の情報
+	を取り出すためにある。

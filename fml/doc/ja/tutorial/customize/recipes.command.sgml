@@ -10,13 +10,13 @@
 
 <question>
 <para>
-���ޥ�ɥ᡼��ʤɤ��ֻ��� Reply-To: �ǤϤʤ� From: ��
+コマンドメールなどの返事は Reply-To: ではなく From: へ
 </para>
 </question>
 
 <answer>
 <para>
-���ޥ�ɥ᡼���������(From:)���ֻ����֤��Τ��ǥե���Ȥε�ư�Ǥ���
+コマンドメールの送信者(From:)へ返事を返すのがデフォルトの挙動です。
 </para>
 </answer>
 
@@ -27,15 +27,15 @@
 
 <question>
 <para>
-help �ʤɤΥ�å������򥢥åץ��졼�ɤ���
+help などのメッセージをアップグレードする
 </para>
 </question>
 
 <answer>
 <para>
-&fml8; �򥢥åץ��졼�ɤ���м�ưŪ�˥��åץ��졼�ɤ���ޤ���
-&fml4; �Ȱۤʤ� &fml8; �Ǥ�
-help ���ޥ�ɤΥ�å������ƥ�ץ졼�Ȥϼ��Τ褦�ʥѥ���¸�ߤ��뤫��Ǥ���
+&fml8; をアップグレードすれば自動的にアップグレードされます。
+&fml4; と異なり &fml8; では
+help コマンドのメッセージテンプレートは次のようなパスに存在するからです。
 <screen>
 /usr/local/share/fml/$VERSION/message/euc-jp/user/help
 /usr/local/share/fml/$VERSION/message/us-ascii/user/help
@@ -43,9 +43,9 @@ help ���ޥ�ɤΥ�å������ƥ�ץ졼�Ȥϼ��Τ褦�ʥѥ���¸�ߤ��뤫��Ǥ���
 </para>
 
 <para>
-�������̤ͣΥۡ���ǥ��쥯�ȥ�� help �ե����뤬�������
-���줬 help ���ޥ�ɤ��ֻ��˻Ȥ��Ƥ��ޤ���
-��ä� help �ե������ʬ���Ѱդ��Ƥ����硢��ʬ���Խ����Ƥ���������
+ただしＭＬのホームディレクトリに help ファイルがある場合は
+それが help コマンドの返事に使われています。
+よって help ファイルを自分で用意している場合、自分で編集してください。
 </para>
 
 </answer>
@@ -57,16 +57,16 @@ help ���ޥ�ɤΥ�å������ƥ�ץ졼�Ȥϼ��Τ褦�ʥѥ���¸�ߤ��뤫��Ǥ���
 
 <question>
 <para>
-help ��å������θ��ե�����򥫥����ޥ������롣
+help メッセージの元ファイルをカスタマイズする。
 </para>
 </question>
 
 <answer>
 <para>
-&fml8; �Ǥ�
-help ���ޥ�ɤΥ�å������ƥ�ץ졼�Ȥϼ��Τ褦�ʥѥ���¸�ߤ��ޤ���
-������Խ����Ƥ��ޤ��Ȥ����Τ����ơ�
-������������򤹤�ȥС�����󥢥åפ򤷤��ݤ��ѹ�����̵���ˤʤäƤ��ޤ��ޤ���
+&fml8; では
+help コマンドのメッセージテンプレートは次のようなパスに存在します。
+これを編集してしまうというのが第一案。
+ただし、これをするとバージョンアップをした際に変更点が無効になってしまいます。
 <screen>
 /usr/local/share/fml/$VERSION/message/euc-jp/user/help
 /usr/local/share/fml/$VERSION/message/us-ascii/user/help
@@ -74,29 +74,29 @@ help ���ޥ�ɤΥ�å������ƥ�ץ졼�Ȥϼ��Τ褦�ʥѥ���¸�ߤ��ޤ���
 </para>
 
 <para>
-�ͣ��ȼ��� help ��å�������
-�̥ͣۡ���ǥ��쥯�ȥ�β��ˡ�local/share/message/����/�פ��ꡢ
-���β��ˤ�����ͭ���ˤʤ�ޤ���
+ＭＬ独自の help メッセージは
+ＭＬホームディレクトリの下に「local/share/message/言語/」を作り、
+その下におけば有効になります。
 <screen>
 [Example]
 
 /var/spool/ml/elena/local/share/message/euc-jp/user/help
 /var/spool/ml/elena/local/share/message/us-ascii/user/help
 </screen>
-��ˤ��Υե����뤬�Ȥ���Τǡ�
-�С�����󥢥åפ��Ƥ����Ƥ��Ѥ��ޤ���
-���줬�����Ǥ���
+常にこのファイルが使われるので、
+バージョンアップしても内容は変わりません。
+それが欠点です。
 </para>
 
 <para>
-�ʤ��̤ͣΥۡ���ǥ��쥯�ȥ�� help �ե����뤬�������
-���줬 help ���ޥ�ɤ��ֻ��˻Ȥ��Ƥ��ޤ�(ͥ�褵��ޤ�)��
-��ä� help �ե������ʬ���Ѱդ��Ƥ���ʤ�
-��ʬ���Խ����Ƥ���������
-���ξ��⡢��ˤ��Υե����뤬�Ȥ���Τǡ�
-�С�����󥢥åפ��Ƥ����Ƥ��Ѥ��ޤ���
-�С�����󥢥åפ�����硢�ѹ�����ʬ�ǥե������ȿ�Ǥ����ʤ��Ȥ����ޤ���
-�դ˸����С����줬�����Ǥ���
+なおＭＬのホームディレクトリに help ファイルがある場合は
+それが help コマンドの返事に使われています(優先されます)。
+よって help ファイルを自分で用意しているなら
+自分で編集してください。
+この場合も、常にこのファイルが使われるので、
+バージョンアップしても内容は変わりません。
+バージョンアップした場合、変更点を自分でファイルに反映させないといけません。
+逆に言えば、それが欠点です。
 </para>
 
 </answer>
@@ -108,14 +108,14 @@ help ���ޥ�ɤΥ�å������ƥ�ץ졼�Ȥϼ��Τ褦�ʥѥ���¸�ߤ��ޤ���
 
 <question>
 <para>
-confirmation ��å������򥫥����ޥ�������
+confirmation メッセージをカスタマイズする
 </para>
 </question>
 
 <answer>
 <para>
-help ��å������Υ������ޥ�����Ʊ�ͤǤ��Τǡ�
-���路�������쥷�Ԥ򻲾Ȥ��Ʋ�������
+help メッセージのカスタマイズと同様ですので、
+くわしくは前レシピを参照して下さい。
 <screen>
 /usr/local/share/fml/$VERSION/message/euc-jp/command/confirm
 /usr/local/share/fml/$VERSION/message/us-ascii/command/confirm
@@ -130,33 +130,33 @@ help ��å������Υ������ޥ�����Ʊ�ͤǤ��Τǡ�
 
 <question>
 <para>
-news �Ȥ����ե�����������֤����ޥ�ɤ���
+news というファイルを送り返すコマンドを作る
 </para>
 </question>
 
 <answer>
 <para>
-���Σ̤ͣκǿ����󤬽񤭹��ޤ�Ƥ���
-$ml_home_dir/news �Ȥ����ե����뤬����Ȥ��ޤ��礦��
-�����̤ͣΥ��С��ʤ�ï�Ǥ���󤻤���褦�ˤ�������
-�������ä����ͤ��ޤ���
+このＭＬの最新情報が書き込まれている
+$ml_home_dir/news というファイルがあるとしましょう。
+これをＭＬのメンバーなら誰でも取り寄せられるようにしたい。
+そういった例を考えます。
 </para>
 
 <para>
-���ִ�ñ�ʺ������ help ���ޥ�ɤ򻲹ͤ� news ���ޥ�ɤ�������뤳�ȤǤ��礦��
-���Ȥ��� FML::Command::User::help �⥸�塼��(
+一番簡単な作り方は help コマンドを参考に news コマンドを作成することでしょう。
+たとえば FML::Command::User::help モジュール(
 /usr/local/lib/fml/$VERSION/FML/Command/User/help.pm
 )
-�򥳥ԡ�����
+をコピーして
 FML::Command::User::news (
 /usr/local/lib/fml/site_local/FML/Command/User/news.pm
 )
-�⥸�塼����äƤ���������
-�����ơ�news.pm ����� help �Ȥ���ʸ����� news ���Ѥ�������Ǥ���
+モジュールを作ってください。
+そして、news.pm の中の help という文字列を news に変えるだけです。
 <screen>
-[��]
+[例]
 
-... ά ...
+... 略 ...
 
 sub process
 {
@@ -164,7 +164,7 @@ sub process
 
     $self->send_user_xxx_message($curproc, $command_args, "news");
 }
-... ά ...
+... 略 ...
 </screen>
 </para>
 
@@ -172,11 +172,11 @@ sub process
 <link linkend="customize.command.myproc">
 <xref linkend="customize.command.myproc">
 </link>
-��
+や
 <link linkend="fml.command.hack.commandmail">
 <xref linkend="fml.command.hack.commandmail">
 </link>
-�⻲�Ȥ��Ƥ���������
+も参照してください。
 </para>
 </answer>
 
@@ -187,18 +187,18 @@ sub process
 
 <question>
 <para>
-mget ���ޥ�ɤΥե�����⡼�ɤΥǥե���Ȥ��ѹ�������
+mget コマンドのファイルモードのデフォルトを変更したい
 </para>
 </question>
 
 <answer>
 <para>
-���ޤΤȤ����Ǥ��ޤ���
+いまのところできません。
 </para>
 
 <para>
-���ĤΤȤ�����get ���ޥ�ɤ� mget ���ޥ�ɤ�Ʊ���Ǥ���
-�����ơ����ޤΤȤ��� get ���ޥ�ɤΥե�����⡼�ɤ��ѹ��Ǥ��ޤ���
+じつのところ、get コマンドと mget コマンドは同じです。
+そして、いまのところ get コマンドのファイルモードは変更できません。
 </para>
 </answer>
 
@@ -210,20 +210,20 @@ mget ���ޥ�ɤΥե�����⡼�ɤΥǥե���Ȥ��ѹ�������
 
 <question>
 <para>
-get ���ޥ�ɤ� mget mp ��Ʊ����̣�ˤ���
+get コマンドを mget mp と同じ意味にする
 </para>
 </question>
 
 <answer>
 <para>
-&fml8; �Ǥϥǥե���Ȥǡ�
-���ΰ�̣(MIME/Multipart �⡼��)�ˤʤäƤ��ޤ���
+&fml8; ではデフォルトで、
+その意味(MIME/Multipart モード)になっています。
 </para>
 
 <para>
-���Τˤϡ�get �� mget ��Ʊ�����ޥ�ɤǡ�
-get ���ޥ�ɤΥե�����⡼�ɤ�
-(���ޤΤȤ���) MIME/Multipart ��������ޤ���
+正確には、get と mget は同じコマンドで、
+get コマンドのファイルモードは
+(いまのところ) MIME/Multipart しかありません。
 </para>
 </answer>
 
@@ -234,15 +234,15 @@ get ���ޥ�ɤΥե�����⡼�ɤ�
 
 <question>
 <para>
-command status report ������������
+command status report を抑制したい
 </para>
 </question>
 
 <answer>
 <para>
-���ޤΤȤ�����
-�ե��륿�ˤĤ��Ƥ� off/on �Ǥ��ޤ�����
-���̤ˤϽ���ޤ���
+いまのところ、
+フィルタについては off/on できますが、
+一般には出来ません。
 </para>
 </answer>
 
@@ -253,19 +253,19 @@ command status report ������������
 
 <question>
 <para>
-���ޥ�ɥ᡼������Ƥ�ƻ뤷����
+コマンドメールの内容を監視したい
 </para>
 </question>
 
 <answer>
 <para>
-(1) ������ perl �ǲù����롣
+(1) ログを perl で加工する。
 </para>
 
 <para>
-(2) ���ޥ�ɥ᡼�뼫�ΤΥ��ԡ�������Ȥ롣
-���Ȥ��С�
-���ޥ�ɥ᡼�������Ȥ�����ΤȤ����˴����Ԥ��ɲä��Ƥ����Ȥ��ä����Ǥ���
+(2) コマンドメール自体のコピーを受けとる。
+たとえば、
+コマンドメールを受けとる設定のところに管理者も追加しておくといった具合です。
 <screen>
 elena-ctl: :include:/var/spool/ml/elena/include-ctl, elena-admin
 </screen>

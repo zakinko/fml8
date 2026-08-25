@@ -2,7 +2,7 @@
 		Current Status of fml-devel (fml 8) Bounce Filter
 
 
-¡û ¼ÂÁõºÑ¤ß
+â—‹ å®Ÿè£…æ¸ˆã¿
 
    MTA specific
 
@@ -17,9 +17,9 @@
 	Postfix 19991231
 	Qmail
 	Exim
-	fetchmail (DSN ¤À¤±¤É¤Á¤ã¤ó¤È¤·¤¿¥¢¥É¥ì¥¹¤Ç¤Ê¤¤¤«¤â ...)
-	Smtpfeed -F ¥ª¥×¥·¥ç¥ó (Í×¥Æ¥¹¥È)
-	SMTP32 ??? (Í×¥Æ¥¹¥È)
+	fetchmail (DSN ã ã‘ã©ã¡ã‚ƒã‚“ã¨ã—ãŸã‚¢ãƒ‰ãƒ¬ã‚¹ã§ãªã„ã‹ã‚‚ ...)
+	Smtpfeed -F ã‚ªãƒ—ã‚·ãƒ§ãƒ³ (è¦ãƒ†ã‚¹ãƒˆ)
+	SMTP32 ??? (è¦ãƒ†ã‚¹ãƒˆ)
 	InterScan
 	Netscape Messaging Server 3.62
 	InterMail   (broken DSN)
@@ -28,22 +28,22 @@
 
    ISP specific
 
-	DSN (¤Ê¤Î¤Ç OK)
+	DSN (ãªã®ã§ OK)
 		DoCoMo
 		MSN
-		*.ezweb.ne.jp ¡üau(µìezweb)
+		*.ezweb.ne.jp â—au(æ—§ezweb)
 		PDX.NE.JP
 
 	InterMail
-		ezweb.ne.jp ¡üau(¿·ezweb)
+		ezweb.ne.jp â—au(æ–°ezweb)
 
-	ÆÈ¼«
+	ç‹¬è‡ª
 		biglobe.ne.jp
 		goo.ne.jp
 		nifty.ne.jp
 		odn.ne.jp
-		caiwireless.net (Í×¥Æ¥¹¥È)
-		compuserve.net (Í×¥Æ¥¹¥È)
+		caiwireless.net (è¦ãƒ†ã‚¹ãƒˆ)
+		compuserve.net (è¦ãƒ†ã‚¹ãƒˆ)
 
 
 $FML: STATUS.ja.txt,v 1.14 2002/04/01 23:41:15 fukachan Exp $

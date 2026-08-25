@@ -5,16 +5,16 @@
 
 <chapter id="fml.command.modules">
 	<title>
-	¥³¥Ş¥ó¥É(¥³¥Ş¥ó¥É¥á¡¼¥ë¡¢makefml¡¢CGI)
+	ã‚³ãƒãƒ³ãƒ‰(ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã€makefmlã€CGI)
 	</title>
 
 
-<!-- ¥â¥¸¥å¡¼¥ë¤Î»È¤¤Êı¤Ë¤Ä¤¤¤Æ¡¢ FML::Command:: °Ê²¼¤ÎÏÃ -->
+<!-- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®ä½¿ã„æ–¹ã«ã¤ã„ã¦ã€ FML::Command:: ä»¥ä¸‹ã®è©± -->
 &sect.command.module;
 
 &sect.command.dataflow;
 
-<!-- ¥³¥Ş¥ó¥É¤Î³ÈÄ¥Îã -->
+<!-- ã‚³ãƒãƒ³ãƒ‰ã®æ‹¡å¼µä¾‹ -->
 &sect.command.extension;
 
 &sect.command.internal;

@@ -1,55 +1,55 @@
-		���̥桼���ѤΥ��ޥ��
+		一般ユーザ用のコマンド
 
-	��ˡ: () �ǳ�äƤ���Τ� alias
+	記法: () で括ってあるのは alias
 
 ----------------------------------------------------------------------
-�� �����Ѥ�
+○ 実装済み
 
-help		�إ�ץե��������󤻤�
-guide		guide �ե��������󤻤�
-summary		summary �ե��������󤻤�
+help		ヘルプファイルを取り寄せる
+guide		guide ファイルを取り寄せる
+summary		summary ファイルを取り寄せる
 
-subscribe	�̤ͣؤ�����
+subscribe	ＭＬへの入会
 (add)
-					confirm ���֤�
+					confirm を返す
 
-unsubscribe	�̤ͣ����æ��
-					confirm ���֤�
+unsubscribe	ＭＬからの脱退
+					confirm を返す
 (bye)
 (remove)
 (resign)
 (signoff)
 
 
-chaddr		��Ͽ���Ƥ���᡼�륢�ɥ쥹���ѹ�����
+chaddr		登録してあるメールアドレスを変更する
 		=> confirm
 
 
-confirm		subscribe, unsubscribe, chaddr ���Ѥ���
-		���� confirmation �����ץ�
+confirm		subscribe, unsubscribe, chaddr で用いる
+		汎用 confirmation アダプタ
 
-		�⤷��confirm ���������ʤ����μ��ΤǤ���
-		FML::Command::Admin::���ޥ�ɤ�ƤӽФ���
-		�Ĥޤ���Ͽ�ط��Υ桼�����ޥ�ɤ� admin ���ޥ�ɤؤ�
-		�����ץ����Ȥ����櫓�Ǥ���
+		もし、confirm が正しいなら操作の実体である
+		FML::Command::Admin::コマンドを呼び出す。
+		つまり登録関係のユーザコマンドは admin コマンドへの
+		アダプターというわけです。
 
-get		���ε�������󤻤� ( MIME/multipart only )
+get		過去の記事を取り寄せる ( MIME/multipart only )
 (mget)
 (send)
-		XXX ����� admin �ؤΥ����ץ��ˤϤʤäƤ��ʤ�
-		XXX �桼���ϵ������������ʤ�����
-		XXX admin �ϲ��Ǥ⸫�����ø������롣
-		XXX �����¸����뤿��˥⥸�塼�뼫�Τ�ʬΥ����
+		XXX これは admin へのアダプタにはなっていない
+		XXX ユーザは記事しか見られないが、
+		XXX admin は何でも見られる特権がある。
+		XXX これを実現するためにモジュール自体を分離する
 
 
-�� �ߴ����Τ������
+○ 互換性のため実装
 
-objective	objective �ե��������󤻤� if found
-deny		deny �ե��������󤻤� if found
-		��ɬ�פ���ʤ��Ρ� �桼�������󤻤�櫓�ʤ������:)
+objective	objective ファイルを取り寄せる if found
+deny		deny ファイルを取り寄せる if found
+		不必要じゃないの？ ユーザが取り寄せるわけないじゃん:)
 
 
-�� ̤����
+○ 未実装
 
 members
 actives

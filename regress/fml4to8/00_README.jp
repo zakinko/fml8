@@ -1,15 +1,15 @@
 
-		�ѿ���İ���Ѵ����Ƥߤ�ƥ���
+		変数一つ一つ変換してみるテスト
 
-����˴ط�����ե������ CF configtest.pl conv_manifest.pl test.pl
+これに関係あるファイルは CF configtest.pl conv_manifest.pl test.pl
 
 % make test
 
-�ѿ���İ�Ĥ�㤦�ͤ��Ѥ��Ĥ� /var/tmp/fml4to8/XXX/config.ph ��������
-�ơ��ºݤ� fml4 ���� fml8 ���Ѵ����Ƥߤ롣
+変数一つ一つを違う値に変えつつ /var/tmp/fml4to8/XXX/config.ph を生成し
+て、実際に fml4 から fml8 へ変換してみる。
 
 
-	... ά ...
+	... 略 ...
 
 	// check /var/tmp/fml4to8/004/config.ph
 	// $MAIL_LIST = "elena\@fml.org";
@@ -19,16 +19,16 @@
 	# A: OK TRANSLATION FOUND
 	language_preference_order = en ja
 
-	... ά ...
+	... 略 ...
 
 
 
 -------->8-------->8-------->8-------->8-------->8-------->8-------->8
 
-			�ե������s
+			ファイル’s
 
 
-list.menu	fml4 �� etc/makefml/menu.conf �ˤ����ѿ�̾������
-		�����˽ФƤ���褦���ѿ��ϼ�ư�Ѵ��Ǥ��뤳�Ȥ�˾�ޤ�����
+list.menu	fml4 の etc/makefml/menu.conf にある変数名一覧。
+		ここに出てくるような変数は自動変換できることが望ましい。
 
 

@@ -18,7 +18,7 @@ unless (-f $changes) {
 
 my $fml_version          = get_version($changes);
 my $date                 = get_date();
-my $fml_version_comment  = sprintf("(•–°º•∏•Á•Û %s-%s)", $fml_version, $date);
+my $fml_version_comment  = sprintf("(„Éê„Éº„Ç∏„Éß„É≥ %s-%s)", $fml_version, $date);
 my $sgml_version_comment = quotemeta("<!-- __FML_CURRENT_VERSION__ -->");
 
 while (<>) {

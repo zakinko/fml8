@@ -16,7 +16,7 @@ default value(s)</entry>
 <entry>
 address_compare_function_domain_matching_level</entry>
 <entry>
- ¥á¡¼¥ë¥¢¥É¥ì¥¹¤òÈæ³Ó¤¹¤ëºİ¤Î¥É¥á¥¤¥óÈæ³Ó¥ì¥Ù¥ë</entry>
+ ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’æ¯”è¼ƒã™ã‚‹éš›ã®ãƒ‰ãƒ¡ã‚¤ãƒ³æ¯”è¼ƒãƒ¬ãƒ™ãƒ«</entry>
 <entry>
 3
    </entry>
@@ -25,7 +25,7 @@ address_compare_function_domain_matching_level</entry>
 <entry>
 address_compare_function_type</entry>
 <entry>
- ¥á¥ó¥Ğ¡¼¥Á¥§¥Ã¥¯¤ò¤¹¤ëºİ¤Ë¡¢¥æ¡¼¥¶¥Ñ¡¼¥È¤ÎÈæ³Ó¤Ç</entry>
+ ãƒ¡ãƒ³ãƒãƒ¼ãƒã‚§ãƒƒã‚¯ã‚’ã™ã‚‹éš›ã«ã€ãƒ¦ãƒ¼ã‚¶ãƒ‘ãƒ¼ãƒˆã®æ¯”è¼ƒã§</entry>
 <entry>
 user_part_case_insensitive
    </entry>
@@ -34,7 +34,7 @@ user_part_case_insensitive
 <entry>
 admin_cgi_allowed_commands</entry>
 <entry>
- ¥Ş¥¹¥¿¡¼´ÉÍıÍÑ CGI ¤Çµö¤µ¤ì¤ë¥³¥Ş¥ó¥É¤Î¥ê¥¹¥È</entry>
+ ãƒã‚¹ã‚¿ãƒ¼ç®¡ç†ç”¨ CGI ã§è¨±ã•ã‚Œã‚‹ã‚³ãƒãƒ³ãƒ‰ã®ãƒªã‚¹ãƒˆ</entry>
 <entry>
 adduser
    deluser
@@ -53,7 +53,7 @@ adduser
 <entry>
 admin_cgi_base_dir</entry>
 <entry>
- ¤³¤Î¥É¥á¥¤¥óÁ´ÂÎ¤ò´ÉÍı¤Ç¤­¤ë CGI ¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê¡£</entry>
+ ã“ã®ãƒ‰ãƒ¡ã‚¤ãƒ³å…¨ä½“ã‚’ç®¡ç†ã§ãã‚‹ CGI ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã€‚</entry>
 <entry>
 $cgi_base_dir/$ml_domain/admin
    </entry>
@@ -98,7 +98,7 @@ $etc_dir/pgp-admin
 <entry>
 admin_command_mail_restrictions</entry>
 <entry>
- admin ¥³¥Ş¥ó¥É¤Ø¤ÎÀ©¸Â</entry>
+ admin ã‚³ãƒãƒ³ãƒ‰ã¸ã®åˆ¶é™</entry>
 <entry>
 reject_system_special_accounts
    check_admin_member_password
@@ -109,7 +109,7 @@ reject_system_special_accounts
 <entry>
 admin_member_maps</entry>
 <entry>
- ¥á¥ó¥Ğ¡¼¤«¤É¤¦¤«Ç§¾Ú¤¹¤ëºİ¤Ë¸¡º÷¤¹¤ë¤¹¤Ù¤Æ¤Î¥á¥ó¥Ğ¡¼¥ê¥¹¥È</entry>
+ ãƒ¡ãƒ³ãƒãƒ¼ã‹ã©ã†ã‹èªè¨¼ã™ã‚‹éš›ã«æ¤œç´¢ã™ã‚‹ã™ã¹ã¦ã®ãƒ¡ãƒ³ãƒãƒ¼ãƒªã‚¹ãƒˆ</entry>
 <entry>
 $primary_admin_member_map
    </entry>
@@ -118,7 +118,7 @@ $primary_admin_member_map
 <entry>
 admin_member_password_maps</entry>
 <entry>
- ¥ê¥â¡¼¥È´ÉÍı¼Ô¤Î¥Ñ¥¹¥ï¡¼¥É¥Õ¥¡¥¤¥ë(·²)</entry>
+ ãƒªãƒ¢ãƒ¼ãƒˆç®¡ç†è€…ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«(ç¾¤)</entry>
 <entry>
 $primary_admin_member_password_map
    file:$etc_dir/passwd
@@ -128,7 +128,7 @@ $primary_admin_member_password_map
 <entry>
 admin_recipient_maps</entry>
 <entry>
- ¤È¤ê¤¢¤¨¤ºÄêµÁ¤·¤Æ¤¢¤ë¤±¤É¡¢»È¤ï¤ì¤Æ¤Ï¤¤¤Ê¤¤</entry>
+ ã¨ã‚Šã‚ãˆãšå®šç¾©ã—ã¦ã‚ã‚‹ã‘ã©ã€ä½¿ã‚ã‚Œã¦ã¯ã„ãªã„</entry>
 <entry>
 $primary_admin_recipient_map
    </entry>
@@ -137,7 +137,7 @@ $primary_admin_recipient_map
 <entry>
 anonymous_cgi_base_dir</entry>
 <entry>
- °ìÈÌ¿Í¸ş¤± CGI ¤òÃÖ¤¯¥È¥Ã¥×¥Ç¥£¥ì¥¯¥È¥ê¡£</entry>
+ ä¸€èˆ¬äººå‘ã‘ CGI ã‚’ç½®ããƒˆãƒƒãƒ—ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã€‚</entry>
 <entry>
 $fml_owner_home_dir/public_html/cgi-bin/anonymous
    </entry>
@@ -146,7 +146,7 @@ $fml_owner_home_dir/public_html/cgi-bin/anonymous
 <entry>
 anonymous_cgi_expire_limit</entry>
 <entry>
- °ìÈÌ¥æ¡¼¥¶ÍÑ CGI session ID ¤ÎÍ­¸ú»ş´Ö</entry>
+ ä¸€èˆ¬ãƒ¦ãƒ¼ã‚¶ç”¨ CGI session ID ã®æœ‰åŠ¹æ™‚é–“</entry>
 <entry>
 15m
    </entry>
@@ -155,7 +155,7 @@ anonymous_cgi_expire_limit</entry>
 <entry>
 article_delivery_transport</entry>
 <entry>
- ¥È¥é¥ó¥¹¥İ¡¼¥È(ÇÛÁ÷¥·¥¹¥Æ¥à)¤Î»ØÄê¡£</entry>
+ ãƒˆãƒ©ãƒ³ã‚¹ãƒãƒ¼ãƒˆ(é…é€ã‚·ã‚¹ãƒ†ãƒ )ã®æŒ‡å®šã€‚</entry>
 <entry>
 smtp
    </entry>
@@ -164,7 +164,7 @@ smtp
 <entry>
 article_expire_limit</entry>
 <entry>
- ¤É¤Î¤¯¤é¤¤¸Å¤¤µ­»ö¤ò¾Ã¤¹¤«¡©</entry>
+ ã©ã®ãã‚‰ã„å¤ã„è¨˜äº‹ã‚’æ¶ˆã™ã‹ï¼Ÿ</entry>
 <entry>
 90d
    </entry>
@@ -173,7 +173,7 @@ article_expire_limit</entry>
 <entry>
 article_filter_reject_notice_data_type</entry>
 <entry>
- ÃÆ¤¤¤¿¥á¡¼¥ë¤ò¤É¤Î¤è¤¦¤Ë¥Õ¥©¥ï¡¼¥É¤¹¤ë¤«¡©</entry>
+ å¼¾ã„ãŸãƒ¡ãƒ¼ãƒ«ã‚’ã©ã®ã‚ˆã†ã«ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 string
    </entry>
@@ -182,7 +182,7 @@ string
 <entry>
 article_filter_reject_notice_recipients</entry>
 <entry>
- ¥¨¥é¡¼¤Î¤ªÃÎ¤é¤»¤Î¼õ¿®¼Ô</entry>
+ ã‚¨ãƒ©ãƒ¼ã®ãŠçŸ¥ã‚‰ã›ã®å—ä¿¡è€…</entry>
 <entry>
 maintainer
    sender
@@ -192,7 +192,7 @@ maintainer
 <entry>
 article_header_filter_rules</entry>
 <entry>
- ¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£</entry>
+ ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚</entry>
 <entry>
 check_message_id
    check_date
@@ -266,7 +266,7 @@ $mail_header_default_list_unsubscribe
 <entry>
 article_header_rewrite_rules</entry>
 <entry>
- µ­»ö¤Î¥Ø¥Ã¥À¤ò½ñ¤­´¹¤¨¤ë¥ë¡¼¥ë·²</entry>
+ è¨˜äº‹ã®ãƒ˜ãƒƒãƒ€ã‚’æ›¸ãæ›ãˆã‚‹ãƒ«ãƒ¼ãƒ«ç¾¤</entry>
 <entry>
 delete_unsafe_header_fields
    rewrite_article_subject_tag
@@ -287,7 +287,7 @@ delete_unsafe_header_fields
 <entry>
 article_message_id_cache_dir</entry>
 <entry>
- µ­»ö¤È¤·¤Æ¥¹¥×¡¼¥ë¤Ë³ÊÇ¼¤µ¤ì¤¿¥á¡¼¥ë¤Î </entry>
+ è¨˜äº‹ã¨ã—ã¦ã‚¹ãƒ—ãƒ¼ãƒ«ã«æ ¼ç´ã•ã‚ŒãŸãƒ¡ãƒ¼ãƒ«ã® </entry>
 <entry>
 $db_dir/article_message_id
    </entry>
@@ -296,7 +296,7 @@ $db_dir/article_message_id
 <entry>
 article_mime_component_filter_rules</entry>
 <entry>
- ¥Õ¥¡¥¤¥ëÌ¾</entry>
+ ãƒ•ã‚¡ã‚¤ãƒ«å</entry>
 <entry>
 $fml_config_dir/mime_component_filter
    </entry>
@@ -305,7 +305,7 @@ $fml_config_dir/mime_component_filter
 <entry>
 article_non_mime_filter_rules</entry>
 <entry>
- ¤È¤ê¤¢¤¨¤º¡¢¤À¤ß¡Á</entry>
+ ã¨ã‚Šã‚ãˆãšã€ã ã¿ã€œ</entry>
 <entry>
 reject_empty_content_type
    permit
@@ -315,7 +315,7 @@ reject_empty_content_type
 <entry>
 article_post_article_thread_lifetime</entry>
 <entry>
- µ­»ö¤ÎÅê¹Æ»ş¤Ë¡¢¥¹¥ì¥Ã¥É¤ÎÂ³¤­¤Ç¤¢¤ë¤Ê¤é¡¢Ã»»ş´Ö¤Î´Ö¡¢ </entry>
+ è¨˜äº‹ã®æŠ•ç¨¿æ™‚ã«ã€ã‚¹ãƒ¬ãƒƒãƒ‰ã®ç¶šãã§ã‚ã‚‹ãªã‚‰ã€çŸ­æ™‚é–“ã®é–“ã€ </entry>
 <entry>
 86400
    </entry>
@@ -360,7 +360,7 @@ $etc_dir/pgp-article-post-encrypt
 <entry>
 article_post_restrictions</entry>
 <entry>
- Åê¹Æ¤Ø¤ÎÀ©¸Â</entry>
+ æŠ•ç¨¿ã¸ã®åˆ¶é™</entry>
 <entry>
 isolate_system_special_accounts
    permit_member_maps
@@ -371,7 +371,7 @@ isolate_system_special_accounts
 <entry>
 article_post_restrictions_reject_notice_data_type</entry>
 <entry>
- ÃÆ¤¤¤¿¥á¡¼¥ë¤ò¤É¤Î¤è¤¦¤Ë¥Õ¥©¥ï¡¼¥É¤¹¤ë¤«¡©</entry>
+ å¼¾ã„ãŸãƒ¡ãƒ¼ãƒ«ã‚’ã©ã®ã‚ˆã†ã«ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 string
    </entry>
@@ -380,7 +380,7 @@ string
 <entry>
 article_sequence_file</entry>
 <entry>
- µ­»öÈÖ¹æ¤òÊİÂ¸¤¹¤ë¥Õ¥¡¥¤¥ë (¥À¥ß¡¼¡©)</entry>
+ è¨˜äº‹ç•ªå·ã‚’ä¿å­˜ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ« (ãƒ€ãƒŸãƒ¼ï¼Ÿ)</entry>
 <entry>
 $sequence_file
    </entry>
@@ -389,7 +389,7 @@ $sequence_file
 <entry>
 article_size_filter_rules</entry>
 <entry>
- ¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£</entry>
+ ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚</entry>
 <entry>
 check_header_size
    check_body_size
@@ -409,7 +409,7 @@ article_spam_filter_bogofilter_options</entry>
 <entry>
 article_spam_filter_drivers</entry>
 <entry>
- SPAM¥Á¥§¥Ã¥«¤È¤·¤Æ»È¤¦³°Éô¥×¥í¥°¥é¥à¡£</entry>
+ SPAMãƒã‚§ãƒƒã‚«ã¨ã—ã¦ä½¿ã†å¤–éƒ¨ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã€‚</entry>
 <entry>
 bogofilter
    </entry>
@@ -427,7 +427,7 @@ bogofilter
 <entry>
 article_spam_filter_rules</entry>
 <entry>
- SPAM¤À¤ÈÈ½Äê¤µ¤ì¤¿¾ì¹ç¡¢¤É¤¦¤¹¤ë¤«¡©</entry>
+ SPAMã ã¨åˆ¤å®šã•ã‚ŒãŸå ´åˆã€ã©ã†ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 header_rewrite
    </entry>
@@ -454,7 +454,7 @@ article_spam_filter_spamc_options</entry>
 <entry>
 article_subject_tag</entry>
 <entry>
- Subject: ¤Î¥¿¥°</entry>
+ Subject: ã®ã‚¿ã‚°</entry>
 <entry>
 [$ml_name:%05d]
    </entry>
@@ -463,7 +463,7 @@ article_subject_tag</entry>
 <entry>
 article_summary_file_format_address_length</entry>
 <entry>
- ¥¢¥É¥ì¥¹¤ÏÀèÆ¬¤Î²¿¥Ğ¥¤¥È¤«¤À¤±¤òµ­Ï¿¤¹¤ë¡£¾Ü¤·¤¯¤Ï¥í¥°¸«¤í</entry>
+ ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯å…ˆé ­ã®ä½•ãƒã‚¤ãƒˆã‹ã ã‘ã‚’è¨˜éŒ²ã™ã‚‹ã€‚è©³ã—ãã¯ãƒ­ã‚°è¦‹ã‚</entry>
 <entry>
 15
    </entry>
@@ -472,7 +472,7 @@ article_summary_file_format_address_length</entry>
 <entry>
 article_text_plain_filter_rules</entry>
 <entry>
- ¥Æ¥­¥¹¥ÈÉôÊ¬¤Ø¤Î¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£</entry>
+ ãƒ†ã‚­ã‚¹ãƒˆéƒ¨åˆ†ã¸ã®ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚</entry>
 <entry>
 reject_not_iso2022jp_japanese_string
    reject_null_mail_body
@@ -488,7 +488,7 @@ reject_not_iso2022jp_japanese_string
 <entry>
 article_thread_outline_greeting_en</entry>
 <entry>
- ¥¹¥ì¥Ã¥É¤Î³µÍ×¤¬»Ï¤Ş¤ëÉôÊ¬¤Ë¤Ä¤±¤ë°§»¢</entry>
+ ã‚¹ãƒ¬ãƒƒãƒ‰ã®æ¦‚è¦ãŒå§‹ã¾ã‚‹éƒ¨åˆ†ã«ã¤ã‘ã‚‹æŒ¨æ‹¶</entry>
 <entry>
 [outline of this thread]
    </entry>
@@ -497,16 +497,16 @@ article_thread_outline_greeting_en</entry>
 <entry>
 article_thread_outline_greeting_ja</entry>
 <entry>
- ¥¹¥ì¥Ã¥É¤Î³µÍ×¤¬»Ï¤Ş¤ëÉôÊ¬¤Ë¤Ä¤±¤ë°§»¢</entry>
+ ã‚¹ãƒ¬ãƒƒãƒ‰ã®æ¦‚è¦ãŒå§‹ã¾ã‚‹éƒ¨åˆ†ã«ã¤ã‘ã‚‹æŒ¨æ‹¶</entry>
 <entry>
-[ËÜ¥¹¥ì¥Ã¥É¤Î¤¢¤é¤¹¤¸]
+[æœ¬ã‚¹ãƒ¬ãƒƒãƒ‰ã®ã‚ã‚‰ã™ã˜]
    </entry>
 </row>
 <row>
 <entry>
 article_thread_outline_rules</entry>
 <entry>
- ¥¹¥ì¥Ã¥É¤Î³µÍ×¤òµ­»ö¤ËÄÉ²Ã¤¹¤ëºİ¤Ë¤É¤³¤ËÄÉ²Ã¤¹¤ë¤Î¤«</entry>
+ ã‚¹ãƒ¬ãƒƒãƒ‰ã®æ¦‚è¦ã‚’è¨˜äº‹ã«è¿½åŠ ã™ã‚‹éš›ã«ã©ã“ã«è¿½åŠ ã™ã‚‹ã®ã‹</entry>
 <entry>
 add_outline_to_header
    append_outline_to_body
@@ -525,7 +525,7 @@ article_virus_filter_clamav_options</entry>
 <entry>
 article_virus_filter_drivers</entry>
 <entry>
- ¥¦¥£¥ë¥¹¥Á¥§¥Ã¥«¤È¤·¤Æ»È¤¦³°Éô¥×¥í¥°¥é¥à</entry>
+ ã‚¦ã‚£ãƒ«ã‚¹ãƒã‚§ãƒƒã‚«ã¨ã—ã¦ä½¿ã†å¤–éƒ¨ãƒ—ãƒ­ã‚°ãƒ©ãƒ </entry>
 <entry>
 clamscan
    </entry>
@@ -543,7 +543,7 @@ clamav
 <entry>
 article_virus_filter_rules</entry>
 <entry>
- ¥¦¥£¥ë¥¹¤À¤ÈÈ½Äê¤µ¤ì¤¿¾ì¹ç¡¢¤É¤¦¤¹¤ë¤«¡©</entry>
+ ã‚¦ã‚£ãƒ«ã‚¹ã ã¨åˆ¤å®šã•ã‚ŒãŸå ´åˆã€ã©ã†ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 reject
    </entry>
@@ -552,7 +552,7 @@ reject
 <entry>
 cgi_base_dir</entry>
 <entry>
- ´ÉÍıÍÑ CGI ¤òÃÖ¤¯¥È¥Ã¥×¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ç®¡ç†ç”¨ CGI ã‚’ç½®ããƒˆãƒƒãƒ—ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $fml_owner_home_dir/public_html/cgi-bin/fml
    </entry>
@@ -561,7 +561,7 @@ $fml_owner_home_dir/public_html/cgi-bin/fml
 <entry>
 cgi_charset_en</entry>
 <entry>
- CGI ¤ÎÉ½¼¨¤Î±Ñ¸ì¥Ç¥Õ¥©¥ë¥È CHARSET</entry>
+ CGI ã®è¡¨ç¤ºã®è‹±èªãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ CHARSET</entry>
 <entry>
 us-ascii
    </entry>
@@ -570,7 +570,7 @@ us-ascii
 <entry>
 cgi_charset_ja</entry>
 <entry>
- CGI É½¼¨¤ÎÆüËÜ¸ì¥Ç¥Õ¥©¥ë¥È CHARSET</entry>
+ CGI è¡¨ç¤ºã®æ—¥æœ¬èªãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ CHARSET</entry>
 <entry>
 euc-jp
    </entry>
@@ -579,7 +579,7 @@ euc-jp
 <entry>
 cgi_default_charset</entry>
 <entry>
- CGI É½¼¨¤Î¥Ç¥Õ¥©¥ë¥È CHARSET</entry>
+ CGI è¡¨ç¤ºã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ CHARSET</entry>
 <entry>
 $cgi_charset_ja
    </entry>
@@ -588,7 +588,7 @@ $cgi_charset_ja
 <entry>
 cgi_default_language</entry>
 <entry>
- CGI ¤Î¥Ç¥Õ¥©¥ë¥È¸À¸ì¥â¡¼¥É (!= charset) </entry>
+ CGI ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨€èªãƒ¢ãƒ¼ãƒ‰ (!= charset) </entry>
 <entry>
 japanese
    </entry>
@@ -597,7 +597,7 @@ japanese
 <entry>
 cgi_language_select_list</entry>
 <entry>
- CGI ¤ÇÍøÍÑ²ÄÇ½¤Ê¸À¸ì¥â¡¼¥É°ìÍ÷ (!= charset) </entry>
+ CGI ã§åˆ©ç”¨å¯èƒ½ãªè¨€èªãƒ¢ãƒ¼ãƒ‰ä¸€è¦§ (!= charset) </entry>
 <entry>
 japanese
    english
@@ -607,7 +607,7 @@ japanese
 <entry>
 cgi_main_menu_color</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î bgcolor</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® bgcolor</entry>
 <entry>
 #FFFFFF
    </entry>
@@ -616,7 +616,7 @@ cgi_main_menu_color</entry>
 <entry>
 cgi_menu_address_map_select_list</entry>
 <entry>
- ´ÉÍıÍÑ CGI ¤Ç¤Î¥¢¥É¥ì¥¹Áàºî¤Îºİ¤ËÁª¤Ù¤ë¥Ş¥Ã¥×°ìÍ÷</entry>
+ ç®¡ç†ç”¨ CGI ã§ã®ã‚¢ãƒ‰ãƒ¬ã‚¹æ“ä½œã®éš›ã«é¸ã¹ã‚‹ãƒãƒƒãƒ—ä¸€è¦§</entry>
 <entry>
 member
    recipient
@@ -627,7 +627,7 @@ member
 <entry>
 cgi_menu_default_address_map</entry>
 <entry>
- ´ÉÍıÍÑ CGI ¤Ç¤Î¥¢¥É¥ì¥¹Áàºî¤Ë»È¤¦¥Ş¥Ã¥×¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ</entry>
+ ç®¡ç†ç”¨ CGI ã§ã®ã‚¢ãƒ‰ãƒ¬ã‚¹æ“ä½œã«ä½¿ã†ãƒãƒƒãƒ—ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤</entry>
 <entry>
 recipient
    </entry>
@@ -636,7 +636,7 @@ recipient
 <entry>
 cgi_navigation_bar_color</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î bgcolor</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® bgcolor</entry>
 <entry>
 #FFFFFF
    </entry>
@@ -645,7 +645,7 @@ cgi_navigation_bar_color</entry>
 <entry>
 chaddr_command_auth_type</entry>
 <entry>
- chaddr ¥³¥Ş¥ó¥É¤Ç confirmation Ç§¾Ú(¥³¡¼¥ë¥Ğ¥Ã¥¯Ç§¾Ú)</entry>
+ chaddr ã‚³ãƒãƒ³ãƒ‰ã§ confirmation èªè¨¼(ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯èªè¨¼)</entry>
 <entry>
 confirmation
    </entry>
@@ -654,7 +654,7 @@ confirmation
 <entry>
 chaddr_command_operation_mode</entry>
 <entry>
- chaddr ¤Î½èÍı¤Ï¼«Æ°¤«¡©´ÉÍı¼Ô¤Ë¤è¤ë¼êÆ°¤«¡©</entry>
+ chaddr ã®å‡¦ç†ã¯è‡ªå‹•ã‹ï¼Ÿç®¡ç†è€…ã«ã‚ˆã‚‹æ‰‹å‹•ã‹ï¼Ÿ</entry>
 <entry>
 automatic
    </entry>
@@ -681,7 +681,7 @@ $etc_dir/pgp-command-mail-auth
 <entry>
 command_mail_filter_reject_notice_data_type</entry>
 <entry>
- ÃÆ¤¤¤¿¥á¡¼¥ë¤ò¤É¤Î¤è¤¦¤Ë¥Õ¥©¥ï¡¼¥É¤¹¤ë¤«¡©</entry>
+ å¼¾ã„ãŸãƒ¡ãƒ¼ãƒ«ã‚’ã©ã®ã‚ˆã†ã«ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 string
    </entry>
@@ -690,7 +690,7 @@ string
 <entry>
 command_mail_filter_reject_notice_recipients</entry>
 <entry>
- ¥¨¥é¡¼¤Î¤ªÃÎ¤é¤»¤Î¼õ¿®¼Ô</entry>
+ ã‚¨ãƒ©ãƒ¼ã®ãŠçŸ¥ã‚‰ã›ã®å—ä¿¡è€…</entry>
 <entry>
 maintainer
    sender
@@ -700,7 +700,7 @@ maintainer
 <entry>
 command_mail_invalid_command_limit</entry>
 <entry>
- ¥³¥Ş¥ó¥É¥á¡¼¥ë°ìÄÌ¤¢¤¿¤ê¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ë</entry>
+ ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ä¸€é€šã‚ãŸã‚Šã«å«ã¾ã‚Œã¦ã„ã‚‹</entry>
 <entry>
 100
    </entry>
@@ -709,7 +709,7 @@ command_mail_invalid_command_limit</entry>
 <entry>
 command_mail_line_length_limit</entry>
 <entry>
- ¥³¥Ş¥ó¥É¥á¡¼¥ë¤Ë¤ª¤±¤ë°ì¹Ô¤¢¤¿¤ê¤Î¥³¥Ş¥ó¥É¤ÎÄ¹¤µ¤Î¾å¸Â¡£</entry>
+ ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã«ãŠã‘ã‚‹ä¸€è¡Œã‚ãŸã‚Šã®ã‚³ãƒãƒ³ãƒ‰ã®é•·ã•ã®ä¸Šé™ã€‚</entry>
 <entry>
 128
    </entry>
@@ -727,7 +727,7 @@ command_mail_reply_prompt</entry>
 <entry>
 command_mail_restrictions</entry>
 <entry>
- ¥³¥Ş¥ó¥É¤Ø¤ÎÀ©¸Â</entry>
+ ã‚³ãƒãƒ³ãƒ‰ã¸ã®åˆ¶é™</entry>
 <entry>
 isolate_system_special_accounts
    permit_anonymous_command
@@ -739,7 +739,7 @@ isolate_system_special_accounts
 <entry>
 command_mail_size_filter_rules</entry>
 <entry>
- ¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£</entry>
+ ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚</entry>
 <entry>
 check_header_size
    check_body_size
@@ -752,7 +752,7 @@ check_header_size
 <entry>
 command_mail_valid_command_limit</entry>
 <entry>
- ¥³¥Ş¥ó¥É¥á¡¼¥ë°ìÄÌ¤¢¤¿¤ê¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ë</entry>
+ ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ä¸€é€šã‚ãŸã‚Šã«å«ã¾ã‚Œã¦ã„ã‚‹</entry>
 <entry>
 100
    </entry>
@@ -761,7 +761,7 @@ command_mail_valid_command_limit</entry>
 <entry>
 confirm_command_expire_limit</entry>
 <entry>
- confirmation ¤¬Í­¸ú¤Ê´ü´Ö¡£</entry>
+ confirmation ãŒæœ‰åŠ¹ãªæœŸé–“ã€‚</entry>
 <entry>
 14d
    </entry>
@@ -770,7 +770,7 @@ confirm_command_expire_limit</entry>
 <entry>
 confirm_command_prefix</entry>
 <entry>
- confirmation ¤ÎÊÖ»ö¤òÉ½¤¹ÆÃÊÌ¤Ê¥³¥Ş¥ó¥É</entry>
+ confirmation ã®è¿”äº‹ã‚’è¡¨ã™ç‰¹åˆ¥ãªã‚³ãƒãƒ³ãƒ‰</entry>
 <entry>
 confirm
    </entry>
@@ -779,7 +779,7 @@ confirm
 <entry>
 createonpost_newml_maps</entry>
 <entry>
- CREATE-ON-POST ¤ÇÆ°Åª¤Ë£Í£Ì¤òºî¤ë¤³¤È¤¬¤Ç¤­¤ë¥æ¡¼¥¶¤Î¥ê¥¹¥È¡£</entry>
+ CREATE-ON-POST ã§å‹•çš„ã«ï¼­ï¼¬ã‚’ä½œã‚‹ã“ã¨ãŒã§ãã‚‹ãƒ¦ãƒ¼ã‚¶ã®ãƒªã‚¹ãƒˆã€‚</entry>
 <entry>
 pcre:$ml_home_dir/newml.allow.pcre
    </entry>
@@ -788,7 +788,7 @@ pcre:$ml_home_dir/newml.allow.pcre
 <entry>
 createonpost_newml_restrictions</entry>
 <entry>
- CREATE-ON-POST ¤ÇÆ°Åª¤Ë£Í£Ì¤òºî¤ë¤³¤È¤¬¤Ç¤­¤ë¥æ¡¼¥¶</entry>
+ CREATE-ON-POST ã§å‹•çš„ã«ï¼­ï¼¬ã‚’ä½œã‚‹ã“ã¨ãŒã§ãã‚‹ãƒ¦ãƒ¼ã‚¶</entry>
 <entry>
 reject_system_special_accounts
    reject_errormail
@@ -802,7 +802,7 @@ reject_system_special_accounts
 <entry>
 createonpost_sender_restrictions</entry>
 <entry>
- CREATE-ON-POST ¤Ê£Í£Ì¤ØÅê¹Æ¤Ç¤­¤ë¿Í¤ÏÃ¯¤«¡©</entry>
+ CREATE-ON-POST ãªï¼­ï¼¬ã¸æŠ•ç¨¿ã§ãã‚‹äººã¯èª°ã‹ï¼Ÿ</entry>
 <entry>
 reject_system_special_accounts
    reject_errormail
@@ -816,7 +816,7 @@ reject_system_special_accounts
 <entry>
 createonpost_subscribe_restrictions</entry>
 <entry>
- REATE-ON-POST ¤Ê£Í£Ì¤Ø subscribe ¤Ç¤­¤ë¿Í¤ÏÃ¯¤«¡©</entry>
+ REATE-ON-POST ãªï¼­ï¼¬ã¸ subscribe ã§ãã‚‹äººã¯èª°ã‹ï¼Ÿ</entry>
 <entry>
 reject_system_special_accounts
    reject_errormail
@@ -829,7 +829,7 @@ reject_system_special_accounts
 <entry>
 db_dir</entry>
 <entry>
- ³Æ¼ï¥Ç¡¼¥¿¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ å„ç¨®ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $var_dir/db
    </entry>
@@ -838,7 +838,7 @@ $var_dir/db
 <entry>
 default_mail_body_size_limit</entry>
 <entry>
- ËÜÊ¸¥µ¥¤¥º¤Î¾å¸Â¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ</entry>
+ æœ¬æ–‡ã‚µã‚¤ã‚ºã®ä¸Šé™ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤</entry>
 <entry>
 10240000
    </entry>
@@ -847,7 +847,7 @@ default_mail_body_size_limit</entry>
 <entry>
 default_mail_header_size_limit</entry>
 <entry>
- ¥Ø¥Ã¥À¥µ¥¤¥º¤Î¾å¸Â¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ</entry>
+ ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã®ä¸Šé™ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤</entry>
 <entry>
 102400
    </entry>
@@ -856,7 +856,7 @@ default_mail_header_size_limit</entry>
 <entry>
 deny_file</entry>
 <entry>
- deny ¥Õ¥¡¥¤¥ë</entry>
+ deny ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $ml_home_dir/deny
    </entry>
@@ -865,7 +865,7 @@ $ml_home_dir/deny
 <entry>
 digest_header_rewrite_rules</entry>
 <entry>
- µ­»ö¤Î¤Ş¤È¤á¤ª¤¯¤ê¤Î¥Ø¥Ã¥À¤ò½ñ¤­´¹¤¨¤ë¥ë¡¼¥ë·²</entry>
+ è¨˜äº‹ã®ã¾ã¨ã‚ãŠãã‚Šã®ãƒ˜ãƒƒãƒ€ã‚’æ›¸ãæ›ãˆã‚‹ãƒ«ãƒ¼ãƒ«ç¾¤</entry>
 <entry>
 add_software_info
    add_rfc2369
@@ -875,7 +875,7 @@ add_software_info
 <entry>
 digest_member_maps</entry>
 <entry>
- ¥À¥ß¡¼</entry>
+ ãƒ€ãƒŸãƒ¼</entry>
 <entry>
 $primary_member_maps
    </entry>
@@ -884,7 +884,7 @@ $primary_member_maps
 <entry>
 digest_recipient_maps</entry>
 <entry>
- ¤¹¤Ù¤Æ¤Î¤Ş¤È¤áÁ÷¤ê¤ò¤¹¤ë¤Ù¤­¼õ¿®¼Ô¤Î¥ê¥¹¥È</entry>
+ ã™ã¹ã¦ã®ã¾ã¨ã‚é€ã‚Šã‚’ã™ã‚‹ã¹ãå—ä¿¡è€…ã®ãƒªã‚¹ãƒˆ</entry>
 <entry>
 $primary_digest_recipient_map
    </entry>
@@ -893,7 +893,7 @@ $primary_digest_recipient_map
 <entry>
 digest_sequence_file</entry>
 <entry>
- ¤Ş¤È¤áÁ÷¤ê¤·¤¿ºÇ¸å¤Îµ­»öÈÖ¹æ¤òÊİÂ¸¤¹¤ë¥Õ¥¡¥¤¥ë</entry>
+ ã¾ã¨ã‚é€ã‚Šã—ãŸæœ€å¾Œã®è¨˜äº‹ç•ªå·ã‚’ä¿å­˜ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $ml_home_dir/seq-digest
    </entry>
@@ -902,7 +902,7 @@ $ml_home_dir/seq-digest
 <entry>
 directory_default_mode</entry>
 <entry>
- ¥Ç¥£¥ì¥¯¥È¥ê¤òºîÀ®¤¹¤ë»ş¤Î¥Ç¥Õ¥©¥ë¥È¥â¡¼¥É</entry>
+ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä½œæˆã™ã‚‹æ™‚ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ¢ãƒ¼ãƒ‰</entry>
 <entry>
 0755
    </entry>
@@ -911,7 +911,7 @@ directory_default_mode</entry>
 <entry>
 domain_config_base_dir</entry>
 <entry>
- fml ¤«¤é¥·¥¹¥Æ¥à¤Ë¶µ¤¨¤ë¥Ç¡¼¥¿¤òÃÖ¤¯¤¿¤á¤Î¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ fml ã‹ã‚‰ã‚·ã‚¹ãƒ†ãƒ ã«æ•™ãˆã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ç½®ããŸã‚ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_home_prefix/etc
    </entry>
@@ -920,7 +920,7 @@ $ml_home_prefix/etc
 <entry>
 domain_exim_config_dir</entry>
 <entry>
- exim ÍÑ¤Ë¶µ¤¨¤ë¤¿¤á¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ exim ç”¨ã«æ•™ãˆã‚‹ãŸã‚ã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $domain_config_base_dir/exim
    </entry>
@@ -929,7 +929,7 @@ $domain_config_base_dir/exim
 <entry>
 domain_local_dir</entry>
 <entry>
- domian local ¤Ê¥Ç¥£¥ì¥¯¥È¥ê¡£</entry>
+ domian local ãªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã€‚</entry>
 <entry>
 $ml_home_prefix
    </entry>
@@ -938,7 +938,7 @@ $ml_home_prefix
 <entry>
 domain_local_log_file</entry>
 <entry>
- ¥É¥á¥¤¥ó¸ÇÍ­¤Î¥í¥°¥Õ¥¡¥¤¥ë</entry>
+ ãƒ‰ãƒ¡ã‚¤ãƒ³å›ºæœ‰ã®ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $domain_local_dir/@log@
    </entry>
@@ -947,7 +947,7 @@ $domain_local_dir/@log@
 <entry>
 domain_local_tmp_dir</entry>
 <entry>
- domian local ¤Ê tmp ¥Ç¥£¥ì¥¯¥È¥ê¡£</entry>
+ domian local ãª tmp ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã€‚</entry>
 <entry>
 $ml_home_prefix/@tmp@
    </entry>
@@ -956,7 +956,7 @@ $ml_home_prefix/@tmp@
 <entry>
 domain_mail_config_dir</entry>
 <entry>
- MTA ÍÑ¤Ë¶µ¤¨¤ë¤¿¤á¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ MTA ç”¨ã«æ•™ãˆã‚‹ãŸã‚ã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $domain_config_base_dir/mail
    </entry>
@@ -965,7 +965,7 @@ $domain_config_base_dir/mail
 <entry>
 domain_postfix_config_dir</entry>
 <entry>
- postfix ÍÑ¤Ë¶µ¤¨¤ë¤¿¤á¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ postfix ç”¨ã«æ•™ãˆã‚‹ãŸã‚ã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $domain_config_base_dir/postfix
    </entry>
@@ -974,7 +974,7 @@ $domain_config_base_dir/postfix
 <entry>
 domain_procmail_config_dir</entry>
 <entry>
- MTA ÍÑ¤Ë¶µ¤¨¤ë¤¿¤á¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ MTA ç”¨ã«æ•™ãˆã‚‹ãŸã‚ã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $domain_config_base_dir/procmail
    </entry>
@@ -983,7 +983,7 @@ $domain_config_base_dir/procmail
 <entry>
 domain_qmail_config_dir</entry>
 <entry>
- qmail ÍÑ¤Ë¶µ¤¨¤ë¤¿¤á¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ qmail ç”¨ã«æ•™ãˆã‚‹ãŸã‚ã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $domain_config_base_dir/qmail
    </entry>
@@ -992,7 +992,7 @@ $domain_config_base_dir/qmail
 <entry>
 domain_sendmail_config_dir</entry>
 <entry>
- sendmail ÍÑ¤Ë¶µ¤¨¤ë¤¿¤á¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ sendmail ç”¨ã«æ•™ãˆã‚‹ãŸã‚ã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $domain_config_base_dir/sendmail
    </entry>
@@ -1001,7 +1001,7 @@ $domain_config_base_dir/sendmail
 <entry>
 error_mail_analyzer_cache_dir</entry>
 <entry>
- error messages ¤Î¥­¥ã¥Ã¥·¥å¤ò³ÊÇ¼¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ error messages ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æ ¼ç´ã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $db_dir/error
    </entry>
@@ -1010,7 +1010,7 @@ $db_dir/error
 <entry>
 error_mail_analyzer_cache_mode</entry>
 <entry>
- ¥­¥ã¥Ã¥·¥å¤Î¥â¡¼¥É</entry>
+ ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ãƒ¢ãƒ¼ãƒ‰</entry>
 <entry>
 temporal
    </entry>
@@ -1019,7 +1019,7 @@ temporal
 <entry>
 error_mail_analyzer_cache_size</entry>
 <entry>
- ¥­¥ã¥Ã¥·¥å¤Î¥µ¥¤¥º</entry>
+ ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã‚µã‚¤ã‚º</entry>
 <entry>
 14
    </entry>
@@ -1028,7 +1028,7 @@ error_mail_analyzer_cache_size</entry>
 <entry>
 error_mail_analyzer_cache_type</entry>
 <entry>
- ¥­¥ã¥Ã¥·¥å¤Î¥¿¥¤¥×</entry>
+ ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã‚¿ã‚¤ãƒ—</entry>
 <entry>
 File::CacheDir
    </entry>
@@ -1037,7 +1037,7 @@ File::CacheDir
 <entry>
 error_mail_analyzer_function</entry>
 <entry>
- FML::Error::Analyze Ãæ¤Î´Ø¿ôÌ¾¡£</entry>
+ FML::Error::Analyze ä¸­ã®é–¢æ•°åã€‚</entry>
 <entry>
 histgram
    </entry>
@@ -1046,7 +1046,7 @@ histgram
 <entry>
 error_mail_analyzer_function_select_list</entry>
 <entry>
- FML::Error::Analyze Ãæ¤Î´Ø¿ôÌ¾¡£</entry>
+ FML::Error::Analyze ä¸­ã®é–¢æ•°åã€‚</entry>
 <entry>
 simple_count
    histgram
@@ -1056,7 +1056,7 @@ simple_count
 <entry>
 error_mail_analyzer_simple_count_limit</entry>
 <entry>
- simple_count ¤Î¥¨¥é¡¼²ó¿ô¤Î¾å¸Â</entry>
+ simple_count ã®ã‚¨ãƒ©ãƒ¼å›æ•°ã®ä¸Šé™</entry>
 <entry>
 5
    </entry>
@@ -1065,7 +1065,7 @@ error_mail_analyzer_simple_count_limit</entry>
 <entry>
 etc_dir</entry>
 <entry>
- ¥Ñ¥¹¥ï¡¼¥É¥Õ¥¡¥¤¥ë¤Ê¤É¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ãªã©ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_home_dir/etc
    </entry>
@@ -1074,7 +1074,7 @@ $ml_home_dir/etc
 <entry>
 event_queue_dir</entry>
 <entry>
- ¥¤¥ô¥§¥ó¥È¤Î¥­¥å¡¼¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ã‚¤ãƒ´ã‚§ãƒ³ãƒˆã®ã‚­ãƒ¥ãƒ¼ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $var_dir/event/queue
    </entry>
@@ -1173,7 +1173,7 @@ $var_dir/mail/queue-fetchfml
 <entry>
 file_default_mode</entry>
 <entry>
- ¥Õ¥¡¥¤¥ë¤òºîÀ®¤¹¤ë»ş¤Î¥Ç¥Õ¥©¥ë¥È¥â¡¼¥É</entry>
+ ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã™ã‚‹æ™‚ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ¢ãƒ¼ãƒ‰</entry>
 <entry>
 0600
    </entry>
@@ -1182,7 +1182,7 @@ file_default_mode</entry>
 <entry>
 get_command_request_limit</entry>
 <entry>
- get ¥³¥Ş¥ó¥É¤Ç»ØÄê¤Ç¤­¤ëµ­»ö¿ô¤Î¾å¸Â¡£</entry>
+ get ã‚³ãƒãƒ³ãƒ‰ã§æŒ‡å®šã§ãã‚‹è¨˜äº‹æ•°ã®ä¸Šé™ã€‚</entry>
 <entry>
 100
    </entry>
@@ -1191,7 +1191,7 @@ get_command_request_limit</entry>
 <entry>
 guide_file</entry>
 <entry>
- GUIDE ¥Õ¥¡¥¤¥ë</entry>
+ GUIDE ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $ml_home_dir/guide
    </entry>
@@ -1200,7 +1200,7 @@ $ml_home_dir/guide
 <entry>
 help_file</entry>
 <entry>
- ¥Ø¥ë¥×¥Õ¥¡¥¤¥ë</entry>
+ ãƒ˜ãƒ«ãƒ—ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $ml_home_dir/help
    </entry>
@@ -1209,7 +1209,7 @@ $ml_home_dir/help
 <entry>
 html_archive_dir</entry>
 <entry>
- HTML ²½¤µ¤ì¤¿µ­»ö¤òºî¤ë¥Ç¥£¥ì¥¯¥È¥ê (£Í£Ì¤´¤È)</entry>
+ HTML åŒ–ã•ã‚ŒãŸè¨˜äº‹ã‚’ä½œã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª (ï¼­ï¼¬ã”ã¨)</entry>
 <entry>
 $fml_owner_home_dir/public_html/fml/mlarchive/$ml_domain/$ml_name
    </entry>
@@ -1218,7 +1218,7 @@ $fml_owner_home_dir/public_html/fml/mlarchive/$ml_domain/$ml_name
 <entry>
 html_tmp_base_url</entry>
 <entry>
- ´ÉÍıÍÑ CGI °ì»şÎÎ°è URL</entry>
+ ç®¡ç†ç”¨ CGI ä¸€æ™‚é ˜åŸŸ URL</entry>
 <entry>
 /~$fml_owner/fml/tmp
    </entry>
@@ -1227,7 +1227,7 @@ html_tmp_base_url</entry>
 <entry>
 html_tmp_dir</entry>
 <entry>
- ´ÉÍıÍÑ CGI °ì»şÎÎ°è¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ç®¡ç†ç”¨ CGI ä¸€æ™‚é ˜åŸŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $fml_owner_home_dir/public_html/fml/tmp
    </entry>
@@ -1236,7 +1236,7 @@ $fml_owner_home_dir/public_html/fml/tmp
 <entry>
 incoming_article_body_size_limit</entry>
 <entry>
- Åê¹Æ¤µ¤ì¤¿µ­»ö¤ÎËÜÊ¸¤Î¾å¸ÂÃÍ</entry>
+ æŠ•ç¨¿ã•ã‚ŒãŸè¨˜äº‹ã®æœ¬æ–‡ã®ä¸Šé™å€¤</entry>
 <entry>
 $default_mail_body_size_limit
    </entry>
@@ -1245,7 +1245,7 @@ $default_mail_body_size_limit
 <entry>
 incoming_article_header_size_limit</entry>
 <entry>
- Åê¹Æ¤µ¤ì¤¿µ­»ö¤Î¥Ø¥Ã¥À¤Î¾å¸ÂÃÍ</entry>
+ æŠ•ç¨¿ã•ã‚ŒãŸè¨˜äº‹ã®ãƒ˜ãƒƒãƒ€ã®ä¸Šé™å€¤</entry>
 <entry>
 $default_mail_header_size_limit
    </entry>
@@ -1254,7 +1254,7 @@ $default_mail_header_size_limit
 <entry>
 incoming_command_mail_body_size_limit</entry>
 <entry>
- MTA ¤«¤é fml ¤¬¼õ¤±¤È¤ëºİ¤Î¥³¥Ş¥ó¥É¥á¡¼¥ë¤ÎËÜÊ¸¥µ¥¤¥º¤Î¾å¸ÂÃÍ</entry>
+ MTA ã‹ã‚‰ fml ãŒå—ã‘ã¨ã‚‹éš›ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®æœ¬æ–‡ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤</entry>
 <entry>
 $default_mail_body_size_limit
    </entry>
@@ -1263,7 +1263,7 @@ $default_mail_body_size_limit
 <entry>
 incoming_command_mail_header_size_limit</entry>
 <entry>
- MTA ¤«¤é fml ¤¬¼õ¤±¤È¤ëºİ¤Î¥³¥Ş¥ó¥É¥á¡¼¥ë¤Î¥Ø¥Ã¥À¥µ¥¤¥º¤Î¾å¸ÂÃÍ</entry>
+ MTA ã‹ã‚‰ fml ãŒå—ã‘ã¨ã‚‹éš›ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤</entry>
 <entry>
 $default_mail_header_size_limit
    </entry>
@@ -1272,7 +1272,7 @@ $default_mail_header_size_limit
 <entry>
 incoming_mail_body_checksum_cache_dir</entry>
 <entry>
- Message-ID ¤Î¥­¥ã¥Ã¥·¥å¤ò³ÊÇ¼¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ Message-ID ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æ ¼ç´ã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $db_dir/body_checksum
    </entry>
@@ -1281,7 +1281,7 @@ $db_dir/body_checksum
 <entry>
 incoming_mail_body_loop_check_rules</entry>
 <entry>
- ¥Ø¥Ã¥À¤ËÂĞ¤¹¤ë¥ë¡¼¥×¥Á¥§¥Ã¥¯¤Î¥ë¡¼¥ë·²</entry>
+ ãƒ˜ãƒƒãƒ€ã«å¯¾ã™ã‚‹ãƒ«ãƒ¼ãƒ—ãƒã‚§ãƒƒã‚¯ã®ãƒ«ãƒ¼ãƒ«ç¾¤</entry>
 <entry>
 check_body_checksum
    </entry>
@@ -1290,7 +1290,7 @@ check_body_checksum
 <entry>
 incoming_mail_cache_dir</entry>
 <entry>
- ÆşÎÏ¤µ¤ì¤ë¥á¡¼¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ å…¥åŠ›ã•ã‚Œã‚‹ãƒ¡ãƒ¼ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $var_dir/mail/incoming
    </entry>
@@ -1299,7 +1299,7 @@ $var_dir/mail/incoming
 <entry>
 incoming_mail_cache_size</entry>
 <entry>
- ÆşÎÏ¤µ¤ì¤ë¥á¡¼¥ë¤òºÇÂç²¿ÄÌ¥­¥ã¥Ã¥·¥å¤¹¤ë¤«</entry>
+ å…¥åŠ›ã•ã‚Œã‚‹ãƒ¡ãƒ¼ãƒ«ã‚’æœ€å¤§ä½•é€šã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã‹</entry>
 <entry>
 128
    </entry>
@@ -1308,7 +1308,7 @@ incoming_mail_cache_size</entry>
 <entry>
 incoming_mail_envelope_loop_check_rules</entry>
 <entry>
- Envelope ¤ËÂĞ¤¹¤ë¥ë¡¼¥×¥Á¥§¥Ã¥¯¤Î¥ë¡¼¥ë·²</entry>
+ Envelope ã«å¯¾ã™ã‚‹ãƒ«ãƒ¼ãƒ—ãƒã‚§ãƒƒã‚¯ã®ãƒ«ãƒ¼ãƒ«ç¾¤</entry>
 <entry>
 check_envelope_sender
    </entry>
@@ -1317,7 +1317,7 @@ check_envelope_sender
 <entry>
 incoming_mail_header_loop_check_rules</entry>
 <entry>
- ¥Ø¥Ã¥À¤ËÂĞ¤¹¤ë¥ë¡¼¥×¥Á¥§¥Ã¥¯¤Î¥ë¡¼¥ë·²</entry>
+ ãƒ˜ãƒƒãƒ€ã«å¯¾ã™ã‚‹ãƒ«ãƒ¼ãƒ—ãƒã‚§ãƒƒã‚¯ã®ãƒ«ãƒ¼ãƒ«ç¾¤</entry>
 <entry>
 check_message_id
    check_x_ml_info
@@ -1346,7 +1346,7 @@ isolated_queue_expire_limit</entry>
 <entry>
 language_preference_order</entry>
 <entry>
- ¸À¸ì¤ÎÍ¥Àè½ç°Ì</entry>
+ è¨€èªã®å„ªå…ˆé †ä½</entry>
 <entry>
 ja en
    </entry>
@@ -1402,7 +1402,7 @@ fml
 <entry>
 list_addresses</entry>
 <entry>
- £Í£Ì¤¬»È¤¦¥¢¥É¥ì¥¹: Îã: elena, elena-ctl</entry>
+ ï¼­ï¼¬ãŒä½¿ã†ã‚¢ãƒ‰ãƒ¬ã‚¹: ä¾‹: elena, elena-ctl</entry>
 <entry>
 $maintainer
    $article_post_address
@@ -1413,7 +1413,7 @@ $maintainer
 <entry>
 list_command_default_maps</entry>
 <entry>
- °ú¿ô¤Ç»ØÄê¤·¤Ê¤¤»ş¤Ë¡¢list ¥³¥Ş¥ó¥É¤¬É½¼¨¤¹¤ë¤Ù¤­¥Ş¥Ã¥×</entry>
+ å¼•æ•°ã§æŒ‡å®šã—ãªã„æ™‚ã«ã€list ã‚³ãƒãƒ³ãƒ‰ãŒè¡¨ç¤ºã™ã‚‹ã¹ããƒãƒƒãƒ—</entry>
 <entry>
 $recipient_maps
    </entry>
@@ -1422,7 +1422,7 @@ $recipient_maps
 <entry>
 listinfo_base_dir</entry>
 <entry>
- information ¤ò¤ª¤¯¥Ç¥£¥ì¥¯¥È¥ê (£Í£Ì¤´¤È)</entry>
+ information ã‚’ãŠããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª (ï¼­ï¼¬ã”ã¨)</entry>
 <entry>
 $fml_owner_home_dir/public_html/fml/listinfo
    </entry>
@@ -1431,7 +1431,7 @@ $fml_owner_home_dir/public_html/fml/listinfo
 <entry>
 listinfo_dir</entry>
 <entry>
- information ¤ò¤ª¤¯¥Ç¥£¥ì¥¯¥È¥ê (£Í£Ì¤´¤È)</entry>
+ information ã‚’ãŠããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª (ï¼­ï¼¬ã”ã¨)</entry>
 <entry>
 $listinfo_base_dir/$ml_domain/$ml_name
    </entry>
@@ -1458,7 +1458,7 @@ $fml_share_dir/listinfo/$template_file_default_charset
 <entry>
 lock_dir</entry>
 <entry>
- ¥í¥Ã¥¯¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ãƒ­ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $var_dir/lock
    </entry>
@@ -1467,7 +1467,7 @@ $var_dir/lock
 <entry>
 lock_file</entry>
 <entry>
- ¥í¥Ã¥¯¥Õ¥¡¥¤¥ë (¥¸¥ã¥¤¥¢¥ó¥È¥í¥Ã¥¯ÍÑ¤Î¥Õ¥¡¥¤¥ë¡Ë</entry>
+ ãƒ­ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ« (ã‚¸ãƒ£ã‚¤ã‚¢ãƒ³ãƒˆãƒ­ãƒƒã‚¯ç”¨ã®ãƒ•ã‚¡ã‚¤ãƒ«ï¼‰</entry>
 <entry>
 $lock_dir/giantlock
    </entry>
@@ -1476,7 +1476,7 @@ $lock_dir/giantlock
 <entry>
 lock_type</entry>
 <entry>
- ¥í¥Ã¥¯¤Î¥¿¥¤¥×</entry>
+ ãƒ­ãƒƒã‚¯ã®ã‚¿ã‚¤ãƒ—</entry>
 <entry>
 flock
    </entry>
@@ -1485,7 +1485,7 @@ flock
 <entry>
 log_command_tail_starting_location</entry>
 <entry>
- ºÇ¸å¤Î²¿¹Ô¤òÉ½¼¨¤¹¤ë¤«¡©¤Ä¤Ş¤ê tail -100 log ¤Î 100 ¤ÎÉôÊ¬¡£</entry>
+ æœ€å¾Œã®ä½•è¡Œã‚’è¡¨ç¤ºã™ã‚‹ã‹ï¼Ÿã¤ã¾ã‚Š tail -100 log ã® 100 ã®éƒ¨åˆ†ã€‚</entry>
 <entry>
 100
    </entry>
@@ -1494,7 +1494,7 @@ log_command_tail_starting_location</entry>
 <entry>
 log_computer_output_engine</entry>
 <entry>
- µ¡²ñ½èÍı¤Ë¤ä¤µ¤·¤¤¥Õ¥©¡¼¥Ş¥Ã¥È¤ò½ĞÎÏ¤¹¤ëºİ¤Î½ĞÎÏ¥¨¥ó¥¸¥ó¡£</entry>
+ æ©Ÿä¼šå‡¦ç†ã«ã‚„ã•ã—ã„ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’å‡ºåŠ›ã™ã‚‹éš›ã®å‡ºåŠ›ã‚¨ãƒ³ã‚¸ãƒ³ã€‚</entry>
 <entry>
 FML::Log::Print::Simple
    </entry>
@@ -1503,7 +1503,7 @@ FML::Log::Print::Simple
 <entry>
 log_dir</entry>
 <entry>
- ¥í¥°¥Õ¥¡¥¤¥ë</entry>
+ ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $var_dir/log
    </entry>
@@ -1512,7 +1512,7 @@ $var_dir/log
 <entry>
 log_file</entry>
 <entry>
- ML ¸ÇÍ­¤Î¥í¥°¥Õ¥¡¥¤¥ë¡£</entry>
+ ML å›ºæœ‰ã®ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã€‚</entry>
 <entry>
 $ml_home_dir/log
    </entry>
@@ -1530,7 +1530,7 @@ process[pid]
 <entry>
 log_rotate_archive_file_total</entry>
 <entry>
- log.0 log.1 ¤Ê¤É¤Î .¿ô»ú ÉôÊ¬¤ÏºÇÂç¤¤¤¯¤Ä¡©</entry>
+ log.0 log.1 ãªã©ã® .æ•°å­— éƒ¨åˆ†ã¯æœ€å¤§ã„ãã¤ï¼Ÿ</entry>
 <entry>
 7
    </entry>
@@ -1539,7 +1539,7 @@ log_rotate_archive_file_total</entry>
 <entry>
 log_rotate_interval</entry>
 <entry>
- ¥í¥°¥Õ¥¡¥¤¥ë¥í¡¼¥Æ¡¼¥·¥ç¥ó¤ò¹Ô¤Ê¤¦´Ö³Ö¡£</entry>
+ ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œãªã†é–“éš”ã€‚</entry>
 <entry>
 86400
    </entry>
@@ -1548,7 +1548,7 @@ log_rotate_interval</entry>
 <entry>
 log_rotate_policy</entry>
 <entry>
- ¥í¥°¥í¡¼¥Æ¥·¥ç¥ó¤Î¥İ¥ê¥·¡¼¡£</entry>
+ ãƒ­ã‚°ãƒ­ãƒ¼ãƒ†ã‚·ãƒ§ãƒ³ã®ãƒãƒªã‚·ãƒ¼ã€‚</entry>
 <entry>
 size
    </entry>
@@ -1557,7 +1557,7 @@ size
 <entry>
 log_rotate_size_limit</entry>
 <entry>
- ¥í¥°¥Õ¥¡¥¤¥ë¤Î¥µ¥¤¥º¤¬¡¢</entry>
+ ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µã‚¤ã‚ºãŒã€</entry>
 <entry>
 300000
    </entry>
@@ -1575,7 +1575,7 @@ mail
 <entry>
 log_syslog_ident</entry>
 <entry>
- ¤¹¤Ù¤Æ¤Î¥á¥Ã¥»¡¼¥¸¤ÎÁ°¤Ë¸½¤ì¤ëÊ¸»úÎó</entry>
+ ã™ã¹ã¦ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‰ã«ç¾ã‚Œã‚‹æ–‡å­—åˆ—</entry>
 <entry>
 fml/$program_name
    </entry>
@@ -1602,7 +1602,7 @@ info
 <entry>
 log_type</entry>
 <entry>
- ¥í¥°¤È¤ê¤Î¥¿¥¤¥× (syslog ¤ÏÌ¤¼ÂÁõ)</entry>
+ ãƒ­ã‚°ã¨ã‚Šã®ã‚¿ã‚¤ãƒ— (syslog ã¯æœªå®Ÿè£…)</entry>
 <entry>
 file
    </entry>
@@ -1611,7 +1611,7 @@ file
 <entry>
 mail_aliases_file</entry>
 <entry>
- MTA ¤Ë¶µ¤¨¤ë¤¿¤á¤Î aliases ¥Õ¥¡¥¤¥ë</entry>
+ MTA ã«æ•™ãˆã‚‹ãŸã‚ã® aliases ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $domain_mail_config_dir/aliases
    </entry>
@@ -1620,7 +1620,7 @@ $domain_mail_config_dir/aliases
 <entry>
 mail_header_default_errors_to</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î Errors-To: ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® Errors-To: ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 $maintainer
    </entry>
@@ -1629,7 +1629,7 @@ $maintainer
 <entry>
 mail_header_default_list_help</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î list-help ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® list-help ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 &lt;mailto:${command_mail_address}?body=help&gt;
    </entry>
@@ -1638,7 +1638,7 @@ mail_header_default_list_help</entry>
 <entry>
 mail_header_default_list_id</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î list-id ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® list-id ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 $ml_name ML &lt;$ml_name.$ml_domain&gt;
    </entry>
@@ -1647,7 +1647,7 @@ $ml_name ML &lt;$ml_name.$ml_domain&gt;
 <entry>
 mail_header_default_list_owner</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î list-owner ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® list-owner ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 &lt;mailto:${maintainer}&gt;
    </entry>
@@ -1656,7 +1656,7 @@ mail_header_default_list_owner</entry>
 <entry>
 mail_header_default_list_post</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î list-post ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® list-post ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 &lt;mailto:${article_post_address}&gt;
    </entry>
@@ -1674,7 +1674,7 @@ $fml_version
 <entry>
 mail_header_default_list_subscribe</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î list-subscribe ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® list-subscribe ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 &lt;mailto:${command_mail_address}?body=subscribe&gt;
    </entry>
@@ -1683,7 +1683,7 @@ mail_header_default_list_subscribe</entry>
 <entry>
 mail_header_default_list_unsubscribe</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î list-unsubscribe ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® list-unsubscribe ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 &lt;mailto:${command_mail_address}?body=unsubscribe&gt;
    </entry>
@@ -1692,7 +1692,7 @@ mail_header_default_list_unsubscribe</entry>
 <entry>
 mail_header_default_precedence</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î Precedence: ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® Precedence: ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 bulk
    </entry>
@@ -1701,7 +1701,7 @@ bulk
 <entry>
 mail_header_default_x_ml_name</entry>
 <entry>
- ¥Ç¥Õ¥©¥ë¥È¤Î X-ML-Name: ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® X-ML-Name: ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 $ml_name
    </entry>
@@ -1710,7 +1710,7 @@ $ml_name
 <entry>
 mail_queue_dir</entry>
 <entry>
- mail queue ¤Î¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ mail queue ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $var_dir/mail/queue
    </entry>
@@ -1719,7 +1719,7 @@ $var_dir/mail/queue
 <entry>
 member_maps</entry>
 <entry>
- ¥á¥ó¥Ğ¡¼¤«¤É¤¦¤«Ç§¾Ú¤¹¤ëºİ¤Ë¸¡º÷¤¹¤ë¤¹¤Ù¤Æ¤Î¥á¥ó¥Ğ¡¼¥ê¥¹¥È</entry>
+ ãƒ¡ãƒ³ãƒãƒ¼ã‹ã©ã†ã‹èªè¨¼ã™ã‚‹éš›ã«æ¤œç´¢ã™ã‚‹ã™ã¹ã¦ã®ãƒ¡ãƒ³ãƒãƒ¼ãƒªã‚¹ãƒˆ</entry>
 <entry>
 $primary_member_map
    $admin_member_maps
@@ -1729,7 +1729,7 @@ $primary_member_map
 <entry>
 member_total_limit</entry>
 <entry>
- ¥æ¡¼¥¶¿ô(Àµ³Î¤Ë¤ÏÅê¹Æ²ÄÇ½¿ô)¤Î¾å¸Â</entry>
+ ãƒ¦ãƒ¼ã‚¶æ•°(æ­£ç¢ºã«ã¯æŠ•ç¨¿å¯èƒ½æ•°)ã®ä¸Šé™</entry>
 <entry>
 3000
    </entry>
@@ -1738,7 +1738,7 @@ member_total_limit</entry>
 <entry>
 message_id_cache_dir</entry>
 <entry>
- ¤¹¤Ù¤Æ¤Î Message-ID ¤Î¥­¥ã¥Ã¥·¥å¤ò³ÊÇ¼¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ã™ã¹ã¦ã® Message-ID ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æ ¼ç´ã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $db_dir/message_id
    </entry>
@@ -1756,7 +1756,7 @@ $fml_share_dir/message
 <entry>
 ml_admin_cgi_allowed_commands</entry>
 <entry>
- ³Æ£Í£Ì¤´¤È¤Î´ÉÍıÍÑ CGI ¤Çµö¤µ¤ì¤ë¥³¥Ş¥ó¥É¤Î¥ê¥¹¥È</entry>
+ å„ï¼­ï¼¬ã”ã¨ã®ç®¡ç†ç”¨ CGI ã§è¨±ã•ã‚Œã‚‹ã‚³ãƒãƒ³ãƒ‰ã®ãƒªã‚¹ãƒˆ</entry>
 <entry>
 adduser
    deluser
@@ -1772,7 +1772,7 @@ adduser
 <entry>
 ml_admin_cgi_base_dir</entry>
 <entry>
- ÆÃÄê¤Î£Í£Ì¸ş¤±´ÉÍıÍÑ CGI ¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê¡£</entry>
+ ç‰¹å®šã®ï¼­ï¼¬å‘ã‘ç®¡ç†ç”¨ CGI ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã€‚</entry>
 <entry>
 $cgi_base_dir/$ml_domain/ml-admin/$ml_name
    </entry>
@@ -1791,7 +1791,7 @@ subscribe
 <entry>
 ml_anonymous_cgi_base_dir</entry>
 <entry>
- ¤³¤Î£Í£Ì¤Î°ìÈÌ¿Í¸ş¤± CGI ¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê¡£</entry>
+ ã“ã®ï¼­ï¼¬ã®ä¸€èˆ¬äººå‘ã‘ CGI ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã€‚</entry>
 <entry>
 $anonymous_cgi_base_dir/$ml_domain/$ml_name
    </entry>
@@ -1800,7 +1800,7 @@ $anonymous_cgi_base_dir/$ml_domain/$ml_name
 <entry>
 ml_anonymous_cgi_base_url</entry>
 <entry>
- ¤³¤Î£Í£Ì¤Î°ìÈÌ¿Í¸ş¤± CGI ¤òÃÖ¤¯ URL ¤Î¥Ù¡¼¥¹¡£</entry>
+ ã“ã®ï¼­ï¼¬ã®ä¸€èˆ¬äººå‘ã‘ CGI ã‚’ç½®ã URL ã®ãƒ™ãƒ¼ã‚¹ã€‚</entry>
 <entry>
 /~$fml_owner/cgi-bin/anonymous/$ml_domain/$ml_name
    </entry>
@@ -1809,7 +1809,7 @@ ml_anonymous_cgi_base_url</entry>
 <entry>
 ml_local_dir</entry>
 <entry>
- ³Æ£Í£Ì¥í¡¼¥«¥ë¤Î¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ å„ï¼­ï¼¬ãƒ­ãƒ¼ã‚«ãƒ«ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_home_dir/local
    </entry>
@@ -1818,7 +1818,7 @@ $ml_home_dir/local
 <entry>
 ml_local_lib_dir</entry>
 <entry>
- ³Æ£Í£Ì¥í¡¼¥«¥ë¤Î lib/ ¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ å„ï¼­ï¼¬ãƒ­ãƒ¼ã‚«ãƒ«ã® lib/ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_local_dir/lib
    </entry>
@@ -1836,7 +1836,7 @@ $ml_local_share_dir/message
 <entry>
 ml_local_share_dir</entry>
 <entry>
- ³Æ£Í£Ì¥í¡¼¥«¥ë¤Î share/ ¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ å„ï¼­ï¼¬ãƒ­ãƒ¼ã‚«ãƒ«ã® share/ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_local_dir/share
    </entry>
@@ -1863,7 +1863,7 @@ moderate_queue_expire_limit</entry>
 <entry>
 moderator_member_maps</entry>
 <entry>
- ¥á¥ó¥Ğ¡¼¤«¤É¤¦¤«Ç§¾Ú¤¹¤ëºİ¤Ë¸¡º÷¤¹¤ë¤¹¤Ù¤Æ¤Î¥á¥ó¥Ğ¡¼¥ê¥¹¥È</entry>
+ ãƒ¡ãƒ³ãƒãƒ¼ã‹ã©ã†ã‹èªè¨¼ã™ã‚‹éš›ã«æ¤œç´¢ã™ã‚‹ã™ã¹ã¦ã®ãƒ¡ãƒ³ãƒãƒ¼ãƒªã‚¹ãƒˆ</entry>
 <entry>
 $primary_moderator_member_map
    </entry>
@@ -1872,7 +1872,7 @@ $primary_moderator_member_map
 <entry>
 moderator_recipient_maps</entry>
 <entry>
- ¤È¤ê¤¢¤¨¤ºÄêµÁ¤·¤Æ¤¢¤ë¤±¤É¡¢»È¤ï¤ì¤Æ¤Ï¤¤¤Ê¤¤</entry>
+ ã¨ã‚Šã‚ãˆãšå®šç¾©ã—ã¦ã‚ã‚‹ã‘ã©ã€ä½¿ã‚ã‚Œã¦ã¯ã„ãªã„</entry>
 <entry>
 $primary_moderator_recipient_map
    </entry>
@@ -1881,7 +1881,7 @@ $primary_moderator_recipient_map
 <entry>
 newml_command_ml_admin_default_address</entry>
 <entry>
- £Í£ÌºîÀ®»ş¤Îºİ¤Ëºî¤ï¤ì¤ë fml_owner ¤ÎÃÍ¤Î»ØÄê¡£</entry>
+ ï¼­ï¼¬ä½œæˆæ™‚ã®éš›ã«ä½œã‚ã‚Œã‚‹ fml_owner ã®å€¤ã®æŒ‡å®šã€‚</entry>
 <entry>
 $fml_owner
    </entry>
@@ -1890,7 +1890,7 @@ $fml_owner
 <entry>
 newml_command_postfix_template_files</entry>
 <entry>
- £Í£ÌºîÀ®»ş (makefml newml)¤Îºİ¤Ëºî¤é¤ì¤ë</entry>
+ ï¼­ï¼¬ä½œæˆæ™‚ (makefml newml)ã®éš›ã«ä½œã‚‰ã‚Œã‚‹</entry>
 <entry>
 include
    include-ctl
@@ -1901,7 +1901,7 @@ include
 <entry>
 newml_command_qmail_template_files</entry>
 <entry>
- £Í£ÌºîÀ®»ş (makefml newml)¤Îºİ¤Ëºî¤é¤ì¤ë</entry>
+ ï¼­ï¼¬ä½œæˆæ™‚ (makefml newml)ã®éš›ã«ä½œã‚‰ã‚Œã‚‹</entry>
 <entry>
 dot-qmail
    dot-qmail-ctl
@@ -1914,7 +1914,7 @@ dot-qmail
 <entry>
 newml_command_template_files</entry>
 <entry>
- £Í£ÌºîÀ®»ş (makefml newml)¤Îºİ¤Ëºî¤é¤ì¤ë</entry>
+ ï¼­ï¼¬ä½œæˆæ™‚ (makefml newml)ã®éš›ã«ä½œã‚‰ã‚Œã‚‹</entry>
 <entry>
 config.cf
    </entry>
@@ -1923,7 +1923,7 @@ config.cf
 <entry>
 objective_file</entry>
 <entry>
- objective ¥Õ¥¡¥¤¥ë</entry>
+ objective ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $ml_home_dir/objective
    </entry>
@@ -1932,7 +1932,7 @@ $ml_home_dir/objective
 <entry>
 outgoing_article_body_size_limit</entry>
 <entry>
- Åê¹Æ¤µ¤ì¤¿µ­»ö¤Î(ÇÛÁ÷»ş¤Î)ËÜÊ¸¤Î¾å¸ÂÃÍ</entry>
+ æŠ•ç¨¿ã•ã‚ŒãŸè¨˜äº‹ã®(é…é€æ™‚ã®)æœ¬æ–‡ã®ä¸Šé™å€¤</entry>
 <entry>
 $default_mail_body_size_limit
    </entry>
@@ -1941,7 +1941,7 @@ $default_mail_body_size_limit
 <entry>
 outgoing_article_header_size_limit</entry>
 <entry>
- Åê¹Æ¤µ¤ì¤¿µ­»ö¤Î(ÇÛÁ÷»ş¤Î)¥Ø¥Ã¥À¤Î¾å¸ÂÃÍ</entry>
+ æŠ•ç¨¿ã•ã‚ŒãŸè¨˜äº‹ã®(é…é€æ™‚ã®)ãƒ˜ãƒƒãƒ€ã®ä¸Šé™å€¤</entry>
 <entry>
 $default_mail_header_size_limit
    </entry>
@@ -1950,7 +1950,7 @@ $default_mail_header_size_limit
 <entry>
 outgoing_command_mail_body_size_limit</entry>
 <entry>
- fml ¤«¤é MTA ¤ØÅÏ¤¹ºİ¤Î¥³¥Ş¥ó¥É¥á¡¼¥ë¤ÎËÜÊ¸¥µ¥¤¥º¤Î¾å¸ÂÃÍ</entry>
+ fml ã‹ã‚‰ MTA ã¸æ¸¡ã™éš›ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®æœ¬æ–‡ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤</entry>
 <entry>
 $default_mail_body_size_limit
    </entry>
@@ -1959,7 +1959,7 @@ $default_mail_body_size_limit
 <entry>
 outgoing_command_mail_header_size_limit</entry>
 <entry>
- fml ¤«¤é MTA ¤ØÅÏ¤¹ºİ¤Î¥³¥Ş¥ó¥É¥á¡¼¥ë¤Î¥Ø¥Ã¥À¥µ¥¤¥º¤Î¾å¸ÂÃÍ</entry>
+ fml ã‹ã‚‰ MTA ã¸æ¸¡ã™éš›ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤</entry>
 <entry>
 $default_mail_header_size_limit
    </entry>
@@ -1968,7 +1968,7 @@ $default_mail_header_size_limit
 <entry>
 outgoing_mail_cache_dir</entry>
 <entry>
- deliver ¤µ¤ì¤ë¥á¡¼¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ deliver ã•ã‚Œã‚‹ãƒ¡ãƒ¼ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $var_dir/mail/outgoing
    </entry>
@@ -1977,7 +1977,7 @@ $var_dir/mail/outgoing
 <entry>
 outgoing_mail_cache_size</entry>
 <entry>
- ½ĞÎÏ(ÇÛÁ÷)¤µ¤ì¤ë¥á¡¼¥ë¤òºÇÂç²¿ÄÌ¥­¥ã¥Ã¥·¥å¤¹¤ë¤«</entry>
+ å‡ºåŠ›(é…é€)ã•ã‚Œã‚‹ãƒ¡ãƒ¼ãƒ«ã‚’æœ€å¤§ä½•é€šã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã‹</entry>
 <entry>
 128
    </entry>
@@ -1986,7 +1986,7 @@ outgoing_mail_cache_size</entry>
 <entry>
 outgoing_mail_header_errors_to</entry>
 <entry>
- Errors-To: ¥Õ¥£¡¼¥ë¥É</entry>
+ Errors-To: ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰</entry>
 <entry>
 ${mail_header_default_errors_to}
    </entry>
@@ -2004,7 +2004,7 @@ ${mail_header_default_precedence}
 <entry>
 outgoing_mail_header_x_ml_name</entry>
 <entry>
- X-ML-Name: ¤ª¤è¤Ó X-Sequence ¤Ë¤¢¤é¤ï¤ì¤ë ML Ì¾</entry>
+ X-ML-Name: ãŠã‚ˆã³ X-Sequence ã«ã‚ã‚‰ã‚ã‚Œã‚‹ ML å</entry>
 <entry>
 ${mail_header_default_x_ml_name}
    </entry>
@@ -2022,7 +2022,7 @@ postfix_verp_delimiters</entry>
 <entry>
 postfix_virtual_map_file</entry>
 <entry>
- MTA ¤Ë¶µ¤¨¤ë¤¿¤á¤Î virtual map ¥Õ¥¡¥¤¥ë</entry>
+ MTA ã«æ•™ãˆã‚‹ãŸã‚ã® virtual map ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $domain_postfix_config_dir/virtual
    </entry>
@@ -2031,7 +2031,7 @@ $domain_postfix_config_dir/virtual
 <entry>
 primary_admin_member_map</entry>
 <entry>
- ÅĞÏ¿¤Ê¤É¤Îºİ¤ËÂĞ¾İ¤È¤Ê¤ë¥á¥ó¥Ğ¡¼¥ê¥¹¥È</entry>
+ ç™»éŒ²ãªã©ã®éš›ã«å¯¾è±¡ã¨ãªã‚‹ãƒ¡ãƒ³ãƒãƒ¼ãƒªã‚¹ãƒˆ</entry>
 <entry>
 file:$ml_home_dir/members-admin
    </entry>
@@ -2040,7 +2040,7 @@ file:$ml_home_dir/members-admin
 <entry>
 primary_admin_member_password_map</entry>
 <entry>
- ¥ê¥â¡¼¥È´ÉÍı¼Ô¤Î¥Ñ¥¹¥ï¡¼¥É¥Õ¥¡¥¤¥ë</entry>
+ ãƒªãƒ¢ãƒ¼ãƒˆç®¡ç†è€…ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 file:$etc_dir/passwd-admin
    </entry>
@@ -2049,7 +2049,7 @@ file:$etc_dir/passwd-admin
 <entry>
 primary_admin_recipient_map</entry>
 <entry>
- ¤È¤ê¤¢¤¨¤ºÄêµÁ¤·¤Æ¤¢¤ë¤±¤É¡¢»È¤ï¤ì¤Æ¤Ï¤¤¤Ê¤¤</entry>
+ ã¨ã‚Šã‚ãˆãšå®šç¾©ã—ã¦ã‚ã‚‹ã‘ã©ã€ä½¿ã‚ã‚Œã¦ã¯ã„ãªã„</entry>
 <entry>
 file:$ml_home_dir/recipients-admin
    </entry>
@@ -2058,7 +2058,7 @@ file:$ml_home_dir/recipients-admin
 <entry>
 primary_digest_member_map</entry>
 <entry>
- ¥À¥ß¡¼</entry>
+ ãƒ€ãƒŸãƒ¼</entry>
 <entry>
 $primary_member_map
    </entry>
@@ -2067,7 +2067,7 @@ $primary_member_map
 <entry>
 primary_digest_recipient_map</entry>
 <entry>
- ¤Ş¤È¤áÁ÷¤ê¤ò¤¹¤ë¼õ¿®¼Ô¤Î¥ê¥¹¥È</entry>
+ ã¾ã¨ã‚é€ã‚Šã‚’ã™ã‚‹å—ä¿¡è€…ã®ãƒªã‚¹ãƒˆ</entry>
 <entry>
 file:$ml_home_dir/recipients-digest
    </entry>
@@ -2076,7 +2076,7 @@ file:$ml_home_dir/recipients-digest
 <entry>
 primary_member_map</entry>
 <entry>
- ÅĞÏ¿¤Ê¤É¤Îºİ¤ËÂĞ¾İ¤È¤Ê¤ë¥á¥ó¥Ğ¡¼¥ê¥¹¥È</entry>
+ ç™»éŒ²ãªã©ã®éš›ã«å¯¾è±¡ã¨ãªã‚‹ãƒ¡ãƒ³ãƒãƒ¼ãƒªã‚¹ãƒˆ</entry>
 <entry>
 file:$ml_home_dir/members
    </entry>
@@ -2085,7 +2085,7 @@ file:$ml_home_dir/members
 <entry>
 primary_moderator_member_map</entry>
 <entry>
- ÅĞÏ¿¤Ê¤É¤Îºİ¤ËÂĞ¾İ¤È¤Ê¤ë¥á¥ó¥Ğ¡¼¥ê¥¹¥È</entry>
+ ç™»éŒ²ãªã©ã®éš›ã«å¯¾è±¡ã¨ãªã‚‹ãƒ¡ãƒ³ãƒãƒ¼ãƒªã‚¹ãƒˆ</entry>
 <entry>
 file:$ml_home_dir/members-moderator
    </entry>
@@ -2094,7 +2094,7 @@ file:$ml_home_dir/members-moderator
 <entry>
 primary_moderator_recipient_map</entry>
 <entry>
- ¤È¤ê¤¢¤¨¤ºÄêµÁ¤·¤Æ¤¢¤ë¤±¤É¡¢»È¤ï¤ì¤Æ¤Ï¤¤¤Ê¤¤</entry>
+ ã¨ã‚Šã‚ãˆãšå®šç¾©ã—ã¦ã‚ã‚‹ã‘ã©ã€ä½¿ã‚ã‚Œã¦ã¯ã„ãªã„</entry>
 <entry>
 file:$ml_home_dir/recipients-moderator
    </entry>
@@ -2103,7 +2103,7 @@ file:$ml_home_dir/recipients-moderator
 <entry>
 primary_recipient_map</entry>
 <entry>
- ÅĞÏ¿¤Ê¤É¤Îºİ¤ËÂĞ¾İ¤È¤¹¤ë¼õ¿®¼Ô¤Î¥ê¥¹¥È</entry>
+ ç™»éŒ²ãªã©ã®éš›ã«å¯¾è±¡ã¨ã™ã‚‹å—ä¿¡è€…ã®ãƒªã‚¹ãƒˆ</entry>
 <entry>
 file:$ml_home_dir/recipients
    </entry>
@@ -2130,7 +2130,7 @@ $user_db_dir/subscribe_date
 <entry>
 privileged_command_prefix</entry>
 <entry>
- ´ÉÍıÍÑ¤Î¥³¥Ş¥ó¥É¤òÉ½¤¹ÆÃÊÌ¤Ê¥³¥Ş¥ó¥É</entry>
+ ç®¡ç†ç”¨ã®ã‚³ãƒãƒ³ãƒ‰ã‚’è¡¨ã™ç‰¹åˆ¥ãªã‚³ãƒãƒ³ãƒ‰</entry>
 <entry>
 admin
    </entry>
@@ -2139,7 +2139,7 @@ admin
 <entry>
 procmail_aliases_file</entry>
 <entry>
- MTA ¤Ë¶µ¤¨¤ë¤¿¤á¤Î aliases ¥Õ¥¡¥¤¥ë</entry>
+ MTA ã«æ•™ãˆã‚‹ãŸã‚ã® aliases ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $domain_procmail_config_dir/procmailrc
    </entry>
@@ -2157,7 +2157,7 @@ qmail_verp_delimiters</entry>
 <entry>
 qmail_virtual_map_file</entry>
 <entry>
- MTA ¤Ë¶µ¤¨¤ë¤¿¤á¤Î virtual map ¥Õ¥¡¥¤¥ë(¥Æ¥ó¥×¥ì¡¼¥È)</entry>
+ MTA ã«æ•™ãˆã‚‹ãŸã‚ã® virtual map ãƒ•ã‚¡ã‚¤ãƒ«(ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ)</entry>
 <entry>
 $domain_qmail_config_dir/virtualdomains
    </entry>
@@ -2175,7 +2175,7 @@ qmail_virtualdomains_file</entry>
 <entry>
 recipient_maps</entry>
 <entry>
- ¤¹¤Ù¤Æ¤Î¼õ¿®¼Ô¤Î¥ê¥¹¥È</entry>
+ ã™ã¹ã¦ã®å—ä¿¡è€…ã®ãƒªã‚¹ãƒˆ</entry>
 <entry>
 $primary_recipient_map
    file:$ml_home_dir/actives
@@ -2185,7 +2185,7 @@ $primary_recipient_map
 <entry>
 recipient_total_limit</entry>
 <entry>
- ¥æ¡¼¥¶¿ô(Àµ³Î¤Ë¤Ï¼õ¿®¼Ô¿ô)¤Î¾å¸Â</entry>
+ ãƒ¦ãƒ¼ã‚¶æ•°(æ­£ç¢ºã«ã¯å—ä¿¡è€…æ•°)ã®ä¸Šé™</entry>
 <entry>
 3000
    </entry>
@@ -2194,7 +2194,7 @@ recipient_total_limit</entry>
 <entry>
 sendmail_virtual_map_file</entry>
 <entry>
- MTA ¤Ë¶µ¤¨¤ë¤¿¤á¤Î virtual map ¥Õ¥¡¥¤¥ë</entry>
+ MTA ã«æ•™ãˆã‚‹ãŸã‚ã® virtual map ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $domain_sendmail_config_dir/virtusertable
    </entry>
@@ -2203,7 +2203,7 @@ $domain_sendmail_config_dir/virtusertable
 <entry>
 sequence_file</entry>
 <entry>
- µ­»öÈÖ¹æ¤òÊİÂ¸¤¹¤ë¥Õ¥¡¥¤¥ë</entry>
+ è¨˜äº‹ç•ªå·ã‚’ä¿å­˜ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $ml_home_dir/seq
    </entry>
@@ -2212,7 +2212,7 @@ $ml_home_dir/seq
 <entry>
 shared_db_dir</entry>
 <entry>
- ML ´Ö¤Ç¥·¥§¥¢¤¹¤ë¥Ç¡¼¥¿¥Ù¡¼¥¹¤ò¤ª¤¯¥Û¡¼¥à¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ML é–“ã§ã‚·ã‚§ã‚¢ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚’ãŠããƒ›ãƒ¼ãƒ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_home_prefix/@db@
    </entry>
@@ -2221,7 +2221,7 @@ $ml_home_prefix/@db@
 <entry>
 smtp_recipient_limit</entry>
 <entry>
- ¤Ò¤È¤Ä¤Î SMTP ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¤Ç MTA ¤ËÅÏ¤¹¼õ¿®¼Ô¤Î¿ô¤Î¾å¸Â</entry>
+ ã²ã¨ã¤ã® SMTP ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã§ MTA ã«æ¸¡ã™å—ä¿¡è€…ã®æ•°ã®ä¸Šé™</entry>
 <entry>
 1000
    </entry>
@@ -2230,7 +2230,7 @@ smtp_recipient_limit</entry>
 <entry>
 smtp_sender</entry>
 <entry>
- SMTP ¤Î MAIL FROM:<$smtp_sender> ¤Ç»È¤¦¥Ñ¥é¥á¡¼¥¿</entry>
+ SMTP ã® MAIL FROM:<$smtp_sender> ã§ä½¿ã†ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿</entry>
 <entry>
 $maintainer
    </entry>
@@ -2239,7 +2239,7 @@ $maintainer
 <entry>
 smtp_servers</entry>
 <entry>
- ¥Ç¥Õ¥©¡¼¥ë¥È¤Î MTA ¤Ï¼«Ê¬¼«¿È( localhost )</entry>
+ ãƒ‡ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆã® MTA ã¯è‡ªåˆ†è‡ªèº«( localhost )</entry>
 <entry>
 [::1]:25
    127.0.0.1:25
@@ -2249,7 +2249,7 @@ smtp_servers</entry>
 <entry>
 spammer_maps</entry>
 <entry>
- ¥¹¥Ñ¥Ş¡¼¤È¤¤¤¦¤«µñÈİ¤·¤¿¤¤¥¢¥É¥ì¥¹¤Î¥ê¥¹¥È</entry>
+ ã‚¹ãƒ‘ãƒãƒ¼ã¨ã„ã†ã‹æ‹’å¦ã—ãŸã„ã‚¢ãƒ‰ãƒ¬ã‚¹ã®ãƒªã‚¹ãƒˆ</entry>
 <entry>
 $primary_spammer_map
    </entry>
@@ -2258,7 +2258,7 @@ $primary_spammer_map
 <entry>
 spool_dir</entry>
 <entry>
- µ­»ö¤òÊİÂ¸¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ è¨˜äº‹ã‚’ä¿å­˜ã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_home_dir/spool
    </entry>
@@ -2267,7 +2267,7 @@ $ml_home_dir/spool
 <entry>
 spool_type</entry>
 <entry>
- ¥¹¥×¡¼¥ë¤Î¥¿¥¤¥×</entry>
+ ã‚¹ãƒ—ãƒ¼ãƒ«ã®ã‚¿ã‚¤ãƒ—</entry>
 <entry>
 plane
    </entry>
@@ -2276,7 +2276,7 @@ plane
 <entry>
 sql_query_find</entry>
 <entry>
- Ãí°Õ: ³Æ¹Ô¤ò¼è¤ê½Ğ¤¹¤Î¤Ç¤Ï¤Ê¤¯</entry>
+ æ³¨æ„: å„è¡Œã‚’å–ã‚Šå‡ºã™ã®ã§ã¯ãªã</entry>
 <entry>
 select fml_address from $sql_table
    where        fml_ml = '$ml_name'
@@ -2290,7 +2290,7 @@ select fml_address from $sql_table
 <entry>
 sql_query_get_next_key</entry>
 <entry>
- Ãí°Õ: ³Æ¹Ô¤ò¼è¤ê½Ğ¤¹¤Î¤Ç¤Ï¤Ê¤¯</entry>
+ æ³¨æ„: å„è¡Œã‚’å–ã‚Šå‡ºã™ã®ã§ã¯ãªã</entry>
 <entry>
 select fml_address from $sql_table
    where fml_ml = '$ml_name'
@@ -2302,7 +2302,7 @@ select fml_address from $sql_table
 <entry>
 sql_query_getline</entry>
 <entry>
- Ãí°Õ: ³Æ¹Ô¤ò¼è¤ê½Ğ¤¹¤Î¤Ç¤Ï¤Ê¤¯</entry>
+ æ³¨æ„: å„è¡Œã‚’å–ã‚Šå‡ºã™ã®ã§ã¯ãªã</entry>
 <entry>
 select fml_address from $sql_table
    where fml_ml = '$ml_name'
@@ -2314,7 +2314,7 @@ select fml_address from $sql_table
 <entry>
 subscribe_command_auth_type</entry>
 <entry>
- subscribe ¥³¥Ş¥ó¥É¤Ç confirmation Ç§¾Ú(¥³¡¼¥ë¥Ğ¥Ã¥¯Ç§¾Ú)</entry>
+ subscribe ã‚³ãƒãƒ³ãƒ‰ã§ confirmation èªè¨¼(ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯èªè¨¼)</entry>
 <entry>
 confirmation
    </entry>
@@ -2323,7 +2323,7 @@ confirmation
 <entry>
 subscribe_command_operation_mode</entry>
 <entry>
- subscribe ¤Î½èÍı¤Ï¼«Æ°¤«¡©´ÉÍı¼Ô¤Ë¤è¤ë¼êÆ°¤«¡©</entry>
+ subscribe ã®å‡¦ç†ã¯è‡ªå‹•ã‹ï¼Ÿç®¡ç†è€…ã«ã‚ˆã‚‹æ‰‹å‹•ã‹ï¼Ÿ</entry>
 <entry>
 automatic
    </entry>
@@ -2332,7 +2332,7 @@ automatic
 <entry>
 system_has_alarm</entry>
 <entry>
- alarm(2) ¤¬¤¢¤ë¤«¡©</entry>
+ alarm(2) ãŒã‚ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2341,7 +2341,7 @@ yes
 <entry>
 system_has_fork</entry>
 <entry>
- fork(2) ¤¬¤¢¤ë¤«¡©</entry>
+ fork(2) ãŒã‚ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2350,7 +2350,7 @@ yes
 <entry>
 system_has_getpwgid</entry>
 <entry>
- getpwgid(2) ¤¬¤¢¤ë¤«¡©</entry>
+ getpwgid(2) ãŒã‚ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2359,7 +2359,7 @@ yes
 <entry>
 system_has_getpwuid</entry>
 <entry>
- getpwuid(2) ¤¬¤¢¤ë¤«¡©</entry>
+ getpwuid(2) ãŒã‚ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2368,7 +2368,7 @@ yes
 <entry>
 system_has_select</entry>
 <entry>
- select(2) ¤¬¤¢¤ë¤«¡©</entry>
+ select(2) ãŒã‚ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2377,7 +2377,7 @@ yes
 <entry>
 system_special_accounts</entry>
 <entry>
- OS ¤¬»È¤Ã¤Æ¤¤¤ë¤è¤¦¤Ê¥¢¥«¥¦¥ó¥È¤ä¼«Æ°¥×¥í¥°¥é¥à¤Î¥ê¥¹¥È</entry>
+ OS ãŒä½¿ã£ã¦ã„ã‚‹ã‚ˆã†ãªã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚„è‡ªå‹•ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ãƒªã‚¹ãƒˆ</entry>
 <entry>
 root
    postmaster
@@ -2397,7 +2397,7 @@ root
 <entry>
 thread_cgi_base_url</entry>
 <entry>
- CGI ¤ÎÁêÂĞ¥Ñ¥¹</entry>
+ CGI ã®ç›¸å¯¾ãƒ‘ã‚¹</entry>
 <entry>
 /cgi-bin/fmlthread.cgi
    </entry>
@@ -2406,7 +2406,7 @@ thread_cgi_base_url</entry>
 <entry>
 thread_cgi_bgcolor</entry>
 <entry>
- CGI ²èÌÌ¤Î´ğËÜ¥«¥é¡¼</entry>
+ CGI ç”»é¢ã®åŸºæœ¬ã‚«ãƒ©ãƒ¼</entry>
 <entry>
 #E6E6FA
    </entry>
@@ -2415,7 +2415,7 @@ thread_cgi_bgcolor</entry>
 <entry>
 thread_cgi_title</entry>
 <entry>
- CGI ¤Î¥¿¥¤¥È¥ë</entry>
+ CGI ã®ã‚¿ã‚¤ãƒˆãƒ«</entry>
 <entry>
 thread tracking system interface
    </entry>
@@ -2424,7 +2424,7 @@ thread tracking system interface
 <entry>
 thread_db_dir</entry>
 <entry>
- ¥Á¥±¥Ã¥È´ØÏ¢¥Ç¡¼¥¿¤òÊİÂ¸¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ãƒã‚±ãƒƒãƒˆé–¢é€£ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜ã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $shared_db_dir/thread
    </entry>
@@ -2433,7 +2433,7 @@ $shared_db_dir/thread
 <entry>
 thread_id_syntax</entry>
 <entry>
- ¥Á¥±¥Ã¥ÈÈÖ¹æ¤Î¥·¥ó¥¿¥Ã¥¯¥¹</entry>
+ ãƒã‚±ãƒƒãƒˆç•ªå·ã®ã‚·ãƒ³ã‚¿ãƒƒã‚¯ã‚¹</entry>
 <entry>
 $ml_name/%d
    </entry>
@@ -2442,7 +2442,7 @@ $ml_name/%d
 <entry>
 thread_sequence_file</entry>
 <entry>
- ¥Á¥±¥Ã¥ÈÈÖ¹æ¤òÊİÂ¸¤¹¤ë¥Õ¥¡¥¤¥ë</entry>
+ ãƒã‚±ãƒƒãƒˆç•ªå·ã‚’ä¿å­˜ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $ml_home_dir/thread.seq
    </entry>
@@ -2451,7 +2451,7 @@ $ml_home_dir/thread.seq
 <entry>
 thread_subject_tag</entry>
 <entry>
- Subject ¤Ë¤Ä¤±¤ë¥Á¥±¥Ã¥ÈÈÖ¹æ¤Î¥·¥ó¥¿¥Ã¥¯¥¹</entry>
+ Subject ã«ã¤ã‘ã‚‹ãƒã‚±ãƒƒãƒˆç•ªå·ã®ã‚·ãƒ³ã‚¿ãƒƒã‚¯ã‚¹</entry>
 <entry>
 [$thread_id_syntax]
    </entry>
@@ -2460,7 +2460,7 @@ thread_subject_tag</entry>
 <entry>
 thread_subject_tag_location</entry>
 <entry>
- Subject ¤Ë¤Ä¤±¤ë¥Á¥±¥Ã¥ÈÈÖ¹æ¤Î¥·¥ó¥¿¥Ã¥¯¥¹¤Î¾ì½ê</entry>
+ Subject ã«ã¤ã‘ã‚‹ãƒã‚±ãƒƒãƒˆç•ªå·ã®ã‚·ãƒ³ã‚¿ãƒƒã‚¯ã‚¹ã®å ´æ‰€</entry>
 <entry>
 appended
    </entry>
@@ -2469,7 +2469,7 @@ appended
 <entry>
 thread_subject_tag_name</entry>
 <entry>
- ¥Á¥±¥Ã¥È¤Ë¤Ä¤±¤ë£Í£ÌÌ¾</entry>
+ ãƒã‚±ãƒƒãƒˆã«ã¤ã‘ã‚‹ï¼­ï¼¬å</entry>
 <entry>
 $ml_name
    </entry>
@@ -2478,7 +2478,7 @@ $ml_name
 <entry>
 tmp_dir</entry>
 <entry>
- °ì»şÅª¤ÊÃæ´Ö¥Õ¥¡¥¤¥ë¤òÃÖ¤¯¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ä¸€æ™‚çš„ãªä¸­é–“ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç½®ããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_home_dir/tmp
    </entry>
@@ -2487,7 +2487,7 @@ $ml_home_dir/tmp
 <entry>
 udb_base_dir</entry>
 <entry>
- ML ´Ö¤Ç¥·¥§¥¢¤¹¤ë¥Ç¡¼¥¿¥Ù¡¼¥¹¤ò¤ª¤¯¥Û¡¼¥à¥Ç¥£¥ì¥¯¥È¥ê</entry>
+ ML é–“ã§ã‚·ã‚§ã‚¢ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚’ãŠããƒ›ãƒ¼ãƒ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</entry>
 <entry>
 $ml_home_prefix/@udb@
    </entry>
@@ -2496,7 +2496,7 @@ $ml_home_prefix/@udb@
 <entry>
 unsafe_header_fields</entry>
 <entry>
- ¤¢¤Ö¤Ê¤¤¥¿¥°¤ò¾Ã¤¹</entry>
+ ã‚ã¶ãªã„ã‚¿ã‚°ã‚’æ¶ˆã™</entry>
 <entry>
 Return-Receipt-To
    </entry>
@@ -2505,7 +2505,7 @@ Return-Receipt-To
 <entry>
 unsubscribe_command_auth_type</entry>
 <entry>
- unsubscribe ¥³¥Ş¥ó¥É¤Ç confirmation Ç§¾Ú(¥³¡¼¥ë¥Ğ¥Ã¥¯Ç§¾Ú)</entry>
+ unsubscribe ã‚³ãƒãƒ³ãƒ‰ã§ confirmation èªè¨¼(ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯èªè¨¼)</entry>
 <entry>
 confirmation
    </entry>
@@ -2514,7 +2514,7 @@ confirmation
 <entry>
 unsubscribe_command_operation_mode</entry>
 <entry>
- unsubscribe ¤Î½èÍı¤Ï¼«Æ°¤«¡©´ÉÍı¼Ô¤Ë¤è¤ë¼êÆ°¤«¡©</entry>
+ unsubscribe ã®å‡¦ç†ã¯è‡ªå‹•ã‹ï¼Ÿç®¡ç†è€…ã«ã‚ˆã‚‹æ‰‹å‹•ã‹ï¼Ÿ</entry>
 <entry>
 automatic
    </entry>
@@ -2523,7 +2523,7 @@ automatic
 <entry>
 use_address_compare_function</entry>
 <entry>
- FML::Credential ¤Ç¥¢¥É¥ì¥¹¤ÎÈæ³Ó¤ò¤¹¤ë¤«?(ÅöÁ³¤¹¤ë)</entry>
+ FML::Credential ã§ã‚¢ãƒ‰ãƒ¬ã‚¹ã®æ¯”è¼ƒã‚’ã™ã‚‹ã‹?(å½“ç„¶ã™ã‚‹)</entry>
 <entry>
 yes
    </entry>
@@ -2532,7 +2532,7 @@ yes
 <entry>
 use_admin_command_mail_function</entry>
 <entry>
- admin ¥³¥Ş¥ó¥É¥á¡¼¥ë¤ò»È¤¦¤«¡©</entry>
+ admin ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã‚’ä½¿ã†ã‹ï¼Ÿ</entry>
 <entry>
 no
    </entry>
@@ -2541,7 +2541,7 @@ no
 <entry>
 use_anonymous_cgi_function</entry>
 <entry>
- WWW ¤«¤é subscribe ¤ä unsubscribe ¥ê¥¯¥¨¥¹¥È¤ò¼õ¤±ÉÕ¤±¤ë</entry>
+ WWW ã‹ã‚‰ subscribe ã‚„ unsubscribe ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’å—ã‘ä»˜ã‘ã‚‹</entry>
 <entry>
 yes
    </entry>
@@ -2550,7 +2550,7 @@ yes
 <entry>
 use_article_delivery</entry>
 <entry>
- µ­»ö¤òÇÛÁ÷¤¹¤ëµ¡Ç½¤ò»È¤¦¤«Èİ¤«¡©</entry>
+ è¨˜äº‹ã‚’é…é€ã™ã‚‹æ©Ÿèƒ½ã‚’ä½¿ã†ã‹å¦ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2559,7 +2559,7 @@ yes
 <entry>
 use_article_expire</entry>
 <entry>
- ¸Å¤¤µ­»ö¤ò¼«Æ°¾Ãµî¤¹¤ë¤«Èİ¤«¡©</entry>
+ å¤ã„è¨˜äº‹ã‚’è‡ªå‹•æ¶ˆå»ã™ã‚‹ã‹å¦ã‹ï¼Ÿ</entry>
 <entry>
 no
    </entry>
@@ -2568,7 +2568,7 @@ no
 <entry>
 use_article_filter_reject_notice</entry>
 <entry>
- ¥Õ¥£¥ë¥¿¤ÇÃÆ¤«¤ì¤¿¤³¤È¤ò¶µ¤¨¤ë</entry>
+ ãƒ•ã‚£ãƒ«ã‚¿ã§å¼¾ã‹ã‚ŒãŸã“ã¨ã‚’æ•™ãˆã‚‹</entry>
 <entry>
 yes
    </entry>
@@ -2577,7 +2577,7 @@ yes
 <entry>
 use_article_header_filter</entry>
 <entry>
- ¥Ø¥Ã¥À¾ğÊó¤òº¬µò¤Ë¤·¤¿¥Õ¥£¥ë¥¿¥ê¥ó¥°¤ò¤¹¤ë¤«¡©</entry>
+ ãƒ˜ãƒƒãƒ€æƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2586,7 +2586,7 @@ yes
 <entry>
 use_article_header_rewrite</entry>
 <entry>
- ¥Ø¥Ã¥À½ñ´¹¤¨¤ÎÁàºî¤ò¤¹¤ë¤«¡©</entry>
+ ãƒ˜ãƒƒãƒ€æ›¸æ›ãˆã®æ“ä½œã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2595,7 +2595,7 @@ yes
 <entry>
 use_article_mime_component_filter</entry>
 <entry>
- MIME ¤Î¹½Â¤¤Ë´ğ¤Å¤¤¤¿¥Õ¥£¥ë¥¿¤ò¹Ô¤Ê¤¦</entry>
+ MIME ã®æ§‹é€ ã«åŸºã¥ã„ãŸãƒ•ã‚£ãƒ«ã‚¿ã‚’è¡Œãªã†</entry>
 <entry>
 yes
    </entry>
@@ -2604,7 +2604,7 @@ yes
 <entry>
 use_article_non_mime_filter</entry>
 <entry>
- ¤È¤ê¤¢¤¨¤º¡¢¤À¤ß¡Á</entry>
+ ã¨ã‚Šã‚ãˆãšã€ã ã¿ã€œ</entry>
 <entry>
 yes
    </entry>
@@ -2613,7 +2613,7 @@ yes
 <entry>
 use_article_post_function</entry>
 <entry>
- µ­»ö¤ÎÇÛÁ÷½èÍı¥×¥í¥°¥é¥à¤ò¤½¤â¤½¤â»È¤¦¤«¡©</entry>
+ è¨˜äº‹ã®é…é€å‡¦ç†ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’ãã‚‚ãã‚‚ä½¿ã†ã‹ï¼Ÿ</entry>
 <entry>
 ${use_distribute_program:-yes}
    </entry>
@@ -2622,7 +2622,7 @@ ${use_distribute_program:-yes}
 <entry>
 use_article_size_filter</entry>
 <entry>
- ¥µ¥¤¥º¾ğÊó¤òº¬µò¤Ë¤·¤¿¥Õ¥£¥ë¥¿¥ê¥ó¥°¤ò¤¹¤ë¤«¡©</entry>
+ ã‚µã‚¤ã‚ºæƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2631,7 +2631,7 @@ yes
 <entry>
 use_article_spam_filter</entry>
 <entry>
- ³°Éô¤ÎSPAM¥Á¥§¥Ã¥«¤ò»È¤Ã¤¿¸¡ºº¡¢¥Ç¥Õ¥©¥ë¥È¤Ç¤ÏÌµ¸ú¡£</entry>
+ å¤–éƒ¨ã®SPAMãƒã‚§ãƒƒã‚«ã‚’ä½¿ã£ãŸæ¤œæŸ»ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ç„¡åŠ¹ã€‚</entry>
 <entry>
 no
    </entry>
@@ -2640,7 +2640,7 @@ no
 <entry>
 use_article_spool</entry>
 <entry>
- µ­»ö¤ò¥¹¥×¡¼¥ë¥Ç¥£¥ì¥¯¥È¥ê¤ËÊİÂ¸¤¹¤ë</entry>
+ è¨˜äº‹ã‚’ã‚¹ãƒ—ãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ä¿å­˜ã™ã‚‹</entry>
 <entry>
 ${use_spool:-yes}
    </entry>
@@ -2649,7 +2649,7 @@ ${use_spool:-yes}
 <entry>
 use_article_summary_file_expire</entry>
 <entry>
- µ­»ö¤Î¼«Æ°¾Ãµî($use_article_expire)¤ËÄÉ½¾¤·¤Æ</entry>
+ è¨˜äº‹ã®è‡ªå‹•æ¶ˆå»($use_article_expire)ã«è¿½å¾“ã—ã¦</entry>
 <entry>
 no
    </entry>
@@ -2658,7 +2658,7 @@ no
 <entry>
 use_article_text_plain_filter</entry>
 <entry>
- ÀèÆ¬¤Î text/plain ÉôÊ¬¤ËÂĞ¤¹¤ë¥Õ¥£¥ë¥¿¡£</entry>
+ å…ˆé ­ã® text/plain éƒ¨åˆ†ã«å¯¾ã™ã‚‹ãƒ•ã‚£ãƒ«ã‚¿ã€‚</entry>
 <entry>
 yes
    </entry>
@@ -2667,7 +2667,7 @@ yes
 <entry>
 use_article_thread_outline</entry>
 <entry>
- ¼«Æ°Åª¤Ë¥¹¥ì¥Ã¥É¤Î³µÍ×¤òµ­»ö¤ËÄÉ²Ã¤¹¤ë¤«Èİ¤«</entry>
+ è‡ªå‹•çš„ã«ã‚¹ãƒ¬ãƒƒãƒ‰ã®æ¦‚è¦ã‚’è¨˜äº‹ã«è¿½åŠ ã™ã‚‹ã‹å¦ã‹</entry>
 <entry>
 no
    </entry>
@@ -2676,7 +2676,7 @@ no
 <entry>
 use_article_virus_filter</entry>
 <entry>
- ³°Éô¤ÎVirus¥Á¥§¥Ã¥«¤ò»È¤Ã¤¿¸¡ºº¡¢¥Ç¥Õ¥©¥ë¥È¤Ç¤ÏÌµ¸ú¡£</entry>
+ å¤–éƒ¨ã®Virusãƒã‚§ãƒƒã‚«ã‚’ä½¿ã£ãŸæ¤œæŸ»ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ç„¡åŠ¹ã€‚</entry>
 <entry>
 no
    </entry>
@@ -2685,7 +2685,7 @@ no
 <entry>
 use_command_mail_filter_reject_notice</entry>
 <entry>
- ¥Õ¥£¥ë¥¿¤ÇÃÆ¤«¤ì¤¿¤³¤È¤ò¶µ¤¨¤ë</entry>
+ ãƒ•ã‚£ãƒ«ã‚¿ã§å¼¾ã‹ã‚ŒãŸã“ã¨ã‚’æ•™ãˆã‚‹</entry>
 <entry>
 yes
    </entry>
@@ -2694,7 +2694,7 @@ yes
 <entry>
 use_command_mail_function</entry>
 <entry>
- ¥³¥Ş¥ó¥É¥á¡¼¥ë¤ò»È¤¦¤«¡©</entry>
+ ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã‚’ä½¿ã†ã‹ï¼Ÿ</entry>
 <entry>
 ${use_command_mail_program:-yes}
    </entry>
@@ -2703,7 +2703,7 @@ ${use_command_mail_program:-yes}
 <entry>
 use_command_mail_reply_preamble</entry>
 <entry>
- ¥³¥Ş¥ó¥É¥á¡¼¥ë¤ÎÊÖ»ö¤ÎÀèÆ¬¤Ë</entry>
+ ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®è¿”äº‹ã®å…ˆé ­ã«</entry>
 <entry>
 yes
    </entry>
@@ -2712,7 +2712,7 @@ yes
 <entry>
 use_command_mail_reply_trailor</entry>
 <entry>
- ¥³¥Ş¥ó¥É¥á¡¼¥ë¤ÎÊÖ»ö¤ÎºÇ¸å¤Ë½èÍı·ë²Ì¤Î¥µ¥Ş¥ê¤ò¤Ä¤±¤ë¤«Èİ¤«¡©</entry>
+ ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®è¿”äº‹ã®æœ€å¾Œã«å‡¦ç†çµæœã®ã‚µãƒãƒªã‚’ã¤ã‘ã‚‹ã‹å¦ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2721,7 +2721,7 @@ yes
 <entry>
 use_command_mail_size_filter</entry>
 <entry>
- ¥µ¥¤¥º¾ğÊó¤òº¬µò¤Ë¤·¤¿¥Õ¥£¥ë¥¿¥ê¥ó¥°¤ò¤¹¤ë¤«¡©</entry>
+ ã‚µã‚¤ã‚ºæƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2730,7 +2730,7 @@ yes
 <entry>
 use_createonpost_function</entry>
 <entry>
- CREATE-ON-POST µ¡Ç½¤ò»È¤¦¤«Èİ¤«¡©</entry>
+ CREATE-ON-POST æ©Ÿèƒ½ã‚’ä½¿ã†ã‹å¦ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2739,7 +2739,7 @@ yes
 <entry>
 use_debug</entry>
 <entry>
- ¥Ç¥Ğ¥Ã¥°¡¢¥Ç¥Õ¥©¥ë¥È¤Ï NO ¤Ë¤·¤Æ¤¢¤ë¡£</entry>
+ ãƒ‡ãƒãƒƒã‚°ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ NO ã«ã—ã¦ã‚ã‚‹ã€‚</entry>
 <entry>
 no
    </entry>
@@ -2748,7 +2748,7 @@ no
 <entry>
 use_digest_header_rewrite</entry>
 <entry>
- ¥Ø¥Ã¥À½ñ´¹¤¨¤ÎÁàºî¤ò¤¹¤ë¤«¡©</entry>
+ ãƒ˜ãƒƒãƒ€æ›¸æ›ãˆã®æ“ä½œã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2757,7 +2757,7 @@ yes
 <entry>
 use_error_mail_analyzer_function</entry>
 <entry>
- ¥¨¥é¡¼²òÀÏ¥×¥í¥°¥é¥à¤ò»È¤¦¤«¡©</entry>
+ ã‚¨ãƒ©ãƒ¼è§£æãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’ä½¿ã†ã‹ï¼Ÿ</entry>
 <entry>
 ${use_error_analyzer_program:-yes}
    </entry>
@@ -2802,7 +2802,7 @@ no
 <entry>
 use_html_archive</entry>
 <entry>
- µ­»ö¤ò HTML ²½¤¹¤ë¤«Èİ¤«</entry>
+ è¨˜äº‹ã‚’ HTML åŒ–ã™ã‚‹ã‹å¦ã‹</entry>
 <entry>
 yes
    </entry>
@@ -2811,7 +2811,7 @@ yes
 <entry>
 use_incoming_mail_body_loop_check</entry>
 <entry>
- ¥Ø¥Ã¥À¾ğÊó¤òº¬µò¤Ë¤·¤¿¥ë¡¼¥×¥Á¥§¥Ã¥¯¤ò¤¹¤ë¤«¡©</entry>
+ ãƒ˜ãƒƒãƒ€æƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ«ãƒ¼ãƒ—ãƒã‚§ãƒƒã‚¯ã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2820,7 +2820,7 @@ yes
 <entry>
 use_incoming_mail_cache</entry>
 <entry>
- ÆşÎÏ¤µ¤ì¤ë¥á¡¼¥ë¤ò¥­¥ã¥Ã¥·¥å¤¹¤ë¤«¡©</entry>
+ å…¥åŠ›ã•ã‚Œã‚‹ãƒ¡ãƒ¼ãƒ«ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2829,7 +2829,7 @@ yes
 <entry>
 use_incoming_mail_envelope_loop_check</entry>
 <entry>
- Envelope ¾ğÊó¤òº¬µò¤Ë¤·¤¿¥ë¡¼¥×¥Á¥§¥Ã¥¯¤ò¤¹¤ë¤«¡©</entry>
+ Envelope æƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ«ãƒ¼ãƒ—ãƒã‚§ãƒƒã‚¯ã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2838,7 +2838,7 @@ yes
 <entry>
 use_incoming_mail_header_loop_check</entry>
 <entry>
- ¥Ø¥Ã¥À¾ğÊó¤òº¬µò¤Ë¤·¤¿¥ë¡¼¥×¥Á¥§¥Ã¥¯¤ò¤¹¤ë¤«¡©</entry>
+ ãƒ˜ãƒƒãƒ€æƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ«ãƒ¼ãƒ—ãƒã‚§ãƒƒã‚¯ã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2847,7 +2847,7 @@ yes
 <entry>
 use_lock</entry>
 <entry>
- ¥í¥Ã¥¯¤ò¤¹¤ë¤«¡©</entry>
+ ãƒ­ãƒƒã‚¯ã‚’ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2856,7 +2856,7 @@ yes
 <entry>
 use_log</entry>
 <entry>
- ¥í¥°¤È¤êµ¡Ç½¤òÍ­¸ú¤Ë¤¹¤ë</entry>
+ ãƒ­ã‚°ã¨ã‚Šæ©Ÿèƒ½ã‚’æœ‰åŠ¹ã«ã™ã‚‹</entry>
 <entry>
 yes
    </entry>
@@ -2865,7 +2865,7 @@ yes
 <entry>
 use_log_computer_output</entry>
 <entry>
- µ¡²ñ½èÍı¤Ë¤ä¤µ¤·¤¤¥Õ¥©¡¼¥Ş¥Ã¥È¤Ç¥í¥°¤ò½ĞÎÏ¤¹¤ë¡£</entry>
+ æ©Ÿä¼šå‡¦ç†ã«ã‚„ã•ã—ã„ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã§ãƒ­ã‚°ã‚’å‡ºåŠ›ã™ã‚‹ã€‚</entry>
 <entry>
 no
    </entry>
@@ -2874,7 +2874,7 @@ no
 <entry>
 use_log_rotate</entry>
 <entry>
- ¥í¥°¥Õ¥¡¥¤¥ë¥í¡¼¥Æ¥·¥ç¥ó¤ò¹Ô¤Ê¤¦¤«Èİ¤«</entry>
+ ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒ¼ãƒ†ã‚·ãƒ§ãƒ³ã‚’è¡Œãªã†ã‹å¦ã‹</entry>
 <entry>
 no
    </entry>
@@ -2883,7 +2883,7 @@ no
 <entry>
 use_member_total_limit</entry>
 <entry>
- ¥æ¡¼¥¶¿ô(Àµ³Î¤Ë¤ÏÅê¹Æ²ÄÇ½¿ô)¤Î¾å¸Â¤òÀß¤±¤ë¤«¡©</entry>
+ ãƒ¦ãƒ¼ã‚¶æ•°(æ­£ç¢ºã«ã¯æŠ•ç¨¿å¯èƒ½æ•°)ã®ä¸Šé™ã‚’è¨­ã‘ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 no
    </entry>
@@ -2901,7 +2901,7 @@ yes
 <entry>
 use_outgoing_mail_cache</entry>
 <entry>
- ½ĞÎÏ(ÇÛÁ÷)¤µ¤ì¤ë¥á¡¼¥ë¤ò¥­¥ã¥Ã¥·¥å¤¹¤ë¤«¡©</entry>
+ å‡ºåŠ›(é…é€)ã•ã‚Œã‚‹ãƒ¡ãƒ¼ãƒ«ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes
    </entry>
@@ -2910,7 +2910,7 @@ yes
 <entry>
 use_recipient_total_limit</entry>
 <entry>
- ¥æ¡¼¥¶¿ô(Àµ³Î¤Ë¤Ï¼õ¿®¼Ô¿ô)¤Î¾å¸Â¤òÀß¤±¤ë¤«¡©</entry>
+ ãƒ¦ãƒ¼ã‚¶æ•°(æ­£ç¢ºã«ã¯å—ä¿¡è€…æ•°)ã®ä¸Šé™ã‚’è¨­ã‘ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 no
    </entry>
@@ -2919,7 +2919,7 @@ no
 <entry>
 use_smtp_log</entry>
 <entry>
- SMTP ¤ÎÍÍ»Ò¤ò¥í¥°¤Ë¤È¤ë¤«¡©</entry>
+ SMTP ã®æ§˜å­ã‚’ãƒ­ã‚°ã«ã¨ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 yes      
    </entry>
@@ -2928,7 +2928,7 @@ yes
 <entry>
 use_spool</entry>
 <entry>
- µ­»ö¤ò¥¹¥×¡¼¥ë¥Ç¥£¥ì¥¯¥È¥ê¤ËÊİÂ¸¤¹¤ë</entry>
+ è¨˜äº‹ã‚’ã‚¹ãƒ—ãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ä¿å­˜ã™ã‚‹</entry>
 <entry>
 yes
    </entry>
@@ -2937,7 +2937,7 @@ yes
 <entry>
 use_thread_subject_tag</entry>
 <entry>
- ¥¹¥ì¥Ã¥ÉÄÉÀ×¥·¥¹¥Æ¥à¤Ï Subject ¥¿¥°¤òÍøÍÑ¤¹¤ë¤«¡©</entry>
+ ã‚¹ãƒ¬ãƒƒãƒ‰è¿½è·¡ã‚·ã‚¹ãƒ†ãƒ ã¯ Subject ã‚¿ã‚°ã‚’åˆ©ç”¨ã™ã‚‹ã‹ï¼Ÿ</entry>
 <entry>
 no
    </entry>
@@ -2946,7 +2946,7 @@ no
 <entry>
 use_thread_track</entry>
 <entry>
- ¥¹¥ì¥Ã¥ÉÄÉÀ×¥·¥¹¥Æ¥à¤ò»È¤¦¤«</entry>
+ ã‚¹ãƒ¬ãƒƒãƒ‰è¿½è·¡ã‚·ã‚¹ãƒ†ãƒ ã‚’ä½¿ã†ã‹</entry>
 <entry>
 yes
    </entry>
@@ -2955,7 +2955,7 @@ yes
 <entry>
 user_command_mail_allowed_commands</entry>
 <entry>
- Í­¸ú¤Ê¥³¥Ş¥ó¥É°ìÍ÷¤ò½ñ¤¯</entry>
+ æœ‰åŠ¹ãªã‚³ãƒãƒ³ãƒ‰ä¸€è¦§ã‚’æ›¸ã</entry>
 <entry>
 help
    get
@@ -3013,7 +3013,7 @@ $primary_user_db_subscribe_date_map
 <entry>
 var_dir</entry>
 <entry>
- ¤µ¤Ş¤¶¤Ş¤ÊÌÜÅª¤Ë¤Ä¤«¤¦</entry>
+ ã•ã¾ã–ã¾ãªç›®çš„ã«ã¤ã‹ã†</entry>
 <entry>
 $ml_home_dir/var
    </entry>
@@ -3022,7 +3022,7 @@ $ml_home_dir/var
 <entry>
 welcome_file</entry>
 <entry>
- welcome ¥Õ¥¡¥¤¥ë</entry>
+ welcome ãƒ•ã‚¡ã‚¤ãƒ«</entry>
 <entry>
 $ml_home_dir/welcome
    </entry>

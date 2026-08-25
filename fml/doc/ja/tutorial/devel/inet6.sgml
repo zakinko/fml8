@@ -4,52 +4,52 @@
 
 <appendix id="inet6">
 	<title>
-	NetBSD 1.5 �Ǥ� IPv6 ������
+	NetBSD 1.5 での IPv6 の設定
 	</title>
 
 <para>
 <ulink url="http://www.netbsd.org/Documentation/network/ipv6/">
-NetBSD �� IPv6 �β���
+NetBSD の IPv6 の解説
 </ulink>
-���ɤߤʤ���ʤ����񤷤��Ϥʤ��Ǥ���
+を読みながら進めれば難しくはないです。
 </para>
 
 <sect1>
 	<title>
-	IIJ IPv6 �ȥ�ͥ뷿�����ӥ��ξ��
+	IIJ IPv6 トンネル型サービスの場合
 	</title>
 
 <para>
-�ޤ�����ή ISP ���� IPv6 ���ɥ쥹���֤������ƤƤ�餤�ޤ���
-���Ȥ��� 2001:240:22::/48 �ʤɤȤ��ä����ɥ쥹����館�ޤ���
+まず、上流 ISP から IPv6 アドレス空間を割り当ててもらいます。
+たとえば 2001:240:22::/48 などといったアドレスがもらえます。
 </para>
 
 <para>
-���� IPv6 ���롼���⡼�ɤ� NetBSD ����
-gif0 �� IIJ �Υ롼���ȥȥ�ͥ��ĥ��ޤ���
+次に IPv6 がルータモードの NetBSD を作り
+gif0 で IIJ のルータとトンネルを張ります。
 <screen>
-   IIJ NOC ¦�롼��
+   IIJ NOC 側ルータ
       |
       | (unnumbered link)
       |
    NetBSD
       |
-   ------------------------ �������� ---
+   ------------------------ セグメント ---
 </screen>
 </para>
 
 <para>
-�ȥ�ͥ��ĥ�ä��塢route6d ��ư�����ޤ���
-����ˤ�� IIJ ����� ::/0 ������Ȥ�ޤ���
-�����ơ�
-�����餫��� 2001:240:22::/48 �� advertise ���뤳�Ȥˤʤ�ޤ���
+トンネルを張った後、route6d を動かします。
+これにより IIJ からの ::/0 を受けとります。
+そして、
+こちらからは 2001:240:22::/48 を advertise することになります。
 </para>
 
 <warning>
 <para>
-route6d �򲿤�ͤ����˵�ư�����
-/64 �� advertise ���Ƥ��ޤ��Τ�
-/48 �� aggregate ���뤳�Ȥ�˺�줺�ˤ��ޤ��礦��
+route6d を何も考えずに起動すると
+/64 を advertise してしまうので
+/48 に aggregate することを忘れずにしましょう。
 </para>
 </warning>
 
@@ -57,39 +57,39 @@ route6d �򲿤�ͤ����˵�ư�����
 
 <sect1>
 	<title>
-	�ȥ�ͥ������
+	トンネルの設定
 	</title>
 
 <para>
-gif ���󥿡��ե�������Ȥäƥȥ�ͥ��ĥ��ޤ���
-��ư�����ꤹ����ϡ����Τ褦�ˤʤ�ޤ���
+gif インターフェイスを使ってトンネルを張ります。
+手動で設定する場合は、次のようになります。
 <screen>
 # ifconfig gif0 tunnel 10.1.1.1 10.2.2.2
 </screen>
-�����ǡ���ʬ�Υ��ɥ쥹�� 10.1.1.1
-10.2.2.2 ���ȥ�ͥ��ĥ������ IP ���ɥ쥹�Ǥ���
-���Υ��ɥ쥹�ˤĤ��Ƥ�Ϣ������Ƥ���Ϥ��Ǥ���
+ここで、自分のアドレスが 10.1.1.1
+10.2.2.2 がトンネルを張る相手の IP アドレスです。
+このアドレスについては連絡が来ているはずです。
 </para>
 
 <para>
-�����֡��Ȼ��˼�ưŪ�����ꤵ��뤿��ˤϡ�
-/etc/ifconfig.gif0 �˼��Τ褦�����Ƥ�񤭤ޤ���
+次回リブート時に自動的に設定されるためには、
+/etc/ifconfig.gif0 に次のような内容を書きます。
 <screen>
 tunnel 10.1.1.1 10.2.2.2
 </screen>
 </para>
 
 <para>
-�ȥ�ͥ뤬�夬�ä����ɤ�����
+トンネルが上がったかどうかは
 <screen>
 % ping6 -n ff02::1%gif0
 </screen>
-��¹Ԥ��ơ�ʣ�����ֻ�������� OK �Ǥ���
-���� ff02 �ΰ�̣�ʤɤˤĤ��Ƥ�
+を実行して、複数の返事があれば OK です。
+この ff02 の意味などについては
 <ulink url="http://www.netbsd.org/Documentation/network/ipv6/">
-[NetBSD �� IPv6 �β���]
+[NetBSD の IPv6 の解説]
 </ulink>
-��Ϥ��� IPv6 �ν�����򻲾Ȥ��Ƥ���������
+をはじめ IPv6 の諸解説を参照してください。
 </para>
 
 </sect1>
@@ -97,25 +97,25 @@ tunnel 10.1.1.1 10.2.2.2
 
 <sect1>
 	<title>
-	�롼�ƥ���
+	ルーティング
 	</title>
 
 <para>
-IIJ �Υ롼�������
-::/0 (IPv4 �ʤ� 0/0) �Ĥޤ�ǥե���ȥ롼�Ȥ�ή��Ƥ��ޤ���
+IIJ のルータからは
+::/0 (IPv4 なら 0/0) つまりデフォルトルートが流れてきます。
 </para>
 
 <para>
-route6d ��ư�����ˤ� /etc/rc.conf ��
+route6d を動かすには /etc/rc.conf に
 <screen>
 route6d=YES		route6d_flags="-A 2001:240:22::/48,gif0"
 </screen>
-�Ƚ񤭡�
+と書き、
 <screen>
 # /etc/rc.d/route6d start
 </screen>
-��¹Ԥ��Ʋ�������
-/48 �� aggregate ���Ƥ��뤳�Ȥ����դ��Ʋ�������
+を実行して下さい。
+/48 へ aggregate していることに注意して下さい。
 </para>
 
 </sect1>
@@ -123,11 +123,11 @@ route6d=YES		route6d_flags="-A 2001:240:22::/48,gif0"
 
 <sect1>
 	<title>
-	�ۥ��ȤʤɤؤΥ��ɥ쥹�γ������
+	ホストなどへのアドレスの割り当て
 	</title>
 
 <para>
-Ŭ���դ�ʤꡢrtadvd �� rtsold �Ǽ�ư�ǳ�����Ƥ�ʤꤷ�ޤ���
+適宜ふるなり、rtadvd か rtsold で自動で割り当てるなりします。
 </para>
 
 </sect1>
@@ -135,7 +135,7 @@ route6d=YES		route6d_flags="-A 2001:240:22::/48,gif0"
 
 <sect1>
 	<title>
-	��ե����
+	リファレンス
 	</title>
 
 <para>

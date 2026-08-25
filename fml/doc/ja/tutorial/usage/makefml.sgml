@@ -5,22 +5,22 @@
 
 <sect1 id="usage.makefml.newml">
 	<title>
-	�̤ͣκ���
+	ＭＬの作成
 	</title>
 
 <para>
 <screen>
 % su fml
-% makefml newml �ͣ�̾
+% makefml newml ＭＬ名
 </screen>
-�֣ͣ�̾�פϡ�ȴ���ξ�硢�ǥե���ȤΥɥᥤ��Ȥʤ�ޤ���
-�֣ͣ�̾�פǥ᡼�륢�ɥ쥹(�桼�����ɥᥤ��)�����˻��ꤹ��С�
-�С������ɥᥤ���б��ޤǴޤ��
-makefml ��Ŭ�ڤ˽���������ͤǤ���
-�������ǥե���Ȥ��С�����뤫�ݤ��ˤ�����餺��
-��ˡ��ɥᥤ��Ĥ��ǻ��ꤷ�Ƥ��ޤ��ޤ���
-�ष���������������侩����Ƥ��ޤ���
-���Ȥ��Хǥե���ȥɥᥤ��(fml.org)�Ǥ���С�������Ĥ�Ʊ����̣�Ǥ���
+「ＭＬ名」は＠抜きの場合、デフォルトのドメインとなります。
+「ＭＬ名」でメールアドレス(ユーザ＠ドメイン)を完全に指定すれば、
+バーチャルドメイン対応まで含めて
+makefml が適切に処理する仕様です。
+もちろんデフォルトかバーチャルか否かにかかわらず、
+常に＠ドメインつきで指定してかまいません。
+むしろ、その方式が推奨されています。
+たとえばデフォルトドメイン(fml.org)であれば、次の二つは同じ意味です。
 <screen>
 % makefml newml elena
 % makefml newml elena@fml.org
@@ -28,11 +28,11 @@ makefml ��Ŭ�ڤ˽���������ͤǤ���
 </para>
 
 <para>
-���路����
+くわしくは
 <link linkend="setup.newml">
 <xref linkend="setup.newml">
 </link>
-�򻲾Ȥ��Ƥ���������
+を参照してください。
 </para>
 
 </sect1>
@@ -40,19 +40,19 @@ makefml ��Ŭ�ڤ˽���������ͤǤ���
 
 <sect1 id="usage.makefml.rmml">
 	<title>
-	�̤ͣκ��
+	ＭＬの削除
 	</title>
 
 <para>
 <screen>
 % su fml
-% makefml rmml �ͣ�̾
+% makefml rmml ＭＬ名
 </screen>
-�֣ͣ�̾�פϡ�ȴ���ξ�硢�ǥե���ȤΥɥᥤ��Ȥʤ�ޤ���
-�֣ͣ�̾�פǥ᡼�륢�ɥ쥹(�桼�����ɥᥤ��)�����˻��ꤹ��С�
-�С������ɥᥤ���б��ޤǴޤ��
-makefml ��Ŭ�ڤ˽���������ͤǤ���
-���Ȥ��Хǥե���ȥɥᥤ��(fml.org)�Ǥ���С�������Ĥ�Ʊ����̣�Ǥ���
+「ＭＬ名」は＠抜きの場合、デフォルトのドメインとなります。
+「ＭＬ名」でメールアドレス(ユーザ＠ドメイン)を完全に指定すれば、
+バーチャルドメイン対応まで含めて
+makefml が適切に処理する仕様です。
+たとえばデフォルトドメイン(fml.org)であれば、次の二つは同じ意味です。
 <screen>
 % makefml rmml elena
 % makefml rmml elena@fml.org
@@ -60,10 +60,10 @@ makefml ��Ŭ�ڤ˽���������ͤǤ���
 </para>
 
 <para>
-rmml �ϡ���ǽ�ʤ����� newml ��ȿ�Ф�ư��򤷤ޤ���
-�ۡ���ǥ��쥯�ȥ��ä����ꡢ
-MTA �� alias �γ�������ȥ��ä���
-�Ȥ��ä��������ǽ�ʤ�����Ԥʤ��ޤ���
+rmml は、可能なかぎり newml と反対の動作をします。
+ホームディレクトリを消したり、
+MTA の alias の該当エントリを消す、
+といった処理も可能なかぎり行ないます。
 </para>
 
 </sect1>
@@ -71,22 +71,22 @@ MTA �� alias �γ�������ȥ��ä���
 
 <sect1 id="usage.makefml.user.adddel">
 	<title>
-	�̥ͣ��С�����Ͽ�Ⱥ��
+	ＭＬメンバーの登録と削除
 	</title>
 
 <para>
-���̤Σ̥ͣ��С�����Ͽ�� useradd������� userdel �Ǥ���
+一般のＭＬメンバーの登録は useradd、削除は userdel です。
 <screen>
 % su fml
-% makefml useradd �ͣ�̾ �᡼�륢�ɥ쥹
-% makefml userdel �ͣ�̾ �᡼�륢�ɥ쥹
+% makefml useradd ＭＬ名 メールアドレス
+% makefml userdel ＭＬ名 メールアドレス
 </screen>
-�֣ͣ�̾�פϡ�ȴ���ξ�硢�ǥե���ȤΥɥᥤ��Ȥʤ�ޤ���
-�֣ͣ�̾�פǥ᡼�륢�ɥ쥹(�桼�����ɥᥤ��)�����˻��ꤹ��С�
-�С������ɥᥤ���б��ޤǴޤ��
-makefml ��Ŭ�ڤ˽���������ͤǤ���
+「ＭＬ名」は＠抜きの場合、デフォルトのドメインとなります。
+「ＭＬ名」でメールアドレス(ユーザ＠ドメイン)を完全に指定すれば、
+バーチャルドメイン対応まで含めて
+makefml が適切に処理する仕様です。
 <screen>
-��
+例
 
 % su fml
 % makefml useradd elena rudo@nuinui.net
@@ -97,16 +97,16 @@ makefml ��Ŭ�ڤ˽���������ͤǤ���
 </para>
 
 <para>
-�ʤ��������ʤ褦�� 
-useradd ���ޥ�ɤ�  
+なお、便利なように 
+useradd コマンドは  
 <screen>	
 useradd
 adduser	
 subscribe
 add
 </screen>	
-�ɤ��ȤäƤ�Ʊ��ư��򤷤ޤ���
-�ޤ���userdel ��
+どれを使っても同じ動作をします。
+また、userdel は
 <screen>
 userdel
 deluser
@@ -116,8 +116,8 @@ resign
 signoff
 unsubscribe
 </screen>
-�ɤ��ȤäƤ�Ʊ��ư��򤷤ޤ�
-(��: BSD �ɤ� System V �ɤɤ����ή���Ǥ��ɤ��褦�ˤ��Ƥ��ޤ� :-)��
+どれを使っても同じ動作をします
+(注: BSD 派と System V 派どちらの流儀でも良いようにしています :-)。
 </para>
 
 
@@ -126,21 +126,21 @@ unsubscribe
 
 <sect1 id="usage.makefml.user.chaddr">
 	<title>
-	�̥ͣ��С��Υ��ɥ쥹�ѹ�
+	ＭＬメンバーのアドレス変更
 	</title>
 
 
 <para>
 <screen>
 % su fml
-% makefml chaddr �ͣ�̾ �Ť��᡼�륢�ɥ쥹 �������᡼�륢�ɥ쥹
+% makefml chaddr ＭＬ名 古いメールアドレス 新しいメールアドレス
 </screen>
-�֣ͣ�̾�פϡ�ȴ���ξ�硢�ǥե���ȤΥɥᥤ��Ȥʤ�ޤ���
-�֣ͣ�̾�פǥ᡼�륢�ɥ쥹(�桼�����ɥᥤ��)�����˻��ꤹ��С�
-�С������ɥᥤ���б��ޤǴޤ��
-makefml ��Ŭ�ڤ˽���������ͤǤ���
+「ＭＬ名」は＠抜きの場合、デフォルトのドメインとなります。
+「ＭＬ名」でメールアドレス(ユーザ＠ドメイン)を完全に指定すれば、
+バーチャルドメイン対応まで含めて
+makefml が適切に処理する仕様です。
 <screen>
-��
+例
 
 % su fml
 % makefml chaddr elena rudo@nuinui.net teddy@nuinui.net
@@ -154,14 +154,14 @@ makefml ��Ŭ�ڤ˽���������ͤǤ���
 
 <sect1 id="usage.makefml.off">
 	<title>
-	������ߤ��
+	配送を止める
 	</title>
 
 <para>
 <screen>
-��
+例
 
-% makefml off elena �᡼�륢�ɥ쥹
+% makefml off elena メールアドレス
 </screen>
 </para>
 
@@ -170,15 +170,15 @@ makefml ��Ŭ�ڤ˽���������ͤǤ���
 
 <sect1 id="usage.makefml.on">
 	<title>
-	������Ƴ�����
+	配送を再開する
 	</title>
 
 <para>
-off ��ȿ��
+off の反対
 <screen>
-��
+例
 
-% makefml on elena �᡼�륢�ɥ쥹
+% makefml on elena メールアドレス
 </screen>
 </para>
 
@@ -187,12 +187,12 @@ off ��ȿ��
 
 <sect1 id="usage.makefml.log">
 	<title>
-	�����򸫤�
+	ログを見る
 	</title>
 
 <para>
 <screen>
-��
+例
 
 % makefml log elena
 % makefml log elena@fml.org
@@ -204,36 +204,36 @@ off ��ȿ��
 
 <sect1 id="usage.makefml.list">
 	<title>
-	���С��ꥹ�Ȥ򸫤�
+	メンバーリストを見る
 	</title>
 
 <para>
 <screen>
-��
+例
 
 % makefml list elena
 </screen>
-����ϼ����ԤΥꥹ�Ȥ�ɽ�����ޤ���
+これは受信者のリストを表示します。
 <screen>
-��
+例
 
 % makefml list elena member
 </screen>
-���С��Υꥹ��(��Ʋ�ǽ�ԤΥꥹ��)
+メンバーのリスト(投稿可能者のリスト)
 </para>
 
 <para>
-�ºݤˤϡ�config.cf �����Ѳ�ǽ��Ǥ�դΥޥåפ�ɽ������ǽ�Ǥ���
+実際には、config.cf で利用可能な任意のマップの表示が可能です。
 <screen>
-% makefml list elena MAP̾
+% makefml list elena MAP名
 </screen>
-�ʤ���Ĺ���ѿ�̾���Ǥ�����Τ����ѤʤΤǡ�
-primary_xxx_map ��
-xxx_maps ��
+なお、長い変数名を打ち込むのも大変なので、
+primary_xxx_map や
+xxx_maps は
 <screen>
 % makefml list elena xxx
 </screen>
-�Ⱦ�ά���Ƥ��ɤ����ȤˤʤäƤ��ޤ���  
+と省略しても良いことになっています。  
 </para>
 
 </sect1>
@@ -241,17 +241,17 @@ xxx_maps ��
 
 <sect1 id="usage.makefml.config">
 	<title>
-	������ѹ�
+	設定の変更
 	</title>
 
 <para>
-2004/11 ���ߡ�����ٱ��˥塼���󥿡��ե������Υƥ����Ǥ�ư���Ƥ��ޤ���
-���ܸ��˥塼�Ǥ�ʤ������ޤ��ޤ������ߤ�ɬ�פȤ������֤Ǥ�����
-����ե졼�����Ϻ����ѤߤȤ������ơ������Ǥ���
+2004/11 現在、設定支援メニューインターフェイスのテスト版が動いています。
+日本語メニューでもないし、まだまだ作り込みが必要という状態ですが、
+一応フレームワークは作成済みというステータスです。
 </para>
 
 <para>
-���ޤΤȤ����� config.cf �ʤɤ򥨥ǥ������Խ����Ʋ����� _o_
+いまのところは config.cf などをエディタで編集して下さい _o_
 </para>
 
 </sect1>
@@ -259,29 +259,29 @@ xxx_maps ��
 
 <sect1 id="usage.makefml.admin.adddel">
 	<title>
-	��⡼�ȴ����Ԥ���Ͽ�Ⱥ��
+	リモート管理者の登録と削除
 	</title>
 
 <warning>
 <para>
-makefml ��Ȥ�������Ԥ����ְΤ��ͤǤ�������:-)��
-makefml ��Ȥ�������Ԥϡ�
-��(��긢�¤μ夤)��⡼�ȴ����פΤ���ν������Ԥʤ����Ȥ��Ǥ��ޤ���
+makefml を使える管理者が一番偉い人です。当然:-)、
+makefml を使える管理者は、
+「(より権限の弱い)リモート管理」のための諸設定を行なうことができます。
 </para>
 </warning>
 
 <para>
-���̤Σ̥ͣ��С�����Ͽ�� addadmin������� deladmin �Ǥ���
+一般のＭＬメンバーの登録は addadmin、削除は deladmin です。
 <screen>
 % su fml
-% makefml addadmin �ͣ�̾ �᡼�륢�ɥ쥹
-% makefml deladmin �ͣ�̾ �᡼�륢�ɥ쥹
+% makefml addadmin ＭＬ名 メールアドレス
+% makefml deladmin ＭＬ名 メールアドレス
 </screen>
-�֣ͣ�̾�פϡ�ȴ���ξ�硢�ǥե���ȤΥɥᥤ��Ȥʤ�ޤ���
-�֣ͣ�̾�פǥ᡼�륢�ɥ쥹(�桼�����ɥᥤ��)�����˻��ꤹ��С�
-�С������ɥᥤ���б��ޤǴޤ��
-makefml ��Ŭ�ڤ˽���������ͤǤ���
-���Ȥ���
+「ＭＬ名」は＠抜きの場合、デフォルトのドメインとなります。
+「ＭＬ名」でメールアドレス(ユーザ＠ドメイン)を完全に指定すれば、
+バーチャルドメイン対応まで含めて
+makefml が適切に処理する仕様です。
+たとえば
 <screen>
 % su fml
 % makefml addadmin elena rudo@nuinui.net
@@ -292,19 +292,19 @@ makefml ��Ŭ�ڤ˽���������ͤǤ���
 </para>
 
 <para>
-�ʤ��������ʤ褦�� 
-addadmin ���ޥ�ɤ�  
+なお、便利なように 
+addadmin コマンドは  
 <screen>	
 addadmin	
 addpriv
 </screen>	
-�ɤ��ȤäƤ�Ʊ��ư��򤷤ޤ���
-�ޤ���deladmin ��
+どれを使っても同じ動作をします。
+また、deladmin は
 <screen>
 byeadmin
 byepriv
 </screen>
-�ɤ��ȤäƤ�Ʊ��ư��Ǥ���
+どれを使っても同じ動作です。
 </para>
 
 
@@ -314,21 +314,21 @@ byepriv
 
 <sect1 id="usage.makefml.moderator.adddel">
 	<title>
-	��ǥ졼������Ͽ�Ⱥ��
+	モデレータの登録と削除
 	</title>
 
 <para>
-���̤Σ̥ͣ��С�����Ͽ�� addmoderator������� delmoderator �Ǥ���
+一般のＭＬメンバーの登録は addmoderator、削除は delmoderator です。
 <screen>
 % su fml
-% makefml addmoderator �ͣ�̾ �᡼�륢�ɥ쥹
-% makefml delmoderator �ͣ�̾ �᡼�륢�ɥ쥹
+% makefml addmoderator ＭＬ名 メールアドレス
+% makefml delmoderator ＭＬ名 メールアドレス
 </screen>
-�֣ͣ�̾�פϡ�ȴ���ξ�硢�ǥե���ȤΥɥᥤ��Ȥʤ�ޤ���
-�֣ͣ�̾�פǥ᡼�륢�ɥ쥹(�桼�����ɥᥤ��)�����˻��ꤹ��С�
-�С������ɥᥤ���б��ޤǴޤ��
-makefml ��Ŭ�ڤ˽���������ͤǤ���
-���Ȥ���
+「ＭＬ名」は＠抜きの場合、デフォルトのドメインとなります。
+「ＭＬ名」でメールアドレス(ユーザ＠ドメイン)を完全に指定すれば、
+バーチャルドメイン対応まで含めて
+makefml が適切に処理する仕様です。
+たとえば
 <screen>
 % su fml
 % makefml addmoderator elena rudo@nuinui.net

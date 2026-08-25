@@ -4,24 +4,24 @@
 
 <chapter id="module.mail.message.encode">
 	<title>
-	Mail::Message::Encode ¥¯¥é¥¹
+	Mail::Message::Encode ã‚¯ãƒ©ã‚¹
 	</title>
 
 
 <sect1 id="module.mail.message.encode.examplee">
 	<title>
-	[¸«ËÜ] Mail::Message::Encode ¤Î»È¤¤Êı
+	[è¦‹æœ¬] Mail::Message::Encode ã®ä½¿ã„æ–¹
 	</title>
 
 <para>
-[¥ê¥Õ¥¡¥ì¥ó¥¹]
-fml-help ML's Count: 02012, 02013, 02016 ¤Ê¤É
+[ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹]
+fml-help ML's Count: 02012, 02013, 02016 ãªã©
 </para>
 
 <screen>
-[»È¤¤Êı¤ÎÎã]
+[ä½¿ã„æ–¹ã®ä¾‹]
 
-   * fml 8.0 É÷¤Î»È¤¤Êı 
+   * fml 8.0 é¢¨ã®ä½¿ã„æ–¹ 
 
 	use Mail::Message::Encode;
 	my $encode  = new Mail::Message::Encode;
@@ -35,7 +35,7 @@ fml-help ML's Count: 02012, 02013, 02016 ¤Ê¤É
 	my $fp = sub { ... };
 	$encode->run_in_chcode( $fp, $oout, $in );
 
-   * fml 4.0 ¸ß´¹É÷¤Î»È¤¤Êı
+   * fml 4.0 äº’æ›é¢¨ã®ä½¿ã„æ–¹
 
 	ues Mail::Message::Encode qw(STR2EUC);
 	my $euc_s = STR2EUC( $s );
@@ -46,14 +46,14 @@ fml-help ML's Count: 02012, 02013, 02016 ¤Ê¤É
 
 <sect1 id="module.mail.message.encode.specification">
 	<title>
-	Mail::Message::Encode ¤Î»ÅÍÍ(¤¢¤é¤¹¤¸)
+	Mail::Message::Encode ã®ä»•æ§˜(ã‚ã‚‰ã™ã˜)
 	</title>
 
 <para>
-ËÜÂÎ¤Ï¥×¥é¥¤¥Ù¡¼¥È¥á¥½¥Ã¥É _convert_str_ref() ¤Ë¤Ş¤È¤á¤Æ¤¢¤ê¤Ş¤¹¡£
+æœ¬ä½“ã¯ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ _convert_str_ref() ã«ã¾ã¨ã‚ã¦ã‚ã‚Šã¾ã™ã€‚
 
 <screen>
-   sub convert # °ú¿ô STR ¤¬ÊÑ´¹ÂĞ¾İ
+   sub convert # å¼•æ•° STR ãŒå¤‰æ›å¯¾è±¡
    {
 	my ($self, $str, $out_code, $in_code) = @_;
 	_convert_str_ref(\$str, $out, $in);
@@ -62,31 +62,31 @@ fml-help ML's Count: 02012, 02013, 02016 ¤Ê¤É
    }
 
 
-   sub convert_str_ref # °ú¿ô STR_REF ¤¬ÊÑ´¹ÂĞ¾İ
+   sub convert_str_ref # å¼•æ•° STR_REF ãŒå¤‰æ›å¯¾è±¡
    {
 	my ($self, $str, $out, $in) = @_;
 	_convert_str_ref($str, $out, $in);
    }
 
 
-   sub _convert_str_ref # °ú¿ô STR_REF ¤¬ÊÑ´¹ÂĞ¾İ
+   sub _convert_str_ref # å¼•æ•° STR_REF ãŒå¤‰æ›å¯¾è±¡
    {
         my ($str, $out, $in) = @_;
 
-        # 1. ¿äÂ¬
-        ¤â¤· $in ¤¬¤Ê¤¤ ¢ª ¿äÂ¬ ¢ª ¼ºÇÔ ¢ª 0 ¤ò¤«¤¨¤¹¡© 
+        # 1. æ¨æ¸¬
+        ã‚‚ã— $in ãŒãªã„ â†’ æ¨æ¸¬ â†’ å¤±æ•— â†’ 0 ã‚’ã‹ãˆã™ï¼Ÿ 
 
-        # 2. ÊÑ´¹¤ò¥È¥é¥¤
-        if ($in ¤¬¤ï¤«¤Ã¤¿ or $in ¤¬»ØÄê¤µ¤ì¤¿) {
-                $out ¤ØÊÑ´¹
-                jcode, Jcode, Encode ¤Ê¤É¤Î¥â¥¸¥å¡¼¥ë¤¬ÊÑ´¹¤ò¤¬¤ó¤Ğ¤ë
-                return 1 ; ¡ôÀ®¸ù
+        # 2. å¤‰æ›ã‚’ãƒˆãƒ©ã‚¤
+        if ($in ãŒã‚ã‹ã£ãŸ or $in ãŒæŒ‡å®šã•ã‚ŒãŸ) {
+                $out ã¸å¤‰æ›
+                jcode, Jcode, Encode ãªã©ã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãŒå¤‰æ›ã‚’ãŒã‚“ã°ã‚‹
+                return 1 ; ï¼ƒæˆåŠŸ
         }
         else { # principle of least surprise ?
-                ¤Ê¤Ë¤â¤·¤Ê¤¤¡ô str ¤ò¡¢¤½¤Î¤Ş¤ŞÊÖ¤¹
+                ãªã«ã‚‚ã—ãªã„ï¼ƒ str ã‚’ã€ãã®ã¾ã¾è¿”ã™
         }
 
-        return 0 ; # ¼ºÇÔ
+        return 0 ; # å¤±æ•—
    }
 </screen>
 
@@ -94,17 +94,17 @@ fml-help ML's Count: 02012, 02013, 02016 ¤Ê¤É
 sub base64 {}
 sub quoted_printable {}
 </screen>
-¤¬¤¢¤ë¤È¤¤¤¤¤Ç¤¹¤«¤Í¡©
+ãŒã‚ã‚‹ã¨ã„ã„ã§ã™ã‹ã­ï¼Ÿ
 <screen>
 $x = $encode->base64($s);
 </screen>
-¤Ş¤¿¡¢¸ß´¹À­¤È¤¤¤¦¤«ÊØµ¹¾å¡¢STR2XXX() ¤â½àÈ÷¤·¤Ş¤¹¡£
+ã¾ãŸã€äº’æ›æ€§ã¨ã„ã†ã‹ä¾¿å®œä¸Šã€STR2XXX() ã‚‚æº–å‚™ã—ã¾ã™ã€‚
 <screen>
    STR2EUC(  $str, [$icode] )
    STR2JIS(  $str, [$icode] )
    STR2SJIS( $str, [$icode] )
 </screen>
-¤Ï convert_str_ref ¤ò wrap ¤¹¤ë´Ø¿ô¤Ç¤¹¡£
+ã¯ convert_str_ref ã‚’ wrap ã™ã‚‹é–¢æ•°ã§ã™ã€‚
 </para>
 
 </sect1>
@@ -112,22 +112,22 @@ $x = $encode->base64($s);
 
 <sect1 id="module.mail.message.encode.run.in.code">
 	<title>
-	¥æ¡¼¥Æ¥£¥ê¥Æ¥£ run_in_chcode()
+	ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ run_in_chcode()
 	</title>
 
 <para>
-¸À¸ì°ÍÂ¸½èÍı¤Î²áÄø¤Ç¤Ï¡¢
-¥×¥í¥°¥é¥à¤¬°·¤¤¤ä¤¹¤¤Ê¸»ú¥³¡¼¥É(ÆâÉô½èÍı¥³¡¼¥É)¤ËÊÑ´¹¤·¡¢
-½èÍı¤ò¹Ô¤Ê¤¦´Ø¿ô¤¬Â¿¿ôÂ¸ºß¤·¤Ş¤¹¡£
-¤½¤³¤Ç¡¢¤½¤¦¤¤¤Ã¤¿½èÍı¤Î¤¿¤á¤Î²¼ÀÁ¤±´Ø¿ô¤òÍÑ°Õ¤·¤Æ¤ª¤¯¤ÈÊØÍø¤Ç¤¹¡£
+è¨€èªä¾å­˜å‡¦ç†ã®éç¨‹ã§ã¯ã€
+ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãŒæ‰±ã„ã‚„ã™ã„æ–‡å­—ã‚³ãƒ¼ãƒ‰(å†…éƒ¨å‡¦ç†ã‚³ãƒ¼ãƒ‰)ã«å¤‰æ›ã—ã€
+å‡¦ç†ã‚’è¡Œãªã†é–¢æ•°ãŒå¤šæ•°å­˜åœ¨ã—ã¾ã™ã€‚
+ãã“ã§ã€ãã†ã„ã£ãŸå‡¦ç†ã®ãŸã‚ã®ä¸‹è«‹ã‘é–¢æ•°ã‚’ç”¨æ„ã—ã¦ãŠãã¨ä¾¿åˆ©ã§ã™ã€‚
 </para>
 
 <para>
-run_in_chcode() ¤Ï¡¢
-°ú¿ô¤Ë¤¢¤ë´Ø¿ô $proc ¤ò¼Â¹Ô¤·¤Ş¤¹¡£
-´Ø¿ô $proc ¤ò¼Â¹Ô¤¹¤ëºİ¤Î°ú¿ô¤Ï¡¢
-¤¢¤é¤«¤¸¤á»ØÄê¤µ¤ì¤¿Ê¸»ú¥³¡¼¥É¤ËÊÑ´¹¤·¤¿¤¢¤È¡¢
-´Ø¿ô $proc ¤ËÅÏ¤µ¤ì¤ë¤È¤¤¤¦»ÅÍÍ¤Ç¤¹¡£
+run_in_chcode() ã¯ã€
+å¼•æ•°ã«ã‚ã‚‹é–¢æ•° $proc ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+é–¢æ•° $proc ã‚’å®Ÿè¡Œã™ã‚‹éš›ã®å¼•æ•°ã¯ã€
+ã‚ã‚‰ã‹ã˜ã‚æŒ‡å®šã•ã‚ŒãŸæ–‡å­—ã‚³ãƒ¼ãƒ‰ã«å¤‰æ›ã—ãŸã‚ã¨ã€
+é–¢æ•° $proc ã«æ¸¡ã•ã‚Œã‚‹ã¨ã„ã†ä»•æ§˜ã§ã™ã€‚
 </para>
 
 <para>
@@ -153,11 +153,11 @@ sub run_in_code
     return wantarray ? ($conv_status, $proc_status): $conv_status;
 }
 </screen>
-¤³¤ì¤Ï¡¢¼¡¤Î¤è¤¦¤ËÆ°ºî¤·¤Ş¤¹¡£
+ã“ã‚Œã¯ã€æ¬¡ã®ã‚ˆã†ã«å‹•ä½œã—ã¾ã™ã€‚
 <screen>
-(1) $s ¤ò EUC-JP ¤ØÊÑ´¹¡£
-(2) $proc($s, $args); ¤ò¼Â¹Ô¡£
-(3) $proc ¤Î¼Â¹Ô·ë²Ì¤òÊÖ¤¹¡£
+(1) $s ã‚’ EUC-JP ã¸å¤‰æ›ã€‚
+(2) $proc($s, $args); ã‚’å®Ÿè¡Œã€‚
+(3) $proc ã®å®Ÿè¡Œçµæœã‚’è¿”ã™ã€‚
 </screen>
 </para>
 

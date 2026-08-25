@@ -67,40 +67,40 @@ sub _P
 
     if ($raw_mode) { return $x;}
 
-    #       .fml8_default           fml8 ¤Î¥Ç¥Õ¥©¥ë¥È¤ÈÆ±¤¸¡¢µ¤¤Ë¤¹¤ë¤Ê
-    #       .not_yet_implemented    ¤Ş¤À¡¢¼ÂÁõ¤µ¤ì¤Æ¤Ê¤¤
-    #       .unavailable            ÂĞ±ş¤¹¤ë¤â¤Î¤¬¤Ê¤¤¡¢¼ÂÁõÍ½Äê¤â¤Ê¤¤
-    #       .ignore                 ¼ÂÁõÊı¼°¤¬°ã¤¦¤Î¤Ç¡¢Ìµ°ÕÌ£
+    #       .fml8_default           fml8 ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¨åŒã˜ã€æ°—ã«ã™ã‚‹ãª
+    #       .not_yet_implemented    ã¾ã ã€å®Ÿè£…ã•ã‚Œã¦ãªã„
+    #       .unavailable            å¯¾å¿œã™ã‚‹ã‚‚ã®ãŒãªã„ã€å®Ÿè£…äºˆå®šã‚‚ãªã„
+    #       .ignore                 å®Ÿè£…æ–¹å¼ãŒé•ã†ã®ã§ã€ç„¡æ„å‘³
     if ($x eq '.fml8_default') {
-	return 'OK¡£fml8 ¤Î¥Ç¥Õ¥©¥ë¥È¤ÈÆ±¤¸';
+	return 'OKã€‚fml8 ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¨åŒã˜';
     }
     elsif ($x =~ /\.auto/) {
-	$x =~ s/\.auto/fml8 ¤Ç¤è¤í¤·¤¯´èÄ¥¤ë(¼«Æ°ÀßÄê)/;
+	$x =~ s/\.auto/fml8 ã§ã‚ˆã‚ã—ãé ‘å¼µã‚‹(è‡ªå‹•è¨­å®š)/;
 	return $x;
     }
     elsif ($x =~ /\.convert/) {
-	$x =~ s/\.convert/fml8 ¤Î·Á¼°¤ËÊÑ´¹¤·¤Æ»È¤¦/;
+	$x =~ s/\.convert/fml8 ã®å½¢å¼ã«å¤‰æ›ã—ã¦ä½¿ã†/;
 	return $x;
     }
     elsif ($x =~ /\.use_fml4_value/) {
-	$x =~ s/\.use_fml4_value/¤³¤Î¤Ş¤Ş fml4  ¤ÎÃÍ¤ò»È¤¦/;
+	$x =~ s/\.use_fml4_value/ã“ã®ã¾ã¾ fml4  ã®å€¤ã‚’ä½¿ã†/;
 	return $x;
     }
     elsif ($x =~ /\.use_fml8_value/) {
-	$x =~ s/\.use_fml8_value/ÂĞ±ş¤¹¤ë fml8 ¤ÎÃÍ¤ò»È¤¦/;
+	$x =~ s/\.use_fml8_value/å¯¾å¿œã™ã‚‹ fml8 ã®å€¤ã‚’ä½¿ã†/;
 	return $x;
     }
     elsif ($x eq '.ignore') {
-	return 'ÂĞ±ş¤¹¤ë¤â¤Î¤¬¤Ê¤¤';
+	return 'å¯¾å¿œã™ã‚‹ã‚‚ã®ãŒãªã„';
     }
     elsif ($x eq '.unavailable') {
-	return '¼ÂÁõÍ½Äê¤Ê¤·';
+	return 'å®Ÿè£…äºˆå®šãªã—';
     }
     elsif ($x eq '.not_yet_configurable') {
-	return '¤Ş¤ÀÀßÄêÊÑ¹¹¤Ç¤­¤Ê¤¤';
+	return 'ã¾ã è¨­å®šå¤‰æ›´ã§ããªã„';
     }
     elsif ($x eq '.not_yet_implemented') {
-	return 'Ì¤¼ÂÁõ';
+	return 'æœªå®Ÿè£…';
     }
     else {
 	if ($x =~ /^\s*\./) {

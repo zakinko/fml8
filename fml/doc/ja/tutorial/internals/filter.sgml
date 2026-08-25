@@ -4,43 +4,43 @@
 
 
 <!--
-   XXX-TODO: �ե��륿���������ľ��
-   XXX-TODO: MTI ��������
+   XXX-TODO: フィルタの説明を書き直せ
+   XXX-TODO: MTI の説明？
 -->
 
 
 <chapter id="internals.filter">
 	<title>
-	�ե��륿
+	フィルタ
 	</title>
 
 <caution>
 
 <para>
-�ܾϤǤ����ե��륿�Ȥϡ�
-�äˤ������ʤ��¤����Ƥ��줿�������Ф���ե��륿�פ�ؤ��Ƥ��ޤ���
+本章でいうフィルタとは、
+特にこだわらない限り「投稿された記事に対するフィルタ」を指しています。
 </para>
 
 <para>
-���Ρֵ������Ф���ե��륿�ץ����ƥ�� 
-FML::Filter ���饹�˼�������Ƥ��ޤ���
+この「記事に対するフィルタ」システムは 
+FML::Filter クラスに実装されています。
 </para>
 
 <para>
-�������
-�ֵ�����
-�ǤϤʤ�
-�֥��ޥ�ɥ᡼���
-���оݤȤ����ե��륿�����ƥ�ʤɤ�ͤ����ޤ���
-���ξ�硢�����ü�ʥե��륿�����ƥब 
+もちろん
+「記事」
+ではなく
+「コマンドメール」
+を対象としたフィルタシステムなども考えられます。
+この場合、その特殊なフィルタシステムが 
 FML::Filter
-�Υ��֥��饹�ˤ���Ȥϸ¤�ޤ���Τ����դ��Ʋ�������
-���ߡ�
-���ޥ�ɥ᡼����оݤȤ����ե��륿�ϡ�
-���ޥ�ɽ����Υ��饹��˼������줿�ե��륿�����ƥ��ƤӽФ��Ƥ��ޤ���
-���Ȥ��Х��ޥ�ɥ᡼��Υ��ޥ�ɤ�Ĺ�������¤��뵡ǽ(�ե��륿)��
+のサブクラスにあるとは限りませんので注意して下さい。
+現在、
+コマンドメールを対象としたフィルタは、
+コマンド処理のクラス中に実装されたフィルタシステムを呼び出しています。
+たとえばコマンドメールのコマンドの長さを制限する機能(フィルタ)は
 FML::Command::Filter
-���饹��ô�����Ƥ��ޤ���
+クラスが担当しています。
 </para>
 
 </caution>
@@ -48,60 +48,60 @@ FML::Command::Filter
 
 <sect1  id="internals.filter.overview">
 	<title>
-	�ե��륿�γ���
+	フィルタの概要
 	</title>
 
 <para>
-����ƥ�Ĥ򸡺�����ե��륿�ˤ��礭��ʬ���ƻ����ढ��ޤ���
-����ϡ�
-�֥إå����Ф���ե��륿��
-�֥᡼����ʸ���Ф���ե��륿��
-��MIME ��¤�򸵤ˤ����ե��륿(mime component filter)�פΣ��ĤǤ���
+コンテンツを検査するフィルタには大きく分けて三種類あります。
+それは、
+「ヘッダに対するフィルタ」
+「メール本文に対するフィルタ」
+「MIME 構造を元にしたフィルタ(mime component filter)」の３つです。
 </para>
 
 <para>
-��äȤ�
-�֥᡼����ʸ���Ф���ե��륿��
-�ˤ⡢
-�� MIME �Ǥʤ��᡼����Ф���ե��륿��
-��
-��text/plain ���Ф���ե��륿��
-������ब����Τǡ�
-�礭��ʬ����Ȼͼ��ब�������������⤷��ޤ���
+もっとも
+「メール本文に対するフィルタ」
+にも、
+「 MIME でないメールに対するフィルタ」
+と
+「text/plain に対するフィルタ」
+の二種類があるので、
+大きく分けると四種類が正しい説明かもしれません。
 <screen>
-��ޤ��ʶ�ʬ��
+大まかな区分け
 
   header
 
   body
 	non-mime
-		permit / reject (fml 4.0 �� content filter �� !MIME)
+		permit / reject (fml 4.0 の content filter の !MIME)
 
 	mime component filter
-		(fml 4.0 �� content filter ����)
+		(fml 4.0 の content filter 相当)
 
 	text/plain filter
-		ja, en, ... (�����¸�ե��륿)
-		������¸�ѡ��� (M$ GUID scanner �Τ�����)
-		��Ƭ��ʬ�� text/plain �ѡ��Ȥ��Ф��륷�󥿥å��������å�
+		ja, en, ... (言語依存フィルタ)
+		非言語依存パート (M$ GUID scanner のたぐい)
+		先頭部分の text/plain パートに対するシンタックスチェック
 
-	�����ե��륿 (�����륹/SPAM �����å���ƤӽФ�)
+	外部フィルタ (ウィルス/SPAM チェッカを呼び出す)
 		clamav
 		spamassassin
 		bogofilter
 </screen>
-�����ϡ�
-����ʳ��ˡ�SMTP �⤷���� LMTP ��Ȥ���
-������ virus scanner �ʤ��ƤӽФ�����ϩ
-(postfix �� content_filter ����)��ɬ�פ��Ȼפ��ΤǤ�����
-(����� Postfix �Ǥ��Ф����Ȥ��⤤�ޤ��Τ�)�������Ƥ��ޤ���
+本当は、
+これ以外に、SMTP もしくは LMTP を使い、
+外部の virus scanner なりを呼び出す迂回路
+(postfix の content_filter 相当)が必要だと思うのですが、
+(それは Postfix でやればいいとおもいますので)実装していません。
 </para>
 
-<!-- XXX-TODO �ȥ�ե��å��١����Υե��륿 -->
+<!-- XXX-TODO トラフィックベースのフィルタ -->
 <para>
-�ޤ���
-�����ʳ��˥ȥ�ե��å��١����Υե��륿������ޤ�
-(�ۤȤ��̤�����ʤΤǲ���Ͼ�ά _o_)��
+また、
+これら以外にトラフィックベースのフィルタがあります
+(ほとんど未実装なので解説は省略 _o_)。
 </para>
 
 </sect1>
@@ -109,24 +109,24 @@ FML::Command::Filter
 
 <sect1 id="internals.filter.config">
 	<title>
-	�ե��륿�˴ؤ�������
+	フィルタに関する設定
 	</title>
 
 <para>
-�����䥳�ޥ�ɥ᡼��Ȥ��ä���ǽ�̤�
-�֥ե��륿��Ȥ����Ȥ�ʤ�������
-�ֻȤ��ե��륿�롼��ϡ���
-�ʤɤ��ѿ����������Ƥ��ޤ���
+配送やコマンドメールといった機能別に
+「フィルタを使うか使わないか？」
+「使うフィルタルールは？」
+などの変数が定義されています。
 </para>
 
 <para>
-�ѿ�̾��̿̾��§�ηϤδ��ܤϰʲ��ΤȤ���Ǥ���
+変数名の命名規則体系の基本は以下のとおりです。
 <screen>
-use_�����ӥ�_filter       = yes �� no
-�����ӥ�_filter_functions = ��ǽA ��ǽB
+use_サービス_filter       = yes か no
+サービス_filter_functions = 機能A 機能B
 
-use_��ǽA   = yes �� no
-��ǽA_rules = �롼��1 �롼��2
+use_機能A   = yes か no
+機能A_rules = ルール1 ルール2
 </screen>
 </para>
 
@@ -137,23 +137,23 @@ use_��ǽA   = yes �� no
 
 <sect1 id="internals.filter.size">
 	<title>
-	�ե��륿: ����������
+	フィルタ: サイズ制限
 	</title>
 
 <para>
-�إå���ʬ����ӥ᡼����ʸ����ʬ�Υ����������¤��������ޤ���
-�ޤ����ѿ��ϵ����ȥ��ޥ�ɥ᡼�뤽�줾���¸�ߤ��ޤ���
-ɬ�פʥե��륿�Τߤ�ͭ���ˤ���Ȥ���
-�����ξ��������������¤ε�ǽ���ڤ�Ȥ��ä��Ȥ������ǽ�Ǥ�(
-��äȤ⡢���ޤ�ʣ���ʾ�ﲼ�ǤΤߥե��륿�Ȥ��ä����Ȥ򤷤褦�Ȥ����
-HOOK �ˤ���б��ˤʤ�Ȥ��⤤�ޤ�����)��
+ヘッダ部分およびメール本文の部分のサイズに制限がかけられます。
+また、変数は記事とコマンドメールそれぞれに存在します。
+必要なフィルタのみを有効にするとか、
+○○の場合だけサイズ制限の機能を切るといった使い方も可能です(
+もっとも、あまり複雑な条件下でのみフィルタといったことをしようとすると
+HOOK による対応になるとおもいますが…)。
 </para>
 
 <para>
-;��:
-Mail::Message ���饹���ǽ�˥᡼�����Ϥ��ƿ���Ĥʤ���¤����ޤ���
-���κݤˡ�
-�᡼��γ���ʬ�Υ�������ʬ�ϺѤߤʤΤǡ����Υե��륿�μ����ϴ�ñ�Ǥ�:)
+余談:
+Mail::Message クラスが最初にメールを解析して数珠つなぎ構造を作ります。
+この際に、
+メールの各部分のサイズも分析済みなので、このフィルタの実装は簡単です:)
 </para>
 
 &var.filter.size;
@@ -163,17 +163,17 @@ Mail::Message ���饹���ǽ�˥᡼�����Ϥ��ƿ���Ĥʤ���¤����ޤ���
 
 <sect1 id="internals.filter.command">
 	<title>
-	�ե��륿: ���ޥ�ɥ᡼��ؤ�����
+	フィルタ: コマンドメールへの制限
 	</title>
 
 <para>
-���ޥ�ɥ᡼��ˤ�
-�ְ���������Υ��ޥ�ɿ���
-�䡢
-���ޥ�ɰ�¸�����¡�
-���Ȥ���
-�ְ��Υ��ޥ�ɥ᡼��� get �Ǥ���ե������ 100 �ĤޤǤȤ����
-�Ȥ��ä����¤򤫤��������פ�����ޤ���
+コマンドメールには
+「一通当たりのコマンド数」
+や、
+コマンド依存の制限、
+たとえば
+「一回のコマンドメールで get できるファイルは 100 個までとする」
+といった制限をかけたい需要があります。
 </para>
 
 <!-- &table.list.filter.commandmail; -->
@@ -183,26 +183,26 @@ Mail::Message ���饹���ǽ�˥᡼�����Ϥ��ƿ���Ĥʤ���¤����ޤ���
 
 <sect1 id="internals.filter.mimecomponent">
 	<title>
-	�ե��륿: mime component filter �Υ롼�빽��ˡ
+	フィルタ: mime component filter のルール構成法
 	</title>
 
 <para>
-&fml4; �� content filter �Ȥϰۤʤꡢ
-&fml8; �� mime component filter �Υ롼���
+&fml4; の content filter とは異なり、
+&fml8; の mime component filter のルールは
 <screen>
 text/plain 	permit
 text/html	reject
 *		permit
 </screen>
-�Τ褦�ʶ�����ڤ�Υե����ޥåȤǽ񤤤Ƥ���ޤ���
+のような空白区切りのフォーマットで書いてあります。
 </para>
 
 <para>
-MIME ������ʤΤǡ�!MIME (MIME �ʳ����оݤȤ���)�Ȥ���̿��Ϥ���ޤ��󤬡�
-text/plain �� multipart/mixed ��� text/plain ����̤��뤿��ˡ�
-���Τ褦�ʽ����򤹤�ɬ�פ�����ޤ���
+MIME が前提なので、!MIME (MIME 以外を対象とする)という命令はありませんが、
+text/plain と multipart/mixed 中の text/plain を区別するために、
+このような書き方をする必要があります。
 <screen>
-����			��ʬ		���������
+全体			部分		アクション
 ----------------------------------------------
 text/plain 		*		permit
 multipart/mixed		text/plain	permit
@@ -210,7 +210,7 @@ multipart/mixed		text/html	reject
 multipart/mixed		image/*		cutoff
 *			*		permit
 </screen>
-����ˡ�����Ϥ��������Τ⤢�ꤨ��Ǥ��礦����(̤����)
+さらに、将来はこういうのもありえるでしょうか？(未実装)
 <screen>
 text/plain 		:uuencoded:	cutoff
 text/plain 		:size>500k	cutoff
@@ -218,7 +218,7 @@ text/plain 		:size>500k	cutoff
 </para>
 
 <para>
-�����������Υ롼��˴ؤ��Ƥ⹽������������������Ĥ�����ޤ���
+ただし、このルールに関しても構成上の問題点がいくつかあります。
 </para>
 
 <sect2>
@@ -227,10 +227,10 @@ text/plain 		:size>500k	cutoff
 	</title>
 
 <para>
-���������ˤ� first match �Τ�ΤȤ����Ǥʤ���Τ�����ޤ���
-reject �ϡ������Ƥ� first match �Ǥ�����
-cutoff �� first match �Ǥ�"�ʤ�"�Ȼפ��ޤ���
-���ơ�
+アクションには first match のものとそうでないものがあります。
+reject は、たいてい first match ですが、
+cutoff は first match では"ない"と思われます。
+さて？
 </para>
 
 </sect2>
@@ -238,61 +238,61 @@ cutoff �� first match �Ǥ�"�ʤ�"�Ȼפ��ޤ���
 
 <sect2>
 	<title>
-	permit �ΰ�̣
+	permit の意味
 	</title>
 
 <para>
-�Ǥϡ�permit �Ϥɤ��Ǥ��礦��
-�¤ΤȤ���ʸ̮��¸�ȹͤ����ޤ�����
-�����������Τ�����ۣ��Ǥ���
-���Ȥ��С�multipart �Υ᡼�����Ȥ�
+では、permit はどうでしょう？
+実のところ文脈依存と考えられますが、
+何が正しいのか少し曖昧です。
+たとえば、multipart のメールの中身が
 <screen>
 text/plain + image/jpeg + text/html
 </screen>
-�Τ褦�ˣ��Ĥΰۤʤ륿���פΥѡ��Ȥ���ʤ��硢
-�ɤ������롼��ʤ�֤����ޤ����פ��ʤ��Ǥ��礦����
+のように３つの異なるタイプのパートからなる場合、
+どういうルールなら「あいまいさ」がないでしょうか？
 </para>
 
 <para>
-�����򤤤��С�
-cutoff �� reject ����ꤹ�륿���פΥ롼�뤷�����ޤ���ǽ���ޤ���
-�Ĥޤ������Ρ��������ʤ����ϵ��ݤ���ץե��륿�ϡ�
-���ޤ�ư��ޤ���
-�椨�˥ǥե���Ȥ� permit �ˤ��뤷������ޤ���
+結論をいえば、
+cutoff や reject を指定するタイプのルールしかうまく機能しません、
+つまり「特定の○○を削除ないしは拒否する」フィルタは、
+うまく動作します。
+ゆえにデフォルトは permit にするしかありません。
 </para>
 
 <para>
-��permit �ϡظ��̤˵����٤Ȥ�����̣�Ǥ����
-��ȡ�
-��permit �ϡإ᡼�����Τ�����ۤȤ�����̣�Ǥ����
-���ξ�������ꤨ�ޤ���
-���Ȥ��С�
+「permit は『個別に許す』という意味である」
+説と、
+「permit は『メール全体を許す】という意味である」
+説の両方がありえます。
+たとえば、
 <screen>
 text/plain	*	permit
 *		*	reject
 </screen>
-�� text/plain �ϵ���������ʳ��Τ����ʤ뷿������ʤ���
-����� text/plain ��ۣ�椵���ʤ��Τ� OK �Ǥ��礦��
+は text/plain は許す、それ以外のいかなる型も許さない。
+これは text/plain に曖昧さがないので OK でしょう。
 </para>
 
 <para>
-������
-��permit �ϡإ᡼�����Τ�����٤Ȥ�����̣�Ǥ������⤢�ꤨ�ޤ���
-���Ȥ��� text/plain �Υ᡼���������������Ȥ��ޤ��礦�� 
-ľ��Ū�ˤϡ����Τ褦�ʥ롼���񤯤Ȥ��⤤�ޤ���
+一方、
+「permit は『メール全体を許す』という意味である」説もありえます。
+たとえば text/plain のメールだけを許したいとしましょう。 
+直観的には、次のようなルールを書くとおもいます。
 <screen>
 text/plain	*	permit
 *		*	reject
 </screen>
-������������� permit ��¨ OK �ΰ�̣�Ǥʤ��Ȥ����
+しかし、これは permit が即 OK の意味でないとすると
 <screen>		
 *	*	reject
 </screen>
-�Ȱ��ˤʤäƤ��ޤ��櫓�Ǥ���
-��ä� permit ��
-�֥᡼�����Τ� OK �Ȥ��ƥ롼��ȤξȤ餷��碌�����򤽤��ǽ���ˤ����
-�Ȥ�����̣�˲�ᤷ�ʤ��Ȥ��ޤ�ư��ޤ���
-��äơ����Τ褦�ʥ롼��Ϥ��ꤨ�ʤ����Ȥˤʤ�ޤ���
+と一緒になってしまうわけです。
+よって permit は
+「メール全体を OK としてルールとの照らし合わせ処理をそこで終りにする」
+という意味に解釈しないとうまく動作しません。
+よって、次のようなルールはありえないことになります。
 <screen>
 text/plain 		*		permit
 multipart/mixed		text/plain	permit
@@ -300,23 +300,23 @@ multipart/mixed		text/html	reject
 multipart/mixed		image/*		cutoff
 *			*		permit
 </screen>
-���ꤨ�ʤ��Ȥ����Τϡ����Υ롼��ϼ��Τ褦�˽񤤤Ƥ�Ʊ��������Ǥ���
+ありえないというのは、このルールは次のように書いても同じだからです。
 <screen>
 text/plain 		*		permit
 multipart/mixed		text/html	reject
 multipart/mixed		image/*		cutoff
 *			*		permit
 </screen>
-�Ĥޤ� permit ̿��ǽ����������Ȥ���С�
-multipart ���Ф��Ƥϻ��¾�ȤäƤϤ����ʤ����Ȥˤʤ�ޤ���
-�֥ǥե���Ȥν�����
-��
-��text/plain * ��
-�Τ褦�ʥ롼����Ф��ƤΤ� permit ̿��ϰ�̣������櫓�Ǥ���
+つまり permit 命令で処理が終わるとすれば、
+multipart に対しては事実上使ってはいけないことになります。
+「デフォルトの処理」
+か
+「text/plain * 」
+のようなルールに対してのみ permit 命令は意味があるわけです。
 </para>
 
 <para>
-�ʲ���first match ������ˡ������ͤ��Ƥߤޤ��礦��
+以下、first match を前提に、事例を考えてみましょう。
 </para>
 
 </sect2>
@@ -324,23 +324,23 @@ multipart ���Ф��Ƥϻ��¾�ȤäƤϤ����ʤ����Ȥˤʤ�ޤ���
 
 <sect2>
 	<title>
-	�����������ǥ�: �ǥե���Ȥε�ư
+	ケーススタディ: デフォルトの挙動
 	</title>
 
 <para>
-���ۤΥǥե���ȥ롼��ϡ�
-¾�� header �� text �ե��륿�Ȥ���������ͤ���ȡ֤Ȥꤢ�����̤��פǤ��礦����
+暗黙のデフォルトルールは、
+他の header や text フィルタとの整合性を考えると「とりあえず通す」でしょうか？
 <screen>
 *		*	permit
 </screen>
-����� content filter ��
-�֥롼��򤦤ޤ��񤱤ʤ��פȤ����̤���ͳ�ˤ�äƤ�ٻ������Ǥ��礦��
+これは content filter の
+「ルールをうまく書けない」という別の理由によっても支持されるでしょう。
 </para>
 
 <para>
-�ʤ���
-�ǥե���Ȥε�ư�� reject ���ѹ�����ˤ�
-* * reject ��Ǹ���դ��ä��Ƥ���������
+なお、
+デフォルトの挙動を reject に変更するには
+* * reject を最後に付け加えてください。
 </para>
 
 </sect2>
@@ -348,7 +348,7 @@ multipart ���Ф��Ƥϻ��¾�ȤäƤϤ����ʤ����Ȥˤʤ�ޤ���
 
 <sect2>
 	<title>
-	�����������ǥ�: text/plain (����)�Τߤ����
+	ケーススタディ: text/plain (全体)のみを許可
 	</title>
 
 <para>
@@ -363,35 +363,35 @@ text/plain	*	permit
 
 <sect2>
 	<title>
-	�����������ǥ�: text/plain ������в��Ǥ����
+	ケーススタディ: text/plain があれば何でも許す
 	</title>
 
 <para>
-��text/plain ������в��Ǥ����������ʳ��η��ϵ��ݤ����
-����ϴ�ñ�ʥ롼�뤬�񤱤ʤ���Ǥ���
+「text/plain があれば何でも許し、それ以外の型は拒否する」
+これは簡単なルールが書けない例です。
 <screen>
 text/plain	*		permit
 multipart/*	text/plain	permit
 *		*		reject
 </screen>
-�����������Υ롼��Ǥ�
+しかし、このルールでは
 <screen>
 text/plain + text/plain + text/plain
 </screen>
-�Ǥ⡢
+でも、
 <screen>
 text/plain + text/plain + image/jpeg
 </screen>
-�Ǥ�ɤä��� OK �ˤʤäƤ��ޤ��ޤ���
-����Ǥ��͡�
-��äȤ� not ���ڥ졼��(!)������С����ϲ�ǽ�Ǥ��礦��
+でもどっちも OK になってしまいます。
+だめですね。
+もっとも not オペレータ(!)があれば、解決は可能でしょう。
 <screen>
 text/plain	*		permit
 multipart/*	!text/plain	reject
 multipart/*	text/plain	permit
 *		*		reject
 </screen>
-���֤󡢤��줬���Ԥ���� plain/text �Τߤ��̤��롼����Ȼפ��ޤ���
+たぶん、これが期待される plain/text のみを通すルールだと思います。
 </para>
 
 </sect2>
@@ -399,8 +399,8 @@ multipart/*	text/plain	permit
 
 <sect2>
 	<title>
-	�����������ǥ�: 
-	text/html (����) ����� text/html ��ޤ� multipart ���������
+	ケーススタディ: 
+	text/html (全体) および text/html を含む multipart だけを拒否
 	</title>
 
 <para>
@@ -416,30 +416,30 @@ multipart/*	text/html	reject
 
 <sect2>
 	<title>
-	�����������ǥ�: �ऺ�������㡩
+	ケーススタディ: むずかしい例？
 	</title>
 
 <para>
-����Ϥɤ��Ǥ��礦������ϴ�ñ�ʥ롼�뤬�񤱤ʤ���Ǥ���
+これはどうでしょう？これは簡単なルールが書けない例です。
 <screen>
 text/plain	*		permit
 multipart/*	text/plain	permit
 multipart/*	*		reject
 *		*		reject
 </screen>
-��multipart ����Ȥ� text/plain ����Τߤʤ�᡼��ʤ������
-�Ĥޤꡢ
+「multipart の中身が text/plain からのみなるメールなら許す」
+つまり、
 <screen>
 text/plain + text/plain + text/plain
 </screen>
-�ϵ��Ĥ��ޤ���
-�������ʤ���
+は許可します。
+しかしながら
 <screen>
 text/plain + text/plain + image/jpeg
 text/plain + image/jpeg + text/html
 </screen>
-�����������ܤΥ롼��� permit ����Ƥ��ޤ��ޤ���
-���ޤ��񤱤ʤ���Ǥ���
+これらも二番目のルールで permit されてしまいます。
+うまく書けない例です。
 </para>
 
 </sect2>
@@ -447,32 +447,32 @@ text/plain + image/jpeg + text/html
 
 <sect2>
 	<title>
-	�����������ǥ�: ����ΥХꥨ�������� reject �ǤϤʤ� cutoff
+	ケーススタディ: 前例のバリエーションで reject ではなく cutoff
 	</title>
 
 <para> 
-reject ������� cutoff ��Ȥ�����ΥХꥨ�������Ǥ���
+reject の代わりに cutoff を使う前例のバリエーションです。
 <screen>   
 text/plain	*		permit
 multipart/*	image/*		cutoff
 multipart/*	text/plain	permit
 *		*		reject
 </screen>
-�Ĥޤ�
+つまり
 <screen>
 text/plain + text/plain + text/plain
 </screen>
-�� OK �Ǥ���
-������
+は OK です。
+一方、
 <screen>
 text/plain + text/plain + image/jpeg
 </screen>
-�Υ᡼��� image/jpeg ��ʬ����ޤ�����3�֤�Υ롼��� permit ����ޤ���
-��äȤ⡢��������ʤ�
+のメールは image/jpeg 部分を削りますが、3番めのルールで permit されます。
+もっとも、これだけなら
 <screen>
 text/plain + image/jpeg + text/html
 </screen>
-���̲��ǽ�Ǥ�����
+も通過可能ですか…
 </para>
 
 </sect2>
@@ -480,7 +480,7 @@ text/plain + image/jpeg + text/html
 
 <sect2>
 	<title>
-	�����������ǥ�: ������� cutoff + permit �ˤ���ȡ�
+	ケーススタディ: 前の例で cutoff + permit にすると？
 	</title>
 
 <para>
@@ -491,13 +491,13 @@ multipart/*	image/*		permit
 multipart/*	text/plain	permit
 *		*		reject
 </screen>
-�ʤ顢
+なら、
 <screen>
 text/plain + text/plain + text/plain
 text/plain + text/plain + image/jpeg
 text/plain + text/plain + text/html
 </screen>
-�ɤ�� OK �Ǥ������롼��Υޥå������꤬�ۤʤ�ޤ���
+どれも OK ですが、ルールのマッチする場所が異なります。
 </para>
 
 </sect2>
@@ -507,45 +507,45 @@ text/plain + text/plain + text/html
 
 <sect1 id="internals.filter.mimecomponent.functions">
 	<title>
-	����: mime component filter ��ɬ�פʵ�ǽ�Ȥϡ�
+	議論: mime component filter に必要な機能とは？
 	</title>
 
 <para>
-�ʲ��ϡ�fml-help �̤ͣˤ�륢�󥱡��ȤΤޤȤ�Ǥ���
+以下は、fml-help ＭＬによるアンケートのまとめです。
 </para>
 
 <para>
-��������˽񤯤ȡ�
-���ޤε�ǽ�Ǥ����褦�ǡ�
-content filter �ε����Ȥʤä� cutoff �ε�ǽ�Ϥ⤦���פߤ����Ǥ���
+結論を先に書くと、
+いまの機能でいいようで、
+content filter の起源となった cutoff の機能はもう不要みたいです。
 </para>
 
 <para>
-�ޤ��� content filter �λȤ����򤤤��Ĥ��ͤ��Ƥߤޤ���
+まずは content filter の使い方をいくつか考えてみます。
 <screen>
-(1) text/plain �� multipart �� text/plain �������̤�
-	���� ML �Ǥ� text/plain �ʳ��Υ᡼������פȤ������
-	(ź�եե�����ʤ�ƥ����륹���⤷��ʤ�����ʤ�����)
+(1) text/plain と multipart の text/plain だけは通す
+	○○ ML では text/plain 以外のメールは不要という場合
+	(添付ファイルなんてウィルスかもしれないじゃないか！)
 
-(2) multipart �� text/plain �ʳ�������褦�ʥ᡼��ϵ��ݤ���
-	(ź�եե�����ʤ�ƥ����륹���⤷��ʤ�����ʤ�����)
+(2) multipart で text/plain 以外があるようなメールは拒否する
+	(添付ファイルなんてウィルスかもしれないじゃないか！)
 
-(3) multipart �� text/html ��ʬ����
-	������ html �᡼��
-	���Ĥ��Ǥ� text/plain ���᤹(��ꤹ�������)��
+(3) multipart の text/html 部分を削る
+	いわゆる html メール
+	＃ついでに text/plain に戻す(やりすぎかも…)？
 
-(4) multipart �� image/* ��ʬ��������
-	�����ʤ�ƣ̤ͣ�����ʤ褩
+(4) multipart の image/* 部分だけを削る
+	画像なんてＭＬに送るなよぉ
 
-(5) text/html �Υ᡼��ʤ�� spam �˷�ޤäƤ뤫��ΤƤ�
+(5) text/html のメールなんて spam に決まってるから捨てる
 </screen>
-���󥱡��Ȥη�̤�ޤȤ��ȡ�
-�̾�� (1) �Υ�������¿���Ȥ������ȤǤ��礦��
-���줬���֤Τ褦�Ǥ���
-���Ϥȥݥꥷ��(���Ӥ����Ǥ��뤫�ݤ��ʤ�)�ˤ�äƤϡ�
-(2)�⥢�꤫�⤷��ޤ���
-���Ȥ��м���̤ͣΤ褦�˥᡼��η��򸷤����Ǥ��ʤ��̤ͣϡ�
-���⤽�� mime component filter �� on �ˤǤ��ʤ��Ȼפ��ޤ���
+アンケートの結果をまとめると、
+通常は (1) のケースが多いということでしょう。
+これが定番のようです。
+規模とポリシー(きびしくできるか否かなど)によっては、
+(2)もアリかもしれません。
+たとえば社内ＭＬのようにメールの型を厳しくできないＭＬは、
+そもそも mime component filter を on にできないと思います。
 </para>
 
 </sect1>

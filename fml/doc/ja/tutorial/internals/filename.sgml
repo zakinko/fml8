@@ -5,61 +5,61 @@
 
 <chapter id="filename">
 	<title>
-	[&fml8; �Ǥ�������] �ե�����̾�ˤĤ���
+	[&fml8; での注意点] ファイル名について
 	</title>
 
 <para>
-�ɤ������ʤ�Ȥ��Ȥ�
-�����ޤǤ�����ե�����̾���Ѥ�����������Ū�������Ȥ����äǤ���
-����: fml-devel 205
+どうせやるならとことん。
+ここまできたらファイル名も変える方が建設的だろうという話です。
+参照: fml-devel 205
 </para>
 
 
 
 <sect1 id="filename.basic">
 	<title>
-	�ե�����̾�δ��ܹ���
+	ファイル名の基本構成
 	</title>
 
 <para>
-���ܷ���
+基本形は
 <screen>
-�ե�����̾-���
+ファイル名-役割
 </screen>
-�Ǥ���
-���Ȥ��С������ꥹ�Ȥϼ��Τ褦�ˤʤ�ޤ���
+です。
+たとえば、配送リストは次のようになります。
 <screen>
-recipients-���
-members-���
+recipients-役割
+members-役割
 </screen>
 </para>
 
 <para>
-����������ꥹ�Ȱʳ��ˤ�Ʊ���롼���Ŭ�Ѥ��ޤ���
-���Ȥ���
+さらに配送リスト以外にも同じルールを適用します。
+たとえば
 <screen>
 passwd-admin
 passwd-moderator
 passwd-cgiadmin
 </screen>
-�Ȥ��ä��������Ǥ���
+といったぐあいです。
 </para>
 
 <para>
-�����Ʊ�ͤˡ������ʡ����٤��ߤ��뤴�Ȥ�
+将来も同様に、新たな『役割』を新設するごとに
 <screen>
-members-���
-recipients-���
+members-役割
+recipients-役割
 </screen>
-���뤳�Ȥˤ��ޤ���
-�Ǥ⡢�����Ƥ� recipients-* �ϥ��ߡ��˲᤮�ʤ��ʤ����Ȥ�¿���Ǥ��礦:)
+を作ることにします。
+でも、たいてい recipients-* はダミーに過ぎないないことが多いでしょう:)
 </para>
 
 <para>
-������Ȥ�ʬ���Ƥ���Ĥ��Ǥ�����
-�ºݡ�
-�ɤ�����������Ω�ĤΤ��Ϥ褯�狼��ʤ��Ǥ���
-Ǻ����Ȥ��ϡ�����Ū��������������Ѥ��뤳�Ȥˤ��Ƥ��ޤ���
+一応、使い分けているつもりですが、
+実際、
+どういう場合に役立つのかはよくわからないです。
+悩んだときは、理論的に美しい方を採用することにしています。
 </para>
 
 </sect1>
@@ -67,14 +67,14 @@ recipients-���
 
 <sect1>
 	<title>
-	��: �̤ͣΥ��С��������ԥꥹ��
+	例: ＭＬのメンバー／受信者リスト
 	</title>
 
 <para>
 <screen>
 primary_recipient_maps	=	recipients
 
-# �ߴ����Τ��� actives �򤤤�Ƥ���ޤ�
+# 互換性のため actives をいれてあります
 recipient_maps	=	recipients
 			actives
 </screen>
@@ -82,7 +82,7 @@ recipient_maps	=	recipients
 
 <!--
 <para>
-[TODO] warning �Ф�Ȥ���������Τǡ��ʤ�Ȥ����ʡ������ޤ���
+[TODO] warning 出るところがあるので、なんとかせな、あきません
 </para>
 -->
 
@@ -91,7 +91,7 @@ recipient_maps	=	recipients
 
 <sect1>
 	<title>
-	��: ��⡼�ȴ����ԤΥꥹ��
+	例: リモート管理者のリスト
 	</title>
 
 <para>
@@ -106,7 +106,7 @@ members-admin
 
 <sect1>
 	<title>
-	��ǥ졼���Υꥹ��
+	モデレータのリスト
 	</title>
 
 
@@ -123,7 +123,7 @@ members-moderator
 
 <sect1>
 	<title>
-	��⡼�ȴ����ԤΥѥ����
+	リモート管理者のパスワード
 	</title>
 
 
@@ -135,14 +135,14 @@ etc/passwd-admin
 
 <warning>
 <para>
-4.0 �Ǥ� etc/passwd �Ǥ�����
+4.0 では etc/passwd でした。
 </para>
 
 <para>
-�ѥ����ǧ�ڰʳ��ξ��⤢������Τǡ�
-�������
-�֥ե�����̾-����
-̾�ˤ��ޤ�����
+パスワード認証以外の場合もあり得るので、
+きちんと
+「ファイル名-役割」
+名にしました。
 </para>
 </warning>
 
@@ -153,10 +153,10 @@ etc/passwd-admin
 
 <!--
 
-[�ҥ��ȥ�]
+[ヒストリ]
 
    01_RFC_FILENAME.txt,v 1.2 2002/08/21 15:30:25 fukachan Exp
 
-���
+より
 
 -->

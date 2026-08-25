@@ -5,28 +5,28 @@
 
 <chapter id="overview.fml">
 	<title>
-	&fml8; �γ���
+	&fml8; の概要
 	</title>
 
 
 <para>
-�ʤ���&fml4; �� &fml8; ��������ˤĤ��Ƥξܺ٤ϡ�
+なお、&fml4; と &fml8; の相違点についての詳細は、
 <link linkend="changes">
 <xref linkend="changes">
 </link>
-�򻲾Ȥ��Ʋ�������
+を参照して下さい。
 </para>
 
 
 <!-- ======================================================== -->
 <sect1 id="overview.fml8">
 	<title>
-	&fml8; �ǽ���뤳��
+	&fml8; で出来ること
 	</title>
 
 <para>
-&fml4; �κƼ����ˤ����äƤλ���ϱۤ����Ȼפ��ޤ���
-��˥塼��Ϣ���ܰʳ��� RC (Release Candidate) �ε�ʬ�Ǥ���
+&fml4; の再実装にあたっての山場は越えたと思います。
+メニュー関連項目以外は RC (Release Candidate) の気分です。
 </para>
 
 <para>
@@ -35,12 +35,12 @@
 
     <listitem>
 	<para>
-	����ե�����������������ʤ�ޤ�����
-	���٤�
+	設定ファイル形式が新しくなりました。
+	今度は
 	<link linkend="internal.config.cf">
-	Postfix ��������ե�����
+	Postfix 風の設定ファイル
 	</link>
-	�Ǥ���
+	です。
 	</para>
     </listitem>
 
@@ -48,46 +48,46 @@
     <listitem>
 	<para>
 	<link linkend="usage.onhost">
-	�������ǤΥ��ޥ��(makefml �ʤ����� fml)�ˤ�����
+	シェル上でのコマンド(makefml なしいは fml)による操作
 	</link>
-	�� &fml4; ��Ʊ�ͤǤ�:
-		�̤ͣκ���/�����
-		���С�����Ͽ/���/�ѹ�(chaddr)��
-		��⡼�ȴ����Ԥ���Ͽ/�����
-		�����򸫤롢
-		���С��ꥹ�Ȥ򸫤롢
-		¾���¹ԤǤ��ޤ���		
+	は &fml4; と同様です:
+		ＭＬの作成/削除、
+		メンバーの登録/削除/変更(chaddr)、
+		リモート管理者の登録/削除、
+		ログを見る、
+		メンバーリストを見る、
+		他が実行できます。		
 	</para>
 
 	<para>
-	CUI �λȤ�����������ˤĤ��Ƥ�
+	CUI の使い方の相違点については
 	<link linkend="changes.cui">
-	��<xref linkend="changes.cui">��
+	『<xref linkend="changes.cui">』
 	</link>
-	�򻲾Ȥ��Ʋ�������
-	�ʤ���CUI �ˤ�������ѹ��ϡ��ޤ�ͽ��Ū���ʳ��Ǥ�����ư���ޤ���
+	を参照して下さい。
+	なお、CUI による設定変更は、まだ予備的な段階ですが、動きます。
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	GUI (CGI) �ˤ�����:
-		�̤ͣκ���/�����
-		���С�����Ͽ/���/�ѹ�(chaddr)��
-		��⡼�ȴ����Ԥ���Ͽ/�����
-		�����򸫤롢
-		���С��ꥹ�Ȥ򸫤롣
-		����ե�������Խ���ǽ����������Ǥ���
+	GUI (CGI) による操作:
+		ＭＬの作成/削除、
+		メンバーの登録/削除/変更(chaddr)、
+		リモート管理者の登録/削除、
+		ログを見る、
+		メンバーリストを見る。
+		設定ファイルの編集機能が実装途中です。
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	������
-	�إå��ν񤭴�����
-	�ե��륿( 4.0 �� Envelope Filter �� Content Filter ������������ )��
+	配送、
+	ヘッダの書き換え、
+	フィルタ( 4.0 の Envelope Filter と Content Filter に相当するもの )。
 	</para>
     </listitem>
 
@@ -95,21 +95,21 @@
 
 	<para>
 	<link linkend="usage.user">
-	���ޥ�ɥ᡼��(���̥桼��)
+	コマンドメール(一般ユーザ)
 	</link>
-	���С�����Ͽ/���/�ѹ�(chaddr)��
-	���ޥ�򸫤롢
-	���ε�������󤻤롣
+	メンバーの登録/削除/変更(chaddr)、
+	サマリを見る、
+	過去の記事を取り寄せる。
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	���ޥ�ɥ᡼��(��⡼�ȴ�����):
-		���С�����Ͽ/���/�ѹ�(chaddr)��
-		��⡼�ȴ����Ԥ���Ͽ/�����
-		�����򸫤롣
+	コマンドメール(リモート管理者):
+		メンバーの登録/削除/変更(chaddr)、
+		リモート管理者の登録/削除、
+		ログを見る。
 	</para>
     </listitem>
 
@@ -117,48 +117,48 @@
     <listitem>
 	<para>
 	<link linkend="error.internal">
-	���顼�᡼��μ�ư����
+	エラーメールの自動解析
 	</link>
-	�����顼�ˤʤ륢�ɥ쥹�μ�ư�����
+	、エラーになるアドレスの自動削除。
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	SPAM �᡼��γ�Υ (2008/08/17 �ʹ�)
+	SPAM メールの隔離 (2008/08/17 以降)
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	IPv6 �ˤ��������
+	IPv6 による配送。
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	����å����ץ����ƥ�(CUI �� CGI ��ޤ�):
-	���١���ä��ΤǤ������ǽ�ΥС������Ϻ�����졢
-	2004/03 ������ľ������ޤ�����
+	スレッド追跡システム(CUI と CGI を含む):
+	一度、作ったのですが、最初のバージョンは削除され、
+	2004/03 に総書き直しされました。
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	������ HTML ��(�ǥե���Ȥ� HTML �Ǥ���):
-	�ǥե���ȤǺ�äƤ��ޤ������ӡ�
-	fmlhtmlify ����� makefml �� HTML �����ޥ�ɤ⤢��ޤ���
+	記事の HTML 化(デフォルトで HTML 版も作る):
+	デフォルトで作っています。別途、
+	fmlhtmlify および makefml に HTML 化コマンドもあります。
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	MTA ����ư����ᥤ��Υץ������:
+	MTA が起動するメインのプログラム:
 	distribute command error
 	</para>
     </listitem>
@@ -166,7 +166,7 @@
 
     <listitem>
 	<para>
-	������ٱ礹��桼�ƥ���ƥ�:
+	管理を支援するユーティリティ:
 	fmladdr
 	fmlailas
 	fmlconf
@@ -179,22 +179,22 @@
 
     <listitem>
 	<para>
-	&fml4; ���ߥ�졼�����:
-	&fml4; �� fml.pl �� &fml8; �� fml.pl �����촹���������
-	&fml8; �˰ܹԤǤ���褦�ˤ��ޤ�����
+	&fml4; エミュレーション:
+	&fml4; の fml.pl と &fml8; の fml.pl を入れ換えるだけで
+	&fml8; に移行できるようにしました。
 	</para>
 
 	<para>
-	����: ����������ɽŪ�ʵ�ǽ�����ǡ�
-	����ǽ���Ф���ߴ���������櫓�ǤϤ���ޤ���
+	注意: ただし、代表的な機能だけで、
+	全機能に対する互換性があるわけではありません。
 	</para>
     </listitem>
 
 
     <listitem>
 	<para>
-	2004 �ưʹ�: �������塼���������ƥ�ˤ�����������
-	���¾� &fml8; �� MTA �Ǥ���
+	2004 夏以降: 配送キュー管理システムにより再送処理。
+	事実上 &fml8; は MTA です。
 	</para>
     </listitem>
 
@@ -202,11 +202,11 @@
     <listitem>
 	<para>
 	<link linkend="module.io.adapter">
-	��ݲ� IO ��
+	抽象化 IO 層
 	</link>
-	���С��ꥹ�Ȥʤɤμ�갷���ˤ����ơ�
-	�ե����롢/etc/group�� NIS��MySQL��PostgreSQL��LDAP �ʤɤ�
-	Ʊ��ˤ��Ĥ����ޤ�(����ե�������ɲ������ɬ��)��
+	メンバーリストなどの取り扱いにおいて、
+	ファイル、/etc/group、 NIS、MySQL、PostgreSQL、LDAP などを
+	同列にあつかいます(設定ファイルに追加設定は必要)。
 	</para>
     </listitem>
     </itemizedlist>
@@ -218,36 +218,36 @@
 <!-- ======================================================== -->
 <sect1 id="overview.fml8.install">
 	<title>
-	���󥹥ȡ����Ȥγ�ά
+	インストール作業の概略
 	</title>
 
 
 <important>
 
 <para>
-���󥹡�����ˡ��
-GNU autoconf ��Ȥ��ǥե����ȥ����������(configure ������ make)
-�ʤ�ΤȤʤäƤ��ޤ���
-&fml4; �ˤ��ޤ���Ƥ��ޤ���
-�Ǥ�����OS ��°�Υѥå����������ƥ�Ȥο������Ϲ⤯�ʤ�ޤ�����
+インスール方法は
+GNU autoconf を使うデファクトスタンダード(configure そして make)
+なものとなっています。
+&fml4; にあまり似ていません。
+ですが、OS 附属のパッケージシステムとの親和性は高くなりました。
 </para>
 
 <para>
-&fml8; �Υ��󥹥ȡ���ˤ�������������(&fml4;�Ȥ������)�ϡ�
-��root �Ǥκ�ȡס�
-��configure �λ��ѡס�
-��/usr/local/etc/fml/ �ʲ��ˤ���ե�������Խ���
-�Ǥ���
+&fml8; のインストールにおける主な注意点(&fml4;との相違点)は、
+「root での作業」、
+「configure の使用」、
+「/usr/local/etc/fml/ 以下にあるファイルの編集」
+です。
 <footnote>
 <para>
-&fml8; ��
+&fml8; の
 /usr/local/etc/fml/
-�ʲ��Υե����뷲��
-&fml4; ��
-/usr/local/fml/.fml �ʲ��Υե����뷲
-�����
+以下のファイル群は
+&fml4; の
+/usr/local/fml/.fml 以下のファイル群
+および
 /usr/local/etc/fml/site_default_config.ph
-�ʤɤ��������Ƥ��ޤ�����ɬ��������а��б����Ƥ���櫓�ǤϤ���ޤ���
+などに相当していますが、必ずしも一対一対応しているわけではありません。
 </para>
 </footnote>
 </para>
@@ -256,9 +256,9 @@ GNU autoconf ��Ȥ��ǥե����ȥ����������(configure ������ make)
 
 
 <para>
-���ơ����Ĥ�Τ褦�� 
-Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
-���󥹥ȡ���Τ����ޤ���ή��ϼ��Τ褦�ˤʤ�ޤ���
+さて、いつものように 
+Unix 上で elena ＭＬ(elena@fml.org)を作成するケースを例にとりましょう。
+インストールのおおまかな流れは次のようになります。
 </para>
 
 
@@ -266,7 +266,7 @@ Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
    <listitem>
 	<para>
 	<link linkend="download">
-	�����������������ɤ��ơ�Ÿ�����Ʋ�������
+	ソースをダウンロードして、展開して下さい。
 	</link>
 	</para>
    </listitem>
@@ -274,16 +274,16 @@ Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
    <listitem>
 	<para>
 	<link linkend="install.fml.unix">
-	�桼�� root �ǥ��󥹥ȡ���򤷤ޤ���
+	ユーザ root でインストールをします。
 	</link>
-	�桼�� root �ˤʤä��顢
-	�ޤ��ϥ桼�� fml �ȥ��롼�� fml ��������ޤ���
-	���θ塢
+	ユーザ root になったら、
+	まずはユーザ fml とグループ fml を作成します。
+	その後、
 	<link linkend="install.fml.unix.configure">
 	configure
 	</link>
-	���θ�
-	make install ��¹Ԥ��Ʋ�������
+	その後
+	make install を実行して下さい。
 <screen>
 % su root
 # groupadd fml
@@ -294,24 +294,24 @@ Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
 	</para>
 
 	<para>
-	�ǥե���ȤǤ� /usr/local �ǥ��쥯�ȥ�ʲ���
-	4.4 BSD ���Υ��֥ǥ��쥯�ȥ꤬����ޤ���
-	�ǥ��쥯�ȥ�ѥ���
+	デフォルトでは /usr/local ディレクトリ以下に
+	4.4 BSD 風のサブディレクトリが作られます。
+	ディレクトリパスは
 	<link linkend="install.fml.unix.configure">
-	configure �Υ��ץ����
+	configure のオプション
 	</link>
-	���ѹ���ǽ�Ǥ���
+	で変更可能です。
 	</para>
 
 	<para>
-	�ǥե���ȤǤϡ�
-	�ᥤ��� MTA ����ƤФ��ץ������� /usr/local/libexec/fml/ �ʲ��ء�
-	makefml �� fmldoc �ʤ�
-	fml �ǻϤޤ�桼�ƥ���ƥ��ץ������� /usr/local/bin �ʲ��ˡ�
-	���󥹥ȡ��뤷�ޤ���
-	�¤ΤȤ�����
-	������
-	/usr/local/libexec/fml �β��μ��Τ�ƤӽФ�ñ�ʤ� wrapper �Ǥ���
+	デフォルトでは、
+	メインの MTA から呼ばれるプログラムを /usr/local/libexec/fml/ 以下へ、
+	makefml や fmldoc など
+	fml で始まるユーティリティプログラムを /usr/local/bin 以下に、
+	インストールします。
+	実のところ、
+	これらは
+	/usr/local/libexec/fml の下の実体を呼び出す単なる wrapper です。
 	</para>
    </listitem>
 
@@ -319,26 +319,26 @@ Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
    <listitem>
 	<para>
 	<link linkend="guide.newml">
-	�桼�� fml �� elena �̤ͣ��롣
+	ユーザ fml で elena ＭＬを作る。
 	</link>
 <screen>
 % su fml
 % makefml newml elena
 </screen>
-�⤷���� fml ���ޥ��(���)��Ȥä�
+もしくは fml コマンド(後述)を使って
 <screen>
 % su fml
 % fml elena newml
 </screen>
-�Ǥ�Ʊ����̣�Ǥ�(����: fml ���ޥ�ɤ� &fml8; �ˤ�������ޤ���)��
+でも同じ意味です(注意: fml コマンドは &fml8; にしかありません)。
 	</para>
    </listitem>
 
 
    <listitem>
 	<para>
-	MTA ���� &fml8; �������ץ������ʤɤ�ư���뤿��ˡ�
-	MTA ������򤷤Ƥ���������
+	MTA から &fml8; の配送プログラムなどを起動するために、
+	MTA の設定をしてください。
 	</para>
    </listitem>
 
@@ -346,7 +346,7 @@ Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
    <listitem>
 	<para>
 	<link linkend="test">
-	�ͣ� ��ư��ƥ��Ȥ򤷤Ƥ���������
+	ＭＬ の動作テストをしてください。
 	</link>
 	</para>
    </listitem>
@@ -355,7 +355,7 @@ Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
    <listitem>
 	<para>
 	<link linkend="guide.config.cf">
-	�ͣ� �Υ������ޥ����򤷤Ƥ���������
+	ＭＬ のカスタマイズをしてください。
 	</link>
 	</para>
    </listitem>
@@ -364,8 +364,8 @@ Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
 
 <warning>
 <para>
-&fml4; �Ȱۤʤꡢ
-�桼�� root �ǥ��󥹥ȡ����Ȥ򤹤뤳�Ȥ����դ��Ʋ�������
+&fml4; と異なり、
+ユーザ root でインストール作業をすることに注意して下さい。
 </para>
 </warning>
 
@@ -375,62 +375,62 @@ Unix ��� elena �ͣ�(elena@fml.org)��������륱��������ˤȤ�ޤ��礦��
 <!-- ============================================================= -->
 <sect1 id="guide.newml">
 	<title>
-	�̤ͣ���
+	ＭＬを作る
 	</title>
 
 <para>
-makefml ���ޥ�ɤ�Ȥäƣ̤ͣ�������ޤ���
-�ǥե���ȡ��ɥᥤ��(��: fml.org)�ξ�硢
-makefml �λȤ����� &fml4; �λ���Ʊ�ͤǤ���
-elena@fml.org �̤ͣ���ˤ�
+makefml コマンドを使ってＭＬを作成します。
+デフォルト・ドメイン(例: fml.org)の場合、
+makefml の使い方は &fml4; の時と同様です。
+elena@fml.org ＭＬを作るには
 <screen>
 % su fml
 % makefml newml elena
 </screen>
-�Ȥ��ޤ���
-�ܤ�����
+とします。
+詳しくは
 <link linkend="setup.newml">
 <xref linkend="setup.newml">
 </link>
-�򻲾Ȥ��Ƥ���������
+を参照してください。
 </para>
 
 <para>
-������
+一方、
 <link linkend="virtualdomain">
-�С������ɥᥤ��(nuinui.net)
+バーチャルドメイン(nuinui.net)
 </link>
-�ξ��ϡ��̤ͣΥ��ɥ쥹�򤹤٤ƻ��ꤷ�Ʋ�������
-���Ȥ��� elena@nuinui.net ������ϡ����Τ褦�˼¹Ԥ��ޤ���
+の場合は、ＭＬのアドレスをすべて指定して下さい。
+たとえば elena@nuinui.net を作る場合は、次のように実行します。
 <screen>
-���
+初回
 % su root
 % makefml newdomain nuinui.net /some/where/nuinui.net
 % su fml
 % makefml newml elena@nuinui.net
 
-����ܰʹ�
+二回目以降
 % su fml
 % makefml newml elena@nuinui.net
 </screen>
 </para>
 
 <para>
-�Ƕ�Ǥϡ���ͤ�ʣ���Υɥᥤ�����Ĥ��ȤϤ���դ�Ƥ��ޤ��Τǡ�
-���̤ͣ�С������ɥᥤ��Ȥ��ƺ�������ۤ�����
-���촶�Τ��뱿�������ˤʤ�Ȼפ��ޤ���
-�º� fml.org ���Ȥ⤽�Τ褦�ʱ��������Ǥ���
+最近では、一人で複数のドメインを持つことはありふれていますので、
+全ＭＬをバーチャルドメインとして作成するほうが、
+統一感のある運用方式になると思われます。
+実際 fml.org 自身もそのような運用方式です。
 </para>
 
 <warning>
 <para>
-�С������ɥᥤ��(nuinui.net)�Σ̤ͣ����硢�ǽ�ΰ���ܤˤϡ�
-�֤��Υɥᥤ���Ȥ��פ�������(���ޤ��ʤ�?)��ɬ�פǤ���
-���路����
+バーチャルドメイン(nuinui.net)のＭＬを作る場合、最初の一回目には、
+「そのドメインを使う」ための宣言(おまじない?)が必要です。
+くわしくは
 <link linkend="virtualdomain">
 <xref linkend="virtualdomain">
 </link>
-�򻲾Ȥ��Ʋ�������
+を参照して下さい。
 </para>
 </warning>
 
@@ -440,18 +440,18 @@ elena@fml.org �̤ͣ���ˤ�
 <!-- ============================================================= -->
 <sect1 id="guide.subscribe">
 	<title>
-	�̤ͣΥ��С�����Ͽ����
+	ＭＬのメンバーを登録する
 	</title>
 
 <para>
-�ǥե���ȤΥɥᥤ��(��: fml.org)�ξ��ϡ�
+デフォルトのドメイン(例: fml.org)の場合は、
 <screen>
 % su fml
 % makefml subscribe elena rudo@nuinui.net
 </screen>
-�ǣϣˤǤ�(elena �����ǣϣˡ��Ĥޤ� @fml.org �ʤ��Ǥ�ϣ�)��
-�������С������ɥᥤ��(nuinui.net)�ξ��ϡ�
-�̤ͣΥ��ɥ쥹�򤹤٤ƻ��ꤷ�Ƥ���������
+でＯＫです(elena だけでＯＫ、つまり @fml.org なしでもＯＫ)。
+一方、バーチャルドメイン(nuinui.net)の場合は、
+ＭＬのアドレスをすべて指定してください。
 <screen>
 % su fml
 % makefml subscribe elena@nuinui.net fukachan@sapporo.iij.ad.jp
@@ -464,18 +464,18 @@ elena@fml.org �̤ͣ���ˤ�
 <!-- ============================================================= -->
 <sect1 id="guide.unsubscribe">
 	<title>
-	�̤ͣΥ��С�����������
+	ＭＬのメンバーから削除する
 	</title>
 
 <para>
-�ǥե���ȤΥɥᥤ��(��: fml.org)�ξ��ϡ�
+デフォルトのドメイン(例: fml.org)の場合は、
 <screen>
 % su fml
 % makefml unsubscribe elena rudo@nuinui.net
 </screen>
-�Ǥ��ޤ��ޤ���
-�������С������ɥᥤ��(nuinui.net)�ξ��ϡ�
-���ɥ쥹��ɥᥤ��ޤǴޤ�Ƥ��٤ƻ��ꤷ�Ƥ���������
+でかまいません。
+一方、バーチャルドメイン(nuinui.net)の場合は、
+アドレスをドメインまで含めてすべて指定してください。
 <screen>
 % su fml
 % makefml unsubscribe elena@nuinui.net fukachan@sapporo.iij.ad.jp
@@ -488,32 +488,32 @@ elena@fml.org �̤ͣ���ˤ�
 <!-- ============================================================= -->
 <sect1 id="guide.config.cf">
 	<title>
-	�ͣ�����Υ������ޥ���
+	ＭＬ設定のカスタマイズ
 	</title>
 
 <warning>
 <para>
-makefml config �ϼ�������ǡ��ޤ����ޥ����Ǥ��������ʤ�����
-���ޤϡ��ޤ� config.cf �ե�������ư���Խ����Ʋ�������
+makefml config は実装途中で、まだイマイチです。ごめんなさい。
+いまは、まだ config.cf ファイルを手動で編集して下さい。
 </para>
 </warning>
 
 
 <sect2>
 	<title>
-	���Υۥ��ȶ��̤�����
+	そのホスト共通の設定
 	</title>
 
 <para>
 /usr/local/etc/fml/site_default_config.cf
-�ϡ����Υۥ��Ȥ�ư�� &fml8; ���٤Ƥ˱ƶ���Ϳ���ޤ���
+は、このホストで動く &fml8; すべてに影響を与えます。
 <footnote>
 <para>
-����� &fml4; �� site_init.ph �����������ΤǤ���
+これは &fml4; の site_init.ph に相当するものです。
 </para>
 
 <para>
-&fml4; �Ǥϼ��Τ褦������ե�������ɤ߹���Ǥ����ޤ���
+&fml4; では次のように設定ファイルを読み込んでいきます。
 <screen>
 InitConfig {
    SetDefaults { ... };
@@ -526,29 +526,29 @@ InitConfig {
    }
 }
 </screen>
-&fml8; �Ǥ�
+&fml8; では
 <screen>
 /usr/local/etc/fml/$fml_version/default_config.cf
 /usr/local/etc/fml/site_default_config.cf
 /usr/local/etc/fml/domains/$DOMAIN/default_config.cf
 /var/spool/ml/elena/config.cf
 </screen>
-�Τ褦�ˤʤäƤ��ޤ���
-site_force.ph ���б�����ե����뤬����ޤ��󤬡�
-���äƤ⤤�ʤ��Τǡ�
-���ͽ��Ϥ���ޤ���
+のようになっています。
+site_force.ph に対応するファイルがありませんが、
+困ってもいないので、
+作る予定はありません。
 </para>
 
 </footnote>
 </para>
 
 <para>
-site_default_config.cf �Υե����ޥåȤϡ�config.cf (���)��Ʊ�ͤǡ�
-����Ǥ����ѿ��� config.cf ��Ʊ���Ǥ���
+site_default_config.cf のフォーマットは、config.cf (後述)と同様で、
+指定できる変数も config.cf と同じです。
 <link linkend="list.variables.by.alphabeticalorder">
-���ѿ��Υꥹ��
+全変数のリスト
 </link>
-�⻲�Ȥ��Ʋ�������
+も参照して下さい。
 </para>
 
 </sect2>
@@ -556,49 +556,49 @@ site_default_config.cf �Υե����ޥåȤϡ�config.cf (���)��Ʊ�ͤǡ�
 
 <sect2>
 	<title>
-	elena �̤ͣ�����
+	elena ＭＬの設定
 	</title>
 
 <para>
-elena �̤ͣ�����Υ������ޥ����� 
+elena ＭＬの設定のカスタマイズは 
 /var/spool/ml/elena/config.cf
-���Խ����뤳�ȤǹԤʤ��ޤ���
+を編集することで行ないます。
 <link linkend="internal.config.cf">
-config.cf �Υե����ޥåȤ� Postfix ������ե�����
+config.cf のフォーマットは Postfix の設定ファイル
 </link>
-�Ȥ��ʤ���Ƥ��ޤ�
-(&fml4; �� config.ph ���� &fml4; �� cf �ˤ��ᤤ�Ǥ�����
-�ե����ޥåȤ��㤦���Ȥ��Ѥ��Ϥʤ�)��
+とかなり似ています
+(&fml4; の config.ph よりは &fml4; の cf にやや近いですが、
+フォーマットが違うことに変わりはない)。
 </para>
 
 <para>
-&fml8; �� HOOK (perl script)��񤯾��ϡ�
-(perl script �ե�����Τ褦��) 
+&fml8; で HOOK (perl script)を書く場合は、
+(perl script ファイルのように) 
 /var/spool/ml/elena/config.cf 
-�ե������ =cut �԰ʲ��˽񤤤Ʋ�������
+ファイルの =cut 行以下に書いて下さい。
 </para>
 
 <para>
-=cut �Ԥ���ˤ�����( �ѿ� = �� )��񤤤Ʋ�������
-Ŭ����ɬ�פʹ��ܤ������ɲä��Ʋ�������
-���ꤷ�ʤ����ϥǥե�����ͤ��Ȥ��ޤ���
-�ǥե�����ͤϥ��󥹥ȡ��뤷���С������˰�¸���Ƥ��ꡢ
+=cut 行より上には設定( 変数 = 値 )を書いて下さい。
+適宜、必要な項目だけを追加して下さい。
+指定しない場合はデフォルト値が使われます。
+デフォルト値はインストールしたバージョンに依存しており、
 <screen>
-/usr/local/etc/fml/defaults/�С�������ֹ�/default_config.cf
+/usr/local/etc/fml/defaults/バージョン番号/default_config.cf
 </screen>
-�Ȥ����ե���������������Ƥ��ޤ���
-����� perl �Υ饤�֥�꤬ /usr/local/lib/perl/5.00503/ �Τ褦��
-�С�������ֹ��դΥǥ��쥯�ȥ���֤����ΤȾ������Ƥ��ޤ���
+というファイル中で定義されています。
+これは perl のライブラリが /usr/local/lib/perl/5.00503/ のように
+バージョン番号付のディレクトリに置かれるのと少し似ています。
 </para>
 
 <para>
-�ޤ����饤�֥��ʤɤΥ��󥹥ȡ������ fml �ΥС�����󤴤Ȥ�
-�̤Υǥ��쥯�ȥ�ˤʤäƤ��뤳�Ȥ����դ��Ʋ�������
+また、ライブラリなどのインストール先も fml のバージョンごとに
+別のディレクトリになっていることに注意して下さい。
 <link linkend="bootloader">
-���λ��Ȥ�
+この仕組み
 </link>
-�Τ������ǥ��åץ��졼�ɤ��Ƥ�ֻ��˥����󥰥졼�ɤǤ��ޤ���
-����� &fml8; ����ħ�Ǥ���
+のおかげでアップグレードしても瞬時にダウングレードできます。
+これは &fml8; の特徴です。
 </para>
 
 </sect2>

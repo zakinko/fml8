@@ -4,20 +4,20 @@
 
 <chapter id="merge">
 	<title>
-	TODO: fml 4.0 ���� 8.0 �ؤθ�Ƥ����
+	TODO: fml 4.0 から 8.0 への検討事項
 	</title>
 
 <sect1 id="merge.removed">
 	<title>
-	������Ƥ褤����
+	削除してよいか？
 	</title>
 
 <sect2>
-	<title> ���ޥ�ɴط� </title>
+	<title> コマンド関係 </title>
 
 
 <para>
-���ޥ��
+コマンド
 
 	status
 	stat
@@ -26,7 +26,7 @@
 	members
 	actives
 
-�Ϥʤ��Ƥ褤?
+はなくてよい?
 </para>
 
 
@@ -36,13 +36,13 @@
 	USE_WARNING
 	COMMAND_ONLY_SERVER
 </screen>
-�Ϻ�������ɤ���
+は削除して良い？
 </para>
 
 
 </sect2>
 <sect2>
-	<title> ��졼��� </title>
+	<title> りれーもの </title>
 
 
 <para>
@@ -51,13 +51,13 @@
 	RELAY_HACK
 	CF_DEF
 </screen>
-�Ϻ�������ɤ���
+は削除して良い？
 </para>
 
 
 </sect2>
 <sect2>
-	<title> �إå������ </title>
+	<title> ヘッダの操作 </title>
 
 
 <para>
@@ -82,7 +82,7 @@
 
 
 <para>
-����
+全部
 <screen>
 	USE_WHOIS:
 	DEFAULT_WHOIS_SERVER:
@@ -94,50 +94,50 @@
 </sect2>
 
 <sect2>
-	<title> MIME ��Ϣ </title>
+	<title> MIME 関連 </title>
 
 
 <para>
 USE_MIME
-�ϥǥե���ȤʤΤǡ��ѿ�����ɬ�ס�
+はデフォルトなので、変数は不必要。
 </para>
 
 
 <para>
 MIME_DECODED_ARTICLE
-�Ϻ��
+は削除
 </para>
 
 </sect2>
 
 <sect2>
-	<title> ���å� </title>
+	<title> ロック </title>
 
 
 <para>
-���å��� flock(2) �Τߡ�
+ロックは flock(2) のみ。
 </para>
 
 
 <para>
 MAX_TIMEOUT
-�� link(2) �١����Υ��å��ǻȤ��ѿ��ʤΤǺ����
+は link(2) ベースのロックで使う変数なので削除。
 </para>
 
 </sect2>
 
 
 <sect2>
-	<title> ����¾ </title>
+	<title> その他 </title>
 
 
 <para>
-	5.0 �Ǥ� ReloadMySelf() �ä�ɬ�פʤ��褦�ʵ������뤬��
+	5.0 では ReloadMySelf() って必要ないような気がするが…
 </para>
 
 <para>
-	RCS �Хå����åס�
-		CVS �Τߥ��ݡ��Ȥ���
+	RCS バックアップ？
+		CVS のみサポートか？
 </para>
 
 <para>
@@ -215,7 +215,7 @@ NOT_USE_UNIX_FROM_LOOP_CHECK:  0
 
 <sect1 id="merge.functions">
 	<title>
-	�ؿ��ط�
+	関数関係
 	</title>
 
 

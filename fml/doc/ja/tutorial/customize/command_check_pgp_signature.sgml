@@ -5,7 +5,7 @@
 
 <sect1 id="config.command.mail.check.pgp">
 	<title>
-	�����������ǥ�: PGP/GPG �ǥ��ޥ�ɥ᡼���ǧ�ڤ���
+	ケーススタディ: PGP/GPG でコマンドメールを認証する
 	</title>
 
 <qandaset>
@@ -14,7 +14,7 @@
 
 <question>
 <para>
-PGP/GPG ��(�桼���⡼�ɤ�)���ޥ�ɥ᡼���ǧ�ڤ�����
+PGP/GPG で(ユーザモードの)コマンドメールを認証したい
 </para>
 </question>
 
@@ -25,22 +25,22 @@ PGP/GPG ��(�桼���⡼�ɤ�)���ޥ�ɥ᡼���ǧ�ڤ�����
 command_mail_restrictions	=	check_pgp_signature
 					isolate
 
-��: ������ reject �Ǥ�����
-fml8 2008/08/17 �ʹߤΥС������Ǥ� isolate (SPAM �γ�Υ)���侩�Ǥ���
+注: 以前は reject でした。
+fml8 2008/08/17 以降のバージョンでは isolate (SPAM の隔離)が推奨です。
 </screen>
-���� 
+鍵は 
 fmlgpg fmlgpgv fmlpgp fmlpgp5 fmlpgpe fmlpgpk fmlpgps fmlpgpv
-���ޥ�ɤ�Ȥä����ꤷ�Ʋ�������
+コマンドを使って設定して下さい。
 <screen>
-��: �ͣ�̾�ѤΥ�������������
+例: ＭＬ名用のキーを生成する
 
-% fmlpgp --command-mail-auth �ͣ�̾ -kg
+% fmlpgp --command-mail-auth ＭＬ名 -kg
 
 </screen>
 <link linkend="config.post.check.pgp">
 <xref linkend="config.post.check.pgp">
 </link>
-�򻲹ͤˤ��Ʋ�������
+を参考にして下さい。
 </para>
 </answer>
 
@@ -51,7 +51,7 @@ fmlgpg fmlgpgv fmlpgp fmlpgp5 fmlpgpe fmlpgpk fmlpgps fmlpgpv
 
 <question>
 <para>
-PGP/GPG �� admin ���ޥ�ɥ᡼���ǧ�ڤ�����
+PGP/GPG で admin コマンドメールを認証したい
 </para>
 </question>
 
@@ -62,22 +62,22 @@ PGP/GPG �� admin ���ޥ�ɥ᡼���ǧ�ڤ�����
 admin_command_mail_restrictions	=	check_pgp_signature
 					isolate
 
-��: ������ reject �Ǥ�����
-fml8 2008/08/17 �ʹߤΥС������Ǥ� isolate (SPAM �γ�Υ)���侩�Ǥ���
+注: 以前は reject でした。
+fml8 2008/08/17 以降のバージョンでは isolate (SPAM の隔離)が推奨です。
 </screen>
-���� 
+鍵は 
 fmlgpg fmlgpgv fmlpgp fmlpgp5 fmlpgpe fmlpgpk fmlpgps fmlpgpv
-���ޥ�ɤ�Ȥä����ꤷ�Ʋ�������
+コマンドを使って設定して下さい。
 <screen>
-��: �ͣ�̾�ѤΥ�������������
+例: ＭＬ名用のキーを生成する
 
-% fmlpgp --admin-command-mail-auth �ͣ�̾ -kg
+% fmlpgp --admin-command-mail-auth ＭＬ名 -kg
 
 </screen>
 <link linkend="config.post.check.pgp">
 <xref linkend="config.post.check.pgp">
 </link>
-�򻲹ͤˤ��Ʋ�������
+を参考にして下さい。
 </para>
 </answer>
 

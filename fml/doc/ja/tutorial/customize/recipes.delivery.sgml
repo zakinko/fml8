@@ -9,56 +9,56 @@
 
 <question>
 <para>
-MAINTAINER �� elena-admin �ʳ��ˤ�������
+MAINTAINER を elena-admin 以外にしたい。
 </para>
 </question>
 
 <answer>
 <para>
-config.cf �� maintainer �ѿ������ꤷ�Ʋ�������
+config.cf で maintainer 変数を設定して下さい。
 <screen>
-maintainer = ���ɥ쥹
+maintainer = アドレス
 
 [EXAMPLE]
 
 maintainer = admin@example.co.jp
 </screen>
-�������
-���ꤹ�륢�ɥ쥹( admin@example.co.jp )�ǥ᡼�������Ȥ��褦��
-MTA ������򤷤Ƥ���������
+もちろん、
+設定するアドレス( admin@example.co.jp )でメールを受けとれるように
+MTA の設定をしてください。
 </para>
 
 <para>
-�ʤ��᡼�륵���Фˤ�äƤϡ�
-�᡼��������Ԥ����ɥᥤ��ʳ�����ξ�硢
-��������ݤ��뤳�Ȥ�����Τ����դ��Ʋ�������
+なおメールサーバによっては、
+メールの送信者が自ドメイン以外からの場合、
+受信を拒否することがあるので注意して下さい。
 </para>
 
 <para>
-ñ�˥��顼�᡼��ʤɤμ�������Ѥ����������ʤ顢
-maintainer ( elena ML �ʤ� elena-admin@fml.org ) 
-�Υե��������ѹ�����������ñ�Ǥ���
-���������
-/etc/mail/aliases ���ѹ����뤫��
-$maintainer_recipient_maps ���ѹ��ǹԤʤ��ޤ���
+単にエラーメールなどの受取先を変えたいだけなら、
+maintainer ( elena ML なら elena-admin@fml.org ) 
+のフォワード先を変更する方が簡単です。
+その設定は
+/etc/mail/aliases を変更するか、
+$maintainer_recipient_maps の変更で行なえます。
 </para>
 
 <para>
-���Ԥ� MTA ���ե��������ѹ����Ƥ��ޤ�����
-��ԤǤϡ�
-���� elena-admin ���Υ᡼��� &fml8; ��������
-&fml8; �� $maintainer_recipient_maps �ˤ������äƺ�������Ԥʤ��ޤ���
+前者は MTA がフォワード先を変更していますが、
+後者では、
+一度 elena-admin 宛のメールを &fml8; が受け、
+&fml8; が $maintainer_recipient_maps にしたがって再配送を行ないます。
 </para>
 
 <para>
-��Ԥϡ�
-�ɥ��顼�᡼��ɤ� &fml8; ������������Ȥ�����̣�Ǽ㴳�԰¤Τ�������Ǥ�����
-���顼�᡼�������Ȥ�����ԥꥹ�Ȥ� MTA �ǤϤʤ�
-&fml8; ¦�Ǵ������뤿���ɬ�פʤΤǼ�������Ƥ��ޤ���
-����ϡ�
-���Ȥ��� WWW ���󥿡��ե�������
-�֥��顼�᡼�������Ȥ�����ԥꥹ�Ȥ����ꤹ���
-�Ȥ��ä������������ꤷ����ǽ�Ǥ���
+後者は、
+”エラーメール”を &fml8; が再配送するという意味で若干不安のある実装ですが、
+エラーメールを受けとる管理者リストを MTA ではなく
+&fml8; 側で管理するために必要なので実装されています。
+これは、
+たとえば WWW インターフェイスで
+「エラーメールを受けとる管理者リストを設定する」
+といったケースを想定した機能です。
 </para>
 
 </answer>
@@ -70,14 +70,14 @@ $maintainer_recipient_maps ���ѹ��ǹԤʤ��ޤ���
 
 <question>
 <para>
-��⡼�ȴ����Ԥϣ̤ͣΥ��С��Ǥʤ��Ƥ���Ƥ�������
+リモート管理者はＭＬのメンバーでなくても投稿したい。
 </para>
 </question>
 
 <answer>
 <para>
-�ʤˤ⤷�ʤ��Ƥ� OK �Ǥ���
-&fml8; �Υǥե���Ȥ����Τ褦�����ꤵ��Ƥ���Τǡ����Τ褦��ư���ޤ���
+なにもしなくても OK です。
+&fml8; のデフォルトが次のように設定されているので、そのように動きます。
 <screen>
 member_maps             =       $primary_member_map
                                 $admin_member_maps
@@ -92,23 +92,23 @@ member_maps             =       $primary_member_map
 
 <question>
 <para>
-Subject: �˱����������ꥹ�Ȥ��ѹ�������
+Subject: に応じて配送リストを変更したい
 </para>
 </question>
 
 <answer>
 <para>
-Subject �Υ�����ɤˤ�äƼ����Ԥ����ؤ��뤳�Ȥ�ͤ��ޤ���
+Subject のキーワードによって受信者を切替えることを考えます。
 </para>
 
 <para>
-���Ȥ��� Subject �ˡֻ�������פȤ���᡼��Ǥ���С�
-�̥ͣɥ饤�Ф�ľ�ܻ��������ô������ͤ����إե���ɤ��Ƥ�����ȸ�Ψ���褤��
-�������ä��������Ǥ���
+たとえば Subject に「資料請求」とあるメールであれば、
+ＭＬドライバが直接資料請求を担当する人たちへフォワードしてあげると効率がよい。
+そういったケースです。
 </para>
 
 <para>
-�����¸����뤿��ˤϡ����Τ褦�� HOOK ���ͤ����ޤ���
+これを実現するためには、次のような HOOK が考えられます。
 <screen>
 
 $distribute_run_start_hook = q{
@@ -122,13 +122,13 @@ $distribute_run_start_hook = q{
 	my $buf = $sbj->as_external_form();
 
 	my $map = '';
-	# ����: ���Υե������ EUC-JP �ǽ񤤤Ʋ�����
-	if ($buf =~ /��������/i) {
-	    # ��������򤦤����� info@example.co.jp �����Υ��С�������
+	# 注意: このファイルは EUC-JP で書いて下さい
+	if ($buf =~ /資料請求/i) {
+	    # 資料請求をうけたら info@example.co.jp 相当のメンバーへ送信
 	    $map = '$ml_home_dir/recipients.info';
 	}
 	else {
-	    # �ǥե����
+	    # デフォルト
 	    $map = '$ml_home_dir/recipients';
 	}
 
@@ -138,10 +138,10 @@ $distribute_run_start_hook = q{
 };
 
 </screen>
-������
+ここで
 $ml_home_dir/recipients.info (/var/spool/ml/elena/recipients.info)
-�ˤϡ�
-���������ô������ͤ����Υ��ɥ쥹���񤫤�Ƥ��ޤ���
+には、
+資料請求を担当する人たちのアドレスが書かれています。
 </para>
 </answer>
 
@@ -152,14 +152,14 @@ $ml_home_dir/recipients.info (/var/spool/ml/elena/recipients.info)
 
 <question>
 <para>
-�����������ꥹ�Ȥ��ѹ�����
+昼と夜で配送リストを変更する
 </para>
 </question>
 
 <answer>
 <para>
-���Υ쥷�Ԥ⻲�Ȥ��Ʋ�������
-����Ū�ʥ����å���Ʊ���ǡ����ʸ�����֤ˤʤ�����Ǥ���
+前のレシピも参照して下さい。
+基本的なロジックは同じで、条件文が時間になるだけです。
 <screen>
 
 $distribute_run_start_hook = q{
@@ -170,11 +170,11 @@ $distribute_run_start_hook = q{
 
 	my $map = '';
 	if ($hour > 9 && $hour <= 17) {
-	    # ������οͤ���
+	    # 昼の部の人たち
 	    $map = '$ml_home_dir/recipients.daytime';
 	}
 	else {
-	    # ������οͤ���
+	    # 夜の部の人たち
 	    $map = '$ml_home_dir/recipients.night';
 	}
 
@@ -195,27 +195,27 @@ $distribute_run_start_hook = q{
 
 <question>
 <para>
-/etc/group ��ȿ�Ǥ����ͣ�
+/etc/group を反映したＭＬ
 </para>
 </question>
 
 <answer>
 
 <para>
-&fml8; �� IO �� IO::Adapter �ˤ����ݲ��򤷤Ƥ��ޤ���
-���Ȥ��м����Ԥ�
-���롼�� fml �˴ޤޤ��桼�����ˤ���ˤϡ�
-���Τ褦�ˤ�������ǽ�ʬ�Ǥ���
+&fml8; の IO は IO::Adapter による抽象化をしています。
+たとえば受信者を、
+グループ fml に含まれるユーザ宛にするには、
+次のようにするだけで十分です。
 <screen>
 [config.cf]
 
 recipient_maps = unix.group:fml
 
 </screen>
-��������
-��ñ�Ǥ褤�����ˡ�
-¾�ɥᥤ��ˤ�����ʤ�����
-���Υ����Ф˥�������Ȥ������ꥢ�����꤬�ʤ��������Ǥ��ʤ��Τ����դ��Ʋ�������
+ただし、
+簡単でよいかわりに、
+他ドメインには送れないし、
+そのサーバにアカウントかエイリアス設定がないと配送できないので注意して下さい。
 </para>
 </answer>
 
@@ -227,20 +227,20 @@ recipient_maps = unix.group:fml
 
 <question>
 <para>
-������(��Ƽ�)�ˤϣ̤ͣε������������ʤ�
+送信者(投稿者)にはＭＬの記事は配送しない
 </para>
 </question>
 
 <answer>
 
 <para>
-���ε�ǽ��ɬ�פʤΤϡ�
-���������᡼��ε�Ͽ���Ĥ�᡼��꡼����ȤäƤ����硢
-�̤ͣ�����äƤ��뵭����ɬ�פʤ��Ȼפ��ͤ����뤫��������Ǥ���
+この機能が必要なのは、
+送信したメールの記録が残るメールリーダを使っている場合、
+ＭＬから戻ってくる記事は必要ないと思う人がいるからだそうです。
 </para>
 
 <para>
-&fml8; �Ǥϡ����ޤΤȤ�������ޤ���̤�����Ǥ���
+&fml8; では、いまのところ出来ません。未実装です。
 </para>
 </answer>
 
@@ -251,18 +251,18 @@ recipient_maps = unix.group:fml
 
 <question>
 <para>
-����μ����Ԥ������������Ƥ��ѹ�������
+特定の受信者だけ記事の内容を変更したい
 </para>
 </question>
 
 <answer>
 <para>
-&fml4; �Ǥ����ޤ��� &fml8; �Ǥ����ޤ���
+&fml4; でも出来ませんが &fml8; でも出来ません。
 </para>
 
 <para>
-���⤽��̤ͣ���Ƥ��줿������̤ͣΥ��С������������ΤʤΤ�
-�����μ����Ԥ������������Ƥ��ѹ�����Τ��񤷤����ȤǤ���
+そもそもＭＬは投稿された記事をＭＬのメンバーへ配送するものなので
+一部の受信者だけ記事の内容を変更するのは難しいことです。
 </para>
 
 </answer>

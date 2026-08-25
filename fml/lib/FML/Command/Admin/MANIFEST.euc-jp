@@ -1,16 +1,16 @@
-		admin ÍÑ¤Î¥³¥Ş¥ó¥É
+		admin ç”¨ã®ã‚³ãƒãƒ³ãƒ‰
 
-	µ­Ë¡: () ¤Ç³ç¤Ã¤Æ¤¢¤ë¤Î¤Ï alias
+	è¨˜æ³•: () ã§æ‹¬ã£ã¦ã‚ã‚‹ã®ã¯ alias
 
 ----------------------------------------------------------------------
-¡û ¼ÂÁõºÑ¤ß
+â—‹ å®Ÿè£…æ¸ˆã¿
 
-subscribe	£Í£Ì¤Ø¤ÎÆş²ñ
+subscribe	ï¼­ï¼¬ã¸ã®å…¥ä¼š
 (add)				(<-> bye)
 (useradd)
 (adduser)
 
-unsubscribe	£Í£Ì¤«¤é¤ÎÃ¦Âà
+unsubscribe	ï¼­ï¼¬ã‹ã‚‰ã®è„±é€€
 (bye)				(<-> add)
 (remove)
 (resign)
@@ -18,21 +18,21 @@ unsubscribe	£Í£Ì¤«¤é¤ÎÃ¦Âà
 (deluser)
 (userdel)
 
-chaddr		ÅĞÏ¿¤·¤Æ¤¢¤ë¥á¡¼¥ë¥¢¥É¥ì¥¹¤òÊÑ¹¹¤¹¤ë
+chaddr		ç™»éŒ²ã—ã¦ã‚ã‚‹ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å¤‰æ›´ã™ã‚‹
 
-edit		config.cf ¤òÊÔ½¸¤¹¤ë( $EDITOR config.cf ¤¹¤ë¤À¤±)
+edit		config.cf ã‚’ç·¨é›†ã™ã‚‹( $EDITOR config.cf ã™ã‚‹ã ã‘)
 
-newml		£Í£Ì¤òºî¤ë(½é´ü²½¤¹¤ë)
+newml		ï¼­ï¼¬ã‚’ä½œã‚‹(åˆæœŸåŒ–ã™ã‚‹)
 rmml		remove mailing lists
 
-htmlify		µ­»ö¤ò HTML ²½¤¹¤ë (¿·¥³¥Ş¥ó¥É¡¢ spool2html ¤ÎÂå¤ï¤ê¤È¤â¤¤¤¦)
-		¥ª¥×¥·¥ç¥ó: outdir=$directory srcdir=$source_directory
+htmlify		è¨˜äº‹ã‚’ HTML åŒ–ã™ã‚‹ (æ–°ã‚³ãƒãƒ³ãƒ‰ã€ spool2html ã®ä»£ã‚ã‚Šã¨ã‚‚ã„ã†)
+		ã‚ªãƒ—ã‚·ãƒ§ãƒ³: outdir=$directory srcdir=$source_directory
 
-off		¥á¥ó¥Ğ¡¼¤ÎÃ¯¤«¤ò off ¤Ë¤¹¤ë
-on		¥á¥ó¥Ğ¡¼¤ÎÃ¯¤«¤ò on  ¤Ë¤¹¤ë
+off		ãƒ¡ãƒ³ãƒãƒ¼ã®èª°ã‹ã‚’ off ã«ã™ã‚‹
+on		ãƒ¡ãƒ³ãƒãƒ¼ã®èª°ã‹ã‚’ on  ã«ã™ã‚‹
 
 
-get		Ç¤°Õ¤Î¥Õ¥¡¥¤¥ë¤ò¼è¤ê´ó¤»¤ë ( MIME/multipart only )
+get		ä»»æ„ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å–ã‚Šå¯„ã›ã‚‹ ( MIME/multipart only )
 (mget)
 (send)
 
@@ -45,33 +45,33 @@ byeadmin	remove the specified administrator
 (admindel)
 
 
-password	¥Ñ¥¹¥ï¡¼¥É¤ÎÇ§¾Ú Îã: admin password ¥Ñ¥¹¥ï¡¼¥É
-(pass)		¥Ñ¥¹¥ï¡¼¥É¤ÎÇ§¾Ú Îã: admin pass     ¥Ñ¥¹¥ï¡¼¥É
+password	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®èªè¨¼ ä¾‹: admin password ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+(pass)		ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®èªè¨¼ ä¾‹: admin pass     ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
 
-changepassword	¥Ñ¥¹¥ï¡¼¥É¤ÎÊÑ¹¹
-(passwd)	¡·
-(initpass)	¡·
-(chpass)	¡·
-		Îã: admin changepassword [¥¢¥É¥ì¥¹] ¥Ñ¥¹¥ï¡¼¥É
-
-
-addmoderator	¥â¥Ç¥ì¡¼¥¿¤ÎÄÉ²Ã
-delmoderator	¥â¥Ç¥ì¡¼¥¿¤Îºï½ü
-
-mailq		ÇÛÁ÷Í½Äê¤Î¥á¡¼¥ë¥­¥å¡¼
+changepassword	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®å¤‰æ›´
+(passwd)	ã€ƒ
+(initpass)	ã€ƒ
+(chpass)	ã€ƒ
+		ä¾‹: admin changepassword [ã‚¢ãƒ‰ãƒ¬ã‚¹] ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
 
 
+addmoderator	ãƒ¢ãƒ‡ãƒ¬ãƒ¼ã‚¿ã®è¿½åŠ 
+delmoderator	ãƒ¢ãƒ‡ãƒ¬ãƒ¼ã‚¿ã®å‰Šé™¤
 
-¡û Ì¤¼ÂÁõ
+mailq		é…é€äºˆå®šã®ãƒ¡ãƒ¼ãƒ«ã‚­ãƒ¥ãƒ¼
 
-moderatoradd	¥â¥Ç¥ì¡¼¥¿¤ÎÄÉ²Ã
-moderatordel	¥â¥Ç¥ì¡¼¥¿¤Îºï½ü
 
-adminmod	Â°À­¤òÊÑ¹¹¤¹¤ë¥³¥Ş¥ó¥É¤ÏÉ¬Í×¤À¤í¤¦¤«¡©
 
-moderatormod	Â°À­¤òÊÑ¹¹¤¹¤ë¥³¥Ş¥ó¥É¤ÏÉ¬Í×¤À¤í¤¦¤«¡©
+â—‹ æœªå®Ÿè£…
 
-help		admin ¤Î¥Ø¥ë¥×¥Õ¥¡¥¤¥ë¤ò¼è¤ê´ó¤»¤ë
+moderatoradd	ãƒ¢ãƒ‡ãƒ¬ãƒ¼ã‚¿ã®è¿½åŠ 
+moderatordel	ãƒ¢ãƒ‡ãƒ¬ãƒ¼ã‚¿ã®å‰Šé™¤
+
+adminmod	å±æ€§ã‚’å¤‰æ›´ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã¯å¿…è¦ã ã‚ã†ã‹ï¼Ÿ
+
+moderatormod	å±æ€§ã‚’å¤‰æ›´ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã¯å¿…è¦ã ã‚ã†ã‹ï¼Ÿ
+
+help		admin ã®ãƒ˜ãƒ«ãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å–ã‚Šå¯„ã›ã‚‹
 
 
 $FML: MANIFEST.euc-jp,v 1.11 2003/03/11 14:44:49 fukachan Exp $

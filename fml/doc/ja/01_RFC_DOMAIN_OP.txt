@@ -1,284 +1,284 @@
 
-		RFC: �ɥᥤ��(default + virtual)����������
+		RFC: ドメイン(default + virtual)の操作の統合
 
-[�ӥ����]
+[ビジョン]
 
-	����:
-		ML���Ѱդ���Τ�ɬ�פ����Τۤ������򥳥ޥ��
-		���ˤ��뤳�ȤǼ�ư�����å���������
+	利点:
+		MLを用意するのに必要な操作のほぼ全部をコマンド
+		操作にすることで自動チェックが効く。
 
-		��������̤�����(����)��
+		誤操作相談が減る(かも)。
 
-		�Ҥä������ڤˤʤ�(�Ϥ�)��
+		ひっこしが楽になる(はず)。
 
-		/etc/fml/ ��/var/spool/ml/$ml_name/ �ʲ��Υե�����ˤĤ���
-		���ι�����minimum�ȸ����뤫?�������������Ƥߤ��ʬ���롣
+		/etc/fml/ と/var/spool/ml/$ml_name/ 以下のファイルについて
+		この構成がminimumと言えるか?がこれを実装してみると分かる。
 
-	����:	�ġ�������(�ǽ�)�����ϵ��礤���פ�ͤ�;-)
+	欠点:	ツールを作る時(最初)だけは気合いが要るねぇ;-)
 
 
-[���פ��ѹ�]
+[重要な変更]
 
-   1. /etc/fml �� group writable �ˤ�����(group �� fml)��
+   1. /etc/fml を group writable にしたい(group は fml)。
 
-	root �ǥ��ڥ졼����󤹤�Ф���������ɡ��Ǥ⡢CGI��CUI�ʤɥġ�
-	����Τ��Ȥ򤫤󤬤���� group writable �ˤ��Ƥ������ۤ����ڡ�
+	root でオペレーションすればいいんだけど、でも、CGIやCUIなどツー
+	ル類のことをかんがえると group writable にしておいたほうが楽。
 		
-   2. ml_home_prefix �Υǥ��쥯�ȥ귲������Ҥˤ��ƤϤ����ʤ�
+   2. ml_home_prefix のディレクトリ群を入れ子にしてはいけない
 
 
-[�Ȥ���]
+[使い方]
 
-   0. ml_home_prefix �Υǥ��쥯�ȥ귲������Ҥˤ��ƤϤ����ʤ�
-	����Ҥˤ��Ƥ��ޤ���change*���ޥ�ɤ��Ȥ��ʤ�
+   0. ml_home_prefix のディレクトリ群を入れ子にしてはいけない
+	入れ子にしてしまうとchange*コマンドが使えない
 
-	��: �ػ�
+	例: 禁止
 		/var/spool/ml			(fml.org)
 		/var/spool/ml/nuinui.net	(nuinui.net)	
 
-	��: �����顢
+	例: だから、
 		/var/spool/ml/domain_01/
 		/var/spool/ml/domain_02/
-	    �Ȥ�
+	    とか
 		/var/spool/ml_virtual/domain_01/
 		/var/spool/ml_virtual/domain_02/
-	    �ߤ����ʻȤ����򤷤��ߤ�����
+	    みたいな使い方をして欲しい。
 
-	�ޤ����ġ���Τ��Ȥ�ͤ���� /var/spool/ml_virtual
-	(ml_home_prefix �ι��˿�)�ϥ桼�� fml ���롼�� fml �ˤ��Ƥ���
-	�����ɤ��Ȥ��⤦�����Ҥ�[���פ��ѹ�]����ʬ�ˤʤ�äƤ���ˡ�
+	また、ツールのことを考えると /var/spool/ml_virtual
+	(ml_home_prefix の更に親)はユーザ fml グループ fml にしておく
+	方が良いとおもう（前述の[重要な変更]の部分にならっている）。
 
-   1. �ǥե���ȥɥᥤ�󤷤��Ȥ�ʤ���
+   1. デフォルトドメインしか使わない人
 
-	���ޤޤ��̤�ʤΤǡ����ˤ��ʤ��ǡ�
-	�� principle of least surprise
+	いままで通りなので、気にしないで〜
+	＃ principle of least surprise
 
-   1.1 �ǥե���ȥɥᥤ�󤷤��Ȥ�ʤ�����/var/spool/ml �ʳ���Ȥ�����
-	1.1.1	configure �ǻ��ꤹ�롣
-	1.1.2	���󥹥ȡ���塢makefml newdomain �����ꤹ�롣
+   1.1 デフォルトドメインしか使わないが、/var/spool/ml 以外を使いたい
+	1.1.1	configure で指定する。
+	1.1.2	インストール後、makefml newdomain で設定する。
 
-   2. ʣ���ɥᥤ���Ȥ���ǽ����ͤ��Ƥ����
+   2. 複数ドメインを使う可能性を考えている人
 
-	��Ϣ�κ�Ȥ����Τ褦���ѹ������ʤ�ͽ�ۤ��Ƥ���ˡ�
-	�̤ͣκ����ϡ��֥ɥᥤ�������סܡ֣̤ͣκ����פ����ʳ��ˤ��롣
-	���������֥ɥᥤ�������פϺǽ�ΰ������Ǥ���
+	一連の作業がこのように変更される（と予想している）。
+	ＭＬの作成は、「ドメインの宣言」＋「ＭＬの作成」の二段階にする。
+	＃もちろん「ドメインの宣言」は最初の一回だけです。
 
-	% makefml newdomain fml.org (�ǥե���ȥɥᥤ��ξ��Ͼ�ά��)
-	% makefml newml elena �⤷���� makefml newml elena@fml.org
+	% makefml newdomain fml.org (デフォルトドメインの場合は省略可)
+	% makefml newml elena もしくは makefml newml elena@fml.org
 	
-	�̤ͣκ���Ϻ��ޤǤɤ���
+	ＭＬの削除は今までどおり
 	% makefml rmml elena
 
-	��ĤΥɥᥤ��κ�� == ���Υɥᥤ������̤ͣ���
+	一つのドメインの削除 == そのドメインの全ＭＬを削除
 	% makefml rmdomain fml.org
 
-[���]
+[作業]
 
-I. ���餿�ˡ�makefml newdomain�ץ��ޥ�ɤ����ߤ��롣
+I. あらたに「makefml newdomain」コマンドを創設する。
 
-	% makefml newdomain �ɥᥤ�� �ǥ��쥯�ȥ�
+	% makefml newdomain ドメイン ディレクトリ
 
-	���Υ��ޥ�ɤϡ��ǥ��쥯�ȥ���Ѱդ�������� 
-	/etc/fml/ml_home_prefix �ե�����ˡ֥ɥᥤ�� �ǥ��쥯�ȥ�פ�
-	�Ԥ��դ��ä��롣
+	このコマンドは、ディレクトリを用意し、さらに 
+	/etc/fml/ml_home_prefix ファイルに「ドメイン ディレクトリ」の
+	行を付け加える。
 
-	/etc/fml/main.cf �Ǥϡ����Τ褦������������롣
-	�� virtual ��ʬ�ϸߴ������뤿�������
-	�� ml_home_prefix �ե����뤬�����������
-	�� ��Ȥϡ֥ɥᥤ���$ml_home_prefix���б��ط��פ򵭤��Ƥ��롣
+	/etc/fml/main.cf では、次のように定義を修正する。
+	＃ virtual 部分は互換性を取るためだけ。
+	＃ ml_home_prefix ファイルが一応、正式。
+	＃ 中身は「ドメインと$ml_home_prefixの対応関係」を記している。
 
 	ml_home_prefix_maps	=	$config_dir/ml_home_prefix
 					$virtual_maps
 
 	virtual_maps		=	$config_dir/virtual
 
-	����:	/var/spool/ml ����� ml_home_prefix �ե������ 
-		writable permission ���ʤ��ȥ��顼�ˤʤ롣
+	注意:	/var/spool/ml および ml_home_prefix ファイルに 
+		writable permission がないとエラーになる。
 
 
-  ��: �ƥɥᥤ�󤴤Ȥ˻Ȥ��ǥ��쥯�ȥ���Ѱդ���
+  例: 各ドメインごとに使うディレクトリを用意する
 
 	% makefml newdomain fml.org    /var/spool/ml/fml.org
 	% makefml newdomain nuinui.net /var/spool/ml/nuinui.net
 		...
 
-  ��: �ǥե���ȥɥᥤ��(fml.org)�ˤĤ��� fml4 �Ȥθߴ������ݤ�
+  例: デフォルトドメイン(fml.org)について fml4 との互換性を保つ
 
 	% makefml newdomain fml.org /var/spool/ml
 
 
-	����:	Ʊ���ǥ��쥯�ȥ��ʣ���Υɥᥤ���ޥåפ��뤳�Ȥ���ǽ��
+	注意:	同じディレクトリに複数のドメインをマップすることが可能。
 
-  ��: 
-	�ɥᥤ���	�ǥ��쥯�ȥ��
-	�ɥᥤ���	�ǥ��쥯�ȥ��
+  例: 
+	ドメインＡ	ディレクトリＡ
+	ドメインＢ	ディレクトリＢ
 
-	�Ȥ�������򤷤���硢�Ĥޤ꼡�Τ褦�ʥ��ޥ������Ǥä�����
-	�ͤ��롣
+	という定義をした場合、つまり次のようなコマンド列を打った場合を
+	考える。
 
 	% makefml newdomain example.org /var/spool/ml/example.org
 	% makefml newdomain example.jp  /var/spool/ml/example.org
 	% makefml newml info@example.org
-	(���θ� makefml newml info@example.jp ��¹Ԥ���ȥ��顼)
+	(この後 makefml newml info@example.jp を実行するとエラー)
 
-	���ξ�硢info@example.jp �� example.org �� include �ե������
-	á���褦�ˤ���Ȼפ��ޤ���To: �Ȥ� Cc: �����̤�ʤΤǡ��ޤ���
-	���Ǥ�����List-* �� .org �����ˤʤäƤ�Ȥ�����礤�Ǥ��礦��
-	�ޤ�������Ϥ��礦���ʤ���
+	この場合、info@example.jp は example.org の include ファイルを
+	叩くようにすると思います。To: とか Cc: は素通りなので、まぁい
+	いですが、List-* は .org の方になってるという具合いでしょう。
+	まぁ、それはしょうがない。
 
-	TODO: makefml newml ��������� newdomain ��Ƥ֥����������롩
-		�ޤ������ꤨ��ΤϤ狼�뤱�ɡ�
-		permission �����꤬���Ǥ��뤫�ʤ���
-
-
-II. ���餿�ˡ�makefml rmdomain�ץ��ޥ�ɤ����ߤ��롣
-
-	% makefml rmdomain �ɥᥤ��
-
-	���Υ��ޥ�ɤϡ�/etc/fml/ml_home_prefix �ե����뤫�鳺�������
-	�ᥤ��Ԥ������롣
-
-	�ǥ��쥯�ȥ�ˤϲ��⤷�ʤ���
-	���ץ����ǡ��̤ͣΥۡ���ǥ��쥯�ȥ귲��ä�(-r?)��
-
-	~fml/.qmail-�ɥᥤ��-* �ե����뷲��ä���
+	TODO: makefml newml がよろしく newdomain も呼ぶケースがある？
+		まぁ、ありえるのはわかるけど、
+		permission の問題が解決できるかなぁ？
 
 
-III. �Ǥϡ����ۤ��Τ���ˡ���makefml changemlhomeprefix�פϺ��뤫��
+II. あらたに「makefml rmdomain」コマンドを創設する。
 
-	- ����񤷤�����?;-)
-	- �����Ĺ�����ޥ��̾�Ϥ���äȡ��ɤ����罸
-	- ��ä��˻Ȥ���ΤǤ�ʤ��Τǡ�Ĺ��̾���Ǥ��ɤ��Ȥ�פ��롣
-	- ���̤λ���ˤ�ꡢ�ǥ��쥯�ȥ�ѥ�̾���ѹ����������
-	- ���̤��ʤ��ʤä�/var/ml����/home/user/ml/�ʲ��˰ܤ��������
+	% makefml rmdomain ドメイン
 
-	% makefml changemlhomeprefix �ɥᥤ�� ��ǥ��쥯�ȥ� ���ǥ��쥯�ȥ�
+	このコマンドは、/etc/fml/ml_home_prefix ファイルから該当するド
+	メイン行を削除する。
 
-  ��: �ʤ��֤󡢤���������ɬ�פΤϤ��ǡ������ư������)
+	ディレクトリには何もしない。
+	オプションで、ＭＬのホームディレクトリ群も消す(-r?)。
+
+	~fml/.qmail-ドメイン-* ファイル群を消す。
+
+
+III. では、引越しのために、「makefml changemlhomeprefix」は作れるか？
+
+	- ん〜難しいかな?;-)
+	- こんな長いコマンド名はちょっと…良い案募集
+	- めったに使うものでもないので、長い名前でも良いとも思える。
+	- 諸般の事情により、ディレクトリパス名を変更したい場合
+	- 容量がなくなって/var/mlから/home/user/ml/以下に移したい場合
+
+	% makefml changemlhomeprefix ドメイン 旧ディレクトリ 新ディレクトリ
+
+  例: （たぶん、こういう操作が必要のはずで、それを自動化する)
 
 	% makefml changemlhomeprefix fml.org
 
-	(0. MTA �����)
+	(0. MTA を停止)
 
-	1. �ǥ��쥯�ȥ���ѹ����롣
+	1. ディレクトリを変更する。
 
-		��ǥ��쥯�ȥ� -> ���ǥ��쥯�ȥ�
+		旧ディレクトリ -> 新ディレクトリ
 
-	2. fml8 ����� MTA �Ѥ�������ѹ����롣
+	2. fml8 が作る MTA 用の設定を変更する。
 
-		/var/spool/ml/etc �ʲ��Υե�����
-		(��: /var/spool/ml/etc/mail/aliases)
-		����������ޤ�Ƥ���ǥ��쥯�ȥ�̾���ѹ����Ʋ�ꡢ
-		.db �ʤɤ���������롣
+		/var/spool/ml/etc 以下のファイル
+		(例: /var/spool/ml/etc/mail/aliases)
+		の中に埋め込まれているディレクトリ名を変更して回り、
+		.db などを再生成する。
 
-	3. MTA ��������ѹ����롣���Ƥ� MTA ��¸��
+	3. MTA の設定を変更する。内容は MTA 依存。
 
-		postfix �ξ�硢virtual_maps �� alias_maps 
+		postfix の場合、virtual_maps と alias_maps 
 
-	(4. MTA �ꥹ������)
+	(4. MTA リスタート)
 
 
-IV. �Ǥϡ��ɥᥤ��̾���ѹ����������ϡ�
+IV. では、ドメイン名を変更したい場合は？
 
-	- ����񤷤�����?;-)
-	- ����ʥ��ޥ��̾�Ǥ�ۣ�椫�ʤ����ɤ����罸
+	- ん〜難しいかな?;-)
+	- こんなコマンド名では曖昧かなぁ。良い案募集
 
-	% makefml changedomain ��ɥᥤ�� ���ɥᥤ��
+	% makefml changedomain 旧ドメイン 新ドメイン
 
-  ��: �ʤ��֤󡢤���������ɬ�פΤϤ��ǡ������ư������)
+  例: （たぶん、こういう操作が必要のはずで、それを自動化する)
 
-	(0. MTA �����)
+	(0. MTA を停止)
 
-	1. ���̤ͣ� MTA ������ե�������ѹ����Ʋ�롣
+	1. 全ＭＬの MTA 用設定ファイルを変更して回る。
 
-		�㡧
+		例：
 		/var/spool/ml/elena/include-ctl
 		/var/spool/ml/elena/include
 		/var/spool/ml/elena/include-error
 
-	2. fml8 ���Ѱդ��� MTA ������ե�������ѹ�����
+	2. fml8 が用意する MTA 用設定ファイルを変更する
 
 		/var/spool/ml/etc/mail/aliases
 		/var/spool/ml/etc/procmail/procmailrc
 		~fml/.qmail-$ml_domain-$ml_name
 
-		/etc/fml/ �ʲ��Υե�����
+		/etc/fml/ 以下のファイル
 			main.cf
 
-	3. MTA ��������ѹ����롣���Ƥ� MTA ��¸��
+	3. MTA の設定を変更する。内容は MTA 依存。
 
-		postfix �ξ�硢virtual_maps �� alias_maps 
+		postfix の場合、virtual_maps と alias_maps 
 
-	4. *.cgi �����������
-		�ɥᥤ��̾�ʤɤ� .cgi ��˥ϡ��ɥ����ɤ���Ƥ��뤿�ᡣ
+	4. *.cgi を再生成する
+		ドメイン名などは .cgi 内にハードコードされているため。
 
-	(5. MTA �ꥹ������)
+	(5. MTA リスタート)
 
 
 	TODO: 
-		map ������ĥ�äƽ񤭴����롩
-		��ꤹ����ͽ���⤢�뤬��������� map �˽񤭹���ʤ�
-		����ͤ��ʤ��Ȥ����ʤ��Τ��񤷤���
+		map の中も頑張って書き換える？
+		やりすぎの予感もあるが、それよりも map に書き込めない
+		場合も考えないといけないのが難しい。
 
 
-V.	�ɥᥤ��ȥǥ��쥯�ȥ�ξ�����ѹ����������
+V.	ドメインとディレクトリ両方を変更したい場合
 
-	% makefml changedomain ��ɥᥤ�� ���ɥᥤ��
-	% makefml changemlhomeprefix ���ɥᥤ�� ��ǥ��쥯�ȥ� ���ǥ��쥯�ȥ�
+	% makefml changedomain 旧ドメイン 新ドメイン
+	% makefml changemlhomeprefix 新ドメイン 旧ディレクトリ 新ディレクトリ
 
-	�Ȥ����Ȥ⡢������������뤳�Ȥ��ȯ�ǹԤʤ��륳�ޥ�ɤˤ��Ƥ�����
+	とせずとも、これに相当することを一発で行なえるコマンドにしておく。
 
-	���ο��դϡ��ǥ��쥯�ȥ�Υޥåפ� ml_home_prefix_maps �˽�
-	�Ƥ���Ϥ��ʤΤǡ�����Ū�˥��ޥ�ɥ饤��ǻ��ꤵ��ʤ��Ƥ��ǽ
-	�ʤϤ��Ǥ���Ȥ������Ȥˤ��롣���������ߥ��������������
+	この真意は、ディレクトリのマップは ml_home_prefix_maps に書い
+	てあるはずなので、明示的にコマンドラインで指定されなくても可能
+	なはずであるということにある。その方がミスが減るだろう。
 
 
-VI.	ml_home_prefix_maps ��ɽ�����륳�ޥ�ɤ��Ѱ�
+VI.	ml_home_prefix_maps を表示するコマンドを用意
 
 	% fml $ml_name list ml_home_prefix
 
-[�����������ǥ�]
+[ケーススタディ]
 
-Q: �ͣ�̾��ǥ��쥯�ȥ�̾���ѹ����ʤ���
-A: ��Ȥ����ס�
-	��: ñ��ʪ��Ū�˰��ñۤ����
-	��: IP ���ɥ쥹���Ѥ�����
+Q: ＭＬ名もディレクトリ名も変更しない。
+A: 作業は不要。
+	例: 単に物理的に引っ越す場合
+	例: IP アドレスが変わるだけ
 
-Q: �ɥᥤ��̾���ѹ��򤹤뤬���ǥ��쥯�ȥ�̾���Ѥ��ʤ���
-A: changedomain ���ޥ�ɰ�ȯ
-
-
-Q: �ɥᥤ��̾���ѹ��������ǥ��쥯�ȥ���ѹ����롣
-A: changemlhomeprefix ���ޥ�ɰ�ȯ
-
-Q: ξ�������
-A: ������� ���ޥ�ɤ���ĥ�뤷���ʤ���ͤ�
+Q: ドメイン名の変更をするが、ディレクトリ名は変わらない。
+A: changedomain コマンド一発
 
 
-[����¾����¿�ʹͻ�]
+Q: ドメイン名は変更せず、ディレクトリは変更する。
+A: changemlhomeprefix コマンド一発
 
-Q: ����ʾ塢�����ʻ��ͤˤʤ뤫��
+Q: 両方やる場合
+A: うーん… コマンドが頑張るしかないわねぇ
+
+
+[その他、雑多な考察]
+
+Q: これ以上、小さな仕様になるか？
 	
-	include �ե������ aliaes �ˤϥǥ��쥯�ȥ꤫�ͣ�̾������뤬��
-	����ʾ�������ܤ򸺤餹���Ȥ�̵����������
+	include ファイルや aliaes にはディレクトリかＭＬ名が現れるが、
+	これ以上設定項目を減らすことは無理だろう。
 
 
-Q: �ͣ�̾�ϥץ饤�ޥꥭ����
+Q: ＭＬ名はプライマリキー？
 
 	yes
 
-	aliases �� virtual �ե����������θǤޤ�򼨤��Ƥ��롣
-	include �ե�����ϡ֥ץ������ �ͣ�̾�פȤ����Ȥ����򤷤Ƥ��롣
+	aliases や virtual ファイルで定義の固まりを示している。
+	include ファイルは「プログラム ＭＬ名」という使い方をしている。
 
 
-Q: IP���ɥ쥹���ѹ���?
+Q: IPアドレスの変更は?
 
-	̵�ط�
+	無関係
 
 
-[��ե����]
+[リファレンス]
 
-	fml-devel �� 2003/10����600 ���椢����ε������ɤ⤦��
+	fml-devel の 2003/10末、600 番台あたりの議論を読もう。
 
 ------------------------------------------------
 $FML: 01_RFC_DOMAIN_OP.txt,v 1.5 2003/11/16 14:36:30 fukachan Exp $

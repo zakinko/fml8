@@ -1,10 +1,10 @@
-  not yet	²¿¤é¤«¤Î°ÕÌ£¤Ç·èÄêºÑ¤ß	status or ¥³¥á¥ó¥È
+  not yet	ä½•ã‚‰ã‹ã®æ„å‘³ã§æ±ºå®šæ¸ˆã¿	status or ã‚³ãƒ¡ãƒ³ãƒˆ
 ------------------------------------------------------
-		ack			removed (¤¿¤Ö¤ó confirm ¤ËÅı¹ç)
+		ack			removed (ãŸã¶ã‚“ confirm ã«çµ±åˆ)
 		active			removed ?
 		actives			removed ?
-		addr			¼ÂÁõ¤¹¤ë¤Ù¤­¤Ê¤Î¤«ÉÔÌÀ
-					¿·¥¹¥¿¥¤¥ë¡© Îã: set addrlevel 10
+		addr			å®Ÿè£…ã™ã‚‹ã¹ããªã®ã‹ä¸æ˜
+					æ–°ã‚¹ã‚¿ã‚¤ãƒ«ï¼Ÿ ä¾‹: set addrlevel 10
 		admin			emulated in FML::Process::Command
 approve
 		bye			done
@@ -23,14 +23,14 @@ digest
 		iam			removed
 index
 		info			done
-		library			¼ÂÁõ¤¹¤ë¤Ù¤­¤Ê¤Î¤«ÉÔÌÀ
+		library			å®Ÿè£…ã™ã‚‹ã¹ããªã®ã‹ä¸æ˜
 matome
 		member			removed ?
 		members			removed ?
 		mget			done
 		mget2			removed
 		mget3			removed
-		mode			¿·¥¹¥¿¥¤¥ë ? set ... ?
+		mode			æ–°ã‚¹ã‚¿ã‚¤ãƒ« ? set ... ?
 moderator
 		msend			removed ?
 		msg			removed ?
@@ -42,7 +42,7 @@ on
 		quit			removed
 		send			done
 		sendfile		removed
-		set			¿·¥¹¥¿¥¤¥ë ? set ... ?
+		set			æ–°ã‚¹ã‚¿ã‚¤ãƒ« ? set ... ?
 skip
 		stat			removed ?
 		status			removed ?

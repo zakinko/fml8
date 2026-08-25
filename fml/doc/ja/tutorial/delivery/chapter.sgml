@@ -5,40 +5,40 @@
 
 <chapter id="delivery">
 	<TITLE>
-	&fml8; �Υ᡼�����������ƥ�
+	&fml8; のメール配送システム
 	</TITLE>
 
 
 <sect1 id="delivery.fml8-and-fml4-difference">
 	<title>
-	&fml4; �� &fml8; �������
+	&fml4; と &fml8; の相違点
 	</title>
 
 <para>
-&fml8; �������Ū�ΰ�Ĥϡ�
-���С��ꥹ�Ȥμ������ˤ����륳���ɤ��������ݲ��Ǥ���
+&fml8; 最大の目的の一つは、
+メンバーリストの取得操作におけるコードの統合と抽象化です。
 </para>
 
 <para>
-���������ƥ����ݲ����줿 IO �ؤ����Ѥ���������ξ����������Ƥ��ޤ���
+配送システムも抽象化された IO 層を利用して配送先の情報を取得しています。
 </para>
 
 <para>
-�����ˤ���ݲ����줿 Mail::Delivery ���饹�򼡤Τ褦�˻ȤäƤ��ޤ���
+配送には抽象化された Mail::Delivery クラスを次のように使っています。
 </para>
 
 <para>
-Mail::Delivery::* ��°���륯�饹��
-SMTP ����� LMTP �����ؤΥ��󥿡��ե��������󶡤��ޤ���
-�Ĥޤ�
-Mail::Delivery ��
-Mail::Delivery �ʲ����������饹
-SMTP��ESMTP
-�ؤΥ��󥿡��ե��������󶡤��륢���ץ����ؤǤ���
+Mail::Delivery::* に属するクラスは
+SMTP および LMTP 配送へのインターフェイスを提供します。
+つまり
+Mail::Delivery は
+Mail::Delivery 以下の派生クラス
+SMTP、ESMTP
+へのインターフェイスを提供するアダプター層です。
 </para>
 
 <para>
-���Ȥ��м��Τ褦�˻Ȥ��ޤ���
+たとえば次のように使います。
 <screen>
     use Mail::Delivery::SMTP;
     my $service = new Mail::Delivery::SMTP;
@@ -55,11 +55,11 @@ SMTP��ESMTP
                           mesage          => $message
                       });
 </screen>
-������ $message ��
+ここで $message は
 <link linkend="module.mail.message">
 Mail::Message
 </link>
-���֥������ȤǤ���
+オブジェクトです。
 </para>
 
 </sect1>
@@ -70,23 +70,23 @@ Mail::Message
 	<link linkend="module.mail.message">
 	Mail::Message
 	</link>
-	���֥�������
+	オブジェクト
 	</title>
 
 <para>
-���Υ��֥������Ȥϥ᡼�����Ϥ���
+このオブジェクトはメールを解析し、
 <screen>
 header -> body
 header -> preamble -> part1 -> part2 -> trailor (multipart)
 </screen>
-�Τ褦�˥��֥������Ȥ��ֿ���Ĥʤ��פˤʤä��ǡ�����¤����ޤ���
+のようにオブジェクトが「数珠つなぎ」になったデータ構造を作ります。
 </para>
 
 <para>
 <link linkend="module.mail.message">
 Mail::Message
 </link>
-���饹�Ϥ��Τ褦�ʥǡ�����¤������᥽�åɤ��󶡤��Ƥ��ޤ���
+クラスはこのようなデータ構造を操作するメソッドを提供しています。
 </para>
 
 </sect1>
@@ -98,19 +98,19 @@ Mail::Message
 
 <sect1 id="delivery.qmgr">
 	<title>
-	���塼���������ƥ�
+	キュー管理システム
 	</title>
 
 <!--
-   XXX-TODO: ��äȡ����塼���������ƥ�ˤĤ��ƾܤ����񤤤ơ�
+   XXX-TODO: もっと、キュー管理システムについて詳しく書いて！
 -->
 
 <para>
-2004 �ưʹߡ�
-&fml8; �����������ƥ�ϥ��塼���������ƥ�Τ�Ȥ�ư���Ƥ��ޤ���
-����ˤ�� &fml8; ���ϤǤκ�����������ǽ�Ȥʤ�ޤ�����
-�̤θ������򤹤�С�
-�¼�Ū�� &fml8; ��᡼�륵���Фȸ��äƤ褯�ʤä��櫓�Ǥ���
+2004 夏以降、
+&fml8; の配送システムはキュー管理システムのもとで動いています。
+これにより &fml8; 自力での再送処理が可能となりました。
+別の言い方をすれば、
+実質的に &fml8; をメールサーバと言ってよくなったわけです。
 </para>
 
 </sect1>
@@ -118,27 +118,27 @@ Mail::Message
 
 <sect1>
 	<title>
-	����: FML::Mailer ��ɬ�פ���
+	議論: FML::Mailer は必要か？
 	</title>
 
 <para>
-FML::Process::QueueManager ���ȤäƤ���ΤߤʤΤ�
-��Ω�����⥸�塼��Ǥ���ɬ�פ���������������Ȥ�������Ǥ���
+FML::Process::QueueManager が使っているのみなので
+独立したモジュールである必要があるだろうか？という疑問です。
 </para>
 
 <para>
-���� reply_message() �᥽�åɤ����Ǥ⤷�Ƥ��ޤ��Τǡ�
-FML::Mailer ��Ƥ֤��ȤϤʤ����⤷��ޤ���
-��äȤ� reply_message() �ʳ��������᥽�åɤ��������뤫�⤷��ޤ���
+現状 reply_message() メソッドが何でもしてしまうので、
+FML::Mailer を呼ぶことはないかもしれません。
+もっとも reply_message() 以外の送信メソッドがあり得るかもしれません。
 </para>
 
 <para>
-���衢�ɤ���ȤäƤʤ��褦�ʤ�
-FML::Process::QueueManager �˹�ʻ����٤��ʤΤǤ��礦��
+将来、どうも使ってないようなら
+FML::Process::QueueManager に合併するべきなのでしょう。
 </para>
 
 <para>
-�ͤ�Τ��ᡢHOOK �ʤɤǤ� FML::Mailer �ϻȤ�ʤ��褦�ˤ��Ʋ�������
+ねんのため、HOOK などでは FML::Mailer は使わないようにして下さい。
 </para>
 
 </sect1>
@@ -146,7 +146,7 @@ FML::Process::QueueManager �˹�ʻ����٤��ʤΤǤ��礦��
 
 <sect1 id="recipes.delivery">
 	<title>
-	�����˴ؤ��� TIPS 	
+	配送に関する TIPS 	
 	</title>
 
 <!-- TABLE_OF_RECIPES -->

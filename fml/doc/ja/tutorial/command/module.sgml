@@ -5,74 +5,74 @@
 
 <sect1 id="fml.command.module.hierarchy">
 	<title>
-	�Ƽ拾�ޥ�ɤǻȤ��⥸�塼��
+	各種コマンドで使うモジュール
 	</title>
 
 <para>
-&fml8; �Ǥϡ�
-���ޥ�ɥ᡼�롢
+&fml8; では、
+コマンドメール、
 makefml
-������
+そして
 CGI
-���Ȥ��⥸�塼��϶�ͭ����Ƥ��ޤ���
-��������
-���θ��¤κ��ۤˤ�äơ�
-���̥桼���ѤΥ⥸�塼��ȴ������ѤΥ⥸�塼��Σ��Ĥ��礭��ʬ����Ƥ��ޤ���
-�ʲ��������Υ⥸�塼�뷲�ι����ˤĤ��Ʋ��⤷�ޤ���
+が使うモジュールは共有されています。
+ただし、
+その権限の差異によって、
+一般ユーザ用のモジュールと管理者用のモジュールの２つに大きく分かれています。
+以下、これらのモジュール群の構成について解説します。
 </para>
 
 <para>
-FML::Command:: ���饹�ϰʲ��Τ褦�ʹ����ˤʤäƤ��ޤ���
+FML::Command:: クラスは以下のような構成になっています。
 <screen>
-FML::Command		FML::Command ���饹�ʲ��ؤ�������dispatcher
-FML::Command::User	�桼���ѥ��ޥ�ɷ�
-FML::Command::Admin	�������ѥ��ޥ�ɷ�
+FML::Command		FML::Command クラス以下への入口、dispatcher
+FML::Command::User	ユーザ用コマンド群
+FML::Command::Admin	管理者用コマンド群
 </screen>
-���Ȥ��С�(���ޥ�ɥ᡼��Ǥ�)�桼���ѥ��ޥ�ɤξ��
-FML::Command ���ͳ����
-FML::Command::User::���ޥ��
-�⥸�塼���ƤӽФ��Ƥ��ޤ���
+たとえば、(コマンドメールでの)ユーザ用コマンドの場合
+FML::Command を経由して
+FML::Command::User::コマンド
+モジュールを呼び出しています。
 </para>
 
 
 <sect2>
 	<title>
-	(���ޥ�ɥ᡼��Ǥ�)���̥桼���ѥ��ޥ��
+	(コマンドメールでの)一般ユーザ用コマンド
 	</title>
 
 <para>
 FML::Process::Command
-����
-FML::Command ��ͳ��
-��FML::Command::User::���ޥ�ɡ�
-��ƤӽФ��Ƥ��ޤ���
+から
+FML::Command 経由で
+「FML::Command::User::コマンド」
+を呼び出しています。
 </para>
 
 <para>
-�ǽ�Ū��
-��FML::Command::Admin::���ޥ�ɡ�
-��Ȥ��⥸�塼��⤢��ޤ���
-���Ȥ�����Ͽ�Ⱥ���μº�Ȥ�
-��FML::Command::Admin::���ޥ�ɡ�
-�ˤ��륳���ɤ��ԤʤäƤ��ޤ���
-���٤ƤΥץ���������Ͽ/�����Ȥμ�����ʬ��ͭ���뤿��Ǥ���
-���ξ�硢
-��FML::Command::User::���ޥ�ɡפ�
-confirm ��Ԥʤ������ wrapper �Ȥ��������դ��ˤʤ�ޤ���
+最終的に
+「FML::Command::Admin::コマンド」
+を使うモジュールもあります。
+たとえば登録と削除の実作業は
+「FML::Command::Admin::コマンド」
+にあるコードが行なっています。
+すべてのプログラムで登録/削除作業の実体部分を共有するためです。
+この場合、
+「FML::Command::User::コマンド」は
+confirm を行なうための wrapper という位置付けになります。
 </para>
 </sect2>
 
 
 <sect2>
 	<title>
-	(���ޥ�ɥ᡼��Ǥ�) �������ѥ��ޥ�� (admin ���ޥ��)
+	(コマンドメールでの) 管理者用コマンド (admin コマンド)
 	</title>
 
 <para>
-FML::Process::Command ����
-FML::Command ��ͳ��
-��FML::Command::Admin::���ޥ�ɡ�
-��ƤӽФ��Ƥ��ޤ���
+FML::Process::Command から
+FML::Command 経由で
+「FML::Command::Admin::コマンド」
+を呼び出しています。
 </para>
 
 </sect2>
@@ -85,16 +85,16 @@ FML::Command ��ͳ��
 
 <warning>
 <para>
-makefml ��¹ԤǤ�������ǡ�
-�����Ф˥�������Ǥ�������Ը��¤�����Ȥߤʤ���Ƥ��ޤ���
+makefml を実行できる時点で、
+サーバにログインできる管理者権限があるとみなされています。
 </para>
 </warning>
 
 <para>
-FML::Process::Configure ����
-FML::Command ��ͳ��
-��FML::Command::Admin::���ޥ�ɡ�
-��ƤӽФ��Ƥ��ޤ���
+FML::Process::Configure から
+FML::Command 経由で
+「FML::Command::Admin::コマンド」
+を呼び出しています。
 </para>
 
 </sect2>
@@ -107,31 +107,31 @@ FML::Command ��ͳ��
 
 <warning>
 <para>
-CGI ����̥桼���ऱ�� CGI �ȴ������Ѥ� CGI ������ޤ���
+CGI も一般ユーザむけの CGI と管理者用の CGI があります。
 </para>
 
 <para>
-�������Ѥ� CGI �ˤĤ��Ƥϡ�
-���� CGI ��¹ԤǤ�������ǡ�
-(ǧ�ڤ�ѥ����Ƥ���)
-�����Ը��¤�����Ȥߤʤ���Ƥ��ޤ���
+管理者用の CGI については、
+この CGI を実行できる時点で、
+(認証をパスしており)
+管理者権限があるとみなされています。
 </para>
 </warning>
 
 <para>
-���ɥ쥹��Ͽ/����ʤɤΤ���ˤ�����̥桼���Ѥ� CGI �ϡ�
-FML::Process::CGI ����
-FML::Command ��ͳ��
-��FML::Command::User::���ޥ�ɡ�
-��ƤӽФ��Ƥ��ޤ���
-���ޥ�ɥ᡼���Ʊ�ͤ� confirm �Τ���� wrapper �Ȥ��������դ��Ǥ���
+アドレス登録/削除などのためにある一般ユーザ用の CGI は、
+FML::Process::CGI から
+FML::Command 経由で
+「FML::Command::User::コマンド」
+を呼び出しています。
+コマンドメールと同様に confirm のための wrapper という位置付けです。
 </para>
 
 <para>
-�������Ѥ� CGI �ϡ�FML::Process::CGI ����
-FML::Command ��ͳ��
-��FML::Command::Admin::���ޥ�ɡ�
-��ƤӽФ��Ƥ��ޤ���
+管理者用の CGI は、FML::Process::CGI から
+FML::Command 経由で
+「FML::Command::Admin::コマンド」
+を呼び出しています。
 </para>
 
 </sect2>

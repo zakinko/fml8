@@ -1,25 +1,25 @@
-		fml.org ���顼�᡼�륳�쥯�����
+		fml.org エラーメールコレクション
 
 
-�� ���顼�᡼��Υ���ץ�ʤ� ; �罸�桪
+○ エラーメールのサンプルなし ; 募集中！
 
   * MTA
 
 	Novell GroupWise
 
-  * ����� ISP �ʤ�
+  * 特定の ISP など
 
-	ido.ne.jp 	qmail �餷��	��au(��IDO)
+	ido.ne.jp 	qmail らしい	●au(旧IDO)
 	Caiwireless
 	Compuserve
 
 
-�� ���顼�᡼��Υ���ץ뤢��
+○ エラーメールのサンプルあり
 
-  * 25/tcp �����ꤽ���ʥ��եȥ�����
+  * 25/tcp を喋りそうなソフトウエア
 
 	CC:Mail
-	InterMail		�� ����Ƥ� DSN ;)
+	InterMail		＊ 壊れてる DSN ;)
 	InterScan
 	MAILsweeper
 	MailShield
@@ -38,37 +38,37 @@
 	Smail
 
 
-  * ����� ISP ��᡼���Ϣ�Υ����ӥ��ʤ�
+  * 特定の ISP やメール関連のサービスなど
 
-	freeml.com		�ȼ� && ���ܸ�ϤĤ餤;)
-	GOO			�ȼ� && ���ܸ�ϤĤ餤;)
-	ODN			RFC1894 ��ɤ������ɴο��Υ��ɥ쥹���ʤ�
-	Biglobe.ne.jp		DSN ����ʤ� sendmail ???
-	nifty.com		�ȼ�	# �侩 nifty.com > nifty.ne.jp
-	(nifty.ne.jp		�ȼ�)
+	freeml.com		独自 && 日本語はつらい;)
+	GOO			独自 && 日本語はつらい;)
+	ODN			RFC1894 もどきだけど肝心のアドレスがない
+	Biglobe.ne.jp		DSN じゃない sendmail ???
+	nifty.com		独自	# 推奨 nifty.com > nifty.ne.jp
+	(nifty.ne.jp		独自)
 	Geocities		DSN
-	Lycos			�ȼ� && ���ܸ�ϤĤ餤;)
-	SkyWalker		�ȼ�
-	J-Phone			�ȼ�
-	pakeo.ne.jp		�ȼ�
+	Lycos			独自 && 日本語はつらい;)
+	SkyWalker		独自
+	J-Phone			独自
+	pakeo.ne.jp		独自
 
 
 --------------------------------------------------------------------
 
-�� TODO �Ѹ���֤äƤ��ʤ���Τ�ɤ������� (�ͤ���)
+○ TODO 英語で返ってこないものをどう扱うか (考え中)
 
 	Netscape Messaging Server 4.15
-		�ɥᥤ��򸫤Ƹ����̤˥�å��������Ѥ��(�餷��)
+		ドメインを見て言語別にメッセージが変わる(らしい)
 
 	Microsoft SMTPSVC
 		UNICODE(unicode-1-1-utf-7)
-		���ܸ��Ǥξ�硢����������ܸ�
+		日本語版の場合、もちろん日本語
 
-�� ����¾ or �褯�狼��ʤ�
+○ その他 or よくわからない
 
 	Yahoo
-		messages from yahoo.com �äƥե����ޥåȤ��Τ��ä���
-		���� sendmail �ߤ�����
+		messages from yahoo.com ってフォーマットは昔の話か？
+		今は sendmail みたいだ
 
 
 $FML: LIST.ja.txt,v 1.1 2002/02/01 14:39:24 fukachan Exp $

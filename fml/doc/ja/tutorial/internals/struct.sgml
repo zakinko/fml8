@@ -4,17 +4,17 @@
 
 <appendix id="structure">
 	<title>
-	е╟б╝е┐╣╜┬дд╬╝┬╬у
+	уГЗуГ╝уВ┐цзЛщАауБохоЯф╛Л
 	</title>
 
 
 <sect1 id="structure.curproc">
 	<title>
-	curproc еке╓е╕езепе╚
+	curproc уВкуГЦуВ╕уВзуВпуГИ
 	</title>
 
 <para>
-FML::Process::Distribute дм┴Ўд├д╞ддды╗■д╬е╟б╝е┐╣╜┬дд╬╬уд╟д╣бг
+FML::Process::Distribute уБМш╡░уБгуБжуБДуВЛцЩВуБоуГЗуГ╝уВ┐цзЛщАауБоф╛ЛуБзуБЩуАВ
 </para>
 
 &struct.curproc;
@@ -24,11 +24,11 @@ FML::Process::Distribute дм┴Ўд├д╞ддды╗■д╬е╟б╝е┐╣╜┬дд╬╬уд╟д╣бг
 
 <sect1 id="structure.pcb">
 	<title>
-	PCB д╬еле╞е┤еъ░ь═ў
+	PCB уБоуВлуГЖуВ┤уГкф╕Ашжз
 	</title>
 
 <para>
-PCB д╟╗╚д├д╞дддыеле╞е┤еъд╚ете╕ехб╝еыбвдкдшд╙┤╪┐Їд╬еъе╣е╚д╟д╣бг
+PCB уБзф╜┐уБгуБжуБДуВЛуВлуГЖуВ┤уГкуБиуГвуВ╕уГеуГ╝уГлуАБуБКуВИуБ│щЦвцХ░уБоуГкуВ╣уГИуБзуБЩуАВ
 </para>
 
 &list.pcb;

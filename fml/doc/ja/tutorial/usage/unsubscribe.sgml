@@ -5,22 +5,22 @@
 
 <sect1 id="usage.user.unsubscribe">
 	<title>
-	�̤ͣ򼭤��
+	ＭＬを辞める
 	</title>
 
 <para>
-elena@fml.org �̤ͣ򼭤᤿����硢
-��ʸ�� 
+elena@fml.org ＭＬを辞めたい場合、
+本文に 
 <screen>
-unsubscribe ̾��
+unsubscribe 名前
 </screen>
-�Ƚ񤤤��᡼���
-elena-ctl@fml.org  �����äƲ�������
+と書いたメールを
+elena-ctl@fml.org  に送って下さい。
 </para>
 
 <para>
-���Υ᡼����Ф� confirmation ����������ޤ���
-���� confirmation ����������Ⱥ������ޤ���
+そのメールに対し confirmation が返送されます。
+その confirmation に返答すると削除されます。
 </para>
 
 </sect1>

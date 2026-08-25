@@ -1,4 +1,4 @@
-## ´ğËÜÅª¤Ê¥Í¡¼¥ß¥ó¥°
+## åŸºæœ¬çš„ãªãƒãƒ¼ãƒŸãƒ³ã‚°
 ##    CLASS {
 ## 	use_CLASS_NAME
 ## 	CLASS_NAME
@@ -6,14 +6,14 @@
 ## 	CLASS_default_NAME_{type,size,limit,...}
 ##   }
 
-##	µì			¿·
+##	æ—§			æ–°
 ## -----------------------------------------------------------
 
-## ¥¢¥É¥ì¥¹
+## ã‚¢ãƒ‰ãƒ¬ã‚¹
 # address_for_post		article_post_address
 # address_for_command		command_mail_address
 
-## libexec/ °Ê²¼¤Î³Æ¥×¥í¥°¥é¥à¤Îµ¡Ç½¤Î off/on
+## libexec/ ä»¥ä¸‹ã®å„ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®æ©Ÿèƒ½ã® off/on
 #use_digest_program              use_article_digest_function 
 #use_distribute_program          use_article_post_function
 #use_command_mail_program        use_command_mail_function
@@ -24,7 +24,7 @@
 #command_restrictions            command_mail_restrictions
 #admin_command_restrictions      admin_command_mail_restrictions
 
-## ¥³¥Ş¥ó¥É¤Î¥ê¥¹¥È
+## ã‚³ãƒãƒ³ãƒ‰ã®ãƒªã‚¹ãƒˆ
 #-				ml_admin_cgi_allowed_commands
 #commands_for_admin_cgi		admin_cgi_allowed_commands	
 #commands_for_admin		admin_command_mail_allowed_commands
@@ -32,14 +32,14 @@
 #commands_for_stranger		anonymous_command_mail_allowed_commands
 #commands_for_user		user_command_mail_allowed_commands
 
-## ¥á¥Ã¥»¡¼¥¸
+## ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 # reply_message_charset		report_mail_charset
 # reply_message_subject		report_mail_subject
 # reply_message_default_charset	report_mail_default_charset
 # default_message_subject	report_mail_default_subject
 # template_file_charset		message_template_file_charset
 
-## OS ´ØÏ¢ (system_ prefix ¤ËÅı¹ç)
+## OS é–¢é€£ (system_ prefix ã«çµ±åˆ)
 ## path_*			system_path_*
 # has_*				system_has_*
 # system_accounts		system_special_accounts
@@ -51,11 +51,11 @@
 # newml_command_init_public_dirs	newml_command_init_public_directories
 
 
-## ¥Ø¥Ã¥À
+## ãƒ˜ãƒƒãƒ€
 # x_ml_name			outgoing_mail_header_x_ml_name
 
 
-## ¥Õ¥£¥ë¥¿
+## ãƒ•ã‚£ãƒ«ã‚¿
 # header_loop_check_rules	incoming_mail_header_loop_check_rules
 # use_header_loop_check		use_incoming_mail_header_loop_check
 # body_loop_check_rules		incoming_mail_body_loop_check_rules

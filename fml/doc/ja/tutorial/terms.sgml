@@ -4,16 +4,16 @@
 
 <sect1 id="terms">
 	<title>
-	�ܥ��塼�ȥꥢ����ˤ������Ѹ�ˤĤ���
+	本チュートリアル中における用語について
 	</title>
 
 <para>
-���������ɤ�ݤʤɤ����Ω�ġ�
-���٤��ʴؿ�̾������ѿ�̾��Ϣ�ˤĤ��Ƥ��Ѹ콸������
+ソースを読む際などに役に立つ、
+より細かな関数名および変数名関連についての用語集が別途
 <link linkend="glossary">
 <xref linkend="glossary">
 </link>
-�ˤ���ޤ���������⻲�Ȥ��Ʋ�������
+にあります。そちらも参照して下さい。
 </para>
 
 
@@ -22,21 +22,21 @@
    <varlistentry>
 	<term> % </term>
 	<listitem>
-	<para>	���̥桼���Υץ���ץ�	</para>
+	<para>	一般ユーザのプロンプト	</para>
 	</listitem>
    </varlistentry>
 
    <varlistentry>
 	<term> # </term>
 	<listitem>
-	<para>	�桼�� root �Υץ���ץ� </para>
+	<para>	ユーザ root のプロンプト </para>
 	</listitem>
    </varlistentry>
 
    <varlistentry>
 	<term> ~ </term>
 	<listitem>
-	<para>	�桼���Υۡ���ǥ��쥯�ȥ� </para>
+	<para>	ユーザのホームディレクトリ </para>
 	</listitem>
    </varlistentry>
 
@@ -44,7 +44,7 @@
 	<term> CUI </term>
 	<listitem>
 	<para>
-	���ޥ�ɥ饤��ǻȤ�����ġ��롢���Ȥ��� makefml �� fml ���ࡣ
+	コマンドラインで使う設定ツール、たとえば makefml と fml の類。
 	</para>
 	</listitem>
    </varlistentry>
@@ -53,27 +53,27 @@
 	<term> fml </term>
 	<listitem>
 	<para>
-	fml ���եȥ����������Ρ����������ä��Ƥ�����ˤϻȤ����Ȥ�����
+	fml ソフトウエアの総称、一般論を話している場合には使うことがある
 	</para>
 	</listitem>
    </varlistentry>
 
    <varlistentry>
-	<term> fml (���ޥ��) </term>
+	<term> fml (コマンド) </term>
 	<listitem>
 	<para>
-	&fml8; �ˤ��� fml �Ȥ������ޥ�ɤΤ��ȡ�
-	makefml ���ޥ�ɤ�Ʊ����ǽ������
-	�����ν��֤��ۤʤ롣��������������֥������Ȼظ�����
+	&fml8; にある fml というコマンドのこと。
+	makefml コマンドと同じ機能だが、
+	引数の順番が異なる。こちらの方がオブジェクト指向風。
 	</para>
 	</listitem>
    </varlistentry>
 
    <varlistentry>
-	<term> �桼�� fml </term>
+	<term> ユーザ fml </term>
 	<listitem>
 	<para>
-	fml �Ȥ���̾�Υ桼����&fml8; ��ư�����桼����������ȡ�
+	fml という名のユーザ。&fml8; を動かすユーザアカウント。
 	</para>
 	</listitem>
    </varlistentry>
@@ -82,7 +82,7 @@
 	<term> &fml4; </term>
 	<listitem>
 	<para>
-	&fml4; ���꡼���Τ���
+	&fml4; シリーズのこと
 	</para>
 	</listitem>
    </varlistentry>
@@ -91,9 +91,9 @@
 	<term> &fml8; </term>
 	<listitem>
 	<para>
-	&fml8; ���꡼���Τ��ȡ�
-	������ &fml8; �Τ��Ȥ�
-	fml 5.0 �Ȥ� fml-devel �ȸ��äƤ��������⤢��Τ����ա�
+	&fml8; シリーズのこと。
+	以前は &fml8; のことを
+	fml 5.0 とか fml-devel と言っていた時期もあるので注意。
 	</para>
 	</listitem>
    </varlistentry>
@@ -102,17 +102,17 @@
 	<term> GUI </term>
 	<listitem>
 	<para>
-	CGI ���󥿡��ե������Τ��ȡ�
+	CGI インターフェイスのこと。
 	</para>
 	</listitem>
    </varlistentry>
 
    <varlistentry>
-	<term> makefml (���ޥ��) </term>
+	<term> makefml (コマンド) </term>
 	<listitem>
 	<para>
-	&fml4; ����� &fml8; �ˤ�������ٱ祳�ޥ�ɤΤ��ȡ�
-	fml �����äƤ���᡼�륵���Ф˥������󤷤ƻȤ���Ρ�
+	&fml4; および &fml8; にある設定支援コマンドのこと。
+	fml が走っているメールサーバにログインして使うもの。
 	</para>
 	</listitem>
    </varlistentry>

@@ -5,11 +5,11 @@
 <!-- ============================================== -->
 <sect1>
    <title>
-   HTML: BASE_URL �ѿ�
+   HTML: BASE_URL 変数
    </title>
 
 <para>
-BASE_URL �ѿ���Ĥ���٤� (fml-support: 05984)
+BASE_URL 変数をつくるべき (fml-support: 05984)
 </para>
 
 
@@ -24,8 +24,8 @@ BASE_URL �ѿ���Ĥ���٤� (fml-support: 05984)
    </title>
 
 <para>
-Content-Type: application/ms-tnef �Ǥ��ä�������(���֤�OS��¸)�äơ�
-�ɤ��ʤä���
+Content-Type: application/ms-tnef でずっこける場合(たぶんOS依存)って…
+どうなった？
 </para>
 
 </sect1>

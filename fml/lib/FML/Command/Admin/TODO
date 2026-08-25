@@ -1,16 +1,16 @@
-		admin ÍÑ¤Î¥³¥Ş¥ó¥É°ìÍ÷
+		admin ç”¨ã®ã‚³ãƒãƒ³ãƒ‰ä¸€è¦§
 
 
-Ãí°Õ: remove ¤Î¤è¤¦¤ËÃ±¸ì¤¬¤Ö¤Ä¤«¤Ã¤Æ¤¤¤ë¤â¤Î¤¬¤¢¤ë¡£
-      ¤½¤Î¤¿¤á¡¢¥¢¥É¥ì¥¹´ØÏ¢¤Îµ¡Ç½¤Ï¸ß´¹À­¤òÍ¥Àè¤¹¤ë¤¬
-      ¤½¤ì°Ê³°¤Î¤â¤Î¤Ï¡¢admin command subcommand args ·Á¤¬
-      ²ÄÇ½¤Ç¤¢¤ë¤«¤òÌÏº÷¤¹¤ë¤Ù¤­¡£
+æ³¨æ„: remove ã®ã‚ˆã†ã«å˜èªãŒã¶ã¤ã‹ã£ã¦ã„ã‚‹ã‚‚ã®ãŒã‚ã‚‹ã€‚
+      ãã®ãŸã‚ã€ã‚¢ãƒ‰ãƒ¬ã‚¹é–¢é€£ã®æ©Ÿèƒ½ã¯äº’æ›æ€§ã‚’å„ªå…ˆã™ã‚‹ãŒ
+      ãã‚Œä»¥å¤–ã®ã‚‚ã®ã¯ã€admin command subcommand args å½¢ãŒ
+      å¯èƒ½ã§ã‚ã‚‹ã‹ã‚’æ¨¡ç´¢ã™ã‚‹ã¹ãã€‚
 
 
-  not yet	²¿¤é¤«¤Î°ÕÌ£¤Ç·èÄêºÑ¤ß	status or ¥³¥á¥ó¥È
+  not yet	ä½•ã‚‰ã‹ã®æ„å‘³ã§æ±ºå®šæ¸ˆã¿	status or ã‚³ãƒ¡ãƒ³ãƒˆ
 ------------------------------------------------------
 
- [¥¢¥É¥ì¥¹´ØÏ¢¤ÎÁàºî]
+ [ã‚¢ãƒ‰ãƒ¬ã‚¹é–¢é€£ã®æ“ä½œ]
 
 actives
 		add			done
@@ -36,39 +36,39 @@ on
 		unsubscribe		done
 
 
-  [¥Ç¥£¥ì¥¯¥È¥êÁàºî]
-   *** ¿·¥¹¥¿¥¤¥ë¤Ø°Ü¹Ô¤¹¤ë¤Ù¤­ ? ***
+  [ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæ“ä½œ]
+   *** æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸ç§»è¡Œã™ã‚‹ã¹ã ? ***
 
 		dir			done
 		ls			done
 
-  [¥í¥°¥Õ¥¡¥¤¥ë¤ò¸«¤ë]
+  [ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’è¦‹ã‚‹]
 
-		log			È¾Ê¬
+		log			åŠåˆ†
 
 
-  [¥Õ¥¡¥¤¥ë¤ËÂĞ¤¹¤ë°ìÈÌÅª¤ÊÁàºî]
-   *** ¿·¥¹¥¿¥¤¥ë¤Ø°Ü¹Ô¤¹¤ë¤Ù¤­ ? ***
+  [ãƒ•ã‚¡ã‚¤ãƒ«ã«å¯¾ã™ã‚‹ä¸€èˆ¬çš„ãªæ“ä½œ]
+   *** æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸ç§»è¡Œã™ã‚‹ã¹ã ? ***
 
-		forward			removed *¿·¥¹¥¿¥¤¥ë¤Ø
+		forward			removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
 		get			done
-		newguide		removed *¿·¥¹¥¿¥¤¥ë¤Ø ?
-		newinfo			removed *¿·¥¹¥¿¥¤¥ë¤Ø ?
-		put			removed *¿·¥¹¥¿¥¤¥ë¤Ø
-		remove			Ãí°Õ: ÊÌ¤Î°ÕÌ£¤Ë¤Ê¤ë
-		remove-article		removed *¿·¥¹¥¿¥¤¥ë¤Ø
-		rename			removed *¿·¥¹¥¿¥¤¥ë¤Ø
-		resend			removed *¿·¥¹¥¿¥¤¥ë¤Ø ?
-		send			removed *¿·¥¹¥¿¥¤¥ë¤Ø ?
-		unlink			removed *¿·¥¹¥¿¥¤¥ë¤Ø
-		unlink-article		removed *¿·¥¹¥¿¥¤¥ë¤Ø
+		newguide		removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸ ?
+		newinfo			removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸ ?
+		put			removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
+		remove			æ³¨æ„: åˆ¥ã®æ„å‘³ã«ãªã‚‹
+		remove-article		removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
+		rename			removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
+		resend			removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸ ?
+		send			removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸ ?
+		unlink			removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
+		unlink-article		removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
 
 		file remove		done
 		file unlink		done
 		file delete		done
 file    rename
 file    put
-file    get				(Îã³°: get ¤ÈÆ±¤¸µ¡Ç½)
+file    get				(ä¾‹å¤–: get ã¨åŒã˜æ©Ÿèƒ½)
 file    send
 
 article forward
@@ -76,18 +76,18 @@ article remove
 article unlink
 
 
-   [Ç§¾Ú]
-   *** ¿·¥¹¥¿¥¤¥ë¤Ø°Ü¹Ô¤¹¤ë¤Ù¤­ ? ***
+   [èªè¨¼]
+   *** æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸ç§»è¡Œã™ã‚‹ã¹ã ? ***
 
-		initpass		removed *¿·¥¹¥¿¥¤¥ë¤Ø
-		initpasswd		removed *¿·¥¹¥¿¥¤¥ë¤Ø
+		initpass		removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
+		initpasswd		removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
 		pass			done
-		passwd			removed *¿·¥¹¥¿¥¤¥ë¤Ø
+		passwd			removed *æ–°ã‚¹ã‚¿ã‚¤ãƒ«ã¸
 		password		done
 pgp
 
 
-   [¤½¤ÎÂ¾]
+   [ãã®ä»–]
 
 help
 		iam			removed

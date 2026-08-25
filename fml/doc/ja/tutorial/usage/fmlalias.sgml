@@ -5,13 +5,13 @@
 
 <sect1 id="usage.fmlalias">
 	<title>
-	�����ꥢ���ΰ�����ɽ������ (fmlalias ���ޥ��)
+	エイリアスの一覧を表示する (fmlalias コマンド)
 	</title>
 
 <para>
 fmlalias (/usr/local/bin/fmlalias)
-�Ϥ��Υۥ��Ȥ��������Ƥ������Ƥ� alias ��ɽ�����ޤ���
-���Τˤϡ�Postfix ���������Ƥ��� alias �����Ƥ�ɽ�����ޤ���
+はそのホストで定義されている全ての alias を表示します。
+正確には、Postfix で定義されている alias の全てを表示します。
 </para>
 
 <para>
@@ -23,10 +23,10 @@ fmlalias (/usr/local/bin/fmlalias)
 <para>
 <warning>
 <para>
-fmladdr �� fmlalias �ΰ㤤�ϡ�������
-�桼��( /etc/passwd ���������Ƥ����� )��ޤफ�ݤ����Ȥ������Ǥ���
-fmladdr �ϴޤߤޤ���fmlalias �ϴޤߤޤ��� 
-fmlalias �ϡ����� alias ���Τߤ�ɽ�����ޤ���
+fmladdr と fmlalias の違いは、一覧に
+ユーザ( /etc/passwd で定義されているもの )を含むか否か？という点です。
+fmladdr は含みます、fmlalias は含みません。 
+fmlalias は、純粋に alias 群のみを表示します。
 </para>
 </warning>
 </para>

@@ -1,48 +1,48 @@
 
-			mysql 4.0.25 �Ǥμ¹���
+			mysql 4.0.25 での実行例
 
 
-0)	mysql �򥹥����Ȥ����롣
+0)	mysql をスタートさせる。
 
 	/etc/rc.d/mysql start
 
 
-1)	localhost ���� root �ǤΥ����������ǧ
+1)	localhost から root でのアクセスを確認
 
 	% su root
 	# mysqlaccess localhost root mysql
 
 
-1.1)	localhost ����Υ桼�� fml���ѥ���� uja ��ͭ���ˤ��롣
+1.1)	localhost からのユーザ fml、パスワード uja を有効にする。
 
-	�ǡ����١��� mysql �����Ƥ򸫤ơ��ơ��֥� user �Υե����ޥå�
-	���ǧ���롣
+	データベース mysql の内容を見て、テーブル user のフォーマット
+	を確認する。
 
 	# mysqldump mysql 
 
-	�桼�� root �����������򥳥ԡ�����Ŭ�ڤʥǡ������ꡢ
-	�ǡ����١����˥桼�� fml �������ή�����ࡣ 
-	�桼��������ѹ������� reload ����Τ�˺�줺�ˡ�
+	ユーザ root あたりの定義をコピーして適切なデータを作り、
+	データベースにユーザ fml の設定を流し込む。 
+	ユーザ情報を変更したら reload するのを忘れずに。
 
 	# mysql mysql
-	INSERT INTO user VALUES ('localhost','fml',Password('uja'), ..ά..);
+	INSERT INTO user VALUES ('localhost','fml',Password('uja'), ..略..);
 	# mysqladmin reload
 
-	[INFO] adduser.sql �������θ��ܡ�
+	[INFO] adduser.sql が、その見本。
 
 
-2)	�ǡ����١��� fml ���롣
+2)	データベース fml を作る。
 
 	# mysqladmin create fml
 
 
-2.1) 	�ǡ����١��� fml �ؤΥ����������ǧ
+2.1) 	データベース fml へのアクセスを確認
 
 	# mysqlaccess localhost fml fml -U root -P -H localhost
 
 
 
-3)	�ơ��֥� ml ���롣
+3)	テーブル ml を作る。
 
 	# mysql fml
 	create table ml (
@@ -53,16 +53,16 @@
 		fml_recipient int
 	);
 
-	�ǡ��������줿�ꡢ�ǡ���������뤫��Ƥߤ롣
+	データを入れたり、データを引けるか試してみる。
 
 	# mysql fml
 	select * from ml;
 
 
-	[INFO] �ʲ��Σ��ĤΥ���ץ뤬���롣
-		create_table.sql	�ơ��֥���롣
-		test.sql		���롢������Ѳ��򸫤롣
-		droptable.sql		�ơ��֥��ä���
+	[INFO] 以下の３つのサンプルがある。
+		create_table.sql	テーブルを作る。
+		test.sql		見る、入れて変化を見る。
+		droptable.sql		テーブルを消す。
 
 
 4)	test
@@ -71,7 +71,7 @@
 
 
 
-��Ͽa)	�ƥ��Ȥ˻Ȥä��ǡ����١�����ä���
+付録a)	テストに使ったデータベースを消す。
 
 	# mysqladmin drop fml
 	Dropping the database is potentially a very bad thing to do.
@@ -80,17 +80,17 @@
 	Do you really want to drop the 'fml' database [y/N] y
 	Database "fml" dropped
 
-��Ͽb)	root �ѥ���ɤ�Ĥ���
+付録b)	root パスワードをつける
 
-	# mysqladmin -u root password "�������ѥ����"
+	# mysqladmin -u root password "新しいパスワード"
 
-	����ʹߤϥ��ޥ�ɤ� -p ���ץ�����Ĥ��ѥ�������Ϥ�
-	����ɬ�פ����롣
+	これ以降はコマンドに -p オプションをつけパスワード入力を
+	する必要がある。
 
-	��:
+	例:
 	# mysqladmin -p create fml
 	# mysql -p mysql < adduser.sql
-	# mysql -h �ۥ��� -u �桼�� --password="�ѥ����" �ǡ����١���
+	# mysql -h ホスト -u ユーザ --password="パスワード" データベース
 
 ------------------------------------------------------------
 $FML$

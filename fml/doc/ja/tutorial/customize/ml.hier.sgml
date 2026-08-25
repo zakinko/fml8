@@ -1,78 +1,78 @@
 <!-- -*- mode:text coding:euc-jp -*-
    $FML: ml.hier.sgml,v 1.2 2008/08/18 02:23:59 fukachan Exp $
 
-   ���ز����줿�ͣ�: $member_maps $recipient_maps ����������
+   階層化されたＭＬ: $member_maps $recipient_maps をよろしく書く
 
 -->
 
 <sect1 id="config.hier.ml">
 	<title>
-	�����������ǥ�: �̤ͣγ��ز�
+	ケーススタディ: ＭＬの階層化
 	</title>
 
 <para>
-���С����¤򤹤����̤Σ̷ͣ�������Ȥ��������γ��ز���ͤ��ޤ���
+メンバー制限をする普通のＭＬ群があるとし、それらの階層化を考えます。
 (
 <ulink url="http://www.oreilly.co.jp/BOOK/fml/">
-fml �Х��֥�
+fml バイブル
 </ulink>
-�ˤ���褦��)
-���Ȥ��бĶ����˱Ķ� 1�� 2�� 3 �ݤ������礬������˳������ޤ���
+にあるように)
+たとえば営業部に営業 1、 2、 3 課がある場合が、これに該当します。
 </para>
 
 <para>
-�ޤ������줾��β��Ѥ� sales-1�� sales-2�� sales-3 �̤ͣ��ꡢ
-�ƣ̤ͣΥ��С��ϡ����줾��βݤǴ������Ƥ�餦���Ȥˤ��ޤ���
-�ޤ����ӡ��Ķ������Τ�Ϣ���Ѥ� sales  �̤ͣ��ꡢ
-sales �̤ͣإ᡼�����������ȡ�
-sales-1 sales-2 sales-3 �Υ��С��ˤ����������褦�ˤ��ޤ��礦��
+まず、それぞれの課用に sales-1、 sales-2、 sales-3 ＭＬを作り、
+各ＭＬのメンバーは、それぞれの課で管理してもらうことにします。
+また別途、営業部全体の連絡用に sales  ＭＬも作り、
+sales ＭＬへメールを送信すると、
+sales-1 sales-2 sales-3 のメンバーにも配送されるようにしましょう。
 </para>
 
 <para>
-����ϴ�ñ�ǡ�sales �̤ͣ�����������䤹�����Ǥ���
-sales �̤ͣ� config.cf ��
+設定は簡単で、sales ＭＬの配送先を増やすだけです。
+sales ＭＬの config.cf で
 <screen>
 recipient_maps 	+=	$ml_home_dir/../sales-1/recipients
 recipient_maps 	+=	$ml_home_dir/../sales-2/recipients
 recipient_maps 	+=	$ml_home_dir/../sales-3/recipients
 </screen>
-�Ȥ���С�sales-1,2,3 ���٤ƤΥ��С�����������ޤ���
+とすれば、sales-1,2,3 すべてのメンバーに配送されます。
 </para>
 
 <para>
-��Ʋ�ǽ�ʥ��С���Ʊ�ͤ�
+投稿可能なメンバーも同様に
 <screen>
 member_maps 	+=	$ml_home_dir/../sales-1/members
 member_maps 	+=	$ml_home_dir/../sales-2/members
 member_maps 	+=	$ml_home_dir/../sales-3/members
 </screen>
-�Ȥ��Ƥ���������
+としてください。
 </para>
 
 <para>
-�����ѣ̤ͣξ���ï�Ǥ���ƤǤ���褦�ˡ�
-$member_maps ���ѹ�����ΤǤϤʤ�
+社内用ＭＬの場合は誰でも投稿できるように、
+$member_maps を変更するのではなく
 <screen>
 article_post_restrictions	=	permit_anyone
 </screen>
-�����ꤷ�ơ�ï�Ǥ���Ʋ�ǽ�פȤ��Ƥ��ޤ��Τ⥢��Ǥ��礦��
+と設定して「誰でも投稿可能」としてしまうのもアリでしょう。
 </para>
 
 <para>
-�����Ǥϥե�����Ǵ������������夲�Ƥ��ޤ���
-����ϴ�ñ�ǡ������˼¹ԤǤ���Ȥ����Τ��褤�Ȥ����Ǥ���
+ここではファイルで管理する例を取り上げています。
+これは簡単で、すぐに実行できるというのがよいところです。
 </para>
 
 <para>
-�������ʤ��顢
-MySQL �ʤ���ȿ��ޤȥ᡼���ۿ���ꥹ�Ȥ��������Τ�����Ū�Ǥ��礦��
-�������ݼ�⡢����ʤ��ɬ�פȤʤ�ޤ�����
-���Ǥˤ������ä�ǧ�ڥ����ƥब����ʤ顢
-�����Ϣ�Ȥ���褦���߷פ��ƤߤƤ���������
+しかしながら、
+MySQL なりで組織図とメール配信先リストを管理するのが現代的でしょう。
+準備も保守も、それなりに必要となりますが、
+すでにそういった認証システムがあるなら、
+それと連携するように設計してみてください。
 </para>
 
 <para>
-���ʤߤ� &fml8; �� MySQL PostgreSQL LDAP �Ȥ��̿�����ǽ�Ǥ���
+ちなみに &fml8; は MySQL PostgreSQL LDAP との通信が可能です。
 </para>
 
 </sect1>

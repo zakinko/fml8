@@ -4,7 +4,7 @@
 
 <glossary id="glossary">
 	<title>
-	�Ѹ콸(�ؿ�̾������ѿ�̾��Ϣ)
+	用語集(関数名および変数名関連)
 	</title>
 
 
@@ -12,7 +12,7 @@
 	<glossterm>	&fml4;	</glossterm>
 	<glossdef>
 	<para>
-	&fml4;  (fml �С������ 4)���꡼���Τ���
+	&fml4;  (fml バージョン 4)シリーズのこと
 	</para>
 	</glossdef>
    </glossentry>
@@ -22,7 +22,7 @@
 	<glossterm>	&fml8;	</glossterm>
 	<glossdef>
 	<para>
-	&fml8;  (fml �С������ 8)���꡼���Τ���
+	&fml8;  (fml バージョン 8)シリーズのこと
 	</para>
 	</glossdef>
    </glossentry>
@@ -32,7 +32,7 @@
 	<glossterm>	fml-devel	</glossterm>
 	<glossdef>
 	<para>
-	&fml8; ��ȯ����Υ����ɥ͡��ࡣ
+	&fml8; 開発初期のコードネーム。
 	</para>
 	</glossdef>
    </glossentry>
@@ -42,11 +42,11 @@
 	<glossterm>	curproc	</glossterm>
 	<glossdef>
 	<para>
-	"current process" ��ά��
+	"current process" の略。
 	</para>
 
 	<para>
-	Unix �����ͥ������Ū�˻Ȥ��Ƥ����ά̾��ŵ���㡣
+	Unix カーネルで伝統的に使われている省略名の典型例。
 	</para>
 
 	</glossdef>
@@ -58,15 +58,15 @@
 	<glossdef>
 
 	<para>
-	Process Control Block ��ά�ǡ����Υץ�������ͭ�ξ����ޤࡣ
-	�̤ͣ��Ȥ����Ƥϰۤʤ롣
-	fml �����ǤΥ���ƥ��������ؤϡ�
-	listserv ��������Σ̤ͣʤɥ��ߥ�졼���ץ����������
-	���������롣
+	Process Control Block の略で、そのプロセス固有の情報を含む。
+	ＭＬごとに内容は異なる。
+	fml 内部でのコンテキスト切替は、
+	listserv スタイルのＭＬなどエミュレータプログラムの中で
+	起こり得る。
 	</para>
 
 	<para>
-	Unix �����ͥ������Ū�˻Ȥ��Ƥ����ά̾��ŵ���㡣
+	Unix カーネルで伝統的に使われている省略名の典型例。
 	</para>
 	</glossdef>
    </glossentry>
@@ -76,7 +76,7 @@
 	<glossterm>	config	</glossterm>
 	<glossdef>
 	<para>
-	configuration ��ά��
+	configuration の略。
 	</para>
 	</glossdef>
    </glossentry>
@@ -86,7 +86,7 @@
 	<glossterm>	conf	</glossterm>
 	<glossdef>
 	<para>
-	configuration ��ά��
+	configuration の略。
 	</para>
 	</glossdef>
    </glossentry>
@@ -96,7 +96,7 @@
 	<glossterm>	arg / args	</glossterm>
 	<glossdef>
 	<para>
-	����( �����������: argument )��ά��
+	引数( アーギュメント: argument )の略。
 	</para>
 	</glossdef>
    </glossentry>
@@ -106,7 +106,7 @@
 	<glossterm>	fh	</glossterm>
 	<glossdef>
 	<para>
-	�ե�����ϥ�ɥ�( file handle )��
+	ファイルハンドル( file handle )。
 	</para>
 	</glossdef>
    </glossentry>
@@ -116,7 +116,7 @@
 	<glossterm>	dh	</glossterm>
 	<glossdef>
 	<para>
-	�ǥ��쥯�ȥ�ϥ�ɥ�( directory handle )��
+	ディレクトリハンドル( directory handle )。
 	</para>
 	</glossdef>
    </glossentry>
@@ -127,13 +127,13 @@
 	<glossdef>
 
 	<para>
-	�ؿ��ؤΥݥ���( function pointer )��
+	関数へのポインタ( function pointer )。
 	</para>
 
 	<para>
-	Perl �Ǥ����� CODE ��ե���󥹤ȸƤ֤٤�������
-	cr �ʤɤȽ񤯤��ʬ����䤹���Τǡ�
-	�ץ��������Ǥ� $fp ��Ȥ����Ȥ�¿����
+	Perl では本来 CODE リファレンスと呼ぶべきだが、
+	cr などと書くより分かりやすいので、
+	プログラム中では $fp を使うことが多い。
 	</para>
 
 	</glossdef>
@@ -141,19 +141,19 @@
 
 
    <glossentry>
-	<glossterm>	_�ʤˤʤ�	</glossterm>
+	<glossterm>	_なになに	</glossterm>
 	<glossdef>
 
 	<para>
-	����Ū�˥ѥå����������饹�����֥������������ǻȤ�
-	�ѿ���ؿ�̾�� _ �ǤϤ��ޤ륭����ɤ�Ȥ���
+	慣習的にパッケージ、クラス、オブジェクト内部で使う
+	変数や関数名に _ ではじまるキーワードを使う。
 	</para>
 
 	<para>
-	�Ĥޤ� private �Ȥ�������(
-	������
-	���֥������Ȼظ�����Ǥ����Ȥ����θ�̩�ʰ�̣��
-	 private method �Ȥ�����̣�����ʤɤȡ��Ĥä��ޤʤ��褦�ˤ��줿��
+	つまり private ということ(
+	ここで
+	オブジェクト指向言語でいうところの厳密な意味で
+	 private method という意味か？などと、つっこまないようにされたい
 	:-)
 	</para>
 
@@ -162,18 +162,18 @@
 
 
    <glossentry>
-	<glossterm>	r�ʤˤʤ�	</glossterm>
+	<glossterm>	rなになに	</glossterm>
 	<glossdef>
 	<para>
-	r �ϥ�ե����(reference)��ά��
-	�����
-	"���֤Ǥ�"
-	�ϥ󥬥ꥢ��ˡ�ȸƤ֤��Ȥ�¿����
+	r はリファレンス(reference)の略。
+	これを
+	"世間では"
+	ハンガリアン記法と呼ぶことが多い。
 	</para>
 
 	<para>
-	�������̤˶�Ĵ���������˻Ȥ����Ȥ����뤬��
-	&fml8; �Ǥϡ��ۤȤ�ɻȤ�ʤ���
+	型を特別に強調したい場合に使うことがあるが、
+	&fml8; では、ほとんど使わない。
 	</para>
 
 	</glossdef>
@@ -184,17 +184,17 @@
 	<glossterm> 	STR	</glossterm>
 	<glossdef>
 	<para>
-	ʸ���� ( string ) ��ά��
+	文字列 ( string ) の略。
 	</para>
 	</glossdef>
    </glossentry>
 
 
    <glossentry>
-	<glossterm> 	���ܸ쥳���ɤ�ά��	</glossterm>
+	<glossterm> 	日本語コードの略称	</glossterm>
 	<glossdef>
 	<para>
-	JIS SJIS EUC �ʤɤ��ʤ��ߤΤ�������
+	JIS SJIS EUC などおなじみのたぐい…
 	</para>
 	</glossdef>
    </glossentry>
@@ -204,11 +204,11 @@
 	<glossterm> 	2	</glossterm>
 	<glossdef>
 	<para>
-	to ��ȯ�������Τ����ά���Ȥ��Ƥ褯�Ȥ��롣
-	����ʤȤ��� 4 ( for �ΰ�̣)�����롣
+	to と発音が一緒のため省略形としてよく使われる。
+	類似品として 4 ( for の意味)がある。
 	</para>
 	<para>
-		��: STR2EUC (STRing to EUC ��ά)
+		例: STR2EUC (STRing to EUC の略)
 <screen>
 use String qw(STR2EUC);
 $euc_string = STR2EUC($string);
@@ -222,21 +222,21 @@ $euc_string = STR2EUC($string);
 	<glossterm> 	4	</glossterm>
 	<glossdef>
 	<para>
-	for ��ȯ����Ʊ��������Ѥ��롣
-	���ޤΤȤ����ȤäƤ������̵����
+	for と発音が同じために用いる。
+	いまのところ使っている例は無い。
 	</para>
 	</glossdef>
    </glossentry>
 
 
    <glossentry>
-	<glossterm> ���ޥ�ɥ᡼�� </glossterm>
+	<glossterm> コマンドメール </glossterm>
 	<glossdef>
 	<para>
-	�᡼�����ʸ�� fml �ؤ�̿��(���ޥ��)��񤤤����뤳�Ȥ�
-	���餫�ν����򤷤Ƥ�餦�������Ρ�
-	���̥桼���ѤΥ��ޥ�ɤ�
-	��⡼�ȴ����ѤΥ��ޥ��(�̾� admin ���ޥ��)�����롣
+	メールの本文に fml への命令(コマンド)を書いて送ることで
+	何らかの処理をしてもらう操作の総称。
+	一般ユーザ用のコマンドと
+	リモート管理用のコマンド(通称 admin コマンド)がある。
 	</para>
 	</glossdef>
    </glossentry>

@@ -5,25 +5,25 @@
 
 <chapter id="operations.log">
 	<title>
-	�����μ谷��
+	ログの取扱い
 	</title>
 
 
 <sect1 id="operations.log.see">
 	<title>
-	�����򸫤�
+	ログを見る
 	</title>
 
 <para>
 <screen>
-% makefml log �ͣ�̾
-% fml     �ͣ�̾ log
+% makefml log ＭＬ名
+% fml     ＭＬ名 log
 </screen>
-�ǡ��Ƕ�Υ���(�ǥե���ȤǤ� 30 ��ʬ)��ɽ������ޤ���
+で、最近のログ(デフォルトでは 30 行分)が表示されます。
 </para>
 
 <para>
-GUI ���������򸫤뤳�Ȥ���ǽ�Ǥ�(΢�Ǥ� log ���ޥ�ɤ�¹Ԥ��Ƥ��ޤ�)��
+GUI からもログを見ることが可能です(裏では log コマンドを実行しています)。
 </para>
 
 </sect1>
@@ -31,73 +31,73 @@ GUI ���������򸫤뤳�Ȥ���ǽ�Ǥ�(΢�Ǥ� log ���ޥ�ɤ�¹Ԥ��Ƥ��ޤ�)��
 
 <sect1 id="operations.log.computeroutput">
 	<title>
-	�������������Υ�����ɽ������
+	機械処理向きのログを表示する
 	</title>
 
 <para>
-��ʬ�ǥ����֥��󥿡��ե������ʤɤ��ꤳ�ߤ������ˤϡ�
-���Τ褦����ˡ�����ѤǤ��ޤ���
+自分でウエブインターフェイスなどを作りこみたい場合には、
+次のような方法が活用できます。
 </para>
 
 <para>
-���Ȥ���
-&fml8; �ʳ����̤Υ��ޥ�ɤ��ȼ��� CGI �ʤɤ��� 
-&fml8; CUI ��ƤӤ��������򤵤�������礬�������ޤ���
-���ξ�硢
-STDERR �ʤɤ� &fml8; ����Υ���������Ȥꤿ���Ǥ��礦��
+たとえば
+&fml8; 以外の別のコマンドや独自の CGI などから 
+&fml8; CUI を呼びだし処理をさせたい場合が該当します。
+この場合、
+STDERR などで &fml8; からのログを受けとりたいでしょう。
 </para>
 
 <para>
-���Τ褦�ʻ���Ǥϡ�
+このような事例では、
 <screen>
-% makefml --log-computer-output ���ޥ�� �ͣ�̾
-% fml --log-computer-output     �ͣ�̾ ���ޥ��
+% makefml --log-computer-output コマンド ＭＬ名
+% fml --log-computer-output     ＭＬ名 コマンド
 </screen>
-�Ȥ���ȡ�
-���ޥ�ɤη�̤�ɸ�����( STDOUT )�ء�
-������ STDERR �ؽ��Ϥ���ޤ���
+とすると、
+コマンドの結果が標準出力( STDOUT )へ、
+ログが STDERR へ出力されます。
 </para>
 
 <para>
-���Ȥ��м��Τ褦�ʵ�ư�ˤʤ�ޤ���
+たとえば次のような挙動になります。
 <screen>
 % fml --log-computer-output elena@fml.org list
 rudo@nuinui.net
 1070109341  info lock channel=recipient_map_modify
 1070109342  info unlock channel=recipient_map_modify
 </screen>
-������ʥǥե���ȡˤǤϡ�
-�ֻ���(unix time)�������Υ�٥�(info,warning,error�ʤ�)����å�������
-�ȤʤäƤ��ޤ���
+この例（デフォルト）では、
+「時刻(unix time)、ログのレベル(info,warning,errorなど)、メッセージ」
+となっています。
 </para>
 
 <para>
-���ޥ�ɥ饤�󥪥ץ���� --log-computer-output �ϡ�
-config.cf �ʤɤ�
+コマンドラインオプション --log-computer-output は、
+config.cf などで
 <screen>
 use_log_computer_output = yes
 </screen>
-�Ȼ��ꤹ�뤳�ȤǤ�Ʊ�����̤Ȥʤ�ޤ���
+と指定することでも同じ効果となります。
 </para>
 
 <para>
-�������ʤ��顢
-�����ѿ��� yes �ˤ���ȡ�
-makefml �� fml �����Ǥʤ���
-�����䥳�ޥ�ɥ᡼��Υץ������� STDERR �˥�������Ϥ���褦�ˤʤ�ޤ���
-���դ��Ƥ���������
+しかしながら、
+この変数を yes にすると、
+makefml や fml だけでなく、
+配送やコマンドメールのプログラムも STDERR にログを出力するようになります。
+注意してください。
 </para>
 
 <para>
-��å������Υ��塼���󥰤�������¤����ϥե����ޥåȤϡ�
-���� Perl �⥸�塼��Τʤ��˲�������Ƥ���ޤ���
-���Υ⥸�塼��(�ǥե���Ȥ� FML::Log::Print::Simple)��
+メッセージのキューイングの内部構造や出力フォーマットは、
+ある Perl モジュールのなかに押し込めてあります。
+このモジュール(デフォルトは FML::Log::Print::Simple)は
 config.cf
-��
-log_computer_output_engine ���ѿ���Ȥ����ѹ���ǽ�Ǥ���
-���Ϥ����ؤ��������ϡ�
-��ʬ�ѤΥ⥸�塼����ꡢ���Υ⥸�塼��򡢤����ѿ��˻��ꤷ�Ƥ���������
-�⥸�塼��� FML::Log::Print::Simple �򻲹ͤˡ�hack ���ƤߤƤ�������:)
+で
+log_computer_output_engine を変数を使えば変更可能です。
+出力を切替えたい場合は、
+自分用のモジュールを作り、そのモジュールを、この変数に指定してください。
+モジュールは FML::Log::Print::Simple を参考に、hack してみてください:)
 </para>
 
 </sect1>
@@ -105,7 +105,7 @@ log_computer_output_engine ���ѿ���Ȥ����ѹ���ǽ�Ǥ���
 
 <sect1 id="operations.log.recipes">
 	<title>
-	�쥷�ԡ�s
+	レシピ’s
 	</title>
 
 &sect.op.log.recipes;

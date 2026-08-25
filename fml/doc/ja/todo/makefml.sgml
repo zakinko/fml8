@@ -40,7 +40,7 @@ routine.
    </title>
 
 <para>
-makefml ��Ǥ� $DEFAULT_DIR_MODE �μ�갷��
+makefml 内での $DEFAULT_DIR_MODE の取り扱い
 </para>
 
 <para>
@@ -48,14 +48,14 @@ fml-support: 06899
 </para>
 
 <para>
-newml �¹Ի��äƤΤȤ���spool �� tmp �� var �ä�
-�ޤȤ�ƺ�äƤ��ޤ���Ǥ����ä�? (�Ф��Ƥʤ�)
-spool  �����ϤĤ����Ƥ��ޤ��ͤ���(lock�Τ���)��
+newml 実行時ってのとき、spool や tmp や var って
+まとめて作ってしまうんでしたっけ? (覚えてない)
+spool  だけはつくられていますねぇ…(lockのため)。
 
-mkdir(�ǥ��쥯�ȥ�) �Ǥ�Ӥ����Ȥ����ϤۤȤ�ɤʤ���Ǥ�����
-������ stat(2)���� mode �� $DEFAULT_DIR_MODE ���ݤ�����
-�⤷��äƤ���$DEFAULT_DIR_MODE�ˤʤ����Ȥ������ʡĤȰ�֤���ä�����
-�տ�Ū��chmod���ƤƤ⤳����ᤵ����㤦�Ȥ����ä�����������ʤ�
+mkdir(ディレクトリ) でよびだすところはほとんどないんですが、
+ここで stat(2)して mode が $DEFAULT_DIR_MODE か否か見て
+もし違ってたら$DEFAULT_DIR_MODEになおすといいかな…と一瞬おもったけど
+意図的にchmodしててもこれに戻されちゃうとかあって問題だろうなぁ
 </para>
 
 </sect1>
@@ -94,12 +94,12 @@ fml-support: 07525
 <!-- ============================================== -->
 <sect1>
    <title>
-   makefml remove-article ɬ�פ���
+   makefml remove-article 必要か？
    </title>
 
 <para>
-makefml remove-article �äƤ���١�����ʤ˼��פ�����ޤ�����
-�� fml-support: 7790 ��
+makefml remove-article ってあるべ？そんなに需要がありますか？
+（ fml-support: 7790 ）
 </para>
 
 </sect1>
@@ -108,7 +108,7 @@ makefml remove-article �äƤ���١�����ʤ˼��פ�����ޤ�����
 <!-- ============================================== -->
 <sect1>
    <title>
-   makefml: ���륢�ɥ쥹����°���Ƥ���ML��ɽ��������ˤ�?
+   makefml: あるアドレスが所属しているMLを表示させるには?
    </title>
 
 <para>
@@ -116,10 +116,10 @@ grep
 </para>
 
 <para>
-�Ǥ� fmlserv �ǤǤ���Τ�ʤ�ʤΤǡ�
-"grep ���ɥ쥹 /var/spool/ml/*/members"���� admin ���ޥ�ɤ��������
-(�ȤƤ⤪�����󤸤�ʤ����������Ĥ���:-)
-fmlserv ����ʤ��̤� admin ML �Ǥ��Ȥ��Τۤ�������Ū�ʴ���������ʤ�
+でも fmlserv でできるのもなんなので、
+"grep アドレス /var/spool/ml/*/members"する admin コマンドを定義して
+(とてもおそいんじゃないだろうかつぅか:-)
+fmlserv じゃない別の admin ML でやるとかのほうが建設的な感じがするなぁ
 </para>
 
 </sect1>

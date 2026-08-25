@@ -1,4 +1,4 @@
-		Mail::Delivery ¤Î VERPs ÂÐ±þ
+		Mail::Delivery ã® VERPs å¯¾å¿œ
 
 
 $service = new Mail::Delivery {
@@ -17,8 +17,8 @@ $service->deliver(
 		  map_params        => $config,
 
 
-	# ¤Ç¡¢verps ¤À¤¬¡©
-	# MTA ¤Î¤Ò¤ó¤È¤Ï¡© 
+	# ã§ã€verps ã ãŒï¼Ÿ
+	# MTA ã®ã²ã‚“ã¨ã¯ï¼Ÿ 
 
 			use_verp	=> yes
 			verp_params	=> {

@@ -6,17 +6,17 @@
 <!-- ============================================== -->
 <sect1>
    <title>
-   �̤ͣ�õ��ݤ� @elena �ǥ��쥯�ȥ��ä�
+   ＭＬを消去する際に @elena ディレクトリを消す
    </title>
 
 <para>
-���Ǥ� @elena �������
+すでに @elena があれば
 <screen>
-	if (-d @elena) { rename(@elena, @elena.����.$$);}
+	if (-d @elena) { rename(@elena, @elena.日付.$$);}
 	rename( elena, @elena )
 </screen>
-�򤹤롩
-rm -fr �Ǥ����󤸡Ĥ��Ƥ⤤�����ɡ����Ԥ���Ȥ��襤����;_;
+をする？
+rm -fr でちゃれんじ…してもいいけど、失敗するとこわい〜ん;_;
 </para>
 
 </sect1>
@@ -25,11 +25,11 @@ rm -fr �Ǥ����󤸡Ĥ��Ƥ⤤�����ɡ����Ԥ���Ȥ��襤����;_;
 <!-- ============================================== -->
 <sect1>
    <title>
-   ML ��ä������б����� authdb/ml-admin/$ml/ �ʲ���ä�
+   ML を消したら対応する authdb/ml-admin/$ml/ 以下も消す
    </title>
 
 <para>
-ML ��ä������б����� authdb/ml-admin/$ml/ �ʲ���ä�
+ML を消したら対応する authdb/ml-admin/$ml/ 以下も消す
 </para>
 
 </sect1>
@@ -38,15 +38,15 @@ ML ��ä������б����� authdb/ml-admin/$ml/ �ʲ���ä�
 <!-- ============================================== -->
 <sect1>
    <title>
-   qmail �� CGI �ǣ̤ͣκ���
+   qmail と CGI でＭＬの作成
    </title>
 
 <para>
-��Ĥ���
+手つかず
 </para>
 
 <para>
-��:  FreeBSD + Apache + qmail  �ǡ�Root�θ��¤�̵�����
+例:  FreeBSD + Apache + qmail  で、Rootの権限が無い場合
 <ulink url="http://www.nmt.ne.jp/~myone/fml.shtml">
 http://www.nmt.ne.jp/~myone/fml.shtml
 </ulink>
@@ -58,7 +58,7 @@ http://www.nmt.ne.jp/~myone/fml.shtml
 <!-- ============================================== -->
 <sect1>
    <title>
-   script ��ȯ���󥹥ȡ��� (����Ǥ�)
+   script 一発インストーラ (決め打ち)
    </title>
 
 <para>
@@ -67,8 +67,8 @@ postfix  + apache + fml-current
 sendmail + apache + fml-current
 qmail    + apache + fml-current
 </screen>
-�ʤɤȤ��ä���ɽŪ���ȹ礻�ˤĤ��ơ�������ץȰ�ȯ��
-���åȥ��åפǤ���褦�ˤ��롣
+などといった代表的な組合せについて、スクリプト一発で
+セットアップできるようにする。
 </para>
 
 </sect1>
@@ -77,11 +77,11 @@ qmail    + apache + fml-current
 <!-- ============================================== -->
 <sect1>
    <title>
-   CGI �ǥإ�ץե�����ʤɤ��Խ��Ǥ��뤫��
+   CGI でヘルプファイルなどを編集できるか？
    </title>
 
 <para>
-�����󡢤�Ĥ������褦�ʡ�
+うーん、むつかしいような…
 </para>
 
 </sect1>
@@ -90,7 +90,7 @@ qmail    + apache + fml-current
 <!-- ============================================== -->
 <sect1>
    <title>
-   �����麸�Υ�˥塼�� update �������äƤʤ�
+   右から左のメニューへ update があがってない
    </title>
 
 <para>
@@ -99,20 +99,20 @@ fml-support: 08449
 
 
 <para>
-���β��̤� newml �η�̤��Ф���˺��Υ�˥�С��Υե졼��˶���Ū��
-TARGET ����򤷤� reload �ϤǤ��ʤ��Τ���
+右の画面の newml の結果が出る時に左のメニュバーのフレームに強制的に
+TARGET 指定をして reload はできないのか？
 </para>
 
 <para>
-����Ū�ˤϤǤ��ʤ����������ɡ�
-���Τ���������줿��ΤȤ��ˤ��ƥ��ꥴ�ꤷ�ʤ��Ȥ���ʤΤ���
+規格的にはできなさそうだけど…
+全体を一括管理されたものとかにしてゴリゴリしないとだめなのか？
 </para>
 
 <para>
-���֤�ְ㤤�ʤ����ᡢ¾�ε���ͤ���褦��
-�����󡢤Ǥ� Java Script �Ȥ�������¸�ݤ��ΤϹͤ������ʤ��ͤ�
-������� table �Ǥʤ�Ȥ��ʤ�󤫤ʤȤ��Ȥˤ���
-HTML ���ʤˤ����ΤǤʤ�Ȥ���
+たぶん間違いなくだめ、他の技を考えるように
+うーん、でも Java Script とか実装依存ぽいのは考えたくないねぇ
+それよりは table でなんとかならんかなとかとにかく
+HTML 規格にあるものでなんとか〜
 </para>
 
 
@@ -122,11 +122,11 @@ HTML ���ʤˤ����ΤǤʤ�Ȥ���
 <!-- ============================================== -->
 <sect1>
    <title>
-   apache with SSL �β�����Ѱդ򤹤�
+   apache with SSL の解説の用意をする
    </title>
 
 <para>
-���뤫�顢������͡� ���Ȥ���
+あるから、いいよね？ たとえば
 <screen>
 http://www.apache.org/dist/Announcement.html
 http://www.cert.org/advisories/CA-2000-02.html
@@ -145,11 +145,11 @@ http://www.apache.org/info/css-security/index.html
    </title>
 
 <para>
-ML̾�Ĥ��ǡ����β��Υ����������¤ϳ� ML ���Ȥ˼�ͳ���ѹ��Ǥ��ʤ��Ȥ����ʤ�
+ML名つきで、その下のアクセス権限は各 ML ごとに自由に変更できないといけない
 </para>
 
 <para>
-�ޤ������̥桼���Ѥ�WWW����������ǥ�ι��ۤ�ɬ�פǤ��礦��
+まず、一般ユーザ用のWWWアクセスモデルの構築が必要でしょう。
 </para>
 
 </sect1>

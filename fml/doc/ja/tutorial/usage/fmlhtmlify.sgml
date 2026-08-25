@@ -5,18 +5,18 @@
 
 <sect1 id="usage.fmlhtmlify">
 	<title>
-	������ HTML ������ (fmlhtmlify ���ޥ��)
+	記事を HTML 化する (fmlhtmlify コマンド)
 	</title>
 
 <para>
-&fml8; �ϡ��ǥե���Ȥǡ���ưŪ�˵����� HTML �����Ƥ��ޤ���
-���Υ��ޥ�ɤϰ��پä��ƽ�������������䡢
-�Ť��̤ͣΰܹԻ��˻Ȥ�����Τ�ΤǤ���
+&fml8; は、デフォルトで、自動的に記事を HTML 化しています。
+このコマンドは一度消して初期化したい時や、
+古いＭＬの移行時に使うためのものです。
 </para>
 
 <para>
 <screen>
-% fmlhtmlify �����Τ���ǥ��쥯�ȥ� �����Υǥ��쥯�ȥ�
+% fmlhtmlify 記事のあるディレクトリ 作る先のディレクトリ
 
 % fmlhtmlify /var/spool/ml/elena/spool /some/where/mlarchive/elena
 </screen>

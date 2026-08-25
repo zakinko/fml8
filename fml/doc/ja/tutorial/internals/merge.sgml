@@ -5,71 +5,71 @@
 
 <chapter id="merge.internal.to.fml8">
 	<title>
-	�����������ǥ�: ¾�Σ̥ͣ����ƥ������� &fml8; ���Ѵ�����ˤϡ�
+	ケーススタディ: 他のＭＬシステムの設定を &fml8; へ変換するには？
 	</title>
 
 
 <sect1 id="merge.internal.fml4to8">
 	<title>
-	��������: &fml4; ���� &fml8; �ؤΰܹԤˤĤ���
+	内部実装: &fml4; から &fml8; への移行について
 	</title>
 
 <sect2>
 	<title>
-	������ 1. /var/spool/ml/elena/ �� 4.0 ���� 8.0 �ذܹԤ������
+	ケース 1. /var/spool/ml/elena/ を 4.0 から 8.0 へ移行する処理
 	</title>
 
 <para>
-���Τ褦�ʽ����򤹤뤳�Ȥˤʤ�ޤ���
+次のような処理をすることになります。
 </para>
 
 <para>
-1) &fml8; �򥤥󥹥ȡ��뤹�롣
-���κݡ�postfix �� alias_maps �� 
+1) &fml8; をインストールする。
+この際、postfix の alias_maps に 
 /var/spool/ml/etc/mail/aliases
-(�ޤ��������ʳ��Ǥ���ȤΤʤ��ե�����Ǥ褤)
-���ɲä��롣
+(まだ、この段階では中身のないファイルでよい)
+を追加する。
 </para>
 
 <para>
-2) makefml --force newml elena �����ν�����Ԥʤ���
-&fml8; ��ɬ�פʥե�����򤤤������Ⱥ��ɬ�פ�����Τǡ�
-newml ��¹Ԥ��Ƥ��ޤ��ۤ����褤��
-������ makefml newml ��¹Ԥ��뤫��
-newml �μ��Τν�����ƤӽФ��褦�ˤ��뤫�Ϥɤ���Ǥ�褤
-(�������֤��Ԥμ����Ǥ褤)��
+2) makefml --force newml elena 相当の処理を行なう。
+&fml8; で必要なファイルをいろいろと作る必要があるので、
+newml を実行してしまうほうがよい。
+本当に makefml newml を実行するか、
+newml の実体の処理を呼び出すようにするかはどちらでもよい
+(が、たぶん後者の実装でよい)。
 </para>
 
 <para>
-3) /var/spool/ml/elena �Υ��С��ꥹ�Ȥ� &fml8; �������Ѵ����롣
-���κݤˤ⡢���������Ѵ����ʤ��Ȥ����ʤ���
+3) /var/spool/ml/elena のメンバーリストを &fml8; 形式へ変換する。
+その際にも、いろいろ変換しないといけない。
 </para>
 
 <para>
 3-1)
-IO::Adapter �� ^# �ιԤϥ����Ȥ��Ȼפä�̵�뤷�Ƥ��롣
-��äơ�actives �� off ����Ƥ��륢�ɥ쥹�Ͼä��Ƥ���褦�˸����롣
+IO::Adapter は ^# の行はコメントだと思って無視している。
+よって、actives で off されているアドレスは消えているように見える。
 </para>
 
 <para>
 3-2)
-off �� s=skip �Ƚ񤤤Ƥ���� on �����ˤʤäƤ��ޤ���
+off を s=skip と書いていると on 扱いになってしまう。
 </para>
 
 <para>
 3-3)
-m=... �Ĥޤ�ޤȤ�Ԥ�̵���ˤʤ롣
+m=... つまりまとめ行が無効になる。
 
-�������ʤ��顢
-���Ū�� members �� # address �Ƚ񤫤�Ƥ���� 4.0 �Ǥ� OK ������
-8.0 �ǤϤ��Υ��ɥ쥹�ϸ����ʤ�(ǧ�ڤ���ݤθ���ˤʤ�ʤ�)��
-�ե����ޥåȤ򸡺����� warning ��Ф��٤�����������
+しかしながら、
+歴史的に members で # address と書かれていると 4.0 では OK だが、
+8.0 ではこのアドレスは見えない(認証する際の候補にならない)。
+フォーマットを検査して warning を出すべきだろうか？
 </para>
 
 <para>
-4) &fml4; ��
-aliases �ե����� (/var/spool/ml/etc/fml/aliases)
-���鳺������̤ͣ���ʬ��ä��� .db ����������롣
+4) &fml4; の
+aliases ファイル (/var/spool/ml/etc/fml/aliases)
+から該当するＭＬの部分を消して .db を再生成する。
 </para>
 
 </sect2>
@@ -77,19 +77,19 @@ aliases �ե����� (/var/spool/ml/etc/fml/aliases)
 
 <sect2>
 	<title>
-	������ 2. /var/spool/ml/ ���Τ� 4.0 ���� 8.0 �ذܹԤ���
+	ケース 2. /var/spool/ml/ 全体を 4.0 から 8.0 へ移行する
 	</title>
 
 <para>
-������ 1. �򷫤��֤�Ŭ�Ѥ���Ф����Ǥ��礦��
+ケース 1. を繰り返し適用すればいいでしょう。
 </para>
 
 <para>
-�ܹԺ����ˣͣ����Τ�ߤ�Ƥ����ʤ顢
-&fml4; �� 
+移行作業中にＭＬ全体を止めていいなら、
+&fml4; の 
 /var/spool/ml/etc/fml/aliases
-�������������ǡ�����������Ŭ�Ѥ���Τ��ڤʤ�����Ǥ��礦��
-������󡢰ܹԺ����� MTA ��ߤ�Ƥ���������
+を削除したうえで、ケース１を適用するのが楽なやり方でしょう。
+もちろん、移行作業中は MTA を止めてください。
 </para>
 
 </sect2>
@@ -97,27 +97,27 @@ aliases �ե����� (/var/spool/ml/etc/fml/aliases)
 
 <sect2>
 	<title>
-	����: Ʊ��ɥᥤ��ǡ�&fml4; �� &fml8; ��Ⱦ���˻ȤäƤ�����
+	議論: 同一ドメインで、&fml4; と &fml8; を半々に使っている場合
 	</title>
 
 <para>
-(X-Sequence: fml-devel 389 ���)
+(X-Sequence: fml-devel 389 より)
 </para>
 
 <para>
-Ʊ��ɥᥤ��ǡ�&fml4; �� &fml8; ��Ⱦ���˻ȤäƤ����硢
-���Τ褦�������ۤɤ����Ƥ����Ȥ褤�Ǥ��礦����
-���䡢
-����Ⱦü�ʥȥ�å��Ϥ��ơ�
-���ʤ��ˡ�mergeml ���Ѵ����뤫�����ʤ����ˤ��Ƥ���������̵����Ȼפ��ޤ���
+同一ドメインで、&fml4; と &fml8; を半々に使っている場合、
+次のような設定をほどこしておくとよいでしょうか？
+いや、
+中途半端なトリックはやめて、
+すなおに、mergeml で変換するか、しないかにしておいた方が無難だと思います。
 </para>
 
 <para>
-&fml4; �Ǥ�����(site_init.ph�Ȥ�config.ph)��
+&fml4; での設定(site_init.phとかconfig.ph)で
 <screen>
 push(@ACTIVE_LIST,"$DIR/recipients") if( -f "$DIR/recipients" ) ;
 </screen>
-������&fml8; �Ǥ�����(site_default_config.cf��config.cf)��
+一方、&fml8; での設定(site_default_config.cfやconfig.cf)で
 <screen>
 html_archive_dir = $ml_home_dir/htdocs
 </screen>

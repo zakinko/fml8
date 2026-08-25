@@ -5,142 +5,142 @@
 
 <chapter id="setup.newml">
 	<title>
-	Unix ��ǣ̤ͣ��������
+	Unix 上でＭＬを作成する
 	</title>
 
 <para>
-���ޥ�ɥ饤�������ٱ�ġ���ˤ� makefml �� fml ������ޤ���
-makefml �� &fml4; ��Ʊ�����󥿥å����Ǥ���
-fml �ϰ������¤ӽ礬�㤦������Ʊ�����ޥ�ɤǤ���
+コマンドラインの設定支援ツールには makefml と fml があります。
+makefml は &fml4; と同じシンタックスです。
+fml は引数の並び順が違うだけの同じコマンドです。
 <screen>
 makefml COMMAND ML      (optional arguments)
 fml     ML      COMMAND (optional arguments)
 </screen>
-�ʲ��Ǥ� makefml ����ˤ����������ޤ���
+以下では makefml を例にして説明します。
 </para>
 
 
 <sect1 id="setup.newml.default">
 	<title>
-	makefml newml �ǣ̤ͣ��� (�ǥե���ȥɥᥤ��ξ��)
+	makefml newml でＭＬを作る (デフォルトドメインの場合)
 	</title>
 
 <caution>
 <para>
-�ǥե���ȥɥᥤ��ξ�硢&fml4 ��Ʊ���Ǥ���
+デフォルトドメインの場合、&fml4 と同じです。
 </para>
 
 <para>
-�С������ɥᥤ���Ȥ���硢&fml4; �Ȥϣͣ�̾�ΰ������ۤʤ�ޤ���
-�С������ɥᥤ��ξܺ٤ˤĤ��Ƥ�
+バーチャルドメインを使う場合、&fml4; とはＭＬ名の扱いが異なります。
+バーチャルドメインの詳細については
 <link linkend="setup.newml.nondefault">
 <xref linkend="setup.newml.nondefault">
 </link>
-�򻲾Ȥ��Ʋ�������
+を参照して下さい。
 </para>
 </caution>
 
 <para>
-�̤ͣκ����� makefml ��ȤäƹԤʤ��ޤ���
-�Ȥ����� &fml4; ��Ʊ�ͤǤ���
+ＭＬの作成は makefml を使って行ないます。
+使い方は &fml4; と同様です。
 <screen>
 % su fml
 % makefml newml elena
-   ... �������ͻҤ����Ϥ����(ά) ...
+   ... 処理の様子が出力される(略) ...
 </screen>
 </para>
 
 <para>
-�ǥե���Ȥ� /var/spool/ml �ʳ��Υѥ���Ȥ��������ϡ�
-���Τ��Ť줫����ˡ��ȤäƲ�������
-(1) ���󥹥ȡ������ configure ���ץ������ѹ����Ƥ�����
+デフォルトの /var/spool/ml 以外のパスを使いたい場合は、
+次のいづれかの方法を使って下さい。
+(1) インストール時の configure オプションで変更しておく、
 (2)
 <link linkend="virtualdomain">
-(�С������ɥᥤ��λ��Ȥߤ���Ѥ���)
+(バーチャルドメインの仕組みを援用して)
 </link>
-makefml newdomain ���ޥ�ɤǻȤ������ѥ�����ꤹ�롢
+makefml newdomain コマンドで使いたいパスを指定する、
 <screen>
 % su root
 # makefml newdomain fml.org /var/spool/virtual/fml.org
 # exit
 % su fml
 % makefml newml elena
-   ... �������ͻҤ����Ϥ����(ά) ...
+   ... 処理の様子が出力される(略) ...
 </screen>
-����: 
-�ܥɥ�����Ȥ�¾�ξ��Ǥ���ڤ��Ƥ���褦�ˡ�
-(���Ѥ���ɥᥤ��������Ƥ����Ȳ��ꤷ��)
-�Ϥ��ᤫ�����̤ͣ�С������ɥᥤ������Ǥα��Ѥ��侩�Ǥ���
+注意: 
+本ドキュメントの他の場所でも言及しているように、
+(運用するドメインは増えていくと仮定して)
+はじめから全ＭＬをバーチャルドメイン前提での運用が推奨です。
 </para>
 
 
 <para>
-��makefml newml elena�פ�¹Ԥ���ȼ��Τ褦�ʽ�����Ԥʤ��ޤ���
+「makefml newml elena」を実行すると次のような処理を行ないます。
 
 <itemizedlist>
 
    <listitem>
         <para>
-	/var/spool/ml/elena ��
+	/var/spool/ml/elena に
 	<screen>
 	config.cf
 	include
 	include-ctl
 	</screen>
-	�ե�����ʤɤ���(Ŭ�����ͣ�̾��ɥᥤ��̾���Ѵ����ʤ���)��
+	ファイルなどを作る(適宜、ＭＬ名やドメイン名を変換しながら)。
         </para>
    </listitem>
 
    <listitem>
         <para>
-	/var/spool/ml/etc/mail/aliases �� elena �̤ͣ������Ź��ࡣ
-	postalias ���ޥ�ɤ�
-	/var/spool/ml/etc/mail/aliases.db �����������
-	(Postfix �Ѥ�����)��
+	/var/spool/ml/etc/mail/aliases に elena ＭＬの設定を仕込む。
+	postalias コマンドで
+	/var/spool/ml/etc/mail/aliases.db を再生成する
+	(Postfix 用の設定)。
         </para>
    </listitem>
 
    <listitem>
         <para>
-	~fml/.qmail-* �ե����뷲����������
-	(qmail �Ѥ�����)��
+	~fml/.qmail-* ファイル群を生成する
+	(qmail 用の設定)。
         </para>
    </listitem>
 
    <listitem>
         <para>
-	procmailrc �θ��ܤ���
-	(����ϸ��ܤ�������Ǥ�)��
+	procmailrc の見本を作る
+	(これは見本を作るだけです)。
         </para>
    </listitem>
 
    <listitem>
         <para>
-	HTML �����줿�������֤����Ȥ��ưʲ��γ��ؤ��Ѱդ���/��롣
+	HTML 化された記事を置く場所として以下の階層を用意する/作る。
 	<screen>
 	~fml/public_html/fml/mlarchive/$domain/$ml/
 	</screen>
-	���Ȥ��� elena@fml.org �ʤ�
+	たとえば elena@fml.org なら
 	<screen>
 	~fml/public_html/fml/mlarchive/fml.org/elena/
 	</screen>
-	���Ѱդ��롣
-	�ǥե���ȤǤϡ�
-	������ HTML �����줿��������ưŪ�˺����(
-	���������ǥե���ȤǤ� apache �����̵꤬���ΤϤ��ʤΤ�
-	���󥿡��ͥåȤˤϸ����ʤ�)��
+	を用意する。
+	デフォルトでは、
+	ここに HTML 化された記事が自動的に作られる(
+	ただし、デフォルトでは apache の設定が無効のはずなので
+	インターネットには見えない)。
         </para>
    </listitem>
 
    <listitem>
         <para>
-	CGI ���󥿡��ե��������Ѱդ��롣
-	�ɥᥤ��ǰ��ְΤ����󥿡��ե�����
-	(���Υɥᥤ��Σ̤ͣ��������Ǥ���)��
+	CGI インターフェイスを用意する。
+	ドメインで一番偉いインターフェイス
+	(そのドメインのＭＬは全部操作できる)が
 	<screen>
 	~fml/public_html/cgi-bin/fml/$domain/admin/config.cgi
 	</screen>
-	�ޤ����ƣ̤ͣǰ��ְΤ����󥿡��ե�����(���Σ̤ͣ����Ǥ���)
+	また、各ＭＬで一番偉いインターフェイス(そのＭＬの操作ができる)
 	<screen>
 	~fml/public_html/cgi-bin/fml/$domain/ml-admin/$ml/config.cgi
 	</screen>
@@ -155,30 +155,30 @@ makefml newdomain ���ޥ�ɤǻȤ������ѥ�����ꤹ�롢
 
 <sect1 id="setup.newml.nondefault">
 	<title>
-	makefml newml �ǣ̤ͣ��� (�ǥե���ȥɥᥤ��Ǥ�"�ʤ�"���)
+	makefml newml でＭＬを作る (デフォルトドメインでは"ない"場合)
 	</title>
 
 <caution>
 <para>
-�ǥե���ȥɥᥤ��ǤϤʤ���硢&fml4; ���礭���ۤʤ�ޤ���
-��������
-(1) �ǽ�� newdomain ���ޥ�ɤ�Ȥ���
-(2) �������ͣ�̾�ˤϥɥᥤ���Ĥ��롢
-�������Ǥ���
+デフォルトドメインではない場合、&fml4; と大きく異なります。
+注意点は
+(1) 最初に newdomain コマンドを使う、
+(2) 操作時、ＭＬ名にはドメインをつける、
+の二点です。
 </para>
 </caution>
 
 <para>
-�̺ͣ����ˤ� makefml ��Ȥ��ޤ���
-�Ȥ����� &fml4; ��Ʊ�ͤǤ���
-�������ʤ���֣ͣ�̾�ˤ�����ȥɥᥤ��ޤǤĤ���פȤ������ۤʤ�ޤ���
-���դ��Ʋ�������
+ＭＬ作成には makefml を使います。
+使い方は &fml4; と同様です。
+しかしながら「ＭＬ名にきちんとドメインまでつける」ところが異なります。
+注意して下さい。
 </para>
 
 <para>
-(�������ɥᥤ���Ȥ��Ϥ�����)
-���� newdomain ���ޥ�ɤˤ��ɥᥤ�������ɬ�פǤ���
-���Ȥ��С�nuinui.net �ɥᥤ��ǤΣ̤ͣ�Ȥ��Ϥ�����
+(新しいドメインを使いはじめる際)
+初回は newdomain コマンドによるドメイン定義も必要です。
+たとえば、nuinui.net ドメインでのＭＬを使いはじめる時
 <screen>
 % su root
 # makefml newdomain nuinui.net /var/spool/virtual/nuinui.net
@@ -186,80 +186,80 @@ makefml newdomain ���ޥ�ɤǻȤ������ѥ�����ꤹ�롢
 % su fml
 % makefml newml elena@nuinui.net
 </screen>
-�Ȥʤ�ޤ���
-����ܰʹߤ�
+となります。
+二回目以降は
 <screen>
 % su fml
 % makefml newml rudo@nuinui.net
 </screen>
-�����ǣ̤ͣ�����Ǥ��ޤ���
+だけでＭＬを作成できます。
 </para>
 
 <para>
-newdomain ���ޥ�ɤǤϡ�
-�֥ɥᥤ��פȡֻȤ� ml_home_prefix �ǥ��쥯�ȥ�פΥڥ�����ꤷ�ޤ���
-�����ϥϥå���ǽ񤱤�
+newdomain コマンドでは、
+「ドメイン」と「使う ml_home_prefix ディレクトリ」のペアを指定します。
+上の例はハッシュで書けば
 <screen>
 { nuinui.net => /var/spool/virtual/nuinui.net }
 </screen>
-���̣���ޤ���
-���Υ��ޥ�ɤ� /usr/local/etc/fml/ml_home_prefix �ե�������Խ�����Ԥ��ޤ���
-�����Ǥ� ml_home_prefix �ե�����˼��ιԤ��ɲä���ޤ���
+を意味します。
+このコマンドは /usr/local/etc/fml/ml_home_prefix ファイルの編集を代行します。
+上の例では ml_home_prefix ファイルに次の行が追加されます。
 <screen>
 nuinui.net /var/spool/virtual/nuinui.net
 </screen>
-���ʤߤˡ������б��ط����ä��륳�ޥ�ɤ� rmdomain �Ǥ���
+ちなみに、この対応関係を解消するコマンドは rmdomain です。
 </para>
 
 <para>
-newml ���ޥ�ɤλȤ����ϡ�
-�����Σͣ�̾��֥ɥᥤ��̾�Ĥ��פˤ���ʳ���
-�ǥե���ȥɥᥤ��ξ��������ˡ��Ʊ���Ǥ���
+newml コマンドの使い方は、
+引数のＭＬ名を「ドメイン名つき」にする以外、
+デフォルトドメインの場合と操作方法は同じです。
 </para>
 
 <para>
-�ޤ����С������ɥᥤ��ξ�硢
-makefml newml �ϳ� MTA ���ȤΥС������ɥᥤ�������긫�ܤ���ޤ���
-���Ȥ���
+また、バーチャルドメインの場合、
+makefml newml は各 MTA ごとのバーチャルドメイン用設定見本を作ります。
+たとえば
 <screen>
 /var/spool/nuinui.net/etc/sendmail/virtusertable
 /var/spool/nuinui.net/etc/postfix/virtual
 /var/spool/nuinui.net/etc/qmail/virtualdomains
 /var/spool/nuinui.net/etc/procmail/procmailrc
 </screen>
-������ޤ���
-MTA �������ѹ����λ��ͤˤ��Ʋ�������
+が作られます。
+MTA の設定変更時の参考にして下さい。
 </para>
 
 <para>
-���ʤߤ� procmail �ϡ�����(
+ちなみに procmail は、見本(
 /var/spool/nuinui.net/etc/procmail/procmailrc
-)���Τ��ɥᥤ��̾�Ĥ��ʤΤǡ�
-���̥С������ɥᥤ���ѤȤ����櫓�ǤϤ���ޤ���
-�ɤ���Υ������Ǥ����긫�ܤ����ѤǤ��ޤ���
+)自体がドメイン名つきなので、
+格別バーチャルドメイン用というわけではありません。
+どちらのケースでも設定見本に利用できます。
 </para>
 
 <para>
-����Ū�ʾܺ٤ϡ�
+技術的な詳細は、
 <link linkend="virtualdomain">
-�С������ɥᥤ��
+バーチャルドメイン
 </link>
-�ξϤ򻲾Ȥ��Ʋ�������
+の章を参照して下さい。
 </para>
 
 </sect1>
 
 
-<!-- �᡼�륵���Ф�����ˤĤ��� -->
+<!-- メールサーバの設定について -->
 &sect.setup.postfix;
 &sect.setup.qmail;
 
 
-<!-- �ƣ̤ͣ�����ˤĤ��� -->
+<!-- 各ＭＬの設定について -->
 &sect.setup.config.cf;
 
 
-<!-- �쥷�� -->
+<!-- レシピ -->
 &sect.setup.newml.recipes;
 
 </chapter>

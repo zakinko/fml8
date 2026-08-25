@@ -5,30 +5,30 @@
 
 <sect2 id="main.cf">
 	<title>
-	��: /usr/local/etc/fml/main.cf
+	例: /usr/local/etc/fml/main.cf
 	</title>
 
 <para>
-/usr/local/etc/fml/main.cf �ϳƣ̤ͣ�����ǤϤ���ޤ���
-main.cf �ϡ�
-�ǥ��쥯�ȥ��ץ������Υ桼����
-���Ѥ��� &fml8; �С������λ���ʤɡ�
-�᥿��٥�δ��ܾ������ꤹ������ե�����ǡ�
-fml �Υץ�����ෲ����ư����ݤ˻��Ȥ��ޤ���
+/usr/local/etc/fml/main.cf は各ＭＬの設定ではありません。
+main.cf は、
+ディレクトリやプロセスのユーザ、
+使用する &fml8; バージョンの指定など、
+メタレベルの基本情報を指定する設定ファイルで、
+fml のプログラム群が起動する際に参照します。
 </para>
 
 <para>
-main.cf �Υե����ޥåȤ�¾�� .cf ��Ʊ��
+main.cf のフォーマットは他の .cf と同様
 <footnote>
 <para>
-�ե������ĥ�Ҥȥե�����ե����ޥåȤˤ���ؤ�����ޤ��� 
+ファイル拡張子とファイルフォーマットには相関があります。 
 </para>
 </footnote>
-��
+に
 <screen>
-�ѿ�̾ = ��
+変数名 = 値
 </screen>
-�Ǥ���
+です。
 
 <screen>
 #

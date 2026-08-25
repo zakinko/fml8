@@ -4,67 +4,67 @@
 
 <chapter id="module.create">
 	<title>
-	����: �������ץ���������
+	例題: 新しいプログラムを作る
 	</title>
 
 
 <para>
-�����Ǥϡ�ñ��ʥ������塼��ɽ�����եȤ���ˤȤꡢ
-&fml8; �Υե졼�������
-�������ץ��������ɲä���ˤϤɤ�������ɤ��Τ����������ޤ��� 
-�ʲ����ץ������̾�� fmlsch �Ȥ������� CGI �Ǥ� fmlsch.cgi �Ǥ���
+ここでは、単純なスケジュール表示ソフトを例にとり、
+&fml8; のフレームワーク中で
+新しいプログラムを追加するにはどうすれば良いのかを説明します。 
+以下、プログラム名は fmlsch とし、その CGI 版が fmlsch.cgi です。
 </para>
 
 <para>
-�ʤ���&fml8; �ܥ����ɥѡ��ƥ���ĥ�Ȥ��ƽв٤��륽�եȥ������Ǥϡ�
-3rdparty/ �ʲ���Ʊ�ͤ����֤ǥե��������������
+なお、&fml8; ＋サードパーティ拡張として出荷するソフトウエアでは、
+3rdparty/ 以下に同様の配置でファイルを生成し、
 <footnote>
 
 <para>
-�ȤϤ�����������������ե�����ϡ�
-�������� fml ��ݥ��ȥ�ʲ���������ѹ�����ɬ�פ�����ޤ��͡�
-���ɲäǺѤ��Ρ�
-�Ǥ���Х����ɥѡ��ƥ��ʲ��˥�����ץȤ���Ф��फ�ȡ�
+とはいえ、さすがに設定ファイルは、
+さすがに fml リポジトリ以下の設定を変更する必要がありますね。
+「追加で済むもの」
+であればサードパーティ以下にスクリプトを作ればすむかと…
 </para>
 
 <para>
-���֤󡢤������ä����ϡ�
-�����ɥѡ��ƥ��ʲ��� fml ��ݥ��ȥ�ʲ��򻲹ͤˡ�
-���󥹥ȡ����켰���ۤ����ڤǤ��礦��
+たぶん、そういった場合は、
+サードパーティ以下に fml リポジトリ以下を参考に、
+インストーラを一式作るほうが楽でしょう。
 </para>
 
 <para>
-����Ǥ⡢�ȥåץǥ��쥯�ȥ�� Makefile �� configure ���ѹ���ɬ�פǤ��ʤ���
+それでも、トップディレクトリの Makefile と configure の変更は必要ですなぁ。
 </para>
 
 </footnote>
-���󥹥ȡ�����������ե�������ѹ����Ʋ�������
+インストーラ等の設定ファイルを変更して下さい。
 </para>
 
 
 <sect1>
 	<title>
-	�����������ǥ�: fmlsch ���롣
+	ケーススタディ: fmlsch を作る。
 	</title>
 
 
 <sect2>
 	<title>
-	���ƥå� 1: ���󥹥ȡ���� fmlsch ���դ��ä���
+	ステップ 1: インストーラに fmlsch を付け加える
 	</title>
 
 <para>
-fml/bin/fmlsch.in �����륹����ץȤ��Ѱդ���
-fml/etc/install.cf.in �� bin_programs �ѿ��� fmlsch ���ɲä��ޤ���
-bin_programs �ˤ��륹����ץȤϥ��󥹥ȡ��餬 
-$prefix/bin/ �إ��󥹥ȡ��뤹���оݤǤ���
+fml/bin/fmlsch.in シェルスクリプトを用意し、
+fml/etc/install.cf.in の bin_programs 変数に fmlsch を追加します。
+bin_programs にあるスクリプトはインストーラが 
+$prefix/bin/ へインストールする対象です。
 </para>
 
 <para>
-fml/bin/fmlsch ����� fml/etc/install.cf ��������
-configure (GNU configure)���Ԥʤ��ޤ���
-configure.in �ˡ����Σ��ĤΥե�������ѿ�Ÿ���򤹤�褦����Ͽ����
-autoconf ��¹Ԥ��� configure ���������Ʋ�������
+fml/bin/fmlsch および fml/etc/install.cf の生成は
+configure (GNU configure)が行ないます。
+configure.in に、この２つのファイルの変数展開をするように登録し、
+autoconf を実行して configure を生成して下さい。
 </para>
 
 </sect2>
@@ -72,24 +72,24 @@ autoconf ��¹Ԥ��� configure ���������Ʋ�������
 
 <sect2>
 	<title>
-	���ƥå� 2: �⥸�塼�����
+	ステップ 2: モジュールを作る
 	</title>
 
 
 <para>
-fmlsch �μ��ΤΥ⥸�塼��Ȥ��ơ�
-fml/lib/FML/Demo/Calendar.pm ��񤭤ޤ���
+fmlsch の実体のモジュールとして、
+fml/lib/FML/Demo/Calendar.pm を書きます。
 </para>
 
 <para>
-�ޤ����ۤ���ɬ�פʥ饤�֥�꤬�����Ŭ��͢�����Ƥ���������
-����� CPAN ����
+また、ほかに必要なライブラリがあれば適宜輸入してください。
+今回は CPAN から
 HTML-CalendarMonthSimple-1.02.tar.gz
-�򥤥󥹥ȡ��뤹��ɬ�פ�����ޤ���
+をインストールする必要があります。
 </para>
 
 <para>
-Date-Calc ��ɬ�פʤΤ�Ŭ�����󥹥ȡ��뤷�Ƥ���������
+Date-Calc も必要なので適宜インストールしてください。
 </para>
 
 </sect2>
@@ -97,51 +97,51 @@ Date-Calc ��ɬ�פʤΤ�Ŭ�����󥹥ȡ��뤷�Ƥ���������
 
 <sect2>
 	<title>
-	���ƥå� 3: FML::Process:: ����
+	ステップ 3: FML::Process:: を修正
 	</title>
 
 <para>
-�Ż��ΤۤȤ�ɤ���ʬ�� FML::Demo::Calendar ���¹Ԥ��ޤ�����
-&fml8; �Υ֡��ȥ��������� FML::Demo::Calendar ��ƤӽФ������
-FML::Process::Calender ���饹��������ޤ���
+仕事のほとんどの部分は FML::Demo::Calendar が実行しますが、
+&fml8; のブートローダから FML::Demo::Calendar を呼び出すために
+FML::Process::Calender クラスを作成します。
 </para>
 
 <caution>
 <para>
-���饹�γ��ؤ� fml/etc/modules �����꼡��ʤΤǡ�
-FML::Process::Calender �Ǥ���ɬ�פϤʤ���
-�ɤγ��ؤǤ�(������� FML:: �ʳ��Ǥ�)���ޤ��ޤ���
+クラスの階層は fml/etc/modules の設定次第なので、
+FML::Process::Calender である必要はなく、
+どの階層でも(もちろん FML:: 以外でも)かまいません。
 </para>
 </caution>
 
 <para>
-�ޤ���fmlsch �ץ������ν��������¹ԤȤ��ä���ޤ��ʰ�Ϣ�μ���
+まず、fmlsch プロセスの初期化から実行といった大まかな一連の手順を
 fml/lib/FML/Process/Calender.pm 
-�˽񤭤ޤ������Υե�����Ͽ����˺������Ʋ�����
+に書きます。このファイルは新規に作成して下さい
 (<link linkend="bootloader">
 <xref linkend="bootloader">
 </link>
-�Ϥ򻲾�)��
+章を参照)。
 </para>
 
 <para>
-�����ơ��֡��ȥ��������� fmlsch �ץ�����ब��ư���줿���ˤ�
-FML::Process::Calender ��ƤӽФ����Ȥ򶵤��뤿���
-fml/etc/modules �ե�����
-��
-fml/etc/command_line_options �ե������ 
-fmlsch �Υ⥸�塼��̾�Ȥ��б��ط����ɲä��ޤ���
+そして、ブートローダーへ fmlsch プログラムが起動された場合には
+FML::Process::Calender を呼び出すことを教えるために
+fml/etc/modules ファイル
+と
+fml/etc/command_line_options ファイルに 
+fmlsch のモジュール名との対応関係を追加します。
 </para>
 
 
 <para>
-FML::Process::Calender ��Ʊ���ǥ��쥯�ȥ�Υ⥸�塼���Ŭ���ˤѤ��ä� 
-hack ���Ƥ������� :-)
+FML::Process::Calender は同じディレクトリのモジュールを適当にぱくって 
+hack してください :-)
 
-�ʤ���fmlsch �ϵ�ǽ���Ǿ��ʤΤǡ�FML::Process::Calender �Ǥ�
-FML::Process::Calender::run() �᥽�åɤ����Ѱդ���Ф����ޤ��Ǥ���
+なお、fmlsch は機能が最小なので、FML::Process::Calender では
+FML::Process::Calender::run() メソッドだけ用意すればおしまいです。
 
-̤����δؿ��� FML::Process::Kernel �Υ᥽�åɤ��Ȥ��ޤ�(�Ѿ�)��
+未定義の関数は FML::Process::Kernel のメソッドが使われます(継承)。
 </para>
 
 </sect2>
@@ -151,27 +151,27 @@ FML::Process::Calender::run() �᥽�åɤ����Ѱդ���Ф����ޤ��Ǥ���
 
 <sect1>
 	<title>
-	�����������ǥ�: fmlsch.cgi
+	ケーススタディ: fmlsch.cgi
 	</title>
 
 
 <para>
-��¤�λ����ϥ⥸�塼�뤬 
-FML::CGI:: ���饹�ˤʤ�ʳ��� fmlsch �ξ���Ʊ�ͤǤ���
-FML::CGI::Calender �� FML::Process::CGI �Υ��֥��饹�Ǥ���
+改造の仕方はモジュールが 
+FML::CGI:: クラスになる以外は fmlsch の場合と同様です。
+FML::CGI::Calender は FML::Process::CGI のサブクラスです。
 </para>
 
 <para>
-̤����Τ�ΤˤĤ��Ƥ� FML::Process::CGI �� FML::Process::Kernel 
-���褭�ˤϤ��餤�ޤ���
+未定義のものについては FML::Process::CGI や FML::Process::Kernel 
+がよきにはからいます。
 </para>
 
 <para>
-�ޤ���HTML ����ΤۤȤ�ɤ� FML::Process::CGI �� 
-Perl �ǥե���Ȥ� CGI.pm ��ȤäƤ��ޤ���
-HTTP header �ʤɤ������� CGI.pm �⥸�塼��Ǥ���
-�����ϡ������ޤǤ����¤ν����ʤΤ�
-FML::CGI:: �ʲ��Υ⥸�塼�뷲��Ŭ�� HTML �ν��Ϥ��������Ƥ��ޤ��� 
+また、HTML 言語のほとんどは FML::Process::CGI が 
+Perl デフォルトの CGI.pm を使っています。
+HTTP header などの生成も CGI.pm モジュールです。
+これらは、あくまでも最低限の処理なので
+FML::CGI:: 以下のモジュール群が適宜 HTML の出力を補正しています。 
 </para>
 
 </sect1>

@@ -5,45 +5,45 @@
 
 <sect1 id="install.postfix">
 	<title>
-	�᡼�륵���Ф����� (Postfix)
+	メールサーバの設定 (Postfix)
 	</title>
 
 <caution>
 <para>
-[�ʥӥ��������] Postfix �����ѹ����ΤޤȤ�
+[ナビゲーション] Postfix 設定変更点のまとめ
 <screen>
 [/etc/postfix/main.cf]
 
-(1) allow_mail_to_commands	(�ǽ�˰�����)
+(1) allow_mail_to_commands	(最初に一回だけ)
 
-(2) alias_maps	���ɲ�		(�ɥᥤ�󤴤Ȥ˰��)
+(2) alias_maps	へ追加		(ドメインごとに一回)
 
-(3) virtual_maps ���ɲ�		(�С������ɥᥤ�󤴤Ȥ˰��)
+(3) virtual_maps へ追加		(バーチャルドメインごとに一回)
 </screen>
-�̤ͣ��ȤΡֺ�ȤϤ���ޤ����
-(�̤ͣο��������������ȼ�� Postfix ���ѹ������פǤ�)��
+ＭＬごとの「作業はありません」
+(ＭＬの新規作成・削除に伴う Postfix の変更は不要です)。
 </para>
 </caution>
 
 <para>
-���餫���ἡ�Τ褦�� Postfix ��������ѹ����Ƥ����Ʋ�������
-�������Ƥ�����
-makefml newml (fml ML newml)��¹Ԥ�������ǣ̤ͣ���ưŪ��ͭ���ˤʤ�ޤ���
+あらかじめ次のように Postfix の設定を変更しておいて下さい。
+こうしておけば
+makefml newml (fml ML newml)を実行するだけでＭＬが自動的に有効になります。
 </para>
 
 <caution>
 
 <para>
-ʣ���Υɥᥤ���Ȥ���硢
-�ɥᥤ�󤴤Ȥ� Postfix �� alias_maps �� virtual_maps
-���ɲ����꤬ɬ�פˤʤ뤳�Ȥ����դ��Ʋ�������
+複数のドメインを使う場合、
+ドメインごとに Postfix の alias_maps と virtual_maps
+の追加設定が必要になることに注意して下さい。
 </para>
 
 <para>
-���������ǽ�ΰ������ǣϣˤǤ���
-��ĤΥɥᥤ��ˤĤ��Ƥϡ����� Postfix ������򤹤�С�
-���Ȥ� 
-makefml �ʤ����� fml ���ޥ�ɤ��������ǣ̤ͣκ������������ǽ�Ǥ���
+ただし、最初の一回だけでＯＫです。
+一つのドメインについては、一度 Postfix の設定をすれば、
+あとは 
+makefml ないしは fml コマンドの操作だけでＭＬの作成・削除が可能です。
 </para>
 
 </caution>
@@ -51,15 +51,15 @@ makefml �ʤ����� fml ���ޥ�ɤ��������ǣ̤ͣκ������������ǽ�Ǥ���
 
 <sect2>
 	<title>
-	Postfix ����ץ�������¹Բ�ǽ�ˤ��롣	
+	Postfix からプログラムを実行可能にする。	
 	</title>
 
 <para>
 <screen>
 allow_mail_to_commands = alias,forward,include
 </screen>
-�����������Ʋ�������
-����ϣ̥ͣɥ饤�Ф�¹Ԥ��뤿���ɬ�ܤ�����Ǥ���
+の設定を入れて下さい。
+これはＭＬドライバを実行するために必須の設定です。
 </para>
 
 </sect2>
@@ -67,52 +67,52 @@ allow_mail_to_commands = alias,forward,include
 
 <sect2>
 	<title>
-	�ǥե���ȡ��ɥᥤ��(��: fml.org)�ѤΣͣ�����
+	デフォルト・ドメイン(例: fml.org)用のＭＬ設定
 	</title>
 
 
 <para>
-����Ū�ˤ� postfix �� /etc/postfix/main.cf �򼡤Τ褦�ˤ��Ƥ���������
+具体的には postfix の /etc/postfix/main.cf を次のようにしてください。
 <screen>
 [/etc/postfix/main.cf]
 
-# Postfix ����ץ�������¹Բ�ǽ�ˤ��롣
+# Postfix からプログラムを実行可能にする。
 allow_mail_to_commands = alias,forward,include
 
-# /etc/mail/aliases �� OS �ǥե���Ȥ� alias
-# /var/spool/ml/etc/mail/aliases �ϥǥե���ȥɥᥤ���Ѥ� alias (fml ����) 
+# /etc/mail/aliases は OS デフォルトの alias
+# /var/spool/ml/etc/mail/aliases はデフォルトドメイン用の alias (fml 管理) 
 alias_maps	=	hash:/etc/mail/aliases
 			hash:/var/spool/ml/etc/mail/aliases
 </screen>
-hash:/var/spool/ml/etc/mail/aliases �� 
-�֥ǥե���ȤΣ̥ͣ��ס���/etc/mail/aliases�פǤ�(
-�ǥե���ȤΣ̥ͣ��ס��롦�ѥ��ϥ��󥹥ȡ�������ˤ�ä��Ѥ��ޤ�)��
-CUI �� newml ���ޥ�ɤ�¹Ԥ���ȡ����̾��
+hash:/var/spool/ml/etc/mail/aliases は 
+「デフォルトのＭＬスプール/etc/mail/aliases」です(
+デフォルトのＭＬスプール・パスはインストール設定によって変わります)。
+CUI で newml コマンドを実行すると、画面上で
 hash:/var/spool/ml/etc/mail/aliases 
-�ե�����򥢥åץǡ��Ȥ��Ƥ��뤳�Ȥ�ɽ�������Τǥѥ����ǧ���ƤߤƲ�������
-newml ���ޥ�ɤλȤ����ˤĤ��Ƥξܺ٤�
+ファイルをアップデートしていることが表示されるのでパスを確認してみて下さい。
+newml コマンドの使い方についての詳細は
 <link linkend="install.fml.unix">
 <xref linkend="install.fml.unix">
 </link>
-�ξϤ򻲾Ȥ��Ƥ���������
+の章を参照してください。
 </para>
 
 <!--
-XXX-TODO: newml �κݤˡ�Postfix ����Υҥ�Ȥ�ɽ������٤��Ǥ��礦��
+XXX-TODO: newml の際に、Postfix 設定のヒントを表示するべきでしょう。
 -->
 
 <warning>
 <para>
-�ޤ� mydestination �˥ǥե���ȤΥɥᥤ��(�����餯 $mydomain )����
-��������ɲä���Ƥ��뤳�Ȥ��ǧ���Ʋ�������
+また mydestination にデフォルトのドメイン(おそらく $mydomain )が、
+きちんと追加されていることを確認して下さい。
 </para>
 
 <para>
-���Ȥ���
+たとえば
 <screen>
 % postconf mydestination
 </screen>
-��¹Ԥ���Postfix ��������ǧ���Ƥ���������
+を実行し、Postfix の設定を確認してください。
 </para>
 </warning>
 
@@ -121,88 +121,88 @@ XXX-TODO: newml �κݤˡ�Postfix ����Υҥ�Ȥ�ɽ������٤��Ǥ��礦��
 
 <sect2>
 	<title>
-	�С������ɥᥤ��(��: nuinui.net)
+	バーチャルドメイン(例: nuinui.net)
 	</title>
 
 <para>
-/etc/postfix/main.cf ��
-alias_maps �� virtual_maps ��ξ����������ɲä�ɬ�פǤ���
+/etc/postfix/main.cf で
+alias_maps と virtual_maps の両方に設定の追加が必要です。
 <screen>
 [/etc/postfix/main.cf]
 
-# Postfix ����ץ�������¹Բ�ǽ�ˤ��롣
+# Postfix からプログラムを実行可能にする。
 allow_mail_to_commands = alias,forward,include
 
-# nuinui.net �Ѥ� alias ���ɲ�
+# nuinui.net 用の alias を追加
 alias_maps	=	hash:/etc/mail/aliases
 			hash:/var/spool/ml/etc/mail/aliases
 			hash:/var/spool/nuinui.net/etc/mail/aliases
 
-# nuinui.net �Ѥ� virtual (�С������ɥᥤ��ΰ������λؼ�)���ɲ�
+# nuinui.net 用の virtual (バーチャルドメインの扱い方の指示)を追加
 virtual_maps	=	hash:/var/spool/nuinui.net/etc/postfix/virtual
 
 </screen>
-makefml newml ��¹Ԥ����
+makefml newml を実行すると
 /var/spool/nuinui.net/etc/mail/aliases
-�����
+および
 /var/spool/nuinui.net/etc/postfix/virtual 
-�� makefml �ˤ�äƼ�ưŪ�˹�������ޤ�(���̤�ɽ�������Τ�ʬ����ޤ��͡�)��
+は makefml によって自動的に更新されます(画面に表示されるので分かりますね？)。
 </para>
 
 <para>
-�С������ɥᥤ��ξ�硢������ ml_home_prefix_maps �����꤬ɬ�פǤ���
-������Ǥ� ml_home_prefix_maps ��
+バーチャルドメインの場合、事前に ml_home_prefix_maps の設定が必要です。
+この例では ml_home_prefix_maps で
 <screen>
 [/var/spool/ml/etc/fml/ml_home_prefix]
 
 nuinui.net /var/spool/nuinui.net
 </screen>
-�Ȥ����ɥᥤ��ȥǥ��쥯�ȥ�֤��б��դ������ꤵ��Ƥ��ޤ���
-�����б��դ��� newdomain ���ޥ�ɤ����ꤷ�ޤ���
-�ܺ٤�
+というドメインとディレクトリ間の対応付けが設定されています。
+この対応付けは newdomain コマンドで設定します。
+詳細は
 <link linkend="install.fml.unix">
 <xref linkend="install.fml.unix">
 </link>
-�ξϤ򻲾Ȥ��Ƥ���������
+の章を参照してください。
 </para>
 
 <!--
-XXX-TODO: newml �κݤˡ�Postfix ������Υҥ�Ȥ�ɽ������٤��Ǥ��礦��
+XXX-TODO: newml の際に、Postfix の設定のヒントを表示するべきでしょう。
 -->
 
 <warning>
 
 <para>
-&fml8; ����� virtual_maps �Υե������
-Postfix ��������� virtual_maps �Ǥ���
-�Ƕ�� Postfix �ˤ� sendmail ��������Ȥ����Τ⤢��ޤ�����
-&fml8; �Ǥ��Τ��餢�� postfix ���������ȤäƤ���Ȥ������Ȥ����դ��Ʋ�������
+&fml8; が作る virtual_maps のファイルは
+Postfix スタイルの virtual_maps です。
+最近の Postfix には sendmail スタイルというのもありますが、
+&fml8; では昔からある postfix スタイルを使っているということに注意して下さい。
 </para>
 
 <para>
-mydestination �ˤϡ�
-�ǥե���ȤΥɥᥤ��(�����餯 $mydomain)������뤳�Ȥ����̤Ǥ�����
-�С������ɥᥤ��(�����Ǥ� nuinui.net)��
-mydestination ���ɲä���ɬ�פϤ���ޤ���
-(Postfix �� virtual_maps ���ͤ򸫤� mydestination �����Ǥ���Ȥߤʤ��Ƥ��ޤ�)��
-���դ��Ʋ�������
+mydestination には、
+デフォルトのドメイン(おそらく $mydomain)を入れることが普通ですが、
+バーチャルドメイン(ここでは nuinui.net)を
+mydestination に追加する必要はありません
+(Postfix は virtual_maps の値を見て mydestination 相当であるとみなしています)。
+注意して下さい。
 </para>
 
 <para>
-�С������ɥᥤ�������뤿�Ӥ�
-alias_maps �ˤϿ������ɥᥤ��� aliaes ��
-virtual_maps �ˤ� virtual �ե�������ɲä���ɬ�פ�����ޤ���
+バーチャルドメインが増えるたびに
+alias_maps には新しいドメインの aliaes を、
+virtual_maps にも virtual ファイルを追加する必要があります。
 </para>
 
 <para>
-���ʤߤˡ�
-�Ƕ�� postfix �Ǥ� virtual_alias_maps �Ȥ����Τ��������ѿ�̾�Ǥ�����
-�ǥե����(/etc/postfix/main.cf.default)��
+ちなみに、
+最近の postfix では virtual_alias_maps というのが正しい変数名ですが、
+デフォルト(/etc/postfix/main.cf.default)で
 <screen>
 virtual_alias_maps = $virtual_maps 
 </screen>
-�ȤʤäƤ��뤿�ᡢ
-virtual_maps �Ǥ� virtual_alias_maps �Ǥ⤫�ޤ��ޤ���
+となっているため、
+virtual_maps でも virtual_alias_maps でもかまいません。
 </para>
 
 </warning>

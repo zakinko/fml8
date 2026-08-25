@@ -5,25 +5,25 @@
 
 <sect1 id="config.autoreply">
 	<title>
-	�����������ǥ�: ��ư�ե����������֤�������
+	ケーススタディ: 自動ファイル送り返しサーバ
 	</title>
 
 <para>
-�����ץ�����( /usr/local/libexec/fml/distribute )���¤����
-�ɤ�ʤȤ��Ǥ� /some/where/help �ե�����������֤����Ȥ�ͤ��ޤ���
-���Ȥ��� help@fml.org �̤ͣ��ꡢ
-���Υ��ɥ쥹�˥᡼��������
-(����򤤤蘆��:-)�إ�ץե�����������֤��Ȥ�����ΤǤ���
+配送プロセス( /usr/local/libexec/fml/distribute )を改造し、
+どんなときでも /some/where/help ファイルを送り返すことを考えます。
+たとえば help@fml.org ＭＬを作り、
+このアドレスにメールを送ると
+(うむをいわさず:-)ヘルプファイルを送り返すというものです。
 </para>
 
 <para>
-���ξ��
-config.cf (e.g. /var/spool/ml/help/config.cf)����ϡ�
-���Τ褦�ˤʤ�ޤ���
+この場合
+config.cf (e.g. /var/spool/ml/help/config.cf)の例は、
+次のようになります。
 <screen>
 article_post_restrictions = permit_anyone
 </screen>
-config.cf �ե������ =cut �԰ʹߤ� hook ��񤭤ޤ���
+config.cf ファイルの =cut 行以降に hook を書きます。
 <screen>
 $distribute_run_start_hook = q{
 
@@ -38,25 +38,25 @@ $distribute_run_start_hook = q{
 
 };
 </screen>
-�Ǹ��
+最後の
 <screen>
 $curproc->stop_this_process();
 </screen>
-�� &fml4; �� $DO_NOTHING �ѿ��ˤ�����ޤ�����&fml8; �Ǥϥ᥽�åɤǤ���
-����ǡ����� HOOK �ʹߡ�����ν�����̵�뤵���褦�ˤʤ�ޤ���
-�Ĥޤꡢ�ʤˤ�¹Ԥ���ʤ��ʤ�Ȥ����櫓�Ǥ���
+が &fml4; の $DO_NOTHING 変数にあたりますが、&fml8; ではメソッドです。
+これで、この HOOK 以降、正常の処理が無視されるようになります。
+つまり、なにも実行されなくなるというわけです。
 </para>
 
 <para>
-���ΤˤϡֿȤΤ�������ϲ���¹Ԥ���ޤ���פ���
-reply_message() �᥽�åɤǡ�
-��å��������塼�������줿��å���������������������Ԥʤ��ޤ���
+正確には「身のある処理は何も実行されません」が、
+reply_message() メソッドで、
+メッセージキューに入れられたメッセージを送信する処理が行なわれます。
 </para>
 
 
 <sect2>
 	<title>
-	�쥷�ԡ�s
+	レシピ’s
 	</title>
 
 &sect.customize.autoreply.recipes;

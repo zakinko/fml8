@@ -5,36 +5,36 @@
 
 <chapter id="digest">
 	<title>
-	������������/�ޤȤ�����
+	ダイジェスト/まとめ送り
 	</title>
 
 <para>
-�����Ρ֤ޤȤ�����פ򤹤�ˤϡ�
+記事の「まとめ送り」をするには、
 <screen>
-/usr/local/libexec/fml/digest �ͣ�̾
+/usr/local/libexec/fml/digest ＭＬ名
 </screen>
-�����Ū�� cron ����¹Ԥ��Ʋ�������
+を定期的に cron から実行して下さい。
 </para>
 
 <warning>
 <para>
-&fml4; �Τ褦�ʥ���κ٤�������Ͻ���ޤ���
+&fml4; のようなキメの細かい設定は出来ません。
 </para>
 
 <para>
-�Ȥ�����ꡢ
-&fml8; �Ǥϡ�&fml4; �Τ褦�ʥ���κ٤�������μ���ͽ�꤬����ޤ���
+というより、
+&fml8; では、&fml4; のようなキメの細かい設定の実装予定がありません。
 </para>
 </warning>
 
 
 <sect1 id="digest.config.files">
 	<title>
-	�ޤȤ�����ǻȤ���ե����뷲
+	まとめ送りで使われるファイル群
 	</title>
 
 <para>
-$ml_home_dir/ �ʲ��Ρ֤ޤȤᤪ�����Ϣ�ե�����פˤϼ��Τ褦�ʤ�Τ�����ޤ���
+$ml_home_dir/ 以下の「まとめおくり関連ファイル」には次のようなものがあります。
 <screen>
 seq-digest
 members-digest 
@@ -43,19 +43,19 @@ recipients-digest
 </para>
 
 <para>
-seq-digest �ϺǸ�����ä������ϲ��֤�����Ͽ���Ƥ��ޤ���
+seq-digest は最後に送った記事は何番か？を記録しています。
 </para>
 
 <para>
-members-digest �ϥ��ߡ��ǡ�
-recipients-digest �����ޤȤᤪ����������ꥹ�ȤǤ�
-(members �� recipients �ϥڥ��ʤΤǡ����ߡ��Ǥ�������Ƥ��ޤ�)��
+members-digest はダミーで、
+recipients-digest が、まとめおくりの配送リストです
+(members と recipients はペアなので、ダミーでも作成しています)。
 </para>
 
 <para>
-������� IO::Adapter ���饹�����Ѥ��������ꥹ�Ȥ��������Τǡ�
-������Υꥹ��
-$digest_recipient_maps �Ǥ� mysql �ʤɤ����Ѳ�ǽ�Ǥ���
+もちろん IO::Adapter クラスを利用して配送リストを取得するので、
+配送先のリスト
+$digest_recipient_maps では mysql なども利用可能です。
 </para>
 
 </sect1>
@@ -63,33 +63,33 @@ $digest_recipient_maps �Ǥ� mysql �ʤɤ����Ѳ�ǽ�Ǥ���
 
 <sect1 id="digest.command">
 	<title>
-	��: �����������ȴ�Ϣ�Υ��ޥ�ɤ�ɤ����뤫��
+	案: ダイジェスト関連のコマンドをどうするか？
 	</title>
 
 
 <!--
-   XXX-TODO �����������ȴ�Ϣ�Υ��ޥ�ɤ�ɤ����뤫��
+   XXX-TODO ダイジェスト関連のコマンドをどうするか？
 -->
 
 
 <para>
-digest ���ޥ�ɤΤޤȤ�Ǥ������ʤ顢�����Ǥ��礦����(fml-devel 313)
+digest コマンドのまとめです。作るなら、こうでしょうか？(fml-devel 313)
 </para>
 
 <para>
-�ǡ��⡢�͡����衢���٤������꤬�����褦�ˤ��뤳�Ȥ�ͤ���ȡ�
-����Ǥ����ΤǤ��礦����
-(�٤�������ϼ�������ʤ��Τ� OK ?)
+で、も、ね、将来、より細かい指定が出来るようにすることを考えると、
+これでいいのでしょうか？
+(細かい指定は実装されないので OK ?)
 </para>
 
 
 <sect2>
 	<title>
-	makefml ���ޥ��
+	makefml コマンド
 	</title>
 
 <para>
-(�ʲ��Υ��ޥ�ɤϼ����Ѥ�)
+(以下のコマンドは実装済み)
 <screen>
 makefml digest    $ml $address on
 makefml digeston  $ml $address
@@ -107,11 +107,11 @@ makefml digestoff $ml $address
 
 <sect2>
 	<title>
-	admin ���ޥ��
+	admin コマンド
 	</title>
 
 <para>
-(�ʲ��Υ��ޥ�ɤϼ����Ѥ�)
+(以下のコマンドは実装済み)
 <screen>
 admin digest $address on
 admin digest $address off
@@ -123,11 +123,11 @@ admin digest $address off
 
 <sect2>
 	<title>
-	�桼�����ޥ��
+	ユーザコマンド
 	</title>
 
 <para>
-(������)
+(実装済)
 <screen>
 digest on
 digest off
@@ -135,15 +135,15 @@ digest off
 </para>
 
 <para>
-(̤����)
-����ϡ�confirmation ���֤��פǡ��褤�Ǥ��礦���͡�
+(未実装)
+これは「confirmation を返す」で、よいでしょうかね？
 </para>
 
 <para>
-confirm ��̤�����Ǥ���
-�ǥ�����ݥꥷ���Ȥ��ơ�
-���ɥ쥹���ط��Υ��ޥ�ɤΥǥե���Ȥϸ��������ޤ��礦��
-��˾���ǤƤ�����缡����Ƥ����Ȥ������Ȥˤ��ޤ���
+confirm は未実装です。
+デザインポリシーとして、
+アドレス操作関係のコマンドのデフォルトは厳しくしましょう。
+要望がでてきたら順次ゆるめていくということにします。
 </para>
 
 </sect2>
@@ -155,7 +155,7 @@ confirm ��̤�����Ǥ���
 	</title>
 
 <para>
-(������)
+(実装済)
 <screen>
 digeston
 digestoff

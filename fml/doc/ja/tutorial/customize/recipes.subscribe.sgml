@@ -8,16 +8,16 @@
 
 <question>
 <para>
-subscribe ����Ͽ��Ȥϼ�ư�Ǥ�����
-(&fml4; �� closed + confirm ����)
+subscribe の登録作業は手動でしたい
+(&fml4; の closed + confirm 相当)
 </para>
 </question>
 
 <answer>
 <para>
-&fml8; �� subscribe �� confirmation �Ĥ��μ�ư��Ͽ���ǥե���ȤǤ���
+&fml8; の subscribe は confirmation つきの自動登録がデフォルトです。
 <screen>
-[config.cf �Υǥե������]
+[config.cf のデフォルト値]
 
 subscribe_command_auth_type      = confirmation
 
@@ -26,7 +26,7 @@ subscribe_command_operation_mode = automatic
 </para>
 
 <para>
-�ּ�ư����ʻ�������ˤ���ˤϡ����Τ褦�����꤬����ޤ���
+「手動操作」併用方式にするには、次のような設定があります。
 <screen>
 [config.cf]
 
@@ -34,23 +34,23 @@ subscribe_command_auth_type      = confirmation
 
 subscribe_command_operation_mode = manual
 </screen>
-�����ꤷ�����ϡ����Τ褦�ʵ�ư�ˤʤ�ޤ���
-(1) &fml8; �� confirmation ��Ԥʤ��ꥯ�����Ȥ����������ǧ���ޤ���
-�����������ǧ�����פȤ�����������ԤعԤʤ��ޤ���
-(2) ���������ɥ쥹����Ͽ��Ȥϼ�ư�ǤϹԤʤ��ޤ���
-�����Ԥؤ���Ͽ��Ȥ���ꤹ��᡼�뤬 &fml8; ����Ф���ޤ���
-���Υ᡼��򸫤��顢
-�����Ԥ���Ͽ���(admin ���ޥ�ɡ�CUI��GUI)���ư�Ǥ��Ʋ�������
+と設定した場合は、次のような挙動になります。
+(1) &fml8; が confirmation を行ないリクエストの正当性を確認します。
+「正当性を確認した」という報告を管理者へ行ないます。
+(2) 一方、アドレスの登録作業は自動では行なわれません。
+管理者へは登録作業を依頼するメールが &fml8; から出されます。
+そのメールを見たら、
+管理者は登録作業(admin コマンド、CUI、GUI)を手動でして下さい。
 </para>
 
 <para>
-�褦�������Ͽ�����κǽ��ʳ����ּ�ư�פ���ּ�ư�פ��Ѥ�ä������Ǥ���
+ようするに登録過程の最終段階が「自動」から「手動」に変わっただけです。
 </para>
 
 <para>
-confirmation ����Ͽ������Ԥ�����Ԥʤ����ϼ��Τ褦�ˤ��Ʋ�������
-���ξ�硢�̥ͣɥ饤�Ф�Ȥ��յ����ʤ��褦�ʵ��⤷�ޤ�����
-���� SPAM �褱�ˤʤ뤫��㴳�ΰ�̣������Ǥ��礦��
+confirmation も登録も管理者が自ら行なう場合は次のようにして下さい。
+この場合、ＭＬドライバを使う意義がないような気もしますが、
+いや SPAM よけになるから若干の意味があるでしょう。
 <screen>
 [config.cf]
 
@@ -69,13 +69,13 @@ subscribe_command_operation_mode = manual
 
 <question>
 <para>
-unsubscribe ���ޥ�ɤǤ� confirmation ��Ȥ�����
+unsubscribe コマンドでも confirmation を使いたい
 </para>
 </question>
 
 <answer>
 <para>
-&fml8; �Ǥ� confirmation ���ǥե���Ȥε�ư�Ǥ���
+&fml8; では confirmation がデフォルトの挙動です。
 <screen>
 
 </screen>
@@ -90,16 +90,16 @@ unsubscribe ���ޥ�ɤǤ� confirmation ��Ȥ�����
 
 <question>
 <para>
-unsubscribe ����Ͽ��Ȥϼ�ư�Ǥ�����
-(&fml4; �� closed + confirm ����)
+unsubscribe の登録作業は手動でしたい
+(&fml4; の closed + confirm 相当)
 </para>
 </question>
 
 <answer>
 <para>
-unsubscribe �� confirmation �Ĥ��μ�ư��Ͽ���ǥե���ȤǤ���
+unsubscribe は confirmation つきの自動登録がデフォルトです。
 <screen>
-[config.cf �Υǥե������]
+[config.cf のデフォルト値]
 
 unsubscribe_command_auth_type      = confirmation
 
@@ -115,22 +115,22 @@ unsubscribe_command_auth_type      = confirmation
 
 unsubscribe_command_operation_mode = manual
 </screen>
-�����ꤷ�����ϡ����Τ褦�ʵ�ư�ˤʤ�ޤ���
-(1) &fml8; �� confirmation ��Ԥʤ��ꥯ�����Ȥ����������ǧ���ޤ���
-�����Ԥغ�Ȱ���Υ᡼�뤬 &fml8; ����Ф���ޤ���
-(2) ���������ɥ쥹����Ͽ��Ȥϼ�ư�ǤϹԤʤ��ޤ���
-�����Ԥؤ���Ͽ��Ȥ���ꤹ��᡼�뤬 &fml8; ����Ф���ޤ���
-���Υ᡼��򸫤�����Ͽ���(admin ���ޥ�ɡ�CUI��GUI)�򤷤Ʋ�������
+と設定した場合は、次のような挙動になります。
+(1) &fml8; が confirmation を行ないリクエストの正当性を確認します。
+管理者へ作業依頼のメールが &fml8; から出されます。
+(2) 一方、アドレスの登録作業は自動では行なわれません。
+管理者へは登録作業を依頼するメールが &fml8; から出されます。
+そのメールを見たら登録作業(admin コマンド、CUI、GUI)をして下さい。
 </para>
 
 <para>
-�褦�������Ͽ�����κǽ��ʳ����ּ�ư�פ���ּ�ư�פ��Ѥ�ä������Ǥ���
+ようするに登録過程の最終段階が「自動」から「手動」に変わっただけです。
 </para>
 
 <para>
-confirmation ����Ͽ������Ԥ�����Ԥʤ����ϼ��Τ褦�ˤ��Ʋ�������
-���ξ�硢�̥ͣɥ饤�Ф�Ȥ��յ����ʤ��褦�ʵ��⤷�ޤ�����
-���� SPAM �褱�ˤʤ뤫���̣������ޤ��͡�
+confirmation も登録も管理者が自ら行なう場合は次のようにして下さい。
+この場合、ＭＬドライバを使う意義がないような気もしますが、
+いや SPAM よけになるから意味がありますね。
 <screen>
 [config.cf]
 
@@ -149,13 +149,13 @@ unsubscribe_command_operation_mode = manual
 
 <question>
 <para>
-chaddr ���ޥ�ɤǤ� confirmation ��Ȥ�������
+chaddr コマンドでも confirmation を使いたい。
 </para>
 </question>
 
 <answer>
 <para>
-&fml8; �Ǥ� confirmation ���ǥե���Ȥε�ư�Ǥ���
+&fml8; では confirmation がデフォルトの挙動です。
 <screen>
 
 </screen>
@@ -170,16 +170,16 @@ chaddr ���ޥ�ɤǤ� confirmation ��Ȥ�������
 
 <question>
 <para>
-chaddr ����Ͽ��Ȥϼ�ư�Ǥ�����
-(&fml4; �� closed + confirm ����)
+chaddr の登録作業は手動でしたい
+(&fml4; の closed + confirm 相当)
 </para>
 </question>
 
 <answer>
 <para>
-chaddr �� confirmation �Ĥ��μ�ư��Ͽ���ǥե���ȤǤ���
+chaddr は confirmation つきの自動登録がデフォルトです。
 <screen>
-[config.cf �Υǥե������]
+[config.cf のデフォルト値]
 
 chaddr_command_auth_type      = confirmation
 
@@ -195,21 +195,21 @@ chaddr_command_auth_type      = confirmation
 
 chaddr_command_operation_mode = manual
 </screen>
-�����ꤷ�����ϡ����Τ褦�ʵ�ư�ˤʤ�ޤ���
-(1) &fml8; �� confirmation ��Ԥʤ��ꥯ�����Ȥ����������ǧ���ޤ���
-(2) ���������ɥ쥹����Ͽ��Ȥϼ�ư�ǤϹԤʤ��ޤ���
-    �����Ԥؤ���Ͽ��Ȥ���ꤹ��᡼�뤬 &fml8; ����Ф���ޤ���
-    ���Υ᡼��򸫤�����Ͽ���(admin ���ޥ�ɡ�CUI��GUI)�򤷤Ʋ�������
+と設定した場合は、次のような挙動になります。
+(1) &fml8; が confirmation を行ないリクエストの正当性を確認します。
+(2) 一方、アドレスの登録作業は自動では行なわれません。
+    管理者へは登録作業を依頼するメールが &fml8; から出されます。
+    そのメールを見たら登録作業(admin コマンド、CUI、GUI)をして下さい。
 </para>
 
 <para>
-�褦�������Ͽ�����κǸ夬�ּ�ư�פ���ּ�ư�פ��Ѥ�ä������Ǥ���
+ようするに登録過程の最後が「自動」から「手動」に変わっただけです。
 </para>
 
 <para>
-confirmation ����Ͽ������Ԥ�����Ԥʤ����ϼ��Τ褦�ˤ��Ʋ�������
-���ξ�硢�̥ͣɥ饤�Ф�Ȥ��յ����ʤ��褦�ʵ��⤷�ޤ�����
-���� SPAM �褱�ˤʤ뤫���̣������ޤ��͡�
+confirmation も登録も管理者が自ら行なう場合は次のようにして下さい。
+この場合、ＭＬドライバを使う意義がないような気もしますが、
+いや SPAM よけになるから意味がありますね。
 <screen>
 [config.cf]
 
@@ -228,13 +228,13 @@ chaddr_command_operation_mode = manual
 
 <question>
 <para>
-��ư��Ͽ�ȼ��ʾҲ��Ʊ���˹Ԥʤ�����
+自動登録と自己紹介を同時に行ないたい
 </para>
 </question>
 
 <answer>
 <para>
-̤�����Ǥ���
+未実装です。
 <screen>
 
 </screen>
@@ -249,13 +249,13 @@ chaddr_command_operation_mode = manual
 
 <question>
 <para>
-����Υ᡼�륢�ɥ쥹�Τߤ�ư��Ͽ��ǽ�ˤ��롣
+特定のメールアドレスのみを自動登録可能にする。
 </para>
 </question>
 
 <answer>
 <para>
-̤�����Ǥ���
+未実装です。
 <screen>
 
 </screen>
@@ -270,36 +270,36 @@ chaddr_command_operation_mode = manual
 
 <question>
 <para>
-fml 3.0 ������ auto_regist ��Ȥ�³������
+fml 3.0 以前の auto_regist を使い続けたい
 </para>
 </question>
 
 <answer>
 <para>
-&fml4; �Ǥ� auto_regist ����ꤷ����� fml 3.0 �����ε�ư�ˤʤ�ޤ���
-����ϡ�
-���С��ꥹ�Ȥˤ������Υꥹ�Ȥˤ� members �ե����������Ȥ��Ȥ�����ΤǤ���
+&fml4; では auto_regist を指定した場合 fml 3.0 以前の挙動になります。
+これは、
+メンバーリストにも配送のリストにも members ファイルだけを使うというものです。
 </para>
 
 <para>
-���ޤ��顢���ε�ǽ�μ��פ�����Ȥϻפ��ޤ��󤬡���������⤷�ޤ���
+いまさら、この機能の需要があるとは思えませんが、一応、解説します。
 </para>
 
 <para>
-����򥨥ߥ�졼����󤹤�ˤϡ��Ȥꤢ����
+これをエミュレーションするには、とりあえず
 <screen>
 primary_recipient_map = $primary_member_map 
 </screen>
-�Ȥ���Ф褤���Ȥˤʤ�ޤ���
-��������ư��Ͽ���˥��顼���Ǥޤ�(���Ǥ˥��С��Ǥ�����)��
-���顼����򤹤뤿��ˤϡ�
-��Ͽ�оݤǤ��� primary_recipient_map �Ϥ��Τޤޥ��ߡ��Υե�����Ȥ��ƻĤ���
-�ºݤ������ꥹ��(recipient_maps)�� members �ˤ��Ƥ��ޤ��Τ��褤�Ǥ��礦��
+とすればよいことになります。
+ただ、自動登録時にエラーがでます(すでにメンバーですから)。
+エラーを回避するためには、
+登録対象である primary_recipient_map はそのままダミーのファイルとして残し、
+実際の配送リスト(recipient_maps)は members にしてしまうのがよいでしょう。
 <screen>
 recipient_maps = $primary_member_map 
 </screen>
-���ξ�� recipients �Ȥ����ե�����ˤ���Ͽ��Ȥ��Ԥʤ��Ƥ��ޤ�����
-�ºݤε�ư�ˤϴط�����ޤ��������ꥹ�Ȥˤ� members ���Ȥ��ޤ���
+この場合 recipients というファイルにも登録作業が行なわれていますが、
+実際の挙動には関係ありません。配送リストには members が使われます。
 </para>
 
 </answer>

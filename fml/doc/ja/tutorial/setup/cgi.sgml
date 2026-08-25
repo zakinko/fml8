@@ -5,135 +5,135 @@
 
 <chapter id="setupcgi">
 	<title>
-	CGI ������
+	CGI の設定
 	</title>
 
 
 <warning>
 
 <para>
-CGI ��������¤�ˤĤ��Ƥ�
+CGI の内部構造については
 <link linkend="cgi.internal.method">
 <xref linkend="cgi.internal.method">
 </link>
-�򻲾Ȥ��Ʋ�������
+を参照して下さい。
 </para>
 
 <para>
-�ǥե���Ȥ� &fml8; �Ǥϡ�
+デフォルトの &fml8; では、
 <link linkend="setup.apache.suexec">
-apache �� suexec ��Ȥ�
+apache で suexec を使う
 </link>
-���Ȥ�����Ȥ��Ƥ��ޤ���
-�Ĥޤ�
+ことを前提としています。
+つまり
 <screen> 
 http://mail.example.org/~fml/cgi-bin/fml/DOMAIN/admin/config.cgi 
 http://mail.example.org/~fml/cgi-bin/fml/DOMAIN/ml-admin/ML/config.cgi 
 </screen> 
-�Ȥ��ä� URL ��Ȥ�����Ǥ���
+といった URL を使う前提です。
 </para>
 
 </warning>
 
 
 <para>
-�̤ͣ��Ȥδ����� CGI��
-�ɥᥤ�����Τ�������� CGI
-���̥桼�������� subscribe/unsubscribe �ꥯ�����Ȥ������Ƥ�餦 CGI (
-2008/09/09 �ʹ�)
-�Σ����ब�Ѱդ���Ƥ��ޤ���
+ＭＬごとの管理用 CGI、
+ドメイン全体を管理する CGI
+一般ユーザ向けの subscribe/unsubscribe リクエストを申請してもらう CGI (
+2008/09/09 以降)
+の３種類が用意されています。
 </para>
 
 <para>
-������ CGI ���󥿡��ե������Ǥϡ�
-�桼�����ɲá���������С��ꥹ�Ȥ�����α����ʤɤ���ǽ�Ǥ�����
-���ޤΤȤ��� CGI ����������ѹ����󥿡��ե�����
-(����ե����� config.cf ���Խ���ǽ)
-������Ⱦü�Ǥ���
+管理用 CGI インターフェイスでは、
+ユーザの追加、削除、メンバーリストやログの閲覧などが可能ですが、
+いまのところ CGI からの設定変更インターフェイス
+(設定ファイル config.cf の編集機能)
+が中途半端です。
 </para>
 
 <para>
-��CGI ��������ǽ�פʥ��ޥ�ɤϡ����٤� CUI ��Ʊ�����̤�����ޤ���
-���Ȥ��С��̤ͣκ��������⥳�ޥ�ɥ饤�������Ʊ��Ǥ��Τǡ�
-CGI �Ѥ����̤ʺ�Ȥ����פǤ���
+「CGI から操作可能」なコマンドは、すべて CUI と同じ効果を持ちます。
+たとえば、ＭＬの作成や削除もコマンドラインと全く同一ですので、
+CGI 用の特別な作業は不要です。
 </para>
 
 
 
 <sect1 id="setupcgi.install">
 	<title>
-	makefml newml �ϡ��Ĥͤ� CGI ������ץȤ����
+	makefml newml は、つねに CGI スクリプトを作成
 	</title>
 
 <para>
-makefml newml ML (fml ML newml)��¹Ԥ���ȡ�
-~fml/public_html/ �ʲ��� CGI ������ץȤ���������ޤ���
+makefml newml ML (fml ML newml)を実行すると、
+~fml/public_html/ 以下に CGI スクリプトが作成されます。
 </para>
 
 
 <warning>
 <para>
-�Ĥͤ� CGI ������ץȤϺ�������ޤ���
-������
-apache �Υǥե��������Ǥ� ~fml/ �ʲ��ϸ����ޤ���
+つねに CGI スクリプトは作成されます。
+一方、
+apache のデフォルト設定では ~fml/ 以下は見えません。
 </para>
 
 <para>
-����(���¤��줿)��̣�ˤ�����
-��&fml8; �ǥե���ȤǤ� CGI ��̵����
-�ȸ��äƤ��ޤ���
+この(制限された)意味において
+「&fml8; デフォルトでは CGI が無効」
+と言っています。
 </para>
 
 </warning>
 
 
 <para>
-���� CGI �����ҤΤ褦�ˣ����ढ��ޤ���
-�����Ѥ������ˤ�
-�֥ɥᥤ�����Τ�������� CGI��
-�ȡ�
-�֤��줾��Σ̤ͣ��������ͣ����Ѥ� CGI��
-�����ꡢ
-���줾�졢���Υѥ��˺�������ޤ���
+この CGI は前述のように３種類あります。
+管理用の二種類には
+「ドメイン全体を管理する CGI」
+と、
+「それぞれのＭＬを管理するＭＬ専用の CGI」
+があり、
+それぞれ、次のパスに作成されます。
 <screen>
-���Υɥᥤ�����Τδ������� (���Υɥᥤ�󤹤٤ƤΣ̤ͣ������ǽ)
-~fml/public_html/cgi-bin/fml/�ɥᥤ��/admin/config.cgi
+そのドメイン全体の管理者用 (そのドメインすべてのＭＬを管理可能)
+~fml/public_html/cgi-bin/fml/ドメイン/admin/config.cgi
 
-�̤ͣ��Ȥδ������� (���Σ̤ͣΤߤ������ǽ)
-~fml/public_html/cgi-bin/fml/�ɥᥤ��/ml-admin/�ͣ�̾/config.cgi
+ＭＬごとの管理者用 (そのＭＬのみを管理可能)
+~fml/public_html/cgi-bin/fml/ドメイン/ml-admin/ＭＬ名/config.cgi
 </screen>
-���������̥桼�������� CGI (�̤ͣ������������˥塼��)�ϡ�
-WWW �����Ф�����ǥե��륿���񤭤䤹���褦�ˡ�
-�虜�Ȱۤʤ�ѥ��˺������Ƥ��ޤ���
+一方、一般ユーザ向けの CGI (ＭＬの入会・退会申請メニュー用)は、
+WWW サーバの設定でフィルタが書きやすいように、
+わざと異なるパスに作成しています。
 <screen>
-~fml/public_html/cgi-bin/anonymous/�ɥᥤ��/�ͣ�̾/submit.cgi
+~fml/public_html/cgi-bin/anonymous/ドメイン/ＭＬ名/submit.cgi
 </screen>
-ɬ�פ˱�����WWW �����Ф������
-�� ~fml/public_html/cgi-bin/fml/ ��
-��
-�� ~fml/public_html/cgi-bin/anonymous/ ��
-�ǰۤʤ륢�����������ԤʤäƲ�������
+必要に応じ、WWW サーバの設定で
+「 ~fml/public_html/cgi-bin/fml/ 」
+と
+「 ~fml/public_html/cgi-bin/anonymous/ 」
+で異なるアクセス制御を行なって下さい。
 </para>
 
 <para>
-���Ȥ��С�elena@fml.org �̤ͣ��������ȼ��Σ��Ĥ���������ޤ���
+たとえば、elena@fml.org ＭＬを作成すると次の３つが作成されます。
 <screen>
-�� fml.org �����̤ͣ�������� CGI ������ץ�
+○ fml.org の全ＭＬを管理する CGI スクリプト
 
-http://lists.fml.org/~fml/cgi-bin/fml/�ɥᥤ��/admin/config.cgi
-��
+http://lists.fml.org/~fml/cgi-bin/fml/ドメイン/admin/config.cgi
+例
 http://lists.fml.org/~fml/cgi-bin/fml/fml.org/admin/config.cgi
 
-�� elena@fml.org ML ������������� CGI ������ץ�
+○ elena@fml.org ML だけを管理する CGI スクリプト
 
-http://lists.fml.org/~fml/cgi-bin/fml/�ɥᥤ��/ml-admin/�ͣ�̾/config.cgi
-��
+http://lists.fml.org/~fml/cgi-bin/fml/ドメイン/ml-admin/ＭＬ名/config.cgi
+例
 http://lists.fml.org/~fml/cgi-bin/fml/fml.org/ml-admin/elena/config.cgi
 
-�� elena@fml.org �̤ͣؤ���������ѿ��� CGI ������ץ�
+○ elena@fml.org ＭＬへの入会・退会用申請 CGI スクリプト
 
-http://lists.fml.org/~fml/cgi-bin/anonymous/�ɥᥤ��/submit.cgi
-��
+http://lists.fml.org/~fml/cgi-bin/anonymous/ドメイン/submit.cgi
+例
 http://lists.fml.org/~fml/cgi-bin/anonymous/fml.org/elena/submit.cgi
 </screen>
 </para>
@@ -147,16 +147,16 @@ http://lists.fml.org/~fml/cgi-bin/anonymous/fml.org/elena/submit.cgi
 
 <sect1 id="setupcgi.authentication">
 	<title>
-	ǧ��: �ɤ�����Ф褤�ΤǤ�����
+	認証: どうすればよいのですか？
 	</title>
 
 <para>
-WWW �����Ф�ǧ�ڥ����ƥ�ˡ�����֤ˤ��ä��Ǥ���
+WWW サーバの認証システムに、おんぶにだっこです。
 </para>
 
 <para>
-����Ϥ����Ȥ��Ƥ⡢�⤦������
-&fml8; �Ǥ� WWW ����������ٱ�ġ��뤬����٤��Ǥ��礦�͡�
+それはいいとしても、もう少し、
+&fml8; での WWW サーバ設定支援ツールがあるべきでしょうね。
 </para>
 
 </sect1>
@@ -164,35 +164,35 @@ WWW �����Ф�ǧ�ڥ����ƥ�ˡ�����֤ˤ��ä��Ǥ���
 
 <sect1 id="setupcgi.htaccess">
 	<title>
-	ǧ��: .htaccess ���Խ�����
+	認証: .htaccess を編集する
 	</title>
 
 <para>
-�ǥե���ȤǤϡ�
-�Ȥꤢ�����٤��Ƥ���ޤ�(ǧ�ڥ��顼�ˤʤ�)�Τǡ�
-Ŭ�ڤ��ѹ����Ʋ�������
+デフォルトでは、
+とりあえず潰してあります(認証エラーになる)ので、
+適切に変更して下さい。
 </para>
 
 <para>
-�ǥե���ȤǤϡ�
-CGI �Υ�����������ݤ���褦�˥ɥᥤ��ñ�̤�
-.htaccess ������ޤ���
+デフォルトでは、
+CGI のアクセスを拒否するようにドメイン単位で
+.htaccess が作られます。
 <screen>
-http://lists.fml.org/~fml/cgi-bin/fml/�ɥᥤ��/.htaccess
+http://lists.fml.org/~fml/cgi-bin/fml/ドメイン/.htaccess
 
-��
+例
 http://lists.fml.org/~fml/cgi-bin/fml/fml.org/.htaccess
 </screen>
 </para>
 
 <para>
-�ǥե���Ȥ� .htaccess �ϼ��Τ褦��̵��̣:)�ʤ�ΤˤʤäƤ��ơ�
-���������Ǥ��ޤ���(���顼�ˤʤ�ޤ�)��
+デフォルトの .htaccess は次のような無意味:)なものになっていて、
+アクセスできません(エラーになります)。
 <footnote>
 <para>
-����ˡ��ǥե���Ȥ� apache �Ǥ� ~fml/ �ؤΥ��������Ͻ���ʤ��Ϥ��ʤΤǡ�
-apache �����������ɬ�פǤ���
-������ǥե���ȤǤϡ��������ʹ����ε��������ˤʤäƤ��ޤ���
+さらに、デフォルトの apache では ~fml/ へのアクセスは出来ないはずなので、
+apache の設定も別途必要です。
+一応、デフォルトでは、この二段構えの拒否体制になっています。
 </para>
 </footnote>
 <screen>
@@ -200,27 +200,27 @@ AuthName ByPassword
 AuthType Basic
 require valid-user
 </screen>
-���� .htaccess ��Ŭ�ڤʤ�Τ˽񤭴�����
-apache ������� suexec ��ͭ���ˤ��Ʋ�������
+この .htaccess を適切なものに書き換え、
+apache の設定で suexec を有効にして下さい。
 <screen>
-��
+例
 
 AuthName ByPassword
 AuthType Basic
-AuthUserConfig "/usr/local/etc/fml/�ɥᥤ��/htpasswd"
+AuthUserConfig "/usr/local/etc/fml/ドメイン/htpasswd"
 require valid-user
 </screen>
 </para>
 
 <warning>
 <para>
-(���������Ǥ���)���� .htaccess �ե������ä��ȡ�
-ï�Ǥ⥢�������Ǥ���褦�ˤʤ�ޤ���
-�ǥХå�������������Ǥ�������������΢���ϻȤ�ʤ��褦�ˤ��ޤ��礦;-)
-�ޤ������������֥ǥХå����������顢����äȤ����ġפȤ������ˤ����äơ�
-���Τޤ޺����ꤷ˺�줿�ꤹ���ΤʤΤǡ�
-��������ή���˴���ʤ��褦�ˤ��Ƥ���������
-������� .htaccess �����ꤷ�ޤ��礦��
+(当たり前ですが)この .htaccess ファイルを消すと、
+誰でもアクセスできるようになります。
+デバッグする場合は便利ですが、そういう裏技は使わないようにしましょう;-)
+また、そういう「デバッグだけだから、ちょっとだけ…」という時にかぎって、
+そのまま再設定し忘れたりするものなので、
+そういう流儀に慣れないようにしてください。
+きちんと .htaccess を設定しましょう。
 </para>
 </warning>
 
@@ -229,49 +229,49 @@ require valid-user
 
 <sect1 id="setupcgi.admin.cgi.overview">
 	<title>
-	������ CGI ����: �ɥᥤ��ޥ��� CGI �β���
+	管理用 CGI の例: ドメインマスタ CGI の画面
 	</title>
 
 <para>
-���� CGI �ϡ�����ɥᥤ�����Τ����Ǥ��븢�¤�Ϳ���Ƥ��ޤ���
-�֣̤ͣ�������븢�¤�Ϳ���Ƥ��ɤ�����ɡ�
-�Ǥ� Unix �Υ��ޥ�ɥ饤���Ȥ��Τ�����äȤĤ餤��
-�Ȥ����ͤ����ꤷ����ΤǤ���
-��äơ��̤ͣκ����ʤɤ��Ǥ���櫓�Ǥ�����
-makefml �Τ��٤Ƥε�ǽ���Ȥ���櫓�Ǥ⤢��ޤ���
+この CGI は、あるドメイン全体を操作できる権限を与えています。
+「ＭＬを管理する権限を与えても良いけれど、
+でも Unix のコマンドラインを使うのがちょっとつらい」
+という人を想定したものです。
+よって、ＭＬの作成などができるわけですが、
+makefml のすべての機能が使えるわけでもありません。
 </para>
 
 <para>
-CGI �β��̤򸫤�Ȥ狼���̤ꡢ
-CGI �ǲ�ǽ�ʹ��ܤ� makefml ����ʬ����ȤʤäƤ��ޤ���
-���Ѳ�ǽ�ʥ��ޥ�ɤϺǽ�β��̤˥إ�פȤ���ɽ������Ƥ����Τ����Ǥ���
+CGI の画面を見るとわかる通り、
+CGI で可能な項目は makefml の部分集合となっています。
+利用可能なコマンドは最初の画面にヘルプとして表示されているものだけです。
 <screen>
-��: CGI �ȥåײ���
+例: CGI トップ画面
 
                      @home.fml.org CGI for configuration
 
 fml admin menu             fml CGI interface for @home.fml.org ML's
 mailing list:
-[elena]              ���Υʥӥ��������С����顢�ͣ�(mailing list)�ȥ���
-command:             ���(command)�����򤷡� submit �ܥ���򲡤��Ʋ�����
-[subscribe  ]        ��
+[elena]              左のナビゲーションバーから、ＭＬ(mailing list)とコマ
+command:             ンド(command)を選択し、 submit ボタンを押して下さい
+[subscribe  ]        。
 [submit][reset]
-                     subscribe   ���ɥ쥹���ɲ�
-                     unsubscribe ���ɥ쥹�κ��
-                     addadmin    ��⡼�ȴ����ԥ��ɥ쥹���ɲ�
-                     byeadmin    ��⡼�ȴ����ԥ��ɥ쥹�κ��
-options Language:    list        ���ɥ쥹�ꥹ�Ȥ򸫤�
-[Japanese] [change]  log         �����򸫤�
-                     newml       �̤ͣκ���
-                     rmml        �̤ͣκ��
+                     subscribe   アドレスの追加
+                     unsubscribe アドレスの削除
+                     addadmin    リモート管理者アドレスの追加
+                     byeadmin    リモート管理者アドレスの削除
+options Language:    list        アドレスリストを見る
+[Japanese] [change]  log         ログを見る
+                     newml       ＭＬの作成
+                     rmml        ＭＬの削除
 </screen>
 </para>
 
 
 <para>
-�ʤ������̤κ����⤷���ϱ��˥إ�ץ�å�������ɽ�������Τ�
-���κݤˤϡ�����򻲹ͤˤ��Ʋ�������
-������󥳥ޥ�ɤ��Ȥ˥�å������ϰۤʤ�ޤ�:)
+なお、画面の左下もしくは右にヘルプメッセージが表示されるので
+操作の際には、それを参考にして下さい。
+もちろんコマンドごとにメッセージは異なります:)
 </para>
 
 <para>
@@ -284,18 +284,18 @@ options Language:    list        ���ɥ쥹�ꥹ�Ȥ򸫤�
 
 <sect1 id="setupcgi.admin.cgi.newml">
 	<title>
-	������ CGI �λȤ���: ��: �̤ͣκ���
+	管理用 CGI の使い方: 例: ＭＬの作成
 	</title>
 
 <para>
-���β��̤Υ��ޥ�ɤ� newml �����򤷡�
-submit �ܥ���򲡤��Ʋ�������
-ML ̾�����򤹤�ɬ�פϤ���ޤ���:)
+左の画面のコマンドで newml を選択し、
+submit ボタンを押して下さい。
+ML 名を選択する必要はありません:)
 </para>
 
 <para>
-����ˡ��ͣ�̾�����Ϥ򤦤ʤ������̤������Τǡ�
-��������ͣ�̾�����Ϥ�������� submit �ܥ���򲡤��Ʋ�������
+中央に、ＭＬ名の入力をうながす画面が現れるので、
+作成するＭＬ名を入力し、中央の submit ボタンを押して下さい。
 </para>
 
 <para>
@@ -307,18 +307,18 @@ ML ̾�����򤹤�ɬ�פϤ���ޤ���:)
 
 <sect1 id="setupcgi.admin.cgi.subscribe">
 	<title>
-	������ CGI �λȤ���: ��: ���С���Ͽ
+	管理用 CGI の使い方: 例: メンバー登録
 	</title>
 
 <para>
-���β��̤Υ��ޥ�ɤ� ML ̾�� subscribe �����򤷡�
-submit �ܥ���򲡤��Ʋ�������
+左の画面のコマンドで ML 名と subscribe を選択し、
+submit ボタンを押して下さい。
 </para>
 
 <para>
-����ˡ����ɥ쥹�����Ϥ򤦤ʤ������̤������Τǡ�
-��Ͽ���������ɥ쥹�����Ϥ���
-����� submit �ܥ���򲡤��Ʋ�������
+中央に、アドレスの入力をうながす画面が現れるので、
+登録したいアドレスを入力し、
+中央の submit ボタンを押して下さい。
 </para>
 
 <para>
@@ -330,27 +330,27 @@ submit �ܥ���򲡤��Ʋ�������
 
 <sect1 id="setupcgi.admin.cgi.skin">
 	<title>
-	������ CGI �����������
+	管理用 CGI スキンの選択
 	</title>	
 
 <para>
-config.cgi �Ǥ� TABLE �� SELECT �����ܤǤ���
-�⤦�����������β��̤ˤ������ʤ顢menu.cgi �Τۤ���ȤäƤߤƲ�������
+config.cgi では TABLE と SELECT が基本です。
+もう少し、昔風の画面にしたいなら、menu.cgi のほうを使ってみて下さい。
 <screen>
-���Υɥᥤ��Σͣ������δ�������
-~fml/public_html/fml/�ɥᥤ��/admin/menu.cgi
+そのドメインのＭＬ全部の管理者用
+~fml/public_html/fml/ドメイン/admin/menu.cgi
 
-�̤ͣ��Ȥδ�������
-~fml/public_html/fml/�ɥᥤ��/ml-admin/menu.cgi
+ＭＬごとの管理者用
+~fml/public_html/fml/ドメイン/ml-admin/menu.cgi
 </screen>
 </para>
 
 <para>
-TODO: cookie �������Ф��Ƥ����褦�ˤ��褦�ȹͤ��Ƥ��ޤ���
+TODO: cookie で設定を覚えておくようにしようと考えています。
 </para>
 
 <!--
-	XXX-TODO: wizard.cgi ������Ȥ��������
+	XXX-TODO: wizard.cgi があるといいかもね
 -->
 
 
@@ -359,101 +359,101 @@ TODO: cookie �������Ф��Ƥ����褦�ˤ��褦�ȹͤ��Ƥ��ޤ���
 
 <sect1 id="setupcgi.anonymous.cgi.overview">
 	<title>
-	���̥桼���� CGI 
+	一般ユーザ用 CGI 
 	</title>
 
 <para>
-&fml8; ��Ȥä��̤ͣؤ�����/���(subscribe/unsubscribe)�ϡ�
-��Ȥ��
+&fml8; を使ったＭＬへの入会/退会(subscribe/unsubscribe)は、
+もともと
 <link linkend="fml.command.bymail">
-�᡼��١����Υ����ƥ�
+メールベースのシステム
 </link>
-�Ǥ���
+です。
 </para>
 
 <para>
-���Υ��ޥ�ɥ᡼��ˤ������/���(subscribe/unsubscribe)
-�κǽ�Υե����������� CGI �Ǥ�����褦�ˤ��ޤ�����
+このコマンドメールによる入会/退会(subscribe/unsubscribe)
+の最初のフェイズだけは CGI でも出来るようにしました。
 </para>
 
 <para>
-CGI ����������/��񤬽����ȥ������ƥ��̤Ǥ��������ʤ��Τǡ�
+CGI だけで入会/退会が出来るとセキュリティ面でもよろしくないので、
 <screen>
-(1) �ǽ������ CGI ���鿽����
-(2) �᡼��� confirmation �����롢
-(3) �᡼��� confirmation ���֤äƤ����� OK
+(1) 最初だけは CGI から申請、
+(2) メールで confirmation を送る、
+(3) メールで confirmation が返ってきたら OK
 </screen>
-�Ȥ��Ƥ��ޤ�
-(������󡢤���ʾ� HTTP ��Ĥ��ä����٤ʤ�Τˤ���ͽ��⤢��ޤ���)��
+としています
+(もちろん、これ以上 HTTP をつかった高度なものにする予定もありません)。
 </para>
 
 <para>
-���Τ��ȤϤʤ���
-�ǽ�ΤȤ�����
-��subscribe �Ȥ����᡼���Ф��Ʋ�������
-����
-�֤��� CGI �ǥ᡼�륢�ɥ쥹�����Ϥ��Ʋ�������
-���Ѥ�ä������Ǥ��͡�
+何のことはない、
+最初のところが
+「subscribe というメールを出して下さい」
+から
+「この CGI でメールアドレスを入力して下さい」
+に変わっただけですね？
 </para>
 
 <para>
-�ʤ���
-���� CGI �ˤϡ�SPAM �褱�Ρɤ��ޤ��ʤ��ɤȤ��ơ�
-�᡼�륢�ɥ쥹����ˡ��ʸ����Σ��Ĥ򥻥åȤ����Ϥ��Ƥ�餦�褦�ˤ��Ƥ���ޤ���
-�֤椬���ʸ�����ǧ���Ǥ���Τϵ����ǤϤʤ��ʹ֤˰㤤�ʤ���
-(image verification)�Ǥ���
+なお、
+この CGI には、SPAM よけの”おまじない”として、
+メールアドレスを魔法の文字列の２つをセットで入力してもらうようにしてあります。
+「ゆがんだ文字列を認識できるのは機械ではなく人間に違いない」
+(image verification)です。
 </para>
 
 <para>
-�ޡ����٤�Ǥ����ɤ͡�
-�ɤ��������Τ��ȥ᡼��ˤ�� confirmation �⤢��Τǡ�
-���Τ��ޤ��ʤ������٤ϵ��ˤ��ʤ��Ǥ���������
+ま、気休めですけどね。
+どうせ、このあとメールによる confirmation もあるので、
+このおまじないの精度は気にしないでください。
 </para>
 
 <para>
-���礻�� CGI �ʤɡ�
-�᡼��ˤ�� confirmation �����ƥ�� wrapper �ˤ����ʤ��Ȥ��������դ��Ǥ���
-CGI ñ�ΤǤ�ư����ޤ���
-���Τ��ᡢ���̥桼���Ѥ� CGI �ϡ�
-���٤ƤΤ��� image verification �ǿ�����Ф��Ƥ�餦�褦�ˤ��ơ�
-�ѥ����ǧ�ڤʤɤȤ��ä����ݤʥ����ƥ���Ѥ��Ƥ��ޤ���
+しょせん CGI など、
+メールによる confirmation システムの wrapper にすぎないという位置付けです。
+CGI 単体では動作させません。
+そのため、一般ユーザ用の CGI は、
+すべてのこの image verification で申請を出してもらうようにして、
+パスワード認証などといった面倒なシステムは廃しています。
 </para>
 
 
 <sect2>
 	<title>
-	����: ���̥桼���ѥѥ����ǧ�ڤϡ��ɤ��ʤΤ���
+	議論: 一般ユーザ用パスワード認証は、どうなのか？
 	</title>
 
 <para>
-�桼���˥ѥ���ɤ����줵����̥ͣ����ƥ�⤢��ޤ�����
-��ϥѥ���ɤ�Ф��Ƥ������ᤷ������ޤ���
-����ʻ��ͤϴ��ʤ������Ǥ���
+ユーザにパスワードを入れさせるＭＬシステムもありますが、
+私はパスワードを覚えていたためしがありません。
+あんな仕様は危ないだけです。
 </para>
 
 <para>
-���̥桼�����̴ͣ�Ϣ�����򤹤뤳�ȤϿ�������ǯ�˰�󤷤�����ޤ���
-�����顢�ѥ���ɤ����ꤷ�Ƥ⼡��ޤǳФ��Ƥ��뤳�Ȥ��ʤ��ΤǤ���
+一般ユーザがＭＬ関連の操作をすることは数カ月から数年に一回しかありません。
+だから、パスワードを設定しても次回まで覚えていることがないのです。
 </para>
 
 <para>
-�ޤ����������ä������ƥ�Ǥϡ��ѥ���ɤ�˺�줿���˺�������ꤹ��ȡ�
-�᡼���ʿʸ�ѥ���ɤ������Ƥ����ꤹ������Ǥ���
-ʬ����ˤ����ѥ���ɤȤ����ɡ�
-�����Ƥ��Ŀ;���򸵤ˤ���Ϣ�ۤ��ä��ꤷ�ޤ���
-�ѥ���ɤ�ʿʸ�Ǥ��Ȥꤵ���Τ�ñ�ΤǴ����Ȥ�����Ф���Ǥʤ���
-����ʳ��Υ����ƥ�ؤδ������������ޤ���
+また、そういったシステムでは、パスワードを忘れた場合に再送を依頼すると、
+メールで平文パスワードが送られてきたりする始末です。
+分かりにくいパスワードといえど、
+たいてい個人情報を元にした連想だったりします。
+パスワードが平文でやりとりされるのは単体で危険といえるばかりでなく、
+それ以外のシステムへの危険性を増します。
 </para>
 
 <para>
-�����Ĥ����褦�ʥ����ƥ�
+毎日つかうようなシステム
 <footnote>
 <para>
-�������ѥ����ǧ�ڥ����ƥ�ϡ�
-���Ū���Ѥ���褦�����⤵��뤳�Ȥ�˾�ޤ�����
+もちろんパスワード認証システムは、
+定期的に変えるよう強制もされることが望ましい。
 </para>
 </footnote>
-�Ǥʤ������ꡢ�ѥ����ǧ��ˡ�ϥ������ƥ��ۡ����������Ǥ���
+でないかぎり、パスワード認証法はセキュリティホールを作るだけです。
 </para>
 
 </sect2>

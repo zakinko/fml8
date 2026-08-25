@@ -5,21 +5,21 @@
 
 <chapter id="install.fml.unix">
 	<title>
-	Unix ��Ǥ� &fml8; �Υ��󥹥ȡ���
+	Unix 上での &fml8; のインストール
 	</title>
 
 
 <sect1 id="install.fml.unix.prepare">
 	<title>
-	���󥹥ȡ���ν���
+	インストールの準備
 	</title>
 
 
 <para>
-configure ��¹Ԥ���(���)���ˡ�
-�桼�� fml �ȥ��롼�� fml ���äƤ���������
+configure を実行する(後述)前に、
+ユーザ fml とグループ fml を作ってください。
 <screen>
-��
+例
 
 % su root
 # groupadd fml
@@ -33,15 +33,15 @@ configure ��¹Ԥ���(���)���ˡ�
 <!-- ====================================================== -->
 <sect1 id="install.fml.unix.configure">
 	<title>
-	configure ��¹Ԥ���
+	configure を実行する
 	</title>
 
 
 <para>
-configure (by GNU autoconf) ����� make ��¹Ԥ��Ʋ�������
-configure �����ˡ�
-�桼�� fml �ȥ��롼�� fml ���äƤ���ɬ�פ�����ޤ��Τ����դ��Ʋ�������
-�����ޤǤκ�Ȥ�ޤȤ�ƽ񤯤ȡ����Τ褦�ˤʤ�ޤ���
+configure (by GNU autoconf) および make を実行して下さい。
+configure の前に、
+ユーザ fml とグループ fml を作っておく必要がありますので注意して下さい。
+ここまでの作業をまとめて書くと、次のようになります。
 <screen>
 % su root
 # groupadd fml
@@ -49,23 +49,23 @@ configure �����ˡ�
 # ./configure
 # make install
 </screen>
-configure ��Ŭ�� script ���� .cf �����ѿ���񤭴����ޤ���
+configure が適宜 script 群や .cf 群の変数を書き換えます。
 </para>
 
 <para>
-make install ��¹Ԥ���ݤˤϡ�
-(configure ����������) etc/fml/install.cf �򸵤ˡ�
-(configure ����������) install.pl (perl script) ����
-�ºݤΥ��󥹥ȡ����Ȥ�Ԥʤ��ޤ���
+make install を実行する際には、
+(configure が生成した) etc/fml/install.cf を元に、
+(configure が生成した) install.pl (perl script) が、
+実際のインストール作業を行ないます。
 </para>
 
 <para>
-�桼��̾�����Ū�ʥǥ��쥯�ȥ깽���ʤɤ� configure �ΰ������ѹ����Ʋ�������
-�ѹ��Ǥ����ѿ��ϰʲ��Τ�ΤǤ���configure --help ��ɽ������ޤ���
-fml �Ǥϳƥǥ��쥯�ȥ�ˡ������ /fml �Ȥ��ä� suffix ��Ĥ��ޤ���
-�ѹ��Ǥ���Τϡ�����ľ���� prefix ��ʬ�ޤǤǤ���
+ユーザ名や基本的なディレクトリ構成などは configure の引数で変更して下さい。
+変更できる変数は以下のものです。configure --help で表示されます。
+fml では各ディレクトリに、さらに /fml といった suffix をつけます。
+変更できるのは、その直前の prefix 部分までです。
 <screen>
-�ѿ�            configure �Υǥե������    fml �����Ѥ���ǥ��쥯�ȥ���
+変数            configure のデフォルト値    fml の利用するディレクトリ例
 --------------------------------------------------------
 prefix          /usr/local                  /usr/local
 exec_prefix     /usr/local                  /usr/local
@@ -82,21 +82,21 @@ oldincludedir   /usr/include
 infodir         ${prefix}/info
 mandir          ${prefix}/man
 </screen>
-�����ơ��������ѿ��� configure �ΰ����Ǿ�񤭤��뤳�Ȥ��Ǥ��ޤ���
+そして、これらの変数も configure の引数で上書きすることができます。
 <screen>
 fmlconfdir      $sysconfidr/fml             /usr/local/etc/fml        
 mlspooldir      /var/spool/ml               /var/spool/ml
 fml_owner       fml                         fml
 fml_group       fml                         fml
-default_domain  ��¬����                    ��¬����
+default_domain  推測する                    推測する
 </screen>
-�����Υ��ץ�����
+これらのオプションは
 <screen>
 configure --help 
 </screen>
-��ɽ������ޤ���
+で表示されます。
 <screen>
-��
+例
 
 ./configure --help
 
@@ -154,11 +154,11 @@ Optional Packages:
 
 <sect2>
 	<title>
-	��: configure �μ¹�
+	例: configure の実行
 	</title>
 
 <para>
-��: NetBSD �Ǥ� /usr/pkg �ʲ��إ��󥹥ȡ��롣
+例: NetBSD では /usr/pkg 以下へインストール。
 <screen>
 % ./configure --prefix=/usr/pkg
 </screen>
@@ -166,15 +166,15 @@ Optional Packages:
 
 
 <para>
-��: FreeBSD �ξ�硢/usr/local �ʲ��إ��󥹥ȡ���(�ǥե���ȤΤޤ�)��
+例: FreeBSD の場合、/usr/local 以下へインストール(デフォルトのまま)。
 <screen>
 % ./configure
 </screen>
 </para>
 
 <para>
-��:	main.cf ���֤����Ȥ���
-	/etc/fml ��Ȥ��ʤ顢��������(Debian �Ǥ���С���������٤���)��
+例:	main.cf の置き場所として
+	/etc/fml を使うなら、こうする(Debian であれば、こうするべき？)。
 <screen>
 #  ./configure --with-fmlconfdir=/etc/fml
 checking for perl... perl
@@ -286,9 +286,9 @@ Now you must run "make install" as user "root".
 </para>
 
 <para>
-��­: ���䡢�������������פ�����򤹤� OS �ξ��
-/usr/local �ǤϤʤ� /usr ľ���������ΤǤ��礦����
-���ξ��ϡ����Τ褦�˻��ꤷ�Ƥ���������
+補足: いや、こういうタイプの設定をする OS の場合
+/usr/local ではなく /usr 直下に入れるのでしょうか？
+その場合は、次のように指定してください。
 <screen>
 # ./configure --prefix=/usr --with-fmlconfdir=/etc/fml
 </screen>
@@ -301,30 +301,30 @@ Now you must run "make install" as user "root".
 
 <!-- ====================================================== -->
 <!--
-   XXX-TODO �ƥǥ��쥯�ȥ�������̥ե�����ء�
+   XXX-TODO 各ディレクトリの役割は別ファイルへ？
 -->
 <sect1>
 	<title>
-	��­: �ƥǥ��쥯�ȥ�����
+	補足: 各ディレクトリの役割
 	</title>
 
 <para>
-���줾��Υǥ��쥯�ȥ�����ϼ����̤�Ǥ���
-�ʤ����ǥե���ȤǤ� /usr/local �ʲ��˥��󥹥ȡ��뤵��ޤ���
+それぞれのディレクトリの役割は次の通りです。
+なお、デフォルトでは /usr/local 以下にインストールされます。
 </para>
 
 <para>
   <table>
     	<title>
-	�ǥ��쥯�ȥ�ι�¤
+	ディレクトリの構造
 	</title>
 
     <tgroup cols=2>
 
       <thead>
         <row>
-          <entry> �ǥ��쥯�ȥ� 		</entry>
-          <entry> ����			</entry>
+          <entry> ディレクトリ 		</entry>
+          <entry> 説明			</entry>
         </row>
       </thead>
 
@@ -332,23 +332,23 @@ Now you must run "make install" as user "root".
         <row>
           <entry> /usr/local/etc/fml	</entry>
           <entry>
-	��������ե�������֤���ꡣ
-	&fml4; ��
-	/usr/local/fml/.fml �� default_config.ph ���֤������������ޤ���
-	/usr/local/etc/fml/main.cf �Ǥϡ�
-	���Ѥ��� &fml8; �ΥС�������饤�֥��ξ��(�ǥ��쥯�ȥ�)
-	�ʤɤ������ǽ�Ǥ�
-	(�ڽ��ס�
-	�С�����󥢥åפ������꤬���ä����ˤϡ�
-	�С�������ѿ����Խ����뤳�Ȥǡ�
-	�����˸Ť��С������ؤ��ڤ��ᤷ����ǽ�Ǥ�)��
+	基本設定ファイルを置く場所。
+	&fml4; の
+	/usr/local/fml/.fml や default_config.ph を置く場所に相当します。
+	/usr/local/etc/fml/main.cf では、
+	使用する &fml8; のバージョンやライブラリの場所(ディレクトリ)
+	などが指定可能です
+	(【重要】
+	バージョンアップして問題があった場合には、
+	バージョン変数を編集することで、
+	すぐに古いバージョンへの切り戻しが可能です)。
           </entry>
         </row>
 
         <row>
           <entry> /usr/local/libexec/fml 		</entry>
           <entry>
-	�¹ԥե����� ( &fml4; �� /usr/local/fml ����)
+	実行ファイル ( &fml4; の /usr/local/fml 相当)
 	  </entry>
         </row>
 
@@ -357,7 +357,7 @@ Now you must run "make install" as user "root".
 		/usr/local/lib/fml
 	  </entry>
           <entry>
-	perl �⥸�塼�뷲���֤���� ( &fml4; �� /usr/local/fml ����)
+	perl モジュール群を置く場所 ( &fml4; の /usr/local/fml 相当)
 	  </entry>
         </row>
 
@@ -366,9 +366,9 @@ Now you must run "make install" as user "root".
 		/usr/local/share/fml
 	  </entry>
           <entry>
-	��å������ʤɤΥƥ�ץ졼�Ȥ��֤�( &fml4; �� 
-		/usr/local/fml/messages/ ����)��
-	���β��˸����¸�Υ��֥ǥ��쥯�ȥ꤬����ޤ���
+	メッセージなどのテンプレートを置く( &fml4; の 
+		/usr/local/fml/messages/ 相当)。
+	この下に言語依存のサブディレクトリが作られます。
 	  </entry>
         </row>
 
@@ -377,29 +377,29 @@ Now you must run "make install" as user "root".
 		/var/spool/ml
 	  </entry>
           <entry>
-		�ǥե���ȥɥᥤ��Σ̷ͣ��Υȥåץǥ��쥯�ȥꡣ
-		&fml4; ��Ʊ����Ū�ǻȤ��ޤ���
+		デフォルトドメインのＭＬ群のトップディレクトリ。
+		&fml4; と同じ目的で使われます。
 
-		����: /var/spool/ml �Υ����ʤ� configure �ǻ��ꤷ��
-		owner �ѿ�(�ǥե���Ȥϥ桼�� fml)�����ꤵ��ޤ���
+		注意: /var/spool/ml のオーナは configure で指定した
+		owner 変数(デフォルトはユーザ fml)に設定されます。
 
-		�ʤ����ɥᥤ�󤴤Ȥ��̤� prefix ���Ѱդ��Ʋ�������
-		���Ȥ��� fml.org �Ѥ� /var/spool/ml �ǡ�
-		nuinui.net �Ѥˤ� /var/spool/nuinui.net �ʤɤΤ褦�ˡ�
-		���Υɥᥤ��ȥǥ��쥯�ȥ���б��ط���
+		なお、ドメインごとに別の prefix を用意して下さい。
+		たとえば fml.org 用は /var/spool/ml で、
+		nuinui.net 用には /var/spool/nuinui.net などのように。
+		このドメインとディレクトリの対応関係は
 		ml_home_prefix_maps (
 			<link linkend="virtualdomain.fml8.overview">
-			�С������ɥᥤ�����
+			バーチャルドメインの節
 			</link>
-			�򻲾�
-		)�˵��Ҥ��ޤ�(
-		makefml/fml �� newdomain ���ޥ�ɤ����ꤵ��ޤ�)��
+			を参照
+		)に記述します(
+		makefml/fml の newdomain コマンドで設定されます)。
 
-		�С������ɥᥤ��ξܺ٤�
+		バーチャルドメインの詳細は
 		<link linkend="virtualdomain">
 		<xref linkend="virtualdomain">
 		</link>
-		�򻲾Ȥ��Ʋ�������
+		を参照して下さい。
 	  </entry>
         </row>
       </tbody>
@@ -413,11 +413,11 @@ Now you must run "make install" as user "root".
 <!-- ====================================================== -->
 <sect1 id="install.fml.unix.makeinstall">
 	<title>
-	fml �Υ��󥹥ȡ���: make install
+	fml のインストール: make install
 	</title>
 
 <para>
-configure ��¹Ը塢�桼�� root �ˤʤꡢmake install ��¹Ԥ��Ʋ������� 
+configure を実行後、ユーザ root になり、make install を実行して下さい。 
 <screen>
 % su root
 # make install
@@ -426,15 +426,15 @@ configure ��¹Ը塢�桼�� root �ˤʤꡢmake install ��¹Ԥ��Ʋ�������
 
 <warning>
 <para>
-configure �ϥ桼�� root �Ǽ¹Ԥ���ɬ�פϤ���ޤ��󤬡�
-make install ��ɬ���桼�� root �Ǽ¹Ԥ��Ʋ�������
+configure はユーザ root で実行する必要はありませんが、
+make install は必ずユーザ root で実行して下さい。
 <screen>
 % su root
 # ./configure
 # make install
 </screen>
-�ְ㤨�ʤ��褦�ˡ��Ϥ��ᤫ�� 
-configure �� root �Ǽ¹Ԥ���ۤ��������Τ��⤷��ޤ���
+間違えないように、はじめから 
+configure も root で実行するほうがいいのかもしれません。
 </para>
 </warning>
 
@@ -443,26 +443,26 @@ configure �� root �Ǽ¹Ԥ���ۤ��������Τ��⤷��ޤ���
 
 <sect1 id="install.fml.unix.edit.main.cf">
 	<title>
-	main.cf ���Խ�����
+	main.cf を編集する
 	</title>
 
 <para>
-ɬ�פʤ� /usr/local/etc/fml/main.cf ���Խ����Ʋ�������
+必要なら /usr/local/etc/fml/main.cf を編集して下さい。
 
-configure �������ʤ��δĶ��˹�碌�� main.cf ��񴹤����Ƥ���Ϥ��ʤΤ� 
-configure �Υ��ץ������꤬��������С��Խ���ɬ�פϡ��ޤ��ʤ��Ϥ��Ǥ���
+configure が、あなたの環境に合わせて main.cf を書換えしているはずなので 
+configure のオプション指定が正しければ、編集の必要は、まずないはずです。
 </para>
 
 <para>
-mani.cf �����ȤκǤ����Ū������Ǥ���
-���٤������ꡢ
-���Ȥ��Х����ȶ��̤� fml ��ư�����ʤɤ� site_default_config.cf �����Ǥ���
-�ƣ̸ͣ�ͭ������ϡ�
-�ƣ̤ͣΥۡ���ǥ��쥯�ȥ�ˤ��� config.cf �ե�������Խ����Ʋ�������
+mani.cf は大枠の最も基本的な設定です。
+より細かな設定、
+たとえばサイト共通の fml の動作指定などは site_default_config.cf の役割です。
+各ＭＬ固有の設定は、
+各ＭＬのホームディレクトリにある config.cf ファイルを編集して下さい。
 </para>
 
 <para>
-�դˤ����С�����Υ᡼��󥰥ꥹ�Ȥ�ͥ�褵����ϼ��Τ褦�ˤʤ�ޤ���
+逆にいえば、特定のメーリングリストで優先される順は次のようになります。
 <screen>
 $ml_home_dir/config.cf
 site_default_config.cf
@@ -470,7 +470,7 @@ main.cf
 </screen>
 </para>
 
-<!-- main.cf �θ��� -->
+<!-- main.cf の見本 -->
 &sect.main.cf;
 
 </sect1>
@@ -478,30 +478,30 @@ main.cf
 
 <sect1 id="install.fml.unix.edit.site.default.config.cf">
 	<title>
-	site_default_config.cf ���Խ����� (���ץ����)
+	site_default_config.cf を編集する (オプション)
 	</title>
 
 <para>
-/usr/local/etc/fml/site_default_config.cf  �ϡ�
-���Υۥ��ȶ��̤�����ե�����
+/usr/local/etc/fml/site_default_config.cf  は、
+そのホスト共通の設定ファイル
 <footnote>
 <para>
-����� &fml4; �� site_force.ph �����������ΤǤ���
+これは &fml4; の site_force.ph に相当するものです。
 </para>
 </footnote>
-�Ǥ���ɬ�פ˱������Խ����Ƥ���������
+です。必要に応じて編集してください。
 </para>
 
 <para>
-�������
-���������ꡢ
-�ƣ̤ͣ�����(��: /var/spool/ml/elena/config.cf)��ͥ�褵��ޤ���
+もちろん、
+この設定より、
+各ＭＬの設定(例: /var/spool/ml/elena/config.cf)が優先されます。
 </para>
 
 <para>
-�ǥե���ȤǤ� &fml4; �ȹ�碌�뤿��ˡ�
-����Ӹ��ܤȤ���:)
-subject �Υ�����Ĥ��ʤ�����ȥե��륿��Ϣ��������������äƤ��ޤ���
+デフォルトでは &fml4; と合わせるために、
+および見本として:)
+subject のタグをつけない設定とフィルタ関連の設定だけが入っています。
 <screen>
 # $FML: fml_on_unix.sgml,v 1.13 2008/08/18 13:21:42 fukachan Exp $
 #
@@ -545,60 +545,60 @@ use_mime_component_filter	=	yes
 
 <sect1>
 	<title>
-	�ե��륿��ɤ����뤫��
+	フィルタをどうするか？
 	</title>
 
 <para>
-�ǥե���ȤǤϤ��٤ƤΥե��륿��ͭ���Ǥ���
-&fml4; �ο侩������������Ƥ��ޤ���
+デフォルトではすべてのフィルタが有効です。
+&fml4; の推奨設定に相当しています。
 </para>
 
 <para>
-�֥ե��륿�Τ��������פȤ�������⤢�뤫�⤷��ޤ��󤬡�
-�����ƥǥե���Ȥϸ���������ˤ��Ƥ���ޤ���
+「フィルタのかけすぎ」という見解もあるかもしれませんが、
+あえてデフォルトは厳しい設定にしてあります。
 </para>
 
 <para>
-�ե��륿���������äƤ���ΤϤ褤�ΤǤ�����
-mime component filter �Υǥե���Ȥ�ɤ�������ɤ��Τ��ϴ�बۣ��Ǥ���
-�ǥե���ȤǤϡ�
-�̤ͣؤ���Ƥ��������Τ� text/plain �Υ᡼��ΤߤȤ��Ƥ���ޤ���
-����� text/html �����äƤ��뿲�ܤ����᡼��⡢
-ź�եե�����������Ƥ��륦���륹��ǥե���ȤǤ��̤�ޤ���
+フィルタが、かかっているのはよいのですが、
+mime component filter のデフォルトをどうすれば良いのかは基準が曖昧です。
+デフォルトでは、
+ＭＬへの投稿が許されるのは text/plain のメールのみとしてあります。
+これで text/html で送ってくる寝ぼけたメールも、
+添付ファイルで送られてくるウィルスもデフォルトでは通りません。
 </para>
 
 <para>
-�ʤ���(���٤ƤΣ̤ͣ�)
-mime component filter ��̵���ˤ���ˤ�
-site_default_config.cf ��
+なお、(すべてのＭＬで)
+mime component filter を無効にするには
+site_default_config.cf で
 <screen>
 use_mime_component_filter	=	no
 </screen>
-�Ȥ��Ƥ���������
+としてください。
 </para>
 
 <para>
-mime component filter ��ͭ���ˤ��������롼��򥫥����ޥ����������Ȥ�����硢
-site_default_config.cf �Ǥ�
+mime component filter を有効にしたいがルールをカスタマイズしたいという場合、
+site_default_config.cf では
 <screen>
 use_mime_component_filter	=	yes
 </screen>
-�Τޤޤˤ��ơ�
+のままにして、
 /usr/local/etc/fml/mime_component_filter 
-�򥫥����ޥ������Ƥ���������
+をカスタマイズしてください。
 </para>
 
 <warning>
 <para>
-�������Ż��Υ᡼���ź�եե�����ʤ��ϸ������褦�ʤΤǡ�
-��������᡼��ʤɻŻ��ѤΣ̥ͣ����ФȤ��ƻȤ��ʤ顢
-���󥹥ȡ���塢������
+ただ、仕事のメールで添付ファイルなしは厳しいようなので、
+社内向けメールなど仕事用のＭＬサーバとして使うなら、
+インストール後、すぐに
 <screen>
 [/usr/local/etc/fml/site_default_config.cf]
 
 use_mime_component_filter	=	no
 </screen>
-���ѹ����Ƥ����Ȥ褤�Ǥ��礦��
+に変更しておくとよいでしょう。
 </para>
 </warning>
 
@@ -607,52 +607,52 @@ use_mime_component_filter	=	no
 
 <sect1 id="install.virtual">
 	<title>
-	�С������ɥᥤ��ξ��
+	バーチャルドメインの場合
 	</title>
 
 <para>
-�ǽ��(�Ĥޤꡢ���Υɥᥤ��ǣ̤ͣ�������)��
-newdomain ���ޥ�ɤ� 
-ml_home_prefix_maps �����Ѥ������ɥᥤ���
-ml_home_prefix ���б��ط���������Ƥ���������
+最初に(つまり、そのドメインでＭＬを作る前に)、
+newdomain コマンドで 
+ml_home_prefix_maps に利用したいドメインと
+ml_home_prefix の対応関係を定義してください。
 <screen>
 [/var/spool/ml/etc/fml/ml_home_prefix]
 
 nuinui.net /var/spool/nuinui.net
 </screen>
-newdomain ���ޥ�ɤˤĤ��Ƥ�
+newdomain コマンドについては
 <link linkend="setup.newml">
-�֣̤ͣκ�����
+「ＭＬの作成」
 </link>
-����Ǹ�Ҥ��ޤ���
+の節で後述します。
 </para>
 
 <warning>
 <para>
-ml_home_prefix_maps �Υѥ����ѹ�����������
-/usr/local/etc/fml/main.cf ���Խ����Ʋ�����
-(��äȤ⡢�����Ƥ����Խ������פǤ�)��
+ml_home_prefix_maps のパスを変更したい場合は
+/usr/local/etc/fml/main.cf を編集して下さい
+(もっとも、たいてい、編集は不要です)。
 </para>
 
 <para>
-�ʤ���
-site_default_config.cf �ϡ�
-�ɥᥤ��˴ؤ�餺Ŭ�Ѥ���뤳�Ȥ����դ��Ƥ���������
-�Ĥޤꡢ��������ϥС������ɥᥤ��ˤ�Ŭ�Ѥ���ޤ���
+なお、
+site_default_config.cf は、
+ドメインに関わらず適用されることに注意してください。
+つまり、この設定はバーチャルドメインにも適用されます。
 </para>
 </warning>
 
 </sect1>
 
 
-<!-- �᡼�륵���Ф����� -->
+<!-- メールサーバの設定 -->
 &sect.install.postfix;
 &sect.install.qmail;
 
 <!-- recipes -->
 <sect1 id="install.recipes">
 	<title> 
-	�쥷�ԡ�s
+	レシピ’s
 	</title> 
 
 	<!-- TABLE_OF_RECIPES -->

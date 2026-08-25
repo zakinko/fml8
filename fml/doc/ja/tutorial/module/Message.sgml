@@ -4,61 +4,61 @@
 
 <chapter id="module.mail.message">
 	<title>
-	Mail::Message �⥸�塼��
+	Mail::Message モジュール
 	</title>
 
 <sect1 id="module.mail.message.overview">
 	<title>
-	Mail::Message �γ���
+	Mail::Message の概要
 	</title>
 
 <para>
-Mail::Message ���饹�ϥ᡼��β��Ϥȡ�
-���Ϥ��줿�ǡ�����¤�ؤΤ��ޤ��ޤ������ʤ��󶡤��ޤ���
+Mail::Message クラスはメールの解析と、
+解析されたデータ構造へのさまざまな操作手段を提供します。
 </para>
 
 <para>
-�⤦�����ܤ�����������ȡ����Υ⥸�塼��ϥ᡼�����Ϥ���
+もう少し詳しく説明すると、このモジュールはメールを解析し、
 <screen>
-(������ƥ����ȥ᡼��ξ��)
+(いわゆるテキストメールの場合)
 header -> body
 
-(�ޥ���ѡ��Ȥξ��)
+(マルチパートの場合)
 header -> preamble -> part1 -> part2 -> trailor
 </screen>
-�Τ褦�˥��֥������Ȥ�����Ĥʤ��Ȥʤä��ǡ�����¤����ޤ���
-���ʤߤˡ����Ⱥ��δ֤� double link list �Ǥ���
-Mail::Message �Υ��饹�ϡ�
-���Τ褦�ʥǡ�����¤���Ф��ơ�
-���ޤ��ޤ�����Ԥʤ��᥽�åɤ��󶡤��Ƥ��ޤ���
+のようにオブジェクトが数珠つなぎとなったデータ構造を作ります。
+ちなみに、鎖と鎖の間は double link list です。
+Mail::Message のクラスは、
+このようなデータ構造に対して、
+さまざまな操作を行なうメソッドを提供しています。
 </para>
 
 <para>
-���κ�����ʬ��ʬ���줾�줬 Mail::Message ���֥������ȤǤ���
-�Ĥޤ���̤Υ᡼��ϡ�
-�᡼��إå�����Ϥޤ륪�֥������Ȥκ��Ȥ���ɽ������ޤ���
+この鎖の部分部分それぞれが Mail::Message オブジェクトです。
+つまり一通のメールは、
+メールヘッダから始まるオブジェクトの鎖として表現されます。
 </para>
 
 <para>
 <screen>
-(�ޥ���ѡ��Ȥξ��)
+(マルチパートの場合)
 header -> preamble -> part1 -> part2 -> trailor
 </screen>
-����˼��ޤ��礦��
-���κ�ü(�᡼��إå�)�ϡ�
-Mail::Message �Υ����פ� text/rfc822-headers �ǡ�
-���� data �� Mail::Header ���֥������Ȥˤʤ�ޤ���
-���� part1 ��
+を例に取りましょう。
+この左端(メールヘッダ)は、
+Mail::Message のタイプが text/rfc822-headers で、
+その data が Mail::Header オブジェクトになります。
+一方 part1 は
 text/plain
-�ǡ�
-���֥������ȤΥǡ�����ʬ�ϡ�
-ʸ����(�ƥ�����)�ؤΥ�ե���󥹤Ǥ���
+で、
+オブジェクトのデータ部分は、
+文字列(テキスト)へのリファレンスです。
 </para>
 
 <para>
-����:
+参照:
 <ulink url="../../en/modules/Mail/Message.txt">
-Mail::Message �⥸�塼��Υޥ˥奢��(�Ѹ�)
+Mail::Message モジュールのマニュアル(英語)
 </ulink>
 </para>
 
@@ -67,19 +67,19 @@ Mail::Message �⥸�塼��Υޥ˥奢��(�Ѹ�)
 
 <sect1 id="module.mail.message.parse">
 	<title>
-	Mail::Message �⥸�塼��: ���Ϥ���
+	Mail::Message モジュール: 解析する
 	</title>
 
 <para>
-parse() �᥽�åɤϡ�
-������Ϳ����줿�ե�����(̾)���ե�����ǥ�������ץ�����ǡ������ɤ߹��ߡ�
-���Υǡ���(��å�����)�β��Ϥ��ߤޤ���
+parse() メソッドは、
+引数で与えられたファイル(名)かファイルディスクリプタからデータを読み込み、
+そのデータ(メッセージ)の解析を試みます。
 </para>
 
 <para>
-data_type_list() �Ϻ�����ξ���� ARRAY REFERENCE �η����֤��ޤ���
-���Ȥ��� MIME/Multipart �ϼ��Τ褦��ɽ������ޤ�
-(���ʤߤˡ��ʲ���ɽ���ϥǥХå��⡼�ɤǽ��Ϥ�����ΤǤ�)��
+data_type_list() は鎖の列の情報を ARRAY REFERENCE の形で返します。
+たとえば MIME/Multipart は次のように表現されます
+(ちなみに、以下の表示はデバッグモードで出力されるものです)。
 <screen>
   type[ 1]: text/rfc822-headers       | multipart/mixed
   type[ 2]: multipart/mixed           | multipart/mixed
@@ -91,8 +91,8 @@ data_type_list() �Ϻ�����ξ���� ARRAY REFERENCE �η����֤��ޤ���
   type[ 8]: multipart.close-delimiter | multipart/mixed
   type[ 9]: text/plain                | multipart/mixed
 </screen>
-������󤬳ƥ��֥������Ȥμ��̤�ɽ���Ƥ��ޤ���
-��ü�ϥ᡼�����Τ� mime type �Ǥ���
+真中の列が各オブジェクトの種別を表しています。
+右端はメール全体の mime type です。
 </para>
 
 </sect1>
@@ -100,29 +100,29 @@ data_type_list() �Ϻ�����ξ���� ARRAY REFERENCE �η����֤��ޤ���
 
 <sect1 id="module.mail.message.create">
 	<title>
-	Mail::Message �⥸�塼��: ��������å���������
+	Mail::Message モジュール: 新しいメッセージを作る
 	</title>
 
 <para>
-new() �᥽�åɤ��̾��������å���������ݤ˻Ȥ��ޤ���
+new() メソッドは通常、新しいメッセージを作る際に使われます。
 </para>
 
 <para>
-MIME/multipart �������ѤΥ᥽�åɤ⤢��ޤ���
+MIME/multipart 作成専用のメソッドもあります。
 <screen>
 build_mime_multipart_chain($args)
 parse_and_build_mime_multipart_chain($args)
 build_mime_header($args)
 </screen>
-����: �����Υ᥽�åɤϻȤ�ʤ��Ǥ���������
-�����������Υ᥽�åɤ�ľ�ܸƤӽФ��Ƥ��ʤ��Τǡ�
-���衢������ private methods �˰ܹԤ��뤫�⤷��ޤ���
+注意: これらのメソッドは使わないでください。
+現状、これらのメソッドを直接呼び出していないので、
+将来、これらは private methods に移行するかもしれません。
 </para>
 
 <para>
-MIME/mulitpart �Ρֺ����פˤ�
-Mail::Message::Compose ���饹��ȤäƤ��ޤ���
-�����ơ����Υ��饹�μ��֤� CPAN �� MIME::Lite ���Τ�ΤǤ� :-)
+MIME/mulitpart の「作成」には
+Mail::Message::Compose クラスを使っています。
+そして、このクラスの実態は CPAN の MIME::Lite そのものです :-)
 </para>
 
 </sect1>
@@ -130,19 +130,19 @@ Mail::Message::Compose ���饹��ȤäƤ��ޤ���
 
 <sect1 id="module.mail.message.headerop">
 	<title>
-	Mail::Message �⥸�塼��: �إå������
+	Mail::Message モジュール: ヘッダの操作
 	</title>
 
 <para>
-dup_header() �᥽�åɤ�
-RFC822 ����å������Υإå���ʬ�Τߤ򥳥ԡ����ޤ���
-�᡼�����Τ���ʬ�Ϥ��ΤޤޤǤ���
-ʣ�����줿�إå����֥������Ȥ���Υ�󥯤ϥ᡼������ΤǤ���
-�Ĥޤꡢ�إå�������ʬ���줷�Ƥ�����֤Ǥ��͡�
+dup_header() メソッドは
+RFC822 型メッセージのヘッダ部分のみをコピーします。
+メール本体の部分はそのままです。
+複製されたヘッダオブジェクトからのリンクはメールの本体です。
+つまり、ヘッダだけ枝分かれしている状態ですね。
 <screen>
 $header1 = $message0->dup_header0;
 
-              |<--------------- �᡼������ ------------->
+              |<--------------- メール本体 ------------->
 $header0 ---> part1 -> part2 -> ...
                 A
                 |
@@ -153,27 +153,27 @@ $header1 ------+
 
 <para>
 whole_message_header() 
-�᥽�åɤϥ�å�������Ρ֥إå���ʬ�Υ��֥������ȡפ��֤��ޤ���
-��ʸ����ǤϤʤ��פ��Ȥ����դ��Ʋ�������
+メソッドはメッセージ中の「ヘッダ部分のオブジェクト」を返します。
+「文字列ではない」ことに注意して下さい。
 </para>
 
 <para>
-__head_message() �Ϻ�����Ƭ�Υ��֥������Ȥ��֤��ޤ���
-__last_message() �Ϻ��κǸ�Υ��֥������Ȥ��֤��ޤ���
-�⥸�塼�����ǻȤ��Ƥ��ޤ�����
-�����ϥץ饤�١��ȡ��᥽�åɤʤΤǡ�
-�����Υ᥽�åɤϻȤ�ʤ��ǲ�������
-���衢�����Υ����ɤϾõ�ޤ���
-�ʤ� __head_message() �ϡ�
-�̾�ޤ� header ���֥������Ȥ��֤����Ȥˤʤ�Τǡ�
-�����Ƥ��ξ�� whole_message_header() �������Ǥ���
+__head_message() は鎖の先頭のオブジェクトを返します。
+__last_message() は鎖の最後のオブジェクトを返します。
+モジュールの中で使われていますが、
+これらはプライベート・メソッドなので、
+これらのメソッドは使わないで下さい。
+将来、これらのコードは消去します。
+なお __head_message() は、
+通常、図の header オブジェクトを返すことになるので、
+たいていの場合 whole_message_header() と等価です。
 </para>
 
 <para>
 whole_message_header_data_type()
-�᥽�åɤϥ᡼�����ΤΥ�����(ʸ����)���֤��ޤ���
-�Ĥޤꡢ���Υ�å�������ñ�ʤ�ƥ����ȤʤΤ��ޥ���ѡ��ȤʤΤ���
-�ʤɤξ���򶵤���ؿ��Ǥ���
+メソッドはメール全体のタイプ(文字列)を返します。
+つまり、このメッセージは単なるテキストなのかマルチパートなのか？
+などの情報を教える関数です。
 </para>
 
 </sect1>
@@ -181,53 +181,53 @@ whole_message_header_data_type()
 
 <sect1 id="module.mail.message.bodyop">
 	<title>
-	Mail::Message �⥸�塼��: ��å�������ʸ�����
+	Mail::Message モジュール: メッセージ本文の操作
 	</title>
 
 <para>
-����Ǥϡ����Τ褦�ʥ��֥������Ȥκ�����ˤȤ뤳�Ȥˤ��ޤ���
+本節では、次のようなオブジェクトの鎖を例にとることにします。
 <screen>
-(multipart �Ǥʤ����)
+(multipart でない場合)
 header -> body
 
-(multipart �ξ��)
+(multipart の場合)
 header -> preamble -> part1 -> part2 -> trailor
 </screen>
 </para>
 
 <para>
-(���������Ҥη����֤��ˤʤ�ޤ�)��
+(一部、前述の繰り返しになります)。
 </para>
 
 <para>
 whole_message_header_data_type()
-�᥽�åɤϥ᡼�����ΤΥ�����(ʸ����)���֤��ޤ���
-�Ĥޤꡢheader �� Content-Type �����������Ǥ���
+メソッドはメール全体のタイプ(文字列)を返します。
+つまり、header の Content-Type で得られる情報です。
 </para>
 
 <para>
-whole_message_body() �᥽�åɤ�
-body �ʤ����� part1 ����ʬ�Υ��֥������Ȥ��֤��ޤ���
-whole_message_body_head() �᥽�åɤ�Ʊ���֤��ͤǤ���
+whole_message_body() メソッドは
+body ないしは part1 の部分のオブジェクトを返します。
+whole_message_body_head() メソッドも同じ返り値です。
 </para>
 
 <para>
-__head_message() �Ϻ�����Ƭ�Υ��֥������Ȥ��֤��ޤ���
-__last_message() �Ϻ��κǸ�Υ��֥������Ȥ��֤��ޤ���
-���Τ��ᡢ�̾�ޤ� header ���֥������Ȥ��֤����Ȥˤʤ�ޤ��Τǡ�
-�����Ƥ��ξ�� whole_message_header() �������Ǥ���
+__head_message() は鎖の先頭のオブジェクトを返します。
+__last_message() は鎖の最後のオブジェクトを返します。
+そのため、通常、図の header オブジェクトを返すことになりますので、
+たいていの場合 whole_message_header() と等価です。
 __last_message()
-�ϡ�
-���κǸ����ʬ�ʤΤǥ�å�������ʸ�κǸ�(�ޤα�ü�Υ��֥�������)�ˤʤ�ޤ���
+は、
+鎖の最後の部分なのでメッセージ本文の最後(図の右端のオブジェクト)になります。
 </para>
 
 <para>
 find_first_plaintext_message($args)
-�ϡ�
-������Ǻǽ�� plain/text �����פ� Mail::Message ���֥������Ȥ��֤��ޤ���
-�ե��륿��󥰤ǤϺǽ��
-plain/text �����פΥ�å�������ʬ�����ܤ��뤳�Ȥ�¿�����ᡢ
-���δؿ���Ȥ��������Ǥ���
+は、
+鎖の中で最初の plain/text タイプの Mail::Message オブジェクトを返します。
+フィルタリングでは最初の
+plain/text タイプのメッセージ部分に着目することが多いため、
+この関数を使うと便利です。
 </para>
 
 </sect1>
@@ -235,15 +235,15 @@ plain/text �����פΥ�å�������ʬ�����ܤ��뤳�Ȥ�¿�����ᡢ
 
 <sect1 id="module.mail.message.search">
 	<title>
-	Mail::Message �⥸�塼��: ���֥������Ȥθ���
+	Mail::Message モジュール: オブジェクトの検索
 	</title>
 
 <para>
 find()
-�᥽�åɤϡ�
-����Υ����פ� Mail::Message ���֥������Ȥ�õ����
-�ǽ�˸��Ĥ������֥������Ȥ��֤��ޤ���
-����: �إå��� Content-Type: ���֤��櫓�ǤϤ���ޤ���
+メソッドは、
+特定のタイプの Mail::Message オブジェクトを探し、
+最初に見つけたオブジェクトを返します。
+注意: ヘッダの Content-Type: を返すわけではありません。
 </para>
 
 </sect1>
@@ -251,24 +251,24 @@ find()
 
 <sect1 id="module.mail.message.print">
 	<title>
-	Mail::Message �⥸�塼��: ��å�������ɽ�����롣
+	Mail::Message モジュール: メッセージを表示する。
 	</title>
 
 <para>
 print()
-�᥽�åɤ�ʸ���ɤ���ɽ��(print)�Ǥ���
-�̾
-�����ǡֽ��Ϥ���ե�����ǥ�������ץ��פ��Ϥ��Ʋ�������
+メソッドは文字どおり表示(print)です。
+通常、
+引数で「出力するファイルディスクリプタ」を渡して下さい。
 </para>
 
 <para>
-print() �ˤ� CRLF �ʤΤ� LF �ʤΤ�����ꤹ�� mode �Ȥ�����ǰ������ޤ���
-���Τ����
+print() には CRLF なのか LF なのかを指定する mode という概念があります。
+このために
 set_print_mode(mode)
-�����
+および
 reset_print_mode()
-�Ȥ����᥽�åɤ�����ޤ���
-�̾�� raw �ǡ�SMTP �λ������� smtp ����ꤷ�Ʋ�������
+というメソッドがあります。
+通常は raw で、SMTP の時だけは smtp を指定して下さい。
 </para>
 
 </sect1>
@@ -276,32 +276,32 @@ reset_print_mode()
 
 <sect1 id="module.mail.message.utils">
 	<title>
-	Mail::Message �⥸�塼��: �����ʴؿ�
+	Mail::Message モジュール: 便利な関数
 	</title>
 
 <sect2>
 	<title>
-	������
+	サイズ
 	</title>
 
 <para>
 size()
-��(���ΰ�İ�Ĥ� Mail::Message)���֥������ȤΥ��������֤��ޤ���
-����: �᡼�����ΤΥ��������֤��櫓�ǤϤ���ޤ���
-�ʤ���
+は(鎖の一つ一つの Mail::Message)オブジェクトのサイズを返します。
+注意: メール全体のサイズを返すわけではありません。
+なお、
 header_size()
-��
+や
 body_size()
-��Ȥ��ȡ��إå���������᡼����ʸ���Τ�Ĺ���򶵤��Ƥ���ޤ���
+を使うと、ヘッダサイズやメール本文全体の長さを教えてくれます。
 </para>
 
 <para>
 is_empty()
-�ϥ��֥������ȤΥǡ����������ɤ����򶵤��Ƥ���ޤ���
+はオブジェクトのデータが空かどうかを教えてくれます。
 </para>
 
 <para>
-������ե��륿��󥰤Υ����ɤ�񤯺ݤ�ͭ�ѤǤ���
+これらもフィルタリングのコードを書く際に有用です。
 </para>
 
 </sect2>
@@ -309,33 +309,33 @@ is_empty()
 
 <sect2>
 	<title>
-	����Ū�ʾ���
+	一般的な情報
 	</title>
 
 <para>
 envelope_sender()
-�ϥ᡼��������Ծ���(ʸ����)���֤��ޤ���
-ʸ���ɤ��ꡢ������ Envelope Sender ����Ǥ���
+はメールの送信者情報(文字列)を返します。
+文字どおり、いわゆる Envelope Sender 情報です。
 </para>
 
 <para>
 data_type()
-�᥽�åɤ�
-Mail::Message ���֥������ȤΥ�����(ʸ����)���֤��ޤ���
-����ϡ�
-�᡼�����ΤΥ����סʥޥ���ѡ��ȤȤ� text/plain)�ǤϤʤ���
-���γ���ʬ�Υ��֥������ȡ������פǤ��뤳�Ȥ����դ��Ʋ�������
+メソッドは
+Mail::Message オブジェクトのタイプ(文字列)を返します。
+これは、
+メール全体のタイプ（マルチパートとか text/plain)ではなく、
+鎖の各部分のオブジェクト・タイプであることに注意して下さい。
 </para>
 
 <para>
 encoding_mechanism()
-�᥽�åɤ�
+メソッドは
 Mail::Message
-���֥������ȤΥ��󥳡��ǥ��󥰥ᥫ�˥���(ʸ����)���֤��ޤ���
-���󥳡��ǥ��󥰤���Ƥ��ʤ���� undef ���֤�ޤ���
-����ϡ�
-�᡼�����ΤΥ����סʥޥ���ѡ��ȤȤ� text/plain)�ǤϤʤ���
-���γ���ʬ�Υ��֥������ȡ������פǤ��뤳�Ȥ����դ��Ʋ�������
+オブジェクトのエンコーディングメカニズム(文字列)を返します。
+エンコーディングされていない場合 undef が返ります。
+これは、
+メール全体のタイプ（マルチパートとか text/plain)ではなく、
+鎖の各部分のオブジェクト・タイプであることに注意して下さい。
 </para>
 
 </sect2>
@@ -343,41 +343,41 @@ Mail::Message
 
 <sect2>
 	<title>
-	Mail::Message ���֥������������ι�¤���Τ�
+	Mail::Message オブジェクト内部の構造を知る
 	</title>
 
 <para>
 num_paragraphs()
-�᥽�åɤϡ�
-���� Mail::Message ���֥������Ȥ����
-���ĤΥѥ饰��դ����뤫(����)���֤��ޤ���
+メソッドは、
+その Mail::Message オブジェクトの中に
+何個のパラグラフがあるか(数字)を返します。
 </para>
 
 
 <para>
-nth_paragraph(����)
-�᥽�åɤ�
-�ֿ��������ܤΥѥ饰��դ����Ƥ�ʸ����Ȥ����֤��ޤ���
-�ʤ���
-�����ܤΥѥ饰��դ� 0 �ǤϤʤ� 1 �Ȼ��ꤷ�Ʋ�������
-�����ϡ�
-(������C�������ǤϤʤ�)
-�ʹ֤�ʬ����䤹���褦�ˡ� 1����Ϥޤ�׻��ͤˤʤäƤ��ޤ���
+nth_paragraph(数字)
+メソッドは
+「数字」番目のパラグラフの内容を文字列として返します。
+なお、
+一番目のパラグラフは 0 ではなく 1 と指定して下さい。
+ここは、
+(あえてC言語風ではなく)
+人間に分かりやすいように「 1から始まる」仕様になっています。
 </para>
 
 <!--
 <para>
 header()
-�᥽�åɤ�
+メソッドは
 MIME/multipart
-�γƥ֥��å��ˤ���إå���ʬ���֤��ޤ���
+の各ブロックにあるヘッダ部分を返します。
 data()
-�᥽�åɤϡ��ǡ�������ʬ�Ǥ���
-���줾��
+メソッドは、データの部分です。
+それぞれ
 message_fields($size)
-�����
+および
 message_text($size)
-�᥽�åɤ� alias �ˤʤäƤ��ޤ���
+メソッドの alias になっています。
 </para>
 -->
 
@@ -388,13 +388,13 @@ message_text($size)
 
 <sect1 id="module.mail.message.ref">
 	<title>
-	����
+	参照
 	</title>
 
 <para>
 
 <ulink url="../../en/modules/Mail/Message.txt">
-Mail::Message �⥸�塼��ޥ˥奢��(�Ѹ�)
+Mail::Message モジュールマニュアル(英語)
 </ulink>
 </para>
 </sect1>

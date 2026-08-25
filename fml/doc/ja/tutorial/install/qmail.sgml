@@ -5,73 +5,73 @@
 
 <sect1 id="install.qmail">
 	<title>
-	�᡼�륵���Ф����� (qmail)
+	メールサーバの設定 (qmail)
 	</title>
 
 <warning>
 <para>
-&fml8; �� qmail ����ϡ�
-�С������ɥᥤ��ʤΤ��ǥե���ȡ��ɥᥤ��(�Τ�)�ʤΤ�������鷺��
-�Ĥͤ�
+&fml8; の qmail 設定は、
+バーチャルドメインなのかデフォルト・ドメイン(のみ)なのか？を問わず、
+つねに
 /var/qmail/control/virtualdomains
-�����Ѥ�����Ȥ��Ƥ��ޤ���
-&fml4; ��ή���Ȥϰۤʤ�ޤ��Τ����դ��Ʋ�������
+の利用を前提としています。
+&fml4; の流儀とは異なりますので注意して下さい。
 </para>
 
 <para>
-[�ʥӥ��������] qmail �����ѹ����ΤޤȤ�
+[ナビゲーション] qmail 設定変更点のまとめ
 <screen>
-(1) ���ɥᥤ���Ȥ��Ϥ����� newdomain (makefml �⤷���� fml ���ޥ��)
+(1) 新ドメインを使い始める初回に newdomain (makefml もしくは fml コマンド)
 
-(2) newml �ǡ��ҤȤģ̤ͣ�������Ƥߤ�(makefml �⤷���� fml ���ޥ��)
+(2) newml で、ひとつＭＬを作成してみる(makefml もしくは fml コマンド)
 
-(3) �������줿���ܤ򸵤ˡ�/var/qmail/control/virtualdomains ���Խ���
-    ���ܤϡ�newdomain�ǻ��ꤷ�����ס���̾��/etc/qmail/virtualdomains ��
+(3) 作成された見本を元に、/var/qmail/control/virtualdomains を編集。
+    見本は「newdomainで指定したスプール名」/etc/qmail/virtualdomains 。
 
-(4) qmail-send �� HUP �����ʥ롣
+(4) qmail-send に HUP シグナル。
 </screen>
-�̤ͣ��Ȥ�����Ϥ���ޤ���
-(�Ĥޤ�̤ͣο��������������ȼ�� qmail �������ѹ������פǤ�)��
+ＭＬごとの設定はありません
+(つまりＭＬの新規作成・削除に伴う qmail の設定変更は不要です)。
 </para>
 
 </warning>
 
 <para>
-makefml newml �ʤ����� fml ML newml
-��¹Ԥ�������ǣ̤ͣ���ưŪ��ͭ���Ȥʤ�褦�ˡ�
-���餫���� qmail ��������ѹ����Ƥ����Ʋ�������
-/var/qmail/control/virtualdomains �����긫�ܤ�
-(�ɥᥤ�󤴤Ȥ�) /var/spool/ml/etc/qmail �˺�������ޤ���
+makefml newml ないしは fml ML newml
+を実行するだけでＭＬが自動的に有効となるように、
+あらかじめ qmail の設定を変更しておいて下さい。
+/var/qmail/control/virtualdomains の設定見本は
+(ドメインごとに) /var/spool/ml/etc/qmail に作成されます。
 </para>
 
 <para>
-�ʲ������Υɥᥤ��κǽ�Σ̤ͣ���ݤ�ɬ�פʼ��ˤĤ����������ޤ���
+以下、そのドメインの最初のＭＬを作る際に必要な手順について説明します。
 </para>
 
 
 <sect2>
 	<title>
-	�ǥե���ȤΥɥᥤ��(��: example.org)�ξ��
+	デフォルトのドメイン(例: example.org)の場合
 	</title>
 
 <para>
-�ǥե���ȤΥɥᥤ��(��: example.org)�ϻȤ��ʤ��Ȼפ��ΤǤ���������
+デフォルトのドメイン(例: example.org)は使えないと思うのですが、嘘？
 </para>
 
 <para>
-�ǥե���ȥɥᥤ��ǤϤʤ���
-ml.example.org �ʤɤȣͣ����ѤΥ��֥ɥᥤ����äƻȤ��Τ��ɤ��ȻפäƤ��ޤ���
+デフォルトドメインではなく、
+ml.example.org などとＭＬ専用のサブドメインを作って使うのが良いと思っています。
 </para>
 
 <para>
-�� �����:
+→ 次節へ:
 </para>
 
 <caution>
 <para>
-�ǥե���ȥɥᥤ����Ф��Ƥ�
+デフォルトドメインに対しては
 /var/qmail/control/virtualdomains
-�θ���(��: /var/spool/ml/etc/qmail/virtualdomains)��ɺ�������ޤ���ɡ�
+の見本(例: /var/spool/ml/etc/qmail/virtualdomains)も”作成されません”。
 </para>
 </caution>
 
@@ -80,18 +80,18 @@ ml.example.org �ʤɤȣͣ����ѤΥ��֥ɥᥤ����äƻȤ��Τ��ɤ��ȻפäƤ��ޤ���
 
 <sect2>
 	<title>
-	�С������ɥᥤ��(��: ml.example.org)
+	バーチャルドメイン(例: ml.example.org)
 	</title>
 
 <para>
-ml.example.org �Ǥκǽ�Σ̤ͣ��������ݤ�
-qmail �� virtualdomains �ե�����θ��ܤ���������ޤ���
-����򸫤ơ�
+ml.example.org での最初のＭＬを作成する際に
+qmail の virtualdomains ファイルの見本が作成されます。
+それを見て、
 <screen>
 /var/qmail/control/virtualdomains
 </screen>
-���Խ����Ƥ���������
-�ޤ������Υɥᥤ��� /var/qmail/control/rcpthosts �ˤ��ɲä��Ƥ���������
+を編集してください。
+また、そのドメインを /var/qmail/control/rcpthosts にも追加してください。
 <screen>
 [/var/qmail/control/rcpthosts]
 
@@ -100,61 +100,61 @@ ml.example.org
 </para>
 
 <para>
-�ƥɥᥤ�󤴤Ȥˡ����˰�� 
-/var/qmail/control/virtualdomains ��
+各ドメインごとに、初回に一回 
+/var/qmail/control/virtualdomains と
 /var/qmail/control/rcpthosts 
-���Խ�����С����Ȥ�����ư�ǣͣ̿���������������Ԥʤ���褦�ˤʤ�ޤ���
+を編集すれば、あとは全自動でＭＬ新規作成・削除が行なえるようになります。
 </para>
 
 <para>
-��( qmail 1.03 on NetBSD/i386 5.0.2 ):
+例( qmail 1.03 on NetBSD/i386 5.0.2 ):
 <screen>
 % su root
 # makefml newdomain ml.example.org /var/spool/ml.example.org
 # su fml
 % makefml newml test@ml.example.org
-  ... ���� ...
+  ... 出力 ...
 % exit
 # echo ml.example.org >> /var/qmail/control/rcpthosts
 # cat /var/spool/ml.example.org/etc/qmail/virtualdomains \
       >> /var/qmail/control/virtualdomains
-# pkill -HUP qmail-send (qmail-send �� HUP �����ʥ������)
+# pkill -HUP qmail-send (qmail-send に HUP シグナルを送る)
 </screen>
-����:
-/var/qmail/control/virtualdomains �����椷�Ƥ���Τ� qmail-send �Ǥ���
-qmail-send �ϥ������Ȥ���ݤˤΤ� virtualdomains �ե�������ɤ߹��ߤޤ���
-virtualdomains �ե��������ɤ߹��ߤ����뤿��ˤ�
-qmail-send �� HUP �����ʥ������ɬ�פ�����ޤ���
+注意:
+/var/qmail/control/virtualdomains を制御しているのは qmail-send です。
+qmail-send はスタートする際にのみ virtualdomains ファイルを読み込みます。
+virtualdomains ファイルを再読み込みさせるためには
+qmail-send に HUP シグナルを送る必要があります。
 </para>
 
 <para>
-makefml newml �����ե�����̾�ˤĤ��Ƥ�
+makefml newml が作るファイル名については
 <link linkend="setup.qmail.aliases">
-makefml newml �� qmail �˴ؤ�����
+makefml newml の qmail に関する節
 </link>
-�򻲾Ȥ��Ƥ���������
+を参照してください。
 </para>
 
 <para>
-qmail �������������
+qmail の設定の要点は
 <screen>
 /var/qmail/control/virtualdomains
 </screen>
-�ˡ����餫���ἡ�Τ褦������
+に、あらかじめ次のような設定
 <screen>
 ml.example.org:fml-ml.example.org
 </screen>
-��Ź���Ǥ����С�
-makefml �ʤ����� fml ���ޥ�ɤ���
-���ΥС������ɥᥤ��˳������� ~fml/.qmail-* �ե����뷲����������Τǡ�
-��������ǣͣ����꤬ͭ���ˤʤ롢�Ȥ����Ȥ����Ǥ���
+を仕込んでおけば、
+makefml ないしは fml コマンドが、
+このバーチャルドメインに該当する ~fml/.qmail-* ファイル群を生成するので、
+これだけでＭＬ設定が有効になる、というところです。
 </para>
 
 <para>
-�ޡ�root �� qmail �������������ɬ�פ�����Τ�¾�Σͣԣ��Ȱ��ʤΤǡ�
-�Ȥꤿ�ƤƳڤȤ��������ȤϤʤ��Ǥ��͡�
-.qmail-* �ե����뷲��ư���������鵤�ˤ��Ƥʤ����ɡ�
-���줫��񤤤��鵤��(�ԡ�)�����Ǥ���
+ま、root で qmail の設定を修整する必要があるのは他のＭＴＡと一緒なので、
+とりたてて楽とかいうことはないですね。
+.qmail-* ファイル群を自動化したから気にしてないけど、
+毎回一から書いたら気が(ピー)そうです。
 </para>
 
 </sect2>

@@ -16,12 +16,12 @@ $FML: book.sgml,v 1.4 2001/07/15 09:17:59 fukachan Exp $
   <toc></toc>
 
   <part>
-	<title> fml 4.0 คหคชคฑค๋ TODO </title>
+	<title> fml 4.0 ใซใใ‘ใ TODO </title>
 	<partintro>
 	<para>
-	fml 4.0 ควคฮ TODO ฅ๊ฅนฅศควคนกฃ
-	ฝพอ่คฯ 4.0 คฮ fml/doc/ri/TODO.wix คหคขครคฟคโคฮควคนกฃ
-	ดษอýคฮลิน็พๅ 5.0 branch ควสÝผ้คทคÞคนกฃ
+	fml 4.0 ใงใฎ TODO ใชในใใงใใ€
+	ๅพ“ๆฅใฏ 4.0 ใฎ fml/doc/ri/TODO.wix ใซใใฃใใใฎใงใใ€
+	็ฎก็ใฎ้ฝๅไธ 5.0 branch ใงไฟๅฎใ—ใพใใ€
 	</para>
 	</partintro>
 	&chapter.fml4;
@@ -30,14 +30,14 @@ $FML: book.sgml,v 1.4 2001/07/15 09:17:59 fukachan Exp $
   </part>
 
   <part>
-	<title> 4.0 คซค้ 5.0 คุฅÞกผฅธคนค๋คูคญคโคฮ </title>
+	<title> 4.0 ใใ 5.0 ใธใใผใธใใในใใใฎ </title>
 	<partintro>
 	<para>
-	fml 8.0 ควคฮ TODO ฅ๊ฅนฅศควคนกฃ
+	fml 8.0 ใงใฎ TODO ใชในใใงใใ€
 	</para>
 	</partintro>
 
-	<!-- ฐสฒผกขณฦพฯคฌสยคึ -->
+	<!-- ไปฅไธใ€ๅ็ซ ใไธฆใถ -->
 	&chapter.merge;
   </part>
 
@@ -45,7 +45,7 @@ $FML: book.sgml,v 1.4 2001/07/15 09:17:59 fukachan Exp $
 	<title> 5.0 TODO </title>
 	<partintro>
 	<para>
-	fml 8.0 ควคฮ TODO ฅ๊ฅนฅศควคนกฃ
+	fml 8.0 ใงใฎ TODO ใชในใใงใใ€
 	</para>
 	</partintro>
 

@@ -1,17 +1,17 @@
-io-reconstruct-base	IO::Adapter Âç²şÊÑ
-bootstrap-20020626	loader ¤Î°ú¿ô¤ò£Í£ÌÌ¾¤ËÊÑ¹¹¤¹¤ë
-hashed-spooldir		spool/$subdir/ ... ¹½À®¤ò²ÄÇ½¤È¤¹¤ë
-cgi-restruct-base	CGI ¤Î¹½À®ÊÑ¹¹¤Î³«»Ï
+io-reconstruct-base	IO::Adapter å¤§æ”¹å¤‰
+bootstrap-20020626	loader ã®å¼•æ•°ã‚’ï¼­ï¼¬åã«å¤‰æ›´ã™ã‚‹
+hashed-spooldir		spool/$subdir/ ... æ§‹æˆã‚’å¯èƒ½ã¨ã™ã‚‹
+cgi-restruct-base	CGI ã®æ§‹æˆå¤‰æ›´ã®é–‹å§‹
 reply-message
 reply-message-base
 threadtrack-pm-base
 ya-ticket-tag-base
 
-mail-message-0-5	mail-message-0-4 ¤Î bug fixes Â¾
-mail-message-0-4	0-3 °Ê¹ß¤Ç¡¢°ìÄÌ¤ê hack ¤·¤¿Ä¾¸å¤Î breakpoint
-mail-message-0-3	¥Ñ¡¼¥µÉôÊ¬¤â¤â¤Ä
+mail-message-0-5	mail-message-0-4 ã® bug fixes ä»–
+mail-message-0-4	0-3 ä»¥é™ã§ã€ä¸€é€šã‚Š hack ã—ãŸç›´å¾Œã® breakpoint
+mail-message-0-3	ãƒ‘ãƒ¼ã‚µéƒ¨åˆ†ã‚‚ã‚‚ã¤
 mail-message-0-2	clean up
-mail-message-0-1	MailingList:: ¤«¤é Mail:: ¤Ø°Ü¹Ô
+mail-message-0-1	MailingList:: ã‹ã‚‰ Mail:: ã¸ç§»è¡Œ
 
 
 ---

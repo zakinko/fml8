@@ -23,7 +23,7 @@ This is a MIME-encapsulated message
 Content-Type: text/plain;charset=iso-2022-jp
 
 The original message was received at 2001***********
-***********@pdx.ne.jp¤Ï¥á¡¼¥ë¤Î¼õ¼è¤òÄä»ß¤·¤Æ¤¤¤ë¤¿¤áÁ÷¿®¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£
+***********@pdx.ne.jpã¯ãƒ¡ãƒ¼ãƒ«ã®å—å–ã‚’åœæ­¢ã—ã¦ã„ã‚‹ãŸã‚é€ä¿¡ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚
 We failed to deliver mail. Recipient suspend the service. ***********@pdx.ne.jp
 
 --IOT01Mki1C3h2iek9o5u2N7E3N0m8i4d1SiA/nuinui.net
@@ -50,13 +50,13 @@ Received: from ca.nuinui.net (casv [10.20.30.48])
 	id 01C4793; Fri,  6 Apr 2001 19: 19: 18 +0900 (JST)
 From: ***@nuinui.net
 To: ***@nuinui.net
-Subject: ** Á÷¤Ã¤¿subject¤¬Æş¤ë
+Subject: ** é€ã£ãŸsubjectãŒå…¥ã‚‹
 Mime-Version: 1.0
 Content-Type: text/plain;charset=iso-2022-jp
 Content-Transfer-Encoding: 7bit
 Message-Id: <20010406101919.01C4793@ca.nuinui.net>
 Date: Fri,  6 Apr 2001 19: 19: 19 +0900 (JST)
 
-** Á÷¤Ã¤¿ËÜÊ¸¤¬Æş¤ë
+** é€ã£ãŸæœ¬æ–‡ãŒå…¥ã‚‹
 
 --IOT01Mki1C3h2iek9o5u2N7E3N0m8i4d1SiA/nuinui.net--

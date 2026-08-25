@@ -5,18 +5,18 @@
 
 <sect1 id="usage.fmldoc">
 	<title>
-	�⥸�塼��Υɥ�����Ȥ�ɽ������ (fmldoc ���ޥ��)
+	モジュールのドキュメントを表示する (fmldoc コマンド)
 	</title>
 
 <para>
-fmldoc �λȤ����� perldoc ��Ʊ�ͤǤ���
-fml ��Ǥ�դΥ⥸�塼����Ф������Υɥ�����Ȥ�ɽ�����ޤ���
-�¤ΤȤ��� perldoc �ؤ� wrapper �Ǥ���
+fmldoc の使い方は perldoc と同様です。
+fml の任意のモジュールに対し、そのドキュメントを表示します。
+実のところ perldoc への wrapper です。
 </para>
 
 <para>
-���Ȥ��С�FML::Process::Kernel �Υɥ�����Ȥ���������硢
-���Τ褦�˼¹Ԥ��Ƥ���������
+たとえば、FML::Process::Kernel のドキュメントが見たい場合、
+次のように実行してください。
 <screen>
 % fmldoc FML::Process::Kernel
 </screen>

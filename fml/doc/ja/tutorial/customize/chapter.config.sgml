@@ -5,24 +5,24 @@
 
 <chapter id="config">
 	<title>
-	����ե�������ѹ�����
+	設定ファイルを変更する
 	</title>
 
 
 <sect1 id="config.sitedefaultconfig.cf">
 	<title>
-	���Υۥ��ȤΤ��٤ƤΣ̤ͣΥǥե����������ѹ�����
+	そのホストのすべてのＭＬのデフォルト設定を変更する
 	</title>
 
 <para>
-�����
+設定を
 /usr/local/etc/fml/site_default_config.cf
-�˽񤤤Ʋ�������
-�ե����ޥåȤ� .cf �������Ĥޤ� config.cf ��Ʊ�ͤǤ���
+に書いて下さい。
+フォーマットは .cf 形式、つまり config.cf と同様です。
 </para>
 
 <para>
-���Υե�����ϡ�&fml4; �� site_force.ph �����������ΤǤ���
+このファイルは、&fml4; の site_force.ph に相当するものです。
 </para>
 
 </sect1>
@@ -30,7 +30,7 @@
 
 <sect1 id="recipes.config">
 	<title>
-	�쥷��'s
+	レシピ's
 	</title>
 
 <qandaset>
@@ -38,20 +38,20 @@
 <qandaentry>
 <question>
 	<para>
-	elena �̤ͣ�����򸫤�
+	elena ＭＬの設定を見る
 	</para>
 </question>
 
 <answer>
 <para>
-�������ѿ���ɽ������ˤ�
+全部の変数を表示するには
 <screen>
 % /usr/local/bin/fmlconf elena
 </screen>
 </para>
 
 <para>
-�ǥե�����ͤȰۤʤ��ѿ���ɽ������ˤ�
+デフォルト値と異なる変数を表示するには
 <screen>
 % /usr/local/bin/fmlconf -n elena
 </screen>

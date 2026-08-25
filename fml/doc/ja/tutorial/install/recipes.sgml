@@ -9,53 +9,30 @@
 
 <question>
 <para>
-�桼�� fml �ʳ�(���Ȥ��м�ʬ̾��)�� fml ��Ȥ�����
+ユーザ fml 以外(たとえば自分名義)で fml を使いたい
 </para>
 </question>
 
 <answer>
 <para>
-fml ��ư�����ץ������Υ桼�� fml ��
-¾�Υ桼��(���Ȥ��� another)�ˤ������ΤǤ���С�
-configure ���ץ�����  --with-fml-owner ���ѹ��Ǥ��ޤ���
+fml を動かすプロセスのユーザ fml を
+他のユーザ(たとえば another)にしたいのであれば、
+configure オプションの  --with-fml-owner で変更できます。
 <screen>
 ./configure --with-fml-owner=another
 </screen>
 </para>
 
 <para>
-��������ʬ�Υ�������ȤǼ¹Ԥ���ΤϤ��ޤ��礦��
-fml ���ѥ桼�����Ѱդ��뤳�Ȥ��侩�Ǥ���
+ただ、自分のアカウントで実行するのはやめましょう。
+fml 専用ユーザを用意することが推奨です。
 </para>
 
 <para>
-aliases ����ε�ư�ǤϤʤ���
-���̥桼���θ��¤Ȥ��ƣ̤ͣ�¹Ԥ���ΤǤ����
-procmail ���� &fml8; ��ư������ˡ�⤢��ޤ���
-����� /var/spool/ml/etc/procmail/procmailrc �򻲹ͤˤ��Ʋ�������
-</para>
-</answer>
-
-</qandaentry>
-
-
-<qandaentry>
-
-<question>
-<para>
-���󥹥ȡ����Ȥκݡ��桼�� fml �ˤʤ륿���ߥ󥰤ϡ�
-</para>
-</question>
-
-<answer>
-<para>
-����������ɤ� configure �μ¹Ԥϥ桼�� fml �ǹԤʤäƤ⤫�ޤ��ޤ��󤬡�
-���󥹥ȡ���ϥ桼�� root �ǹԤʤäƲ�������
-</para>
-
-<para>
-�դˡ����٤Ƥκ��(����������ɤ��饤�󥹥ȡ���ޤǤ��٤�)��
-�桼�� root �ǹԤʤäƤ����ꤢ��ޤ���
+aliases からの起動ではなく、
+一般ユーザの権限としてＭＬを実行するのであれば
+procmail から &fml8; を起動する方法もあります。
+設定は /var/spool/ml/etc/procmail/procmailrc を参考にして下さい。
 </para>
 </answer>
 
@@ -66,22 +43,19 @@ procmail ���� &fml8; ��ư������ˡ�⤢��ޤ���
 
 <question>
 <para>
-�ɥ������ȴ���Υ��󥹥ȡ���򤷤���
+インストール作業の際、ユーザ fml になるタイミングは？
 </para>
 </question>
 
 <answer>
 <para>
-���̤˥��󥹥ȡ��뤷�Ƥ���������
-�ʤ��ʤ顢
-���ߡ�&fml8; �ϥɥ�����Ȥ򥤥󥹥ȡ��뤷�Ƥ��ޤ���Τǡ� 
+ダウンロードと configure の実行はユーザ fml で行なってもかまいませんが、
+インストールはユーザ root で行なって下さい。
 </para>
 
 <para>
-�դˡ��ɥ�����Ȥ�ɬ�פʤ饽������ 
-Documentation/ �ʲ���Ŭ�ڤʾ��
-(���Ȥ��� /usr/local/share/doc/fml8/�С�������ֹ�/)
-�˥��ԡ����Ʋ�������
+逆に、すべての作業(ダウンロードからインストールまですべて)を
+ユーザ root で行なっても問題ありません。
 </para>
 </answer>
 
@@ -92,14 +66,40 @@ Documentation/ �ʲ���Ŭ�ڤʾ��
 
 <question>
 <para>
-���󥹥ȡ������ perl �Υѥ�����ꤷ����
+ドキュメント抜きのインストールをしたい
 </para>
 </question>
 
 <answer>
 <para>
-configure ��¹Ԥ���ݤ˴Ķ��ѿ� PATH ��Ŭ�ڤ����ꤷ�Ĥ�
-�¹Ԥ��Ʋ�������
+普通にインストールしてください。
+なぜなら、
+現在、&fml8; はドキュメントをインストールしていませんので。 
+</para>
+
+<para>
+逆に、ドキュメントが必要ならソースの 
+Documentation/ 以下を適切な場所
+(たとえば /usr/local/share/doc/fml8/バージョン番号/)
+にコピーして下さい。
+</para>
+</answer>
+
+</qandaentry>
+
+
+<qandaentry>
+
+<question>
+<para>
+インストール時に perl のパスを指定したい
+</para>
+</question>
+
+<answer>
+<para>
+configure を実行する際に環境変数 PATH を適切に設定しつつ
+実行して下さい。
 <screen>
 % env PATH=/some/where/:$PATH sh configure 
 </screen>
@@ -113,13 +113,13 @@ configure ��¹Ԥ���ݤ˴Ķ��ѿ� PATH ��Ŭ�ڤ����ꤷ�Ĥ�
 
 <question>
 <para>
-jperl �� fml ��Ȥ�����
+jperl で fml を使いたい
 </para>
 </question>
 
 <answer>
 <para>
-ư�����ɤ������ޤä���ʬ����ޤ���
+動くかどうか、まったく分かりません。
 </para>
 </answer>
 
@@ -130,13 +130,13 @@ jperl �� fml ��Ȥ�����
 
 <question>
 <para>
-elena ML ����(������)������
+elena ML を上書き(再生成)したい
 </para>
 </question>
 
 <answer>
 <para>
---force �Ĥ��� newml ��¹Ԥ��Ʋ������� 
+--force つきで newml を実行して下さい。 
 <screen>
 % makefml --force newml elena
 </screen>
@@ -150,16 +150,16 @@ elena ML ����(������)������
 
 <question>
 <para>
-/var/spool/ml/etc/ �ʲ��� aliases �ե�������Խ����Ƥ�����פǤ�����
+/var/spool/ml/etc/ 以下の aliases ファイルを編集しても大丈夫ですか？
 </para>
 </question>
 
 <answer>
 <para>
-�Ϥ����Խ����Ƥ⤫�ޤ��ޤ������Ƥϼ�ʬ�Ǵ�������褦�ˤ��Ʋ�������
-���������褽���� makefml/fml ����ư���Խ�����Ȥ����Ǥ��Τǡ�
-�̤ͣ�ä��к������ޤ�����
-�����ˣͣ������ԤʤäƤ⸵�ˤ����ޤ���Τǡ����դ��Ʋ�������
+はい、編集してもかまいませんが内容は自分で管理するようにして下さい。
+ただ、本来そこは makefml/fml が自動で編集するところですので、
+ＭＬを消せば削除されますし、
+削除後にＭＬ復活を行なっても元には戻りませんので、注意して下さい。
 </para>
 </answer>
 
@@ -170,18 +170,18 @@ elena ML ����(������)������
 
 <question>
 <para>
-�᡼�륵���Ф� Unix �ǲ�Ư���� fml �� Windows 2000/NT4 ��ư��������
+メールサーバは Unix で稼働させ fml は Windows 2000/NT4 で動かしたい
 </para>
 </question>
 
 <answer>
 <para>
-����: �ƥ��Ȥ��Ƥ��ޤ���
+注意: テストしていません。
 </para>
 
 <para>
-fetchfml �� Windows 2000/NT4 ��ư������
-MTA �� Unix ��ư�������ɤ��Ǥ��礦��
+fetchfml を Windows 2000/NT4 で動かし、
+MTA を Unix で動かせば良いでしょう。
 </para>
 </answer>
 
@@ -192,13 +192,13 @@ MTA �� Unix ��ư�������ɤ��Ǥ��礦��
 
 <question>
 <para>
-�̤ͣ�����(�ƽ����)������
+ＭＬを初期化(再初期化)したい
 </para>
 </question>
 
 <answer>
 <para>
-������ rmml ���ơ��⤦������ newml ��¹Ԥ���Τ���ñ�Ǥ���
+いちど rmml して、もういちど newml を実行するのが簡単です。
 <screen>
 % makefml rmml elena
 % makefml newml elena
@@ -212,13 +212,13 @@ MTA �� Unix ��ư�������ɤ��Ǥ��礦��
 <qandaentry>
 <question>
 <para>
-�ְ㤨�� rmml ���Ƥ��ޤä��̤ͣ����褵������
+間違えて rmml してしまったＭＬを復活させたい
 </para>
 </question>
 
 <answer>
 <para>
-reviveml ���ޥ�ɤ�ȤäƲ�������
+reviveml コマンドを使って下さい。
 </para>
 </answer>
 </qandaentry>
@@ -227,24 +227,24 @@ reviveml ���ޥ�ɤ�ȤäƲ�������
 <qandaentry>
 <question>
 <para>
-loader �� Bootstrap() ���ĤʤɤȤ������顼���Фޤ������ɤ�����Ф褤����
+loader や Bootstrap() が…などというエラーが出ますが、どうすればよいか？
 </para>
 </question>
 
 <answer>
 <para>
-�֡��ȥ��ȥ�åפΥ����ɤ��ޤ���«���Ƥʤ��Τǡ��ޤ��
-fml �� boot loader (/usr/local/fml/libexec/loader)
-�������ؤ���ɬ�פ����뤳�Ȥ⤢�ꤨ�ޤ���
+ブートストラップのコードがまだ収束してないので、まれに
+fml の boot loader (/usr/local/fml/libexec/loader)
+を入れ替える必要があることもありえます。
 </para>
 
 <para>
-�������ä����ϡ�make install ����
+そういった場合は、make install 時に
 <screen>
 You must upgrade loader. Replace it ? [y/n]
 </screen>
-��ɽ������ޤ���������  y ��������ȡ�
-���󥹥ȡ��餬 loader �򿷤�����Τ����촹���ޤ���
+と表示されます。ここで  y と答えると、
+インストーラが loader を新しいものに入れ換えます。
 </para>
 
 </answer>

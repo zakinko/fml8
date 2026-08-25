@@ -4,96 +4,67 @@
 
 <appendix id="pmtools">
 	<title>
-	[�Ť�] Problem Report ��Ϣ�ġ���ΤޤȤ�
+	[古い] Problem Report 関連ツールのまとめ
 	</title>
 
 
 <sect1 id="pmtools.overview">
 	<title>
-	Problem Report ��Ϣ�ġ���
+	Problem Report 関連ツール
 	</title>
 
 <para>
-bug tracking �����ƥ�ȥȥ�֥�����åȥ����ƥ����̯����Ū���㤦�Ȼפ��ޤ�����
-�����ǤϹ��� problem report �Ȥ��������ǤޤȤ�Ƥ��ޤ���
+bug tracking システムとトラブルチケットシステムは微妙に目的が違うと思いますが、
+ここでは広く problem report という観点でまとめています。
 </para>
 
 <para>
 <ulink url="http://www.daveeaton.com/scm/PMTools.html">
 http://www.daveeaton.com/scm/PMTools.html
 </ulink>
-�� FAQ
+に FAQ
 	<footnote>
 	<para>
 	<ulink url="http://www.iac.honeywell.com/Pub/Tech/CM/PMTools.html">
 	http://www.iac.honeywell.com/Pub/Tech/CM/PMTools.html
 	</ulink>
-	���Τ��ä���
+	に昔あった？
 	</para>
 	</footnote>
-������ޤ���
-�ä�����ΰ����ˤĤ��Ƥϡ�������ޤ�����Ȥ褤�褦�Ǥ���
-�äơ����λ�ǯ���餤�������Ƥޤ���͡�
+があります。
+特に売りもの一覧については、ここをまず見るとよいようです…
+って、この三年くらい更新してませんね。
 </para>
 
 <para>
-Free �Τ�Τ⤤���Ĥ�����ޤ���
-�Ǥ�ͭ̾�Ȥ�������ˤΤ���ġ���� GNATS �Ǥ��礦����
-���Ȥ�
-jitterbug��
+Free のものもいくつかあります。
+最も有名というか歴史のあるツールは GNATS でしょうか。
+あとは
+jitterbug、
 Bugzilla
-debuggs (Debian Bug Tracking System)��
-OpenTrack PTS WREK Wreq (?) �ʤɡ�
-�Ƕ�ϡ��ʤ�Ǥ⥦���֤ǡ��Ȥ����ͤ����Ф�������餫��
-Bugzilla ��¿���Ǥ����͡�
+debuggs (Debian Bug Tracking System)、
+OpenTrack PTS WREK Wreq (?) など。
+最近は、なんでもウエブで〜という人たちばかりだからか、
+Bugzilla が多いですかね？
 </para>
 
 <para>
-�������ä��� linux ��ΤΥڡ���
+あ、こっちの linux もののページ
 <ulink url="http://linas.org/linux/pm.html">
 http://linas.org/linux/pm.html
 </ulink>
-�������褯�ޤȤޤäƤ뤫��Ĥ���������⹹�����Ƥޤ���͡�
+の方がよくまとまってるかも…いえ、これも更新してませんね。
 </para>
 
 <para>
-������ˤ��衢
-�����Ƥ�ͭ̾�ʤ�Τ�����Υץ��������Ȥ� bind ����Ƥ���
-�����������������Ȥ�����¿���褦�ˤ��⤨�ޤ���
-���Ȥ��� perl.org �ΥХ��ȥ�å��ġ���Ǥ��� perlbug (CPAN �򸫤�) ��
-¾�Ǥ��ޤ�Ȥ��Ƥ���褦�ʵ������ʤ��櫓�ǡ�
-�ɤ��� project ��ȯ�����뤿�Ӥˡ�
-�ش�¸�� bug tracking system �ϻȤ��ˤ������������
-�Ȥ��� project ���տ路��ȯ�����Ƥ���褦��ʷ�ϵ��ⴶ�����ޤ�(��)��
-</para>
-
-</sect1>
-
-
-<sect1>
-	<title>
-	Call Tracking �� Problem Tracking
-	</title>
-
-<para>
-Call Tracking �ϡ�
-����ˤ����ͤ���������Ŧ���Ф����б������ƥ�ǡ�
-�ֿͤγ�����ơ�
-�֥��ơ�����������
-������
-��ݡ��Ȥ�Ԥʤ�ɬ�פ�����ޤ���
-</para>
-
-<para>
-���� Problem Tracking �ϡֳ�ȯ�ץ������δ����פʤɤǤ��ꡢ
-���δ����оݤˤϥ��������������ס���ݡ��Ȥ����Ǥʤ���
-����ƥ��졼�����䤽�Υƥ��ȤޤǤ�ޤޤ�ޤ���
-</para>
-
-<para>
-�ʤ� Configuration Management �Ȥ���ñ��� 
-Problem Tracking �ζ��٤˰��֤��ޤ�����
-����� CVS �ʤɤΥġ���ϤΤ��ȤǤ���
+いずれにせよ、
+たいてい有名なものは特定のプロジェクトと bind されていて
+そこから派生したという趣が多いようにおもえます。
+たとえば perl.org のバグトラックツールである perlbug (CPAN を見よ) は
+他であまり使われているような気がしないわけで、
+どうも project が発生するたびに、
+『既存の bug tracking system は使いにくい、作ろう』
+という project が付随して発生しているような雰囲気も感じられます(笑)。
 </para>
 
 </sect1>
@@ -101,11 +72,40 @@ Problem Tracking �ζ��٤˰��֤��ޤ�����
 
 <sect1>
 	<title>
-	status �ǻȤ���ñ�����
+	Call Tracking と Problem Tracking
 	</title>
 
 <para>
-���Ȥ��� GNATS �Ǥ�
+Call Tracking は、
+おもにお客様からの問題指摘に対する対応システムで、
+「人の割り当て」
+「ステータス管理」
+そして
+レポートを行なう必要があります。
+</para>
+
+<para>
+一方 Problem Tracking は「開発プロセスの管理」などであり、
+その管理対象にはタスク管理や統計、レポートだけでなく、
+インテグレーションやそのテストまでも含まれます。
+</para>
+
+<para>
+なお Configuration Management という単語も 
+Problem Tracking の近隣に位置しますが、
+これは CVS などのツール系のことです。
+</para>
+
+</sect1>
+
+
+<sect1>
+	<title>
+	status で使われる単語の例
+	</title>
+
+<para>
+たとえば GNATS では
 <screen>
 open
 analyzed
@@ -113,7 +113,7 @@ feedback
 closed
 suspended
 </screen>
-¾����Ǥ�
+他の例では
 <screen>
 NEW
 ASSIGNED
@@ -122,15 +122,15 @@ RESOLVED
 VERIFIED
 CLOSED
 </screen>
-�ʤɤ⤢��ޤ���
-jitterbug ����
+などもあります。
+jitterbug だと
 <screen>
 all
 pending
 replied
 unreplied
 </screen>
-����status �ˤ������Τ��ʤ���(�Ǥ����Τ�?)
+が、status にあたるものかなあ？(でいいのか?)
 </para>
 
 </sect1>
@@ -142,15 +142,15 @@ unreplied
 	</title>
 
 <para>
-��¸�Ρ�ͭ̾�� bug tracking system��
-�ޤ��Ȥˤ��� GNATS �μ���򸫤褦��
+ご存知、有名な bug tracking system。
+まぁとにかく GNATS の実例を見よう〜
 <ulink url="http://www.netbsd.org/Misc/send-pr.html">
 http://www.netbsd.org/Misc/send-pr.html
 </ulink>
 </para>
 
 <para>
-send-pr ����
+send-pr の例
 <screen>
 To: gnats-bugs@gnats.netbsd.org
 Subject: no definition for 9801N-J12 pcmcia card
@@ -259,11 +259,11 @@ diff -u -u -b -r1.93.2.7 pcmciadevs
 <ulink url="http://samba.anu.edu.au/jitterbug/">
 http://samba.anu.edu.au/jitterbug/
 </ulink>
-�򻲾ȡ�
-��� simple is best �ظ��ʤ�ΤȤ�����Ǥ��礦����
-��Ȥ�Ȥ� samba �� bug tracking �򤹤���Ū���饹�����ȡ�
-C ����ǡ�WWW ���󥿡��ե������Τ�
-(URL �ߤ��狼��Ȥ���)��
+を参照。
+割と simple is best 指向なものといえるでしょうか。
+もともとは samba の bug tracking をする目的からスタート。
+C 言語で、WWW インターフェイスのみ
+(URL みりゃわかるとおり)。
 </para>
 
 </sect1>
@@ -281,7 +281,7 @@ http://linas.org/linux/pm.html
 </para>
 
 <para>
-���ߤޤ��󡢤ޤ����褯�ߤƤʤ�����
+すみません、まだ、よくみてないす。
 </para>
 
 </sect1>
@@ -299,7 +299,7 @@ http://www.ravenbrook.com/project/p4dti/
 </para>
 
 <para>
-���ߤޤ��󡢤ޤ����褯�ߤƤʤ��Ǥ���
+すみません、まだ、よくみてないです。
 </para>
 
 </sect1>

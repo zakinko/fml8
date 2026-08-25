@@ -5,27 +5,27 @@
 
 <sect1 id="usage.post">
 	<title>
-	��������� (���������ץ������ˤĤ���)
+	記事の投稿 (配送処理プログラムについて)
 	</title>
 
 <para>
-elena@fml.org �ͣ�(fml.org �� elena �ͣ�)�ؤ���Ƥϡ�
-���̤˥᡼��� elena@fml.org ���������뤳�ȤǤ���
+elena@fml.org ＭＬ(fml.org の elena ＭＬ)への投稿は、
+普通にメールを elena@fml.org に送信することです。
 </para>
 
 <para>
-�᡼��� MTA ���������ǽ�Ū�� MTA ��
+メールは MTA が受け、最終的に MTA は
 /usr/local/libexec/fml/distribute
-�Ȥ������ޥ�ɤ�¹Ԥ��ޤ���
-distribute �ϥ᡼���ɸ�����Ϥ�������Ȥꡢ
-�̤ͣȤ���ɬ�פʽ���(��������¸��إå��ν񤭴���)�򤷤��塢
-MTA ������������Ѥͤޤ���
+というコマンドを実行します。
+distribute はメールを標準入力から受けとり、
+ＭＬとして必要な処理(記事の保存やヘッダの書き換え)をした後、
+MTA へ配送処理を委ねます。
 </para>
 
 
 <sect2>
 	<title>
-	distribute �ץ�����ब �̤ͣȤ��ƽ�������٤�����
+	distribute プログラムが ＭＬとして処理するべきこと
 	</title>
 
 
@@ -33,32 +33,32 @@ MTA ������������Ѥͤޤ���
 
 <listitem>
 <para>
-subject �Υ�����Ĥ��롢�⤷���ϵ����ֹ�ʤɤ򹹿�����ʤ�
+subject のタグをつける、もしくは記事番号などを更新するなど
 <screen>
-��
+例
 
-Subject: [elena:00100] ����ʤ�����Ũ
+Subject: [elena:00100] エレナさん素敵
 </screen>
-(�ǥե���ȤǤϤĤ��ޤ���)
+(デフォルトではつけません)
 </para>
 </listitem>
 
 <listitem>  
 <para>
-��������¸(�ƥ����ȥե�����)
+記事の保存(テキストファイル)
 </para>
 </listitem>
 
 <listitem>  
 <para>
-HTML �����줿�������롣
-~fml/public_html/ �ʲ��˺�������ޤ���
+HTML 化された記事を作る。
+~fml/public_html/ 以下に作成されます。
 </para>
 </listitem>
 
 <listitem>  
 <para>
-����å����ץ����ƥ�Υǡ����١����򹹿����롣
+スレッド追跡システムのデータベースを更新する。
 </para>
 </listitem>
 
@@ -69,16 +69,16 @@ HTML �����줿�������롣
 
 <sect2>
 	<title>
-	��Ƶ����ο��񤤤����椹���ѿ�
+	投稿記事の振舞いを制御する変数
 	</title>
 
 <!--
-XXX-TODO ��Ƶ����ο��񤤤����椹���ѿ�
+XXX-TODO 投稿記事の振舞いを制御する変数
 -->
 
 <warning>
 <para>
-�����ޤ��󡢤ޤ����񤤤Ƥ��ޤ���(_o_)
+すいません、まだ、書いていません(_o_)
 </para>
 </warning>
 
@@ -87,41 +87,41 @@ XXX-TODO ��Ƶ����ο��񤤤����椹���ѿ�
 
 <sect2>
 	<title>
-	����: �֡��Ȥ��Ƥ����ͻ�
+	解説: ブートしていく様子
 	</title>
 
 <para>
 <link linkend="bootloader">
-fml �֡��ȥ�����
+fml ブートローダ
 </link>
-�ξϤǤ���˾夲�Ƥ���褦�ˡ����Τ褦�˥֡��Ȥ��ޤ���
+の章でも例に上げているように、次のようにブートします。
 </para>
 
 
 <para>
-/usr/local/libexec/fml/distribute ��/usr/local/libexec/fml/loader �� 
-symlink(2) �Ƿ�Ф졢Ʊ��Υե�����Ǥ���
-/usr/local/libexec/fml/distribute ����ư�����ȡ��Ĥޤ� loader ����ư
-�����ȡ�/usr/local/libexec/fml/loader �� /usr/local/etc/fml/main.cf 
-���ɤߤ��ߤޤ��������� fml_version �ѿ�����Ȥ��٤��饤�֥��ΥС�����
-�����ޤ������Ȥ��� fml_vesrion �� current-20010501 �ȤʤäƤ�����
-/usr/local/lib/fml/current-20010501/ �ʲ��ˤ���饤�֥���Ȥ��Ȥ���
-�����Ǥ���
+/usr/local/libexec/fml/distribute と/usr/local/libexec/fml/loader は 
+symlink(2) で結ばれ、同一のファイルです。
+/usr/local/libexec/fml/distribute が起動されると、つまり loader が起動
+されると、/usr/local/libexec/fml/loader は /usr/local/etc/fml/main.cf 
+を読みこみます。そして fml_version 変数から使うべきライブラリのバージョ
+ンを決めます。たとえば fml_vesrion が current-20010501 となっていたら
+/usr/local/lib/fml/current-20010501/ 以下にあるライブラリを使うといっ
+た具合です。
 </para>
 
 <para>
-@INC (Perl �Υ饤�֥�ꥵ�����ѥ�)�����ꤷ���塢
-loader (/usr/local/libexec/fml/distribute �μ���) 
-�� FML::Process::Switch ������ɤ���$0 (�ץ�����̾)��Ĵ�٤ޤ���
-����̾�����鼫ʬ�λŻ��ϡ����������פ����Τ�ޤ���
+@INC (Perl のライブラリサーチパス)を設定した後、
+loader (/usr/local/libexec/fml/distribute の実体) 
+は FML::Process::Switch をロードし、$0 (プロセス名)を調べます。
+その名前から自分の仕事は「配送処理」だと知ります。
 </para>
 
 <para>
-loader �� /usr/local/etc/fml/defaults/�С������/modules �ե������Ĵ�١�
-�����ɤ���٤��⥸�塼�뤬
+loader は /usr/local/etc/fml/defaults/バージョン/modules ファイルを調べ、
+ロードするべきモジュールが
 FML::Process::Distribute 
-�����Τ�ޤ���
-�Ǹ�ˡ����Υ��饹������ɤ������������˰ܤ�ޤ���
+だと知ります。
+最後に、このクラスをロードし、配送処理に移ります。
 </para>
 
 </sect2>

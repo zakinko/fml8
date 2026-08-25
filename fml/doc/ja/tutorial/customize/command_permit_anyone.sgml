@@ -5,29 +5,29 @@
 
 <sect1 id="config.command.permitanyone">
 	<title>
-	�����������ǥ�: ï�Ǥ⥳�ޥ�ɥ᡼�뤬�Ȥ���
+	ケーススタディ: 誰でもコマンドメールが使える
 	</title>
 
 <para>
-�ѿ�
+変数
 command_mail_restrictions
-�ϥ��ޥ�ɥ᡼������Ѥ�������С���������Ƥ��ޤ���
+はコマンドメールの利用を許すメンバーを定義しています。
 <screen>
 command_mail_restrictions = permit_anyone
 </screen>
-����ǡ��̤ͣΥ��С����ݤ�����鷺ï�Ǥ⥳�ޥ�ɥ᡼�뤬�Ȥ��ޤ���
+これで、ＭＬのメンバーか否かを問わず誰でもコマンドメールが使えます。
 </para>
 
 <para>
-���������򤷤Ƥ����Τ���
-���ĻȤ������
-�Ȥ����ΤϤ���ޤ����������塢����ϲ�ǽ�Ǥ���
+こんな設定をしていいのか？
+いつ使うんだ？
+というのはありますが、理論上、設定は可能です。
 </para>
 
 
 <sect2>
 	<title>
-	�쥷�ԡ�s
+	レシピ’s
 	</title>
 
 <qandaset>
@@ -36,7 +36,7 @@ command_mail_restrictions = permit_anyone
 
 <question>
 <para>
-ï�Ǥ⥳�ޥ�ɥ᡼�뤬�Ȥ���
+誰でもコマンドメールが使える
 </para>
 </question>
 
@@ -55,7 +55,7 @@ command_mail_restrictions = permit_anyone
 
 <question>
 <para>
-�����ƥॢ������Ȥ�Τ����ơ�ï�Ǥ⥳�ޥ�ɥ᡼�뤬�Ȥ���
+システムアカウントをのぞいて、誰でもコマンドメールが使える
 </para>
 </question>
 
@@ -65,8 +65,8 @@ command_mail_restrictions = permit_anyone
 command_mail_restrictions = isolate_system_accounts
                             permit_anyone
 </screen>
-��: ������ reject_system_accounts �Ǥ�����
-&fml8; 2008/08/17 �ʹߤΥС������Ǥ� isolate (SPAM �γ�Υ)���侩�Ǥ���
+注: 以前は reject_system_accounts でした。
+&fml8; 2008/08/17 以降のバージョンでは isolate (SPAM の隔離)が推奨です。
 </para>
 </answer>
 
@@ -77,7 +77,7 @@ command_mail_restrictions = isolate_system_accounts
 
 <question>
 <para>
-���ޥ�ɥ᡼���ï��Ȥ��ʤ��褦�ˤ���
+コマンドメールを誰も使えないようにする
 </para>
 </question>
 
@@ -86,16 +86,16 @@ command_mail_restrictions = isolate_system_accounts
 <screen>
 command_mail_restrictions = isolate
 </screen>
-��: ������ reject �Ǥ�����
-&fml8; 2008/08/17 �ʹߤΥС������Ǥ� isolate (SPAM �γ�Υ)���侩�Ǥ���
+注: 以前は reject でした。
+&fml8; 2008/08/17 以降のバージョンでは isolate (SPAM の隔離)が推奨です。
 </para>
 
 <para>
-����ʳ��ˤ���ˡ������ޤ������路����
+これ以外にも方法があります。くわしくは
 <link linkend="config.command.rejectall">
 <xref linkend="config.command.rejectall">
 </link>
-�򻲾Ȥ��Ʋ�������
+を参照して下さい。
 </para>
 </answer>
 

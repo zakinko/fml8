@@ -5,16 +5,16 @@
 <qandaentry>
 <question>
 <para>
-�ȤäƤ��� fml �ΥС�������Τꤿ����
+使っている fml のバージョンが知りたい。
 </para>
 </question>
 
 <answer>
 <para>
-fmlconf ���ޥ�ɤ��ƣ̤ͣ��ѿ�������ɽ�����Ƥ���ޤ���
-�ɤΣͣ�(�¤ΤȤ���Ŭ���ʣ̤ͣǤ褤)����ꤷ�Ƥ��ޤ��ޤ���Τǡ�
-fmlconf ��¹Ԥ��Ʋ�������
-���Ȥ���
+fmlconf コマンドが各ＭＬの変数一覧を表示してくれます。
+どのＭＬ(実のところ適当なＭＬでよい)を指定してかまいませんので、
+fmlconf を実行して下さい。
+たとえば
 <screen>
 % /usr/local/bin/fmlconf test |grep fml_version
 fml_version                          = fml-devel current-20021029
@@ -27,7 +27,7 @@ fml_version                          = fml-devel current-20021029
 <qandaentry>
 <question>
 <para>
-Postfix �ΥС�������Τꤿ����
+Postfix のバージョンが知りたい。
 </para>
 </question>
 
@@ -45,7 +45,7 @@ Postfix �ΥС�������Τꤿ����
 <qandaentry>
 <question>
 <para>
-Sendmail �ΥС�������Τꤿ����
+Sendmail のバージョンが知りたい。
 </para>
 </question>
 
@@ -62,21 +62,21 @@ Sendmail �ΥС�������Τꤿ����
 <qandaentry>
 <question>
 <para>
-qmail �ΥС�������Τꤿ����
+qmail のバージョンが知りたい。
 </para>
 </question>
 
 <answer>
 
 <para>
-�����ϡ����֤� 1.03 + �褯ʬ����ʤ��ѥå����Ǥ���
-���󥹥ȡ��뤷���ͤʤꡢ
-�Ȥä��ѥå����������ƥ�����Τ����ޤ��뤫���Ƥ���������
+答えは、たぶん 1.03 + よく分からないパッチ群です。
+インストールした人なり、
+使ったパッケージシステムの中をのぞきまくるかしてください。
 </para>
 
 <para>
-��������¸�ߤ��ޤ���
-DJB ���ϡ֥ѥå��򤢤Ƥ����פȤ������Ѥ�ͤ��ʤ�ʸ���ʤΤǤ��礦���ʤ��Ǥ���
+一般論は存在しません。
+DJB 教は「パッチをあてろ！」という運用を考えない文化なのでしょうがないです。
 </para>
 
 </answer>

@@ -5,23 +5,23 @@
 
 <sect1 id="usage.fmladdr">
 	<title>
-	���ɥ쥹������ɽ������ (fmladdr ���ޥ��)
+	アドレス一覧を表示する (fmladdr コマンド)
 	</title>
 
 <para>
 fmladdr (/usr/local/bin/fmladdr)
-�ϡ�
-���Υۥ��Ȥ��������Ƥ������ƤΥ��ɥ쥹(�Υ桼���ѡ���)��ɽ�����ޤ���
+は、
+そのホストで定義されている全てのアドレス(のユーザパート)を表示します。
 </para>
 
 <important>
 <para>
-���Τˤϡ�
-/etc/passwd ���������Ƥ���桼��
+正確には、
+/etc/passwd で定義されているユーザ
 +
-Postfix ���������Ƥ��� alias �Τ��٤�
-(�Ĥޤ���Ĥ�绻�����ꥹ��)
-��ɽ�����Ƥ��ޤ���
+Postfix で定義されている alias のすべて
+(つまり二つを合算したリスト)
+を表示しています。
 </para>
 </important>
 
@@ -34,10 +34,10 @@ Postfix ���������Ƥ��� alias �Τ��٤�
 <para>
 <warning>
 <para>
-fmladdr �� fmlalias �ΰ㤤�ϡ�������
-�桼��( /etc/passwd ���������Ƥ����� )��ޤफ�ݤ����Ȥ������Ǥ���
-fmladdr �ϴޤߤޤ���fmlalias �ϴޤߤޤ��� 
-fmlalias �ϡ����� alias ����ɽ�����ޤ���
+fmladdr と fmlalias の違いは、一覧に
+ユーザ( /etc/passwd で定義されているもの )を含むか否か？という点です。
+fmladdr は含みます、fmlalias は含みません。 
+fmlalias は、純粋に alias 群を表示します。
 </para>
 </warning>
 </para>

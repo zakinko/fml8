@@ -1,79 +1,79 @@
 <para>
 <screen>
 
-# Descriptions: ¥Ø¥Ã¥À¥µ¥¤¥º¤Î¾å¸Â¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ
+# Descriptions: ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã®ä¸Šé™ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
 #      History:
 #        Value: NUM
 #     Examples: 102400
 default_mail_header_size_limit	=	102400
 
 
-# Descriptions: ËÜÊ¸¥µ¥¤¥º¤Î¾å¸Â¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ
+# Descriptions: æœ¬æ–‡ã‚µã‚¤ã‚ºã®ä¸Šé™ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
 #      History:
 #        Value: NUM
 #     Examples: 10240000
 default_mail_body_size_limit	=	10240000
 
 
-# Descriptions: ÆşÎÏ¤µ¤ì¤ë¥á¡¼¥ë¤òºÇÂç²¿ÄÌ¥­¥ã¥Ã¥·¥å¤¹¤ë¤«
+# Descriptions: å…¥åŠ›ã•ã‚Œã‚‹ãƒ¡ãƒ¼ãƒ«ã‚’æœ€å¤§ä½•é€šã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã‹
 #      History: $NUM_LOG_MAIL
 #        Value: NUM
 #     Examples: 128
 incoming_mail_cache_size	=	128
 
 
-# Descriptions: ½ĞÎÏ(ÇÛÁ÷)¤µ¤ì¤ë¥á¡¼¥ë¤òºÇÂç²¿ÄÌ¥­¥ã¥Ã¥·¥å¤¹¤ë¤«
+# Descriptions: å‡ºåŠ›(é…é€)ã•ã‚Œã‚‹ãƒ¡ãƒ¼ãƒ«ã‚’æœ€å¤§ä½•é€šã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã‹
 #      History: $NUM_LOG_MAIL
 #        Value: NUM
 #     Examples: 128
 outgoing_mail_cache_size	=	128
 
 
-# Descriptions: ¥í¥°¥í¡¼¥Æ¥·¥ç¥ó¤Î¥İ¥ê¥·¡¼¡£
-#               ¥µ¥¤¥º¤¬°ìÄêÃÍ¤ò±Û¤¨¤¿¤é¹Ô¤Ê¤¦¤Î¤«¡©(¥Ç¥Õ¥©¥ë¥È)
-#               ¤½¤ì¤Æ¤â°ìÄê»ş´Ö¤ª¤­¤Ë¹Ô¤Ê¤¦¤Î¤«¡©
+# Descriptions: ãƒ­ã‚°ãƒ­ãƒ¼ãƒ†ã‚·ãƒ§ãƒ³ã®ãƒãƒªã‚·ãƒ¼ã€‚
+#               ã‚µã‚¤ã‚ºãŒä¸€å®šå€¤ã‚’è¶ŠãˆãŸã‚‰è¡Œãªã†ã®ã‹ï¼Ÿ(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ)
+#               ãã‚Œã¦ã‚‚ä¸€å®šæ™‚é–“ãŠãã«è¡Œãªã†ã®ã‹ï¼Ÿ
 #      History: none
 #        Value: SELECT ( size interval )
 #     Examples: size
 log_rotate_policy	=	size
 
 
-# Descriptions: ¥í¥°¥Õ¥¡¥¤¥ë¤Î¥µ¥¤¥º¤¬¡¢
-#               ¤³¤ÎÂç¤­¤µ¤ò±Û¤¨¤¿¤é¥í¡¼¥Æ¡¼¥·¥ç¥ó¤ò¹Ô¤Ê¤¦¡£
-#      History: $LOGFILE_NEWSYSLOG_LIMIT ¤ÎÃÍ
+# Descriptions: ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µã‚¤ã‚ºãŒã€
+#               ã“ã®å¤§ãã•ã‚’è¶ŠãˆãŸã‚‰ãƒ­ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œãªã†ã€‚
+#      History: $LOGFILE_NEWSYSLOG_LIMIT ã®å€¤
 #        Value: NUM
 #     Examples: 300000 (300K bytes)
 log_rotate_size_limit	=	300000
 
 
-# Descriptions: Åê¹Æ¤µ¤ì¤¿µ­»ö¤Î¥Ø¥Ã¥À¤Î¾å¸ÂÃÍ
-#               (MTA ¤«¤é fml ¤¬¼õ¤±¤È¤ëºİ¤Îµ­»ö¤Î¥Ø¥Ã¥À¥µ¥¤¥º¤Î¾å¸ÂÃÍ)
+# Descriptions: æŠ•ç¨¿ã•ã‚ŒãŸè¨˜äº‹ã®ãƒ˜ãƒƒãƒ€ã®ä¸Šé™å€¤
+#               (MTA ã‹ã‚‰ fml ãŒå—ã‘ã¨ã‚‹éš›ã®è¨˜äº‹ã®ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤)
 #      History:
 #        Value: NUM
 #     Examples: 102400
 incoming_article_header_size_limit	= $default_mail_header_size_limit
 
 
-# Descriptions: Åê¹Æ¤µ¤ì¤¿µ­»ö¤ÎËÜÊ¸¤Î¾å¸ÂÃÍ
-#               (MTA ¤«¤é fml ¤¬¼õ¤±¤È¤ëºİ¤Îµ­»ö¤ÎËÜÊ¸¥µ¥¤¥º¤Î¾å¸ÂÃÍ)
+# Descriptions: æŠ•ç¨¿ã•ã‚ŒãŸè¨˜äº‹ã®æœ¬æ–‡ã®ä¸Šé™å€¤
+#               (MTA ã‹ã‚‰ fml ãŒå—ã‘ã¨ã‚‹éš›ã®è¨˜äº‹ã®æœ¬æ–‡ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤)
 #      History:
 #        Value: NUM
 #     Examples: 10240000
 incoming_article_body_size_limit	= $default_mail_body_size_limit
 
 
-# Descriptions: Åê¹Æ¤µ¤ì¤¿µ­»ö¤Î(ÇÛÁ÷»ş¤Î)¥Ø¥Ã¥À¤Î¾å¸ÂÃÍ
-#               (fml ¤«¤é MTA ¤ØÅÏ¤¹ºİ¤Îµ­»ö¤Î¥Ø¥Ã¥À¥µ¥¤¥º¤Î¾å¸ÂÃÍ)
-#		(¤´¤á¤ó¡¢¤³¤Îµ¡Ç½¤ÏÌ¤¼ÂÁõ;-)
+# Descriptions: æŠ•ç¨¿ã•ã‚ŒãŸè¨˜äº‹ã®(é…é€æ™‚ã®)ãƒ˜ãƒƒãƒ€ã®ä¸Šé™å€¤
+#               (fml ã‹ã‚‰ MTA ã¸æ¸¡ã™éš›ã®è¨˜äº‹ã®ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤)
+#		(ã”ã‚ã‚“ã€ã“ã®æ©Ÿèƒ½ã¯æœªå®Ÿè£…;-)
 #      History:
 #        Value: NUM
 #     Examples: 102400
 outgoing_article_header_size_limit	= $default_mail_header_size_limit
 
 
-# Descriptions: Åê¹Æ¤µ¤ì¤¿µ­»ö¤Î(ÇÛÁ÷»ş¤Î)ËÜÊ¸¤Î¾å¸ÂÃÍ
-#               (fml ¤«¤é MTA ¤ØÅÏ¤¹ºİ¤Îµ­»ö¤ÎËÜÊ¸¥µ¥¤¥º¤Î¾å¸ÂÃÍ)
-#		(¤´¤á¤ó¡¢¤³¤Îµ¡Ç½¤ÏÌ¤¼ÂÁõ;-)
+# Descriptions: æŠ•ç¨¿ã•ã‚ŒãŸè¨˜äº‹ã®(é…é€æ™‚ã®)æœ¬æ–‡ã®ä¸Šé™å€¤
+#               (fml ã‹ã‚‰ MTA ã¸æ¸¡ã™éš›ã®è¨˜äº‹ã®æœ¬æ–‡ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤)
+#		(ã”ã‚ã‚“ã€ã“ã®æ©Ÿèƒ½ã¯æœªå®Ÿè£…;-)
 #        Value: NUM
 #     Examples: 10240000
 outgoing_article_body_size_limit	= $default_mail_body_size_limit
@@ -99,15 +99,15 @@ article_filter_functions	=	article_size_filter
 					article_virus_filter
 
 
-# Descriptions: ¥µ¥¤¥º¾ğÊó¤òº¬µò¤Ë¤·¤¿¥Õ¥£¥ë¥¿¥ê¥ó¥°¤ò¤¹¤ë¤«¡©
+# Descriptions: ã‚µã‚¤ã‚ºæƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹ã‹ï¼Ÿ
 #      History: no
 #        Value: YES_OR_NO
 #     Examples:
 use_article_size_filter	=	yes
 
 
-# Descriptions: ¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£
-#               ¤É¤Î¥ë¡¼¥ë¤Ë¤â¥Ş¥Ã¥Á¤·¤Ê¤¤¤Ê¤é¡¢µ­»ö¤ÎÅê¹Æ¤ÏÇ§¤á¤é¤ì¤ë¡£
+# Descriptions: ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚
+#               ã©ã®ãƒ«ãƒ¼ãƒ«ã«ã‚‚ãƒãƒƒãƒã—ãªã„ãªã‚‰ã€è¨˜äº‹ã®æŠ•ç¨¿ã¯èªã‚ã‚‰ã‚Œã‚‹ã€‚
 #      History:
 #        Value: MIX (	check_header_size
 #			check_body_size
@@ -125,15 +125,15 @@ article_size_filter_rules	=	check_header_size
 command_mail_filter_functions	=	command_mail_size_filter
 
 
-# Descriptions: ¥µ¥¤¥º¾ğÊó¤òº¬µò¤Ë¤·¤¿¥Õ¥£¥ë¥¿¥ê¥ó¥°¤ò¤¹¤ë¤«¡©
+# Descriptions: ã‚µã‚¤ã‚ºæƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹ã‹ï¼Ÿ
 #      History:
 #        Value: YES_OR_NO
 #     Examples:
 use_command_mail_size_filter	=	yes
 
 
-# Descriptions: ¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£
-#               ¤É¤Î¥ë¡¼¥ë¤Ë¤â¥Ş¥Ã¥Á¤·¤Ê¤¤¤Ê¤é¡¢¥³¥Ş¥ó¥É¥á¡¼¥ë¤ÏÇ§¤á¤é¤ì¤ë¡£
+# Descriptions: ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚
+#               ã©ã®ãƒ«ãƒ¼ãƒ«ã«ã‚‚ãƒãƒƒãƒã—ãªã„ãªã‚‰ã€ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã¯èªã‚ã‚‰ã‚Œã‚‹ã€‚
 #      History:
 #        Value: MIX (
 #			check_header_size
@@ -149,38 +149,38 @@ command_mail_size_filter_rules	=	check_header_size
 					check_line_length_limit
 					permit
 
-# Descriptions: MTA ¤«¤é fml ¤¬¼õ¤±¤È¤ëºİ¤Î¥³¥Ş¥ó¥É¥á¡¼¥ë¤Î¥Ø¥Ã¥À¥µ¥¤¥º¤Î¾å¸ÂÃÍ
+# Descriptions: MTA ã‹ã‚‰ fml ãŒå—ã‘ã¨ã‚‹éš›ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤
 #      History:
 #        Value: NUM
 #     Examples: 102400
 incoming_command_mail_header_size_limit	= $default_mail_header_size_limit
 
 
-# Descriptions: MTA ¤«¤é fml ¤¬¼õ¤±¤È¤ëºİ¤Î¥³¥Ş¥ó¥É¥á¡¼¥ë¤ÎËÜÊ¸¥µ¥¤¥º¤Î¾å¸ÂÃÍ
+# Descriptions: MTA ã‹ã‚‰ fml ãŒå—ã‘ã¨ã‚‹éš›ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®æœ¬æ–‡ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤
 #      History:
 #        Value: NUM
 #     Examples: 10240000
 incoming_command_mail_body_size_limit	= $default_mail_body_size_limit
 
 
-# Descriptions: fml ¤«¤é MTA ¤ØÅÏ¤¹ºİ¤Î¥³¥Ş¥ó¥É¥á¡¼¥ë¤Î¥Ø¥Ã¥À¥µ¥¤¥º¤Î¾å¸ÂÃÍ
-#		(¤´¤á¤ó¡¢¤³¤Îµ¡Ç½¤ÏÌ¤¼ÂÁõ;-)
+# Descriptions: fml ã‹ã‚‰ MTA ã¸æ¸¡ã™éš›ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤
+#		(ã”ã‚ã‚“ã€ã“ã®æ©Ÿèƒ½ã¯æœªå®Ÿè£…;-)
 #      History:
 #        Value: NUM
 #     Examples: 102400
 outgoing_command_mail_header_size_limit	= $default_mail_header_size_limit
 
 
-# Descriptions: fml ¤«¤é MTA ¤ØÅÏ¤¹ºİ¤Î¥³¥Ş¥ó¥É¥á¡¼¥ë¤ÎËÜÊ¸¥µ¥¤¥º¤Î¾å¸ÂÃÍ
-#		(¤´¤á¤ó¡¢¤³¤Îµ¡Ç½¤ÏÌ¤¼ÂÁõ;-)
+# Descriptions: fml ã‹ã‚‰ MTA ã¸æ¸¡ã™éš›ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã®æœ¬æ–‡ã‚µã‚¤ã‚ºã®ä¸Šé™å€¤
+#		(ã”ã‚ã‚“ã€ã“ã®æ©Ÿèƒ½ã¯æœªå®Ÿè£…;-)
 #      History:
 #        Value: NUM
 #     Examples: 10240000
 outgoing_command_mail_body_size_limit	= $default_mail_body_size_limit
 
 
-# Descriptions: ¥­¥ã¥Ã¥·¥å¤Î¥µ¥¤¥º
-#		mode ¤¬ temporal ¤Ê¤éÆü¿ô¤À¡£
+# Descriptions: ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã‚µã‚¤ã‚º
+#		mode ãŒ temporal ãªã‚‰æ—¥æ•°ã ã€‚
 #      History: none
 #        Value: NUM
 #     Examples: 

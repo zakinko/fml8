@@ -8,21 +8,21 @@
 
 <question>
 	<para>
-	���а���(ǧ�ڥꥹ�Ȥΰ���)��������
+	メンバ一覧(認証リストの一覧)が見たい
 	</para>
 </question>
 
 <answer>
 <para>
-elena ML �Υ��а����򸫤������ϡ����Υ��ޥ�ɤ�¹Ԥ��Ƥ�������
+elena ML のメンバ一覧を見たい場合は、次のコマンドを実行してください
 <screen>
 makefml list elena
 </screen>
-�⤷����
+もしくは
 <screen>
 makefml list elena member
 </screen>
-�¼�Ū�ˡ����ԤΥ��ޥ�ɤϸ�Ԥ� member ���ά������Τ˳������Ƥ��ޤ���
+実質的に、前者のコマンドは後者の member を省略したものに該当しています。
 </para>
 </answer>
 </qandaentry>
@@ -31,7 +31,7 @@ makefml list elena member
 <qandaentry>
 <question>
 	<para>
-	�����ԥꥹ�Ȥ�������
+	受信者リストが見たい
 	</para>
 </question>
 
@@ -40,7 +40,7 @@ makefml list elena member
 <screen>
 makefml list elena recipient
 </screen>
-�⤷����
+もしくは
 <screen>
 makefml list elena active
 </screen>
@@ -53,36 +53,36 @@ makefml list elena active
 
 <question>
 <para>
-�̤ͣ�ְ�äƾä��Ƥ��ޤä��������ᤷ���� (CUI,CGI,admin ���ޥ��)
+ＭＬを間違って消してしまった。元に戻したい (CUI,CGI,admin コマンド)
 </para>
 </question>
 
 <answer>
 <para>
-��makefml rmml�פǣ̤ͣ�ä��Ƥ����
+「makefml rmml」でＭＬを消していれば
 <screen>
-% makefml reviveml �ͣ�̾
+% makefml reviveml ＭＬ名
 </screen>
-���᤻�ޤ���
+で戻せます。
 </para>
 
 <para>
-CGI �Ǥ�Ʊ�ͤǤ���rmml �Ǿä��Ƥ���� reviveml ������Ǥ��ޤ���
+CGI でも同様です。rmml で消していれば reviveml で復活できます。
 </para>
 
 <para>
-��⡼�ȴ���(admin ���ޥ��)�Ǥϡ��������Ͻ���ޤ���
+リモート管理(admin コマンド)では、この操作は出来ません。
 </para>
 
 <para>
-�������
+もちろん
 <screen>
 % rm -fr /var/spool/ml/elena
 </screen>
-�ʤɤȤ��ƣ̤ͣ�õ�Ƥ��ޤä���硢
-&fml8; ���ϰϤǸ����᤹��ˡ����ޤ���
-����� OS ���������äǤ���
-OS �ΥХå����åפ����ᤷ�Ʋ�����(���ޤ�˥Хå����åפ�Ȥ�ޤ��礦)��
+などとしてＭＬを消去してしまった場合、
+&fml8; の範囲で元に戻す方法ありません。
+これは OS の世界の話です。
+OS のバックアップから戻して下さい(こまめにバックアップをとりましょう)。
 </para>
 
 </answer>
@@ -94,32 +94,32 @@ OS �ΥХå����åפ����ᤷ�Ʋ�����(���ޤ�˥Хå����åפ�Ȥ�ޤ��礦)��
 
 <question>
 <para>
-��ƤǤ��륢�ɥ쥹�����䤹 (CUI,CGI,admin ���ޥ��)
+投稿できるアドレスを増やす (CUI,CGI,admin コマンド)
 </para>
 </question>
 
 <answer>
 <para>
-���̤ˤϡ����̤˥桼���Ȥ�����Ͽ���Ƥ���������
+一般には、普通にユーザとして登録してください。
 <screen>
-% makefml add �ͣ�̾ �᡼�륢�ɥ쥹
+% makefml add ＭＬ名 メールアドレス
 </screen>
-���������̤���Ͽ����ȡ����Υ��ɥ쥹�ˤ���������Ƥ��ޤ��ޤ���
+ただ、普通に登録すると、そのアドレスにも配送されてしまいます。
 </para>
 
 <para>
-�����ǡ�������ϰ��������ˤ����������Ȥ���
-����֤ϲ�Ҥ��顢��ϼ��𤫤��̤ͣ���Ƥ���������������ϲ�Ҥ����ˤ�������
-�ʤ顢
-addmember ���ޥ�ɤ�Ȥäơ���Ʋ�ǽ�ʥ��ɥ쥹���������䤷�ơפ���������
+そこで、配送先は一ヶ所だけにしたい、たとえば
+「昼間は会社から、夜は自宅からもＭＬに投稿したいが、受取先は会社だけにしたい」
+なら、
+addmember コマンドを使って「投稿可能なアドレスだけを増やして」ください。
 </para>
 
 <para>
-�̥ͣ����Фξ�Ǥ���� makefml ��ȤäƲ�������
+ＭＬサーバの上であれば makefml を使って下さい。
 <screen>
-% makefml addmember �ͣ�̾ �᡼�륢�ɥ쥹
+% makefml addmember ＭＬ名 メールアドレス
 </screen>
-���Υ��ޥ�ɤϼ��Σ��Ĥɤ��ȤäƤ�ư���Ʊ���Ǥ���
+このコマンドは次の４つどれを使っても動作は同じです。
 add2member
 add2members
 addmember
@@ -127,18 +127,18 @@ addmembers
 </para>
 
 <para>
-��⡼�ȴ���(admin ���ޥ��)�Ǥ�Ʊ�ͤǤ���
+リモート管理(admin コマンド)でも同様です。
 <screen>
 To: elena-ctl@fml.org
 Subject: 
 
-admin pass �ѥ����
-admin addmember �ͣ�̾ �᡼�륢�ɥ쥹
+admin pass パスワード
+admin addmember ＭＬ名 メールアドレス
 </screen>
 </para>
 
 <para>
-���ޤΤȤ��� CGI �Ǥϡ����Υ��ޥ�ɤ��Ȥ���褦�ˤʤäƤ��ޤ���
+いまのところ CGI では、このコマンドが使えるようになっていません。
 </para>
 
 </answer>
@@ -150,48 +150,48 @@ admin addmember �ͣ�̾ �᡼�륢�ɥ쥹
 
 <question>
 <para>
-�����襢�ɥ쥹���������䤹
+配送先アドレスだけを増やす
 </para>
 </question>
 
 <answer>
 
 <para>
-�̤ͣ���ƤϽ���ʤ�����ɡ������μ����ԤȤ������䤹���Ǥ���
-���Ȥ���
+ＭＬの投稿は出来ないけれど、記事の受信者として増やす場合です。
+たとえば
 <link linkend="config.mailmagazine.1">
-�᡼��ޥ�����
+メールマガジン
 </link>
-���������ޤ���
+が該当します。
 </para>
 
 <para>
-�̥ͣ����Фξ�Ǥ���� makefml ��ȤäƲ�������
+ＭＬサーバの上であれば makefml を使って下さい。
 <screen>
-% makefml addrecipient �ͣ�̾ �᡼�륢�ɥ쥹
+% makefml addrecipient ＭＬ名 メールアドレス
 </screen>
-����� recipient_maps �ˤΤߥ��ɥ쥹����Ͽ����ޤ���
-���Υ��ޥ�ɤ�
+これで recipient_maps にのみアドレスが登録されます。
+このコマンドは
 add2recipient
 add2recipients
 addrecipient
 addrecipients
-�Τɤ�Ǥ�Ʊ����̣�Ǥ���
+のどれでも同じ意味です。
 </para>
 
 <para>
-��⡼�ȴ���(admin ���ޥ��)�Ǥ�Ʊ�ͤǤ���
+リモート管理(admin コマンド)でも同様です。
 <screen>
 To: elena-ctl@fml.org
 Subject: 
 
-admin pass �ѥ����
-admin addrecipient �ͣ�̾ �᡼�륢�ɥ쥹
+admin pass パスワード
+admin addrecipient ＭＬ名 メールアドレス
 </screen>
 </para>
 
 <para>
-���ޤΤȤ��� CGI �Ǥϡ����Υ��ޥ�ɤ��Ȥ���褦�ˤʤäƤ��ޤ���
+いまのところ CGI では、このコマンドが使えるようになっていません。
 </para>
 
 </answer>
@@ -203,31 +203,31 @@ admin addrecipient �ͣ�̾ �᡼�륢�ɥ쥹
 
 <question>
 <para>
-��Ͽ����Ƥ���᡼�륢�ɥ쥹���ѹ�����
+登録されているメールアドレスを変更する
 </para>
 </question>
 
 <answer>
 <para>
-�̥ͣ����Фξ�Ǥ���� makefml ��ȤäƲ�������
+ＭＬサーバの上であれば makefml を使って下さい。
 <screen>
-% makefml chaddr �ͣ�̾ ��᡼�륢�ɥ쥹 ���᡼�륢�ɥ쥹
+% makefml chaddr ＭＬ名 旧メールアドレス 新メールアドレス
 </screen>
 </para>
 
 <para>
-��⡼�ȴ���(admin ���ޥ��)�Ǥ�Ʊ�ͤǤ���
+リモート管理(admin コマンド)でも同様です。
 <screen>
 To: elena-ctl@fml.org
 Subject: 
 
-admin pass �ѥ����
-admin chaddr �ͣ�̾ ��᡼�륢�ɥ쥹 ���᡼�륢�ɥ쥹
+admin pass パスワード
+admin chaddr ＭＬ名 旧メールアドレス 新メールアドレス
 </screen>
 </para>
 
 <para>
-CGI �Ǥ� chaddr ���ޥ�ɤ����Ѳ�ǽ�Ǥ���
+CGI でも chaddr コマンドは利用可能です。
 </para>
 
 </answer>

@@ -5,35 +5,35 @@
 
 <sect1 id="usage.user.subscribe">
 	<title>
-	�̤ͣ˻��ä���
+	ＭＬに参加する
 	</title>
 
 <para>
-elena@fml.org �̤ͣ˻��ä�������硢
-��ʸ�� 
+elena@fml.org ＭＬに参加したい場合、
+本文に 
 <screen>
 
-subscribe ̾��
+subscribe 名前
 
-��
+例
 
 subscribe Teresa Testarossa
 
 </screen>
-�Ƚ񤤤��᡼���
-elena-ctl@fml.org  �����äƲ�������
+と書いたメールを
+elena-ctl@fml.org  に送って下さい。
 </para>
 
 <para>
-�᡼����Ф� confirmation ����������ޤ���
-���� confirmation �᡼��������������Ͽ����ޤ���
+メールに対し confirmation が返送されます。
+その confirmation メールに返答すると登録されます。
 </para>
 
 <para>
-�ʤ� &fml4; �Ǥ�
-subscribe ��³����̾���餷����Τ�񤫤ʤ���Ф����ʤ����ȤˤʤäƤ��ޤ�������
-&fml8; �Ǥ����פǤ���
-�񤤤Ƥ��ä��Ȥ��Ƥ⡢���� &fml8; �ǤϤ�����ʬ�򲿤ˤ�ȤäƤޤ���
+なお &fml4; では
+subscribe に続いて名前らしきものを書かなければいけないことになっていましたが、
+&fml8; では不要です。
+書いてもらったとしても、今の &fml8; ではこの部分を何にも使ってません。
 </para>
 
 </sect1>

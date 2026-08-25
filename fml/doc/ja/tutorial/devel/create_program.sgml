@@ -5,29 +5,29 @@
 
 <chapter id="program.create">
 	<title>
-	���ץ������κ���
+	新プログラムの作成
 	</title>
 
 
 <sect1 id="program.create.cui">
 	<title>
-	�ץ���������(���ޥ�ɥ饤����)
+	プログラムを作る(コマンドライン用)
 	</title>
 
 <para>
-�ޤ� FML::Process:: ���饹�ʲ��˥⥸�塼����Ѱդ��ޤ���
-�Ǿ������θ��ܤȤ��Ƥ� FML::Process::Calender ��
-���繽���Ȥ��Ƥ� FML::Process::Distribute (���������ץ�����������)
-�򻲹ͤˤ�����ɤ��Ǥ��礦��
+まず FML::Process:: クラス以下にモジュールを用意します。
+最小構成の見本としては FML::Process::Calender 、
+最大構成としては FML::Process::Distribute (記事配送プログラムの本体)
+を参考にすると良いでしょう。
 </para>
 
 <para>
-�� FML::Process::������ �⥸�塼�뤬�Ѱդ��ʤ���Ф����ʤ��ؿ�(�᥽�å�)��
+各 FML::Process::○○○ モジュールが用意しなければいけない関数(メソッド)は
 FML::Process::Flow::ProcessStart()
-�򸫤��ʬ����ޤ���
+を見ると分かります。
 FML::Process::Flow::ProcessStart()
-���ץ��������ư���Ƥ��ޤ��Τǡ�������Ȥ�é�äƤߤƲ�������
-2002/07 ���ߡ������Υ᥽�åɤ�ɬ�ܤǤ���
+がプロセスを駆動していますので、その中身を辿ってみて下さい。
+2002/07 現在、これらのメソッドが必須です。
 <screen>
 new()
 prepare()
@@ -36,10 +36,10 @@ run()
 finish()
 help()
 </screen>
-���ߡ��Ǥ�褤�Τǡ������Υ᥽�åɤ�Ŭ���Ѱդ��Ƥ����Ʋ��������ƥ᥽��
-�ɤζ�����ϡ�FML::Process �ʲ��Υ⥸�塼��򸫤Ʋ��������᥽�åɤ���
-����Τ뤿��ˤϺ��繽���� FML::Process::Distribute ������Ŭ�����⤷��
-�ޤ���
+ダミーでもよいので、これらのメソッドを適宜用意しておいて下さい。各メソッ
+ドの具体例は、FML::Process 以下のモジュールを見て下さい。メソッドの役
+割を知るためには最大構成の FML::Process::Distribute が一番適当かもしれ
+ません。
 </para>
 
 <para>
@@ -48,35 +48,35 @@ help()
                 |       uses-a FML::Process::{Flow,Utils} FML::Parse ...
                 |
                 A
-        FML::Process::������
-                        uses-a FML::�ۤ��ۤ�
-                        uses-a CPAN �⥸�塼��
-                        uses-a ��
+        FML::Process::○○○
+                        uses-a FML::ほえほえ
+                        uses-a CPAN モジュール
+                        uses-a …
 </screen>
 </para>
 
 <para>
-FML::Process::������
-���Ѱդ����顢
+FML::Process::○○○
+を用意したら、
 etc/modules
-�˥ץ������ȥ��饹�δط���������Ʋ�������
-����ϥץ������̾��������ɤ���٤��⥸�塼����������ե�����Ǥ���
-�ޤ���
+にプログラムとクラスの関係を定義して下さい。
+これはプログラム名からロードするべきモジュールを定義するファイルです。
+また、
 etc/command_line_options
-�˥��ץ����ȣͣ�̾��̵ͭ�ʤɤ�������Ƥ���������
-̾�����̤ꡢ��ǽ�ʥ��ץ����ˤĤ��ƻ��ꤹ��ե�����Ǥ���
-�����Υե�����ե����ޥåȤϡ���������Ȥ򸫤ƿ�¬���Ʋ�������
-Unix �����Υ��ڡ������ڤ�ʤΤǡ�����ʬ����ޤ���
+にオプションとＭＬ名の有無などを定義してください。
+名前の通り、可能なオプションについて指定するファイルです。
+これらのファイルフォーマットは、これらの中身を見て推測して下さい。
+Unix 伝統のスペース区切りなので、すぐ分かります。
 </para>
 
 <para>
-����飳�Ĥ��������С��������ץ������μ¹Ԥν���������ޤ�����
+これら３つを準備すれば、新しいプログラムの実行の準備が出来ました。
 </para>
 
 <para>
-�Ǹ�ˡ��ƤӤ���̾���Υե������ loader �� link �⤷���� symlink ����
-���ȤǼ¹Ԥ���ǽ�ˤʤ�ޤ���
-���Ȥ��С�ɸ��Υ��󥹥ȡ���Ǥϡ����Τ褦�ˤʤäƤ��ޤ���
+最後に、呼びたい名前のファイルを loader と link もしくは symlink する
+ことで実行が可能になります。
+たとえば、標準のインストールでは、次のようになっています。
 <screen>
 % ls -l /usr/local/libexec/fml
 lrwxr-xr-x  1 root  wheel     6 Apr 14 18:25 command@ -> loader
@@ -100,11 +100,11 @@ lrwxr-xr-x  1 root  wheel     6 Apr 14 18:25 mead@ -> loader
 </para>
 
 <para>
-�ǥե���ȤΥץ������ˤĤ��Ƥϡ����󥹥ȡ��餬������ symlink ����
-�򤷤Ƥ���Ƥ��ޤ������󥹥ȡ���� symlink (���)��¹Ԥ��Ƥ�餦ɬ��
-������ʤ顢etc/install.cf.in �� bin_programs �� libexec_programs �˥�
-�������̾��������Ʋ��������ƥ����ʳ��Ǥϼ�ư�� symlink ��ԤʤäƤ�
-�ޤ��ޤ���
+デフォルトのプログラムについては、インストーラがこれらの symlink 処理
+をしてくれています。インストーラに symlink (後述)を実行してもらう必要
+があるなら、etc/install.cf.in の bin_programs か libexec_programs にプ
+ログラム名を定義して下さい。テスト段階では手動で symlink を行なってか
+まいません。
 </para>
 
 </sect1>
@@ -112,26 +112,26 @@ lrwxr-xr-x  1 root  wheel     6 Apr 14 18:25 mead@ -> loader
 
 <sect1 id="program.create.gui">
 	<title>
-	�ץ���������( CGI ��)
+	プログラムを作る( CGI 用)
 	</title>
 
 <!--
-  XXX-TODO ���������� �� �ץ���������( CGI ��)
+  XXX-TODO ただしい？ ＞ プログラムを作る( CGI 用)
 -->
 
 <para>
-������¤�ξܺ٤�
+内部構造の詳細は
 <link linkend="cgi.internal">
 <xref linkend="cgi.internal">
 </link>
-�򻲾Ȥ��Ƥ���������
+を参照してください。
 </para>
 
 <para>
-CGI �Υץ���������Τ�
-FML::CGI::������
-�Ȥ������饹�Υ⥸�塼��Ǥ���
-CGI ����Ǥϼ��Τ褦�ʡ����֥������Ȥδط�������ޤ���
+CGI のプログラム本体は
+FML::CGI::○○○
+というクラスのモジュールです。
+CGI 系列では次のような、オブジェクトの関係があります。
 <screen>
         FML::Process::Kernel
                 |
@@ -142,28 +142,28 @@ CGI ����Ǥϼ��Τ褦�ʡ����֥������Ȥδط�������ޤ���
         FML::Process::CGI
                 |
                 A
-        FML::CGI::������
+        FML::CGI::○○○
 </screen>
 </para>
 
 <para>
-CGI �Υץ������ν����⥳�ޥ�ɥ饤��ץ�������Ʊ�ͤǤ���
-̾�����֤Ƕ��̤��뤿��� CGI ������ץȤΥ⥸�塼���
-FML::Process �ǤϤʤ� FML::CGI �ʲ������֤���Ƥ��ޤ���
-��¸�� FML::CGI �Υ⥸�塼����ܤˤ��ơ�
-FML::CGI::������
-��Ŭ���Ѱդ��Ʋ�������
+CGI のプログラムの書き方もコマンドラインプログラムと同様です。
+名前空間で区別するために CGI スクリプトのモジュールは
+FML::Process ではなく FML::CGI 以下に配置されています。
+既存の FML::CGI のモジュールを見本にして、
+FML::CGI::○○○
+を適宜用意して下さい。
 </para>
 
 
 <para>
-FML::CGI::������ ���������ϡ�
-�Ѱդ���᥽�åɤ�
+FML::CGI::○○○ の注意点は、
+用意するメソッドが
 <screen>
 html_start()
 html_end()
 </screen>
-�����
+および
 <screen>
 run_cgi_main()
 run_cgi_title()
@@ -172,44 +172,44 @@ run_cgi_menu()
 run_cgi_command_help()
 run_cgi_options()
 </screen>
-�ˤʤ�Ȥ������Ǥ���
-�������Ȥǰ�Ĥβ���
+になるという点です。
+これらの組で一つの画面
 <footnote>
 <para>
-���Τˤϡ����̤ϣ��ߣ��ι�ף��ĤΥ֥��å�����ʤ�ޤ�����
-�����Ƥ������Τ����Σ��Ĥ����ȤäƤ��ޤ���
+正確には、画面は３×３の合計９個のブロックからなりますが、
+たいてい、そのうちの６つしか使っていません。
 </para>
 </footnote>
-����������Ƥ��ޤ���
+が構成されています。
 </para>
 
 <para>
-������ FML::Process::CGI �����
-verify_request() ����� run() ����ƤФ줿��Υ᥽�åɤȤʤäƤ��ޤ���
+これらは FML::Process::CGI の中の
+verify_request() および run() から呼ばれた先のメソッドとなっています。
 </para>
 
 <para>
-CGI �ץ������� FML::Process::CGI �Ƕ�ư���졢run() �᥽�åɤ�
+CGI プロセスは FML::Process::CGI で駆動され、run() メソッドは
 <screen>
 $curproc->html_start($args);
-���̤��뤿��� run_cgi_xxx() �᥽�åɷ���ƤӽФ���
+画面を作るために run_cgi_xxx() メソッド群を呼び出す。
 $curproc->html_end($args);
 </screen>
-�ν�� FML::CGI:: �ʲ��Υ᥽�åɷ���ƤӽФ��Ƥ��ޤ���
+の順に FML::CGI:: 以下のメソッド群を呼び出しています。
 </para>
 
 <para>
-���ʤߤˡ�2001/11 ���ߡ�FML::Process::CGI::Kernel �ץ��������Ȥϡ�
-�ʲ��Υ᥽�å�
+ちなみに、2001/11 現在、FML::Process::CGI::Kernel プロセス自身は、
+以下のメソッド
 	<footnote>
 	<para>
-	���Τ��ᡢ¿���ξ��
+	このため、多くの場合
 	FML::Process::Kernel
-	�Υ᥽�åɤ� CGI::Kernel �ǥ����Х����ɤ���Ƥ��ꡢ
-	ľ�ܸƤФ�뤳�Ȥϵ��Ǥ���
+	のメソッドは CGI::Kernel でオーバロードされており、
+	直接呼ばれることは稀です。
 	</para>
 	</footnote>
-����ʤäƤ��ޤ���
+からなっています。
 <screen>
 new()
 prepare()
@@ -217,8 +217,8 @@ verify_request()
 run()
 finish()
 </screen>
-�äˡ��������Խ�����ɬ�פϤʤ��Ǥ��礦��
-���ʤߤ� FML::CGI:: �� run() ����ƤФ�Ƥ��ޤ���
+特に、これらを編集する必要はないでしょう。
+ちなみに FML::CGI:: は run() から呼ばれています。
 </para>
 
 </sect1>

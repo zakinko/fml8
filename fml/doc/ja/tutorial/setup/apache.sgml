@@ -5,18 +5,18 @@
 
 <chapter id="setup.apache">
 	<title>
-	apache ������
+	apache の設定
 	</title>
 
 
 <warning>
 
 <para>
-fml8 CGI ��������¤�ˤĤ��Ƥ�
+fml8 CGI の内部構造については
 <link linkend="cgi.internal.method">
 <xref linkend="cgi.internal.method">
 </link>
-�򻲾Ȥ��Ʋ�������
+を参照して下さい。
 </para>
 
 </warning>
@@ -25,64 +25,64 @@ fml8 CGI ��������¤�ˤĤ��Ƥ�
 <!-- TODO: suexec on apache 2.2 -->
 <sect1 id="setup.apache.suexec">
 	<title>
-	apache �� suexec ��Ȥ�
+	apache で suexec を使う
 	</title>
 
 <para>
-suexec ��ǽ�����Ѳ�ǽ�� apache ����ɬ�פ�����ޤ��� 
-configure ��¹Ԥ���ݤˡ�
+suexec 機能を利用可能な apache を作る必要があります。 
+configure を実行する際に、
 <screen>
-(apache 1.x �ξ��)
-# ./configure --enable-suexec --suexec-caller=www (...����¾�Υ��ץ����...)
+(apache 1.x の場合)
+# ./configure --enable-suexec --suexec-caller=www (...その他のオプション...)
 </screen>
-�ʤɤȤ��ޤ���
+などとします。
 </para>
 
 <important>
 <para>
-������Ǥ� suexec ��ƤӽФ����Ȥ���ǽ�ʥ桼���� www �Ǥ���
-CGI �桼���ˤϡ�CGI �������ѤΥ桼�����Ѱդ��Ʋ�������
+この例では suexec を呼び出すことが可能なユーザが www です。
+CGI ユーザには、CGI 用途専用のユーザを用意して下さい。
 </para>
 
 <para>
-suexec ��ƤӽФ����Ȥ���ǽ�ʥ桼���� www �Ǥ���
-CGI �桼���ˤϡ�CGI �������ѤΥ桼�����Ѱդ��Ʋ�������
+suexec を呼び出すことが可能なユーザが www です。
+CGI ユーザには、CGI 用途専用のユーザを用意して下さい。
 </para>
 </important>
 
 <para>
-���󥹥ȡ���塢~�桼��/cgi-bin/ ������褦�� httpd.conf ��
-�ѹ�����ɬ�פ�����ޤ���
+インストール後、~ユーザ/cgi-bin/ を許すように httpd.conf を
+変更する必要があります。
 <screen>
-������(Apache 2.2�ޤ�):
+設定例(Apache 2.2まで):
 
 &lt;Directory /home/*/*/public_html&gt;
     AllowOverride FileInfo AuthConfig Limit
     Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec ExecCGI
     &lt;Limit GET POST OPTIONS PROPFIND&gt;
         Order allow,deny
-        Allow from ����Υۥ���
+        Allow from 特定のホスト
     &lt;/Limit&gt;
 &lt;/Directory&gt;
 
 &lt;IfModule mod_mime.c&gt;
-	... ά ...
+	... 略 ...
 
    AddHandler cgi-script .cgi
 
-	... ά ...
+	... 略 ...
 &lt;/IfModule&gt;
 </screen>
-Apache 2.4 �ʹߤϡ�
+Apache 2.4 以降は、
 <screen>
 Order allow,deny
-Allow from ����Υۥ���
+Allow from 特定のホスト
 </screen>
-�ΤȤ�������
+のところが、
 <screen>
 Require ...
 </screen>
-�Ȥ�����ʸ���Ѥ��ޤ���
+という呪文に変わります。
 </para>
 
 </sect1>

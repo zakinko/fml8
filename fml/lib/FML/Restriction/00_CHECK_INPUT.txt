@@ -1,33 +1,33 @@
-			���Ϥθ����ˤĤ���
+			入力の検査について
 
 
-�� �ݥ���
+＊ ポスト
 
-	�����å��ʤ����ǥե����
-	�⤷�ե��륿�򤷤������� FML::Filter ���饹��������ô�����롣
-
-
-�� ���ޥ�ɥ᡼��
-
-	���ޥ�ɥ᡼��� FML::Process::Command �ǰ�Ԥ���
-	FML::Restriction::Command ���������Ƥ���롼���
-	��������롣��ʤ���С�
-	FML::Command::User::���ޥ�� �μ¹Ԥ˿ʤळ�Ȥ��Ǥ��롣
+	チェックなしがデフォルト
+	もしフィルタをしたい場合は FML::Filter クラスが検査を担当する。
 
 
-�� CGI
+＊ コマンドメール
 
-	safe_param_�ۤ��ۤ�() �Ȥ����ؿ���ͳ�ǤΤ� CGI ����
-	�ǡ���������Ȥ뤳�Ȥ��Ǥ��롣
-
-	safe_param_XXX() �� FML::Restriction::CGI (
-	FML::Restriction::Base ��Ѿ����Ƥ���)��ͳ�ǥѥ�����θ�����
-	�롣
+	コマンドメールは FML::Process::Command で一行ずつ
+	FML::Restriction::Command で定義されているルールで
+	検査される。合格すれば、
+	FML::Command::User::コマンド の実行に進むことができる。
 
 
-�� makefml
+＊ CGI
 
-	���ޥ�ɥ饤��Ǽ¹Ԥ���Τǡ����ϥ����å��ʤ����ǥե����
+	safe_param_ほえほえ() という関数経由でのみ CGI から
+	データを受けとることができる。
+
+	safe_param_XXX() は FML::Restriction::CGI (
+	FML::Restriction::Base を継承している)経由でパターンの検査をす
+	る。
+
+
+＊ makefml
+
+	コマンドラインで実行するので、入力チェックなしがデフォルト
 
 ----------
 $FML: 00_CHECK_INPUT.txt,v 1.1 2002/02/11 13:27:02 fukachan Exp $

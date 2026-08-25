@@ -5,27 +5,27 @@
 
 <sect1 id="usage.user.chaddr">
 	<title>
-	�᡼�륢�ɥ쥹���ѹ�����
+	メールアドレスを変更する
 	</title>
 
 <para>
-elena@fml.org �̤ͣξ�硢
-��ʸ�� 
+elena@fml.org ＭＬの場合、
+本文に 
 <screen>
-chaddr �쥢�ɥ쥹 �����ɥ쥹
+chaddr 旧アドレス 新アドレス
 </screen>
-�Ƚ񤤤��᡼���
-elena-ctl@fml.org  �����äƲ�������
+と書いたメールを
+elena-ctl@fml.org  に送って下さい。
 </para>
 
 <para>
-�쿷�ɤ���Υ��ɥ쥹�������äƤ⤫�ޤ��ޤ���
+旧新どちらのアドレスから送ってもかまいません。
 </para>
 
 <para>
-ξ���Υ��ɥ쥹�� confirmation ����������ޤ���
-���� confirmation ���������Ƥ���������
-�ܿͤǤ���ȳ�ǧ���Ȥ��С��ºݤ˥��ɥ쥹���ѹ�����ޤ���
+両方のアドレスに confirmation が返送されます。
+その confirmation に返答してください。
+本人であると確認がとれれば、実際にアドレスが変更されます。
 </para>
 
 </sect1>

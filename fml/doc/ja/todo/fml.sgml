@@ -4,27 +4,27 @@
 
 <chapter id="fml4.todo">
 
-<title> fml 4.0 current �� TODO (ͥ��Ū�ˤ��٤�) </title>
+<title> fml 4.0 current の TODO (優先的にやるべき) </title>
 
 <para>
-�ʲ��ϡ��ʤ�٤��᤯�ͤ���٤���ΤȻפ��ޤ���
+以下は、なるべく早く考えるべきものと思われます。
 </para>
 
 <para>
-���Ĥ�����������ʤȻפäƤ뤳��
-(ï�����Ǥˤ�äƤ���ѥå�������)
+やり残し、やろうかなと思ってること
+(誰かすでにやってたらパッチ下さい)
 </para>
 
 
 <!-- ============================================== -->
 <sect1>
    <title>
-    makefml *  �� connect()
+    makefml *  と connect()
    </title>
 
 <para>
-makefml install �λ��ʳ��Ǥ�
-connect(2) ���Ƥߤʤ��Ƥ�褤�������ˡ�
+makefml install の時以外では
+connect(2) してみなくてもよいだろうに？
 ( fml-help: 00251 )
 </para>
 
@@ -36,7 +36,7 @@ connect(2) ���Ƥߤʤ��Ƥ�褤�������ˡ�
    <title> RDBMS </title>
 
 <para>
-toy model �ǥơ��֥뤬��ĤΤ�� ( members == actives )
+toy model でテーブルが一つのもの ( members == actives )
 </para>
 
 </sect1>
@@ -47,7 +47,7 @@ toy model �ǥơ��֥뤬��ĤΤ�� ( members == actives )
 <title> mget "uu" mode </title>
 
 <para>
-mget �� uu �äƲ������Ԥ�­��ʤ��ʤ�������
+mget の uu って何か空行が足りなくないかい？
 </para>
 </sect1>
 
@@ -57,13 +57,13 @@ mget �� uu �äƲ������Ԥ�­��ʤ��ʤ�������
    <title> admin add </title>
 
 <para>
-Q: ML�����Ԥ����⡼�Ȥǥ��С���Ͽ admin add ���������֤����
-   Welcome �᡼��ǡ����Υ᡼��� Reply-To: �Τߤ� $MAIL_LIST ���ѹ�������
+Q: ML管理者からリモートでメンバー登録 admin add した時に返される
+   Welcome メールで、そのメールの Reply-To: のみを $MAIL_LIST に変更したい
 </para>
 
 <para>
-HOOK �Ǥ�����ФǤ���褦�ʵ��Ϥ��뤱�ɡ�
-������ǥե���Ȥ򤽤��ѹ������������������͡�
+HOOK でいじればできるような気はするけど、
+それよりデフォルトをそう変更した方がいいんだよね？
 </para>
 
 </sect1>

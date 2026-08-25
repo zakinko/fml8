@@ -5,69 +5,69 @@
 
 <chapter id="language.preference">
 	<title>
-	���������ͥ����
+	言語処理の優先順位
 	</title>
 
 
 <sect1 id="language.preference.overview">
 	<title>
-	��������ν�����
+	言語処理の諸問題
 	</title>
 
 <para>
-����ñ��ʥ�ǥ��
-�֤��Σ̤ͣ����ܿ��ѤȲ��ꤹ�롣
-��äơ�
-��ư������å������ϡ��Ĥͤ����ܸ���֤���
-�Ȥ�����ΤǤ���
-������󡢤��ޤ��ޤ����꤬�ͤ����ޤ���
+一番単純なモデルは
+「このＭＬは日本人用と仮定する。
+よって、
+自動応答メッセージは、つねに日本語で返す」
+というものです。
+もちろん、さまざまな問題が考えられます。
 </para>
 
 <para>
-���ˡ����Υ�ǥ�Ǥϡ��̺ͣ������˲������Ѥ�����ꤹ��ɬ�פ�����ޤ���
+第一に、このモデルでは、ＭＬ作成時に何言語用かを指定する必要があります。
 </para>
 
 <para>
-����ˡ�
-�ְ�ä�(���ܸ줬�ɤ�ʤ��ͤ���)�����Ƥ����᡼����Ф��Ƥ⡢
-���ܸ�ǥ��顼��å��������֤��ޤ���
+第二に、
+間違って(日本語が読めない人から)送られてきたメールに対しても、
+日本語でエラーメッセージを返します。
 </para>
 
 <para>
-�軰�ˡ�
-���ܿͤ��᡼������äƤ��Ƥ����Ȥ��Ƥ⡢
-����
-�᡼����ɤ�Ǥ���Ķ������ܸ줬�Ȥ��ʤ����⤷��ޤ��󤷡�
+第三に、
+日本人がメールを送ってきていたとしても、
+今、
+メールを読んでいる環境で日本語が使えないかもしれませんし、
 </para>
 
 <para>
-�᡼��إå��� Accept-Language: �����Ƥˤʤ�Ǥ��礦����
+メールヘッダの Accept-Language: がアテになるでしょうか？
 </para>
 
 <para>
-�����餯�������ϥ��Ƥˤʤ�Ǥ��礦��
-��äơ�
-�᡼��إå��� Accept-Language: ��̵�뤹��Τ�����������ޤ���
-��������������� Accept-Language: ���Ĥ����Ƥ���Ȥ�¤�ޤ��󤬡�
+おそらく、少しはアテになるでしょう。
+よって、
+メールヘッダの Accept-Language: を無視するのもよろしくありません。
+ただし、きちんと Accept-Language: がつけられているとも限りませんが…
 </para>
 
 <para>
-���Ȥ��С�
-Accept-Language: ja �ʤɤȤ��Ƥ������ ja ��ͥ�����ʬ����ޤ���
-�������ʤ��顢
-�������ä���Τ��ʤ���
-���ġ�
-�����ܿͤ� help �Ȥ����᡼������äƤ����׾�硢
-�ֻ��� us-ascii ���֤��٤��ʤΤ���
-����Ȥ� 
-iso-2022-jp ���֤��٤��ʤΤ���
-�ץ������ˤ�Ƚ�ǤǤ��ޤ���
+たとえば、
+Accept-Language: ja などとしてある場合は ja が優先だと分かります。
+しかしながら、
+そういったものがなく、
+かつ、
+「日本人が help というメールを送ってきた」場合、
+返事を us-ascii で返すべきなのか？
+それとも 
+iso-2022-jp で返すべきなのか？
+プログラムには判断できません。
 </para>
 
 <para>
-���Ȥ��С�����ʥ᡼��Ǥϡ��ɤ�Ƚ�Ǥ���Τ��������Ǥ��礦��
+たとえば、こんなメールでは、どう判断するのが正しいでしょう？
 <screen>
-��:
+例:
 
 From: rudo@example.co.jp
 Subject: help
@@ -79,26 +79,26 @@ help
 </para>
 
 <para>
-charset ����ľ�˹ͤ���ȱѸ���֤��٤��Ǥ�����
-������Ǥϡ�
-���ޤ�����ʸ���Ѹ줷���ޤޤʤ������ charset=us-ascii �ˤʤäƤ�������Ǥ���
-���������ʤ��Τǡ�
-���Σ̤ͣ�(���ܿ����Τ���)���ܸ�ͥ������ꤵ��Ƥ���ʤ顢
-���ܸ�ȱѸ�Υ�å�����ξ�����֤��٤��Ǥ��礦��
+charset を素直に考えると英語で返すべきですが、
+この例では、
+たまたま本文が英語しか含まないために charset=us-ascii になっているだけです。
+しかたがないので、
+このＭＬが(日本人相手のため)日本語優先と設定されているなら、
+日本語と英語のメッセージ両方を返すべきでしょう。
 </para>
 
 <para>
-�դˡ�
-�Ѹ�Σ̤ͣȤ�������ʤ顢
-�Ѹ�Υ�å��������֤������Ǥ����Ϥ��Ǥ���
+逆に、
+英語のＭＬという想定なら、
+英語のメッセージを返すだけでいいはずです。
 </para>
 
 <para>
-������ˤ��衢
-Accept-Lanaguage: �����ꤵ��Ƥ���С������º�Ť���٤��Ǥ���
-�Ѹ�Σͣ�(language_preference_order = en)�ξ��Ǥ⡢
-Accept-Lanaguage: ja �ʤ�ʤǤ�����������ܸ���ֻ��򤹤�٤��Ǥ��礦��
-&fml8; ɸ��Υ�å������Ǥ���С�����ư���ǽ�Ǥ���
+いずれにせよ、
+Accept-Lanaguage: が指定されていれば、それを尊重するべきです。
+英語のＭＬ(language_preference_order = en)の場合でも、
+Accept-Lanaguage: ja なら（できるだけ）日本語で返事をするべきでしょう。
+&fml8; 標準のメッセージであれば、この動作が可能です。
 </para>
 
 </sect1>
@@ -106,19 +106,19 @@ Accept-Lanaguage: ja �ʤ�ʤǤ�����������ܸ���ֻ��򤹤�٤��Ǥ��礦��
 
 <sect1 id="language.preference.ml.ja">
 	<title>
-	���ܸ�ͥ��Σͣ�
+	日本語優先のＭＬ
 	</title>
 
 <para>
-language_preference_order �Ȥ����ѿ�������ޤ���
-���ܸ줬�ǥե���ȤΣ̤ͣǤϼ��Τ褦�˻��ꤵ��Ƥ��ޤ���
+language_preference_order という変数があります。
+日本語がデフォルトのＭＬでは次のように指定されています。
 <screen>
 language_preference_order	=	ja en
 </screen>
-���Υҥ�Ȥ�Ȥ���
-���Τ褦�ʽ����򤷤Ƥ��ޤ���
-�ʲ��Ǥϡ�
-�����Ƥ����᡼��إå�����ʬ�����ƹͤ��Ƥߤޤ��礦��
+このヒントを使い、
+次のような処理をしています。
+以下では、
+送られてきたメールヘッダを場合分けして考えてみましょう。
 </para>
 
 <sect2>
@@ -127,7 +127,7 @@ language_preference_order	=	ja en
 	</title>
 
 <para>
-���ܸ�ʤ����ˤ��֤���Ƚ�Ǥ��ޤ���
+日本語（だけ）で返すと判断します。
 </para>
 
 </sect2>
@@ -139,7 +139,7 @@ language_preference_order	=	ja en
 	</title>
 
 <para>
-�Ѹ�ʤ����ˤ��֤���Ƚ�Ǥ��ޤ���
+英語（だけ）で返すと判断します。
 </para>
 
 </sect2>
@@ -147,11 +147,11 @@ language_preference_order	=	ja en
 
 <sect2>
 	<title>
-	Accept-Language: ��̵����Content-Type: �Ǥ� charset=iso-2022-jp
+	Accept-Language: は無し、Content-Type: では charset=iso-2022-jp
 	</title>
 
 <para>
-���ܸ�ʤ����ˤ��֤���Ƚ�Ǥ��ޤ���
+日本語（だけ）で返すと判断します。
 </para>
 
 </sect2>
@@ -159,12 +159,12 @@ language_preference_order	=	ja en
 
 <sect2>
 	<title>
-	Accept-Language: ��̵����Content-Type: �Ǥ� charset=us-ascii
+	Accept-Language: は無し、Content-Type: では charset=us-ascii
 	</title>
 
 <para>
-���ܸ�ʤ����ˤ��֤��Ƥ�����Ƚ�ǤǤ��ޤ���
-���ܸ�ȱѸ�Υ���Ӥ��֤��٤����ȹͤ��ޤ���
+日本語（だけ）で返していいと判断できません。
+日本語と英語のコンビで返すべきだと考えます。
 </para>
 
 </sect2>
@@ -172,12 +172,12 @@ language_preference_order	=	ja en
 
 <sect2>
 	<title>
-	Accept-Language: ��̵����Content-Type: ��̵��
+	Accept-Language: は無し、Content-Type: も無し
 	</title>
 
 <para>
-���ܸ�ʤ����ˤ��֤��Ƥ�����Ƚ�ǤǤ��ޤ���
-���ܸ�ȱѸ�Υ���Ӥ��֤��٤����ȹͤ��ޤ���
+日本語（だけ）で返していいと判断できません。
+日本語と英語のコンビで返すべきだと考えます。
 </para>
 
 </sect2>
@@ -187,18 +187,18 @@ language_preference_order	=	ja en
 
 <sect1 id="language.preference.ml.en">
 	<title>
-	�Ѹ�ͥ��Σͣ�
+	英語優先のＭＬ
 	</title>
 
 <para>
-language_preference_order �Ȥ����ѿ������Τ褦�˻��ꤵ��ޤ���
+language_preference_order という変数が次のように指定されます。
 <screen>
 language_preference_order	=	en
 </screen>
-���Υҥ�Ȥ�Ȥ���
-���Τ褦�ʽ����򤷤Ƥ��ޤ���
-�ʲ��Ǥϡ�
-�����Ƥ����᡼��إå�����ʬ�����ƹͤ��Ƥߤޤ��礦��
+このヒントを使い、
+次のような処理をしています。
+以下では、
+送られてきたメールヘッダを場合分けして考えてみましょう。
 </para>
 
 
@@ -208,7 +208,7 @@ language_preference_order	=	en
 	</title>
 
 <para>
-���ܸ�ʤ����ˤ��֤���Ƚ�Ǥ��ޤ���
+日本語（だけ）で返すと判断します。
 </para>
 
 </sect2>
@@ -220,7 +220,7 @@ language_preference_order	=	en
 	</title>
 
 <para>
-�Ѹ�ʤ����ˤ��֤���Ƚ�Ǥ��ޤ���
+英語（だけ）で返すと判断します。
 </para>
 
 </sect2>
@@ -228,11 +228,11 @@ language_preference_order	=	en
 
 <sect2>
 	<title>
-	Accept-Language: ��̵����Content-Type: �Ǥ� charset=iso-2022-jp
+	Accept-Language: は無し、Content-Type: では charset=iso-2022-jp
 	</title>
 
 <para>
-���ܸ�ʤ����ˤ��֤���Ƚ�Ǥ��ޤ���
+日本語（だけ）で返すと判断します。
 </para>
 
 </sect2>
@@ -240,11 +240,11 @@ language_preference_order	=	en
 
 <sect2>
 	<title>
-	Accept-Language: ��̵����Content-Type: �Ǥ� charset=us-ascii
+	Accept-Language: は無し、Content-Type: では charset=us-ascii
 	</title>
 
 <para>
-�Ѹ�ʤ����ˤ��֤���Ƚ�Ǥ��ޤ���
+英語（だけ）で返すと判断します。
 </para>
 
 </sect2>
@@ -252,11 +252,11 @@ language_preference_order	=	en
 
 <sect2>
 	<title>
-	Accept-Language: ��̵����Content-Type: ��̵��
+	Accept-Language: は無し、Content-Type: も無し
 	</title>
 
 <para>
-�Ѹ�ʤ����ˤ��֤���Ƚ�Ǥ��ޤ���
+英語（だけ）で返すと判断します。
 </para>
 
 </sect2>

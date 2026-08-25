@@ -1,58 +1,58 @@
-		IO::Adapter �β�¤
+		IO::Adapter の改造
 
-   [�Ѹ�]
+   [用語]
 	KEY = STR		
-	*   = ���ơ�����
+	*   = ステータス
 
 
-   [��¤������]
+   [改造の要点]
 
    1)
-	getline() ���� split() ���Ƥ��륳���ɤ�
-	get_next_value() �� ARRAY_REF �Ȥ��Ƽ����Ȥ�褦���ѹ�
+	getline() して split() しているコードは
+	get_next_value() で ARRAY_REF として受けとるように変更
 
    2)
-	address -> # address ����������
-	replace(key, \@argv) ��ȤäƹԤʤ���
+	address -> # address したい場合は
+	replace(key, \@argv) を使って行なう。
 
-	�� replace() �ϻȤäƤʤ���
+	＊ replace() は使ってない。
 
 
-   [���Υ᥽�åɤϻȤäƤ���]
+   [このメソッドは使っている]
 	get_next_key		()		STR
 	add			(KEY)		*
-				(KEY, STR)	*	���׳�ĥ��
-				(KEY, [])	*	���׳�ĥ��
+				(KEY, STR)	*	←要拡張？
+				(KEY, [])	*	←要拡張？
 	delete			(KEY)		*
 
-	�� Mail::Delivery::SMTP �ǤĤ����Ƥ�
+	＊ Mail::Delivery::SMTP でつこうてる
 	getpos			()		NUM
 	setpos			(NUM)		NUM
 	eof			()		*
 
-   [���Υ᥽�åɤϲ��ɤ�;�Ϥʤ�]
-	touch			(�����ʤ�)	*
+   [このメソッドは改良の余地なし]
+	touch			(引数なし)	*
 
-   [�׺Ƽ���(���ϤȤꤢ�����ȤäƤ��ʤ�)]
-	getline			()		STR	�� implemented.
+   [要再実装(今はとりあえず使っていない)]
+	getline			()		STR	← implemented.
 				join by space.
-	get_value_as_str	(KEY)		STR	���׳�ĥ��
-	get_value_as_array_ref	(KEY)		[]	���׳�ĥ��
+	get_value_as_str	(KEY)		STR	←要拡張？
+	get_value_as_array_ref	(KEY)		[]	←要拡張？
 
    [ removed ]
-	replace			(KEY, STR)	*	���׳�ĥ��
-				(KEY, [])	*	���׳�ĥ��
+	replace			(KEY, STR)	*	←要拡張？
+				(KEY, [])	*	←要拡張？
 
 *** TODO ***
 
    File::Sequence
-	IO::Adapter ��ͳ�ˤ���٤��Ǥ�
+	IO::Adapter 経由にするべきでし
 
    Tie::JournaledFile
-	IO::Adapter �� journaled file �򥵥ݡ��Ȥ��Ƥۤ���
+	IO::Adapter で journaled file をサポートしてほしい
 
 	[BUG] ?
-	���� negative cache �äƤޤ����äƤʤ�����
-		find() ���� ->{} ����� negative cache
-		���ְ�ä�ͭ���ˤʤäƤ�󤸤�ʤ��Ρ�
+	この negative cache ってまちがってないか？
+		find() して ->{} すると negative cache
+		が間違って有効になってるんじゃないの？
 

@@ -8,19 +8,19 @@
 <qandaentry>
 <question>
 	<para>
-	HTML �����줿����������������ʤ�
+	HTML 化された記事を公開したくない
 	</para>
 </question>
 
 <answer>
 	<para>
-	apache �� suexec �򥵥ݡ��Ȥ��뵡ǽ���ʤ����
-	~fml/public_html/ �ʲ��ϥ��󥿡��ͥåȤ��鸫���ʤ��Ϥ��ʤΤǡ�
-	�ǥե���ȤǤ�����ʤ��Ȥ��⤤�ޤ��� 
+	apache に suexec をサポートする機能がなければ
+	~fml/public_html/ 以下はインターネットから見えないはずなので、
+	デフォルトでは問題ないとおもいます。 
 	</para>
 
 	<para>
-	�Ǥ⡢���⤽�⵭���� HTML ����ǽ����ߤ���С��������Ǥ���
+	でも、そもそも記事を HTML 化機能を停止すれば、より安全です。
 	<screen>
 	[config.cf]
 
@@ -34,17 +34,17 @@
 <qandaentry>
 <question>
 	<para>
-	HTML �����줿������ URL �� ~fml ��ʤ���������Ǥ�����
+	HTML 化された記事の URL の ~fml をなくしたいんですが？
 	</para>
 </question>
 
 <answer>
 	<para>
-	apache �� Alias ��
+	apache の Alias で
 	<screen>
 	Alias /mlarchive/ "/home/fml/public_html/"
 	</screen>
-	�Ȥ������ OK ���Ȼפ��ΤǤ���������Ǥ����ܤǤ��礦����
+	とかすれば OK だと思うのですが、それでは駄目でしょうか？
 	</para>
 </answer>
 </qandaentry>
@@ -54,29 +54,29 @@
 
 <question>
 <para>
-���Ѥ����椫�� html ���������ʤä����
+運用の途中から html 化したくなった場合
 </para>
 </question>
 
 <answer>
 <para>
-�Ϥ��ᤫ�� HTML �����줿�������Ѱդ���Ƥ��ޤ���
-���⤽��ǥե���Ȥ� HTML ������Ƥ���Τǡ�
-������ HTML ����ǽ��̵���ˤ��Ƥ��ʤ���С�
-�������뤿��� WWW �����Ф������ѹ��򤹤���ɤ������Ǥ���
+はじめから HTML 化された記事が用意されています。
+そもそもデフォルトで HTML 化されているので、
+あえて HTML 化機能を無効にしていなければ、
+公開するために WWW サーバの設定変更をすれば良いだけです。
 </para>
 
 <para>
-���� HTML ����̵���ˤ��Ƥ��ơ�
-�դ�����ͭ���ˤ������ʤä���礬����Ǥ�����
-���ξ���
-fmlhtmlify ���ޥ�ɤǵ����κ� HTML ���򤹤뤳�Ȥ��Ǥ��ޤ���
+一度 HTML 化を無効にしていて、
+ふたたび有効にしたくなった場合が問題ですが、
+この場合は
+fmlhtmlify コマンドで記事の再 HTML 化をすることができます。
 <screen>
-% fmlhtmlify �����Τ���ǥ��쥯�ȥ� HTML���֤��ǥ��쥯�ȥ�
+% fmlhtmlify 記事のあるディレクトリ HTMLを置くディレクトリ
 
-��
+例
 
-% fmlhtmlify /var/spool/ml/elena/spool ~fml/public/fml/mlarchive/�ɥᥤ��/�ͣ�
+% fmlhtmlify /var/spool/ml/elena/spool ~fml/public/fml/mlarchive/ドメイン/ＭＬ
 </screen>
 </para>
 </answer>
@@ -88,20 +88,20 @@ fmlhtmlify ���ޥ�ɤǵ����κ� HTML ���򤹤뤳�Ȥ��Ǥ��ޤ���
 
 <question>
 <para>
-HTML ������ʤ���(����������)�ˤϡ�
+HTML 化をやりなおす(再生成する)には？
 </para>
 </question>
 
 <answer>
 <para>
-fmlhtmlify ���ޥ�ɤ�ȤäƲ�������
+fmlhtmlify コマンドを使って下さい。
 <screen>
-% fmlhtmlify �����Τ���ǥ��쥯�ȥ� HTML���֤��ǥ��쥯�ȥ�
+% fmlhtmlify 記事のあるディレクトリ HTMLを置くディレクトリ
 
-��
+例
 
-% rm -fr ~fml/public/fml/mlarchive/�ɥᥤ��/�ͣ�
-% fmlhtmlify /var/spool/ml/elena/spool ~fml/public/fml/mlarchive/�ɥᥤ��/�ͣ�
+% rm -fr ~fml/public/fml/mlarchive/ドメイン/ＭＬ
+% fmlhtmlify /var/spool/ml/elena/spool ~fml/public/fml/mlarchive/ドメイン/ＭＬ
 </screen>
 </para>
 </answer>
@@ -113,30 +113,30 @@ fmlhtmlify ���ޥ�ɤ�ȤäƲ�������
 
 <question>
 <para>
-������ HTML ���������� WWW �����Ф� &fml8; �Υ����Ф��㤦�ΤǤ�����
+記事を HTML 化したいが WWW サーバと &fml8; のサーバが違うのですが？
 </para>
 </question>
 
 <answer>
 <para>
-�� 1 �����Ū�˵�����ž�����뤳�ȤǤ��� 
+案 1 は定期的に記事を転送することです。 
 <screen>
-% rsync -av ~fml/public/fml/mlarchive/�ɥᥤ��/�ͣ� ¾�Υޥ���:/�ѥ�/
+% rsync -av ~fml/public/fml/mlarchive/ドメイン/ＭＬ 他のマシン:/パス/
 </screen>
-rsync over ssh ��ư�Ǽ¹Ԥ���ˤϡ�
-�����ü�� ssh �����꤬ɬ�פǤ��Τ����դ��Ʋ�������
+rsync over ssh を自動で実行するには、
+少し特殊な ssh の設定が必要ですので注意して下さい。
 </para>
 
 <para>
-�� 2 ��¾�Υޥ����¦��
-HTML ��¹Ԥ��륳�ޥ��(���Ȥ��� mhonarc)��ųݤ��Ƥ����Ȥ�����ΤǤ���
+案 2 は他のマシンの側に
+HTML を実行するコマンド(たとえば mhonarc)を仕掛けておくというものです。
 </para>
 
 <para>
-�� 3 �Ȥ���
-WWW �����ФΥե����륷���ƥ�˥ͥåȥ�������˥�����������Ƥ⤢�ꤨ�ޤ�����
-�ե����륷���ƥब���󥿡��ͥåȤ��鸫����ͥåȥ�������Ͽ侩����ޤ���
-���ʤ��Ȥ�΢�ͥåȥ����ͳ�ǥ�����������褦���߷פ��Ƥ���������
+案 3 として
+WWW サーバのファイルシステムにネットワークごしにアクセスする案もありえますが、
+ファイルシステムがインターネットから見えるネットワーク構成は推奨されません。
+少なくとも裏ネットワーク経由でアクセスするように設計してください。
 </para>
 
 </answer>

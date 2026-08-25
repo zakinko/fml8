@@ -9,39 +9,39 @@
 
 <question>
 <para>
-�ե��륿�����ƥ��Ȥ�ʤ��ȼ��Υե��륿�����ꤷ����
+フィルタシステムを使わない独自のフィルタを設定したい
 </para>
 </question>
 
 <answer>
 <para>
-&fml8; �Υե��륿�����ƥ�����Ѳ�ǽ�ʥե��륿�� 
+&fml8; のフィルタシステムで利用可能なフィルタは 
 <screen>
 /usr/local/etc/fml//defaults/$VERSION/default_config.cf.ja
 </screen>
-���ɤ��ʬ����ޤ���
+を読むと分かります。
 </para>
 
 <para>
-������¢�ե��륿�Ǽ�������Ƥ��ʤ����ƤΥե��륿��
+この内蔵フィルタで実装されていない内容のフィルタは
 article_post_verify_request_end_hook
 article_filter_start_hook  
 article_filter_end_hook  
 article_post_run_start_hook  
-�Τ��Ť줫�� HOOK �Ǥ����ʤ��Ф褤�Ǥ��礦��
+のいづれかの HOOK でおこなえばよいでしょう。
 <screen>
 $article_filter_start_hook = q{
 	my $header = $curproc->incoming_message_header();
 	my $body   = $curproc->incoming_message_body();
 
-	if (���) {
+	if (条件) {
 		$curproc->policy_reject_this_message();
 	}
 };
 </screen>
-�Τ褦�˽񤱤��ɤ��Ȥ��⤤�ޤ���
-�ե��륿�ν����ˤĤ��Ƥϥ��������������Τ䡢
-�ʲ��Υ쥷�Ԥ⻲�Ȥ��Ʋ�������
+のように書けば良いとおもいます。
+フィルタの書き方についてはソースコード本体や、
+以下のレシピも参照して下さい。
 </para>
 
 </answer>
@@ -53,16 +53,16 @@ $article_filter_start_hook = q{
 
 <question>
 <para>
-����Υ᡼�륢�ɥ쥹����ݤ�����
+特定のメールアドレスを拒否したい
 </para>
 </question>
 
 <answer>
 <para>
-���Ȥ��С�
-����Υɥᥤ��(\S+\@example.co.jp)�����Ƶ��ݤ���ե��륿�Τ��ȤǤ���
-��¢�ե��륿�ΰ����Ȥ��Ƽ������褦�ȹͤ��Ƥ��ޤ�����
-��ǰ�ʤ���̤�����Ǥ� _o_
+たとえば、
+特定のドメイン(\S+\@example.co.jp)を全て拒否するフィルタのことです。
+内蔵フィルタの一部として実装しようと考えていますが、
+残念ながら未実装です _o_
 </para>
 </answer>
 
@@ -73,13 +73,13 @@ $article_filter_start_hook = q{
 
 <question>
 <para>
-message/partial ��ե��륿��������
+message/partial をフィルタしたい。
 </para>
 </question>
 
 <answer>
 <para>
-mime component filter �ǡ�message/partial * reject�פ����ꤷ�Ʋ�������
+mime component filter で「message/partial * reject」を設定して下さい。
 <screen>
 [/usr/local/etc/fml/mime_component_filter]
 
@@ -92,7 +92,7 @@ multipart/*	!text/plain	reject
 </para>
 
 <para>
-����: ���Υե��륿�����̤ͣ�ȿ�Ǥ���ޤ���
+注意: このフィルタは全ＭＬに反映されます。
 </para>
 </answer>
 
@@ -103,41 +103,41 @@ multipart/*	!text/plain	reject
 
 <question>
 <para>
-���ʤ�ź�եե����뤬�Ĥ��Ƥ����᡼��ϵ��ݤ��� HOOK
+危ない添付ファイルがついてきたメールは拒否する HOOK
 </para>
 </question>
 
 <answer>
 
 <para>
-&fml8; �ϡ�
-���餫�������Ϥ��줿��å���������Ϥ���
-�����˺����� Mail::Message ���֥������Ȥη��ǻ��äƤ��ޤ���
-�����ǡ�
+&fml8; は、
+あらかじめ入力されたメッセージを解析し、
+メモリ上に鎖状の Mail::Message オブジェクトの形で持っています。
+そこで、
 MIME/Multipart 
-�γ���ʬ�Υإå�����Ф��ơ�����ɽ���ǽ�˳�ǧ����Ф褤�����Ǥ���
+の各部分のヘッダを取り出して、正規表現で順に確認すればよいだけです。
 </para>
 
 <para>
-HOOK �Ǥʤ�Ȥ�����/���ޤ�����ϼ����̤�Ǥ���
-�ɤ������Ǥ⡢
-�ޥå�������硢stop_this_process() ̿��ǡ�
-����ʾ�ν�����ߤ�Ƥ��ޤ���
-�ޤ���
-������Ǥϲ��⥨�顼��å��������֤����Ȥ��Ƥ��ʤ����ᡢ
-��̤Ȥ��ơ����Υ�å�������̵�뤵��ƽ���ˤʤäƤ��ޤ���
+HOOK でなんとかする/ごまかす例は次の通りです。
+どちらの例でも、
+マッチした場合、stop_this_process() 命令で、
+それ以上の処理を止めています。
+また、
+この例では何もエラーメッセージを返そうとしていないため、
+結果として、このメッセージは無視されて終りになっています。
 </para>
 
 <para>
-�ֻ��򤷤Ƥ��������ʤ顢
-reply_message() �ǡ������ֻ����֤��Ƥ����Ƥ���������
-�������������ä��᡼��ϥ����륹�ʤɤβ�ǽ�����⤤�Τǡ�
-�ֻ��򤷤ʤ��ۤ����ɤ��Ǥ��礦��
+返事をしてあげたいなら、
+reply_message() で、何か返事を返してあげてください。
+ただ、こういったメールはウィルスなどの可能性が高いので、
+返事をしないほうが良いでしょう。
 </para>
 
 <para>
-.exe �ʤ�����Υե������ĥ�Ҥ˥ޥå����뤫����Ĵ�٤��㡣
-�Τ� &fml8; (2004/12/08 ����)�ʤ顢����ʴ�����
+.exe など特定のファイル拡張子にマッチするか？を調べる例。
+昔の &fml8; (2004/12/08 以前)なら、こんな感じ。
 <screen>
 $distribute_verify_request_start_hook = q{
     my $msg = $curproc->incoming_message() || undef;
@@ -150,7 +150,7 @@ $distribute_verify_request_start_hook = q{
     }
 };
 </screen>
-2004/12/08 �ʹߤ� &fml8; �ʤ顢����ʤ��󤸡�
+2004/12/08 以降の &fml8; なら、こんなかんじ。
 <screen>
 $distribute_verify_request_start_hook = q{
     my $msg  = $curproc->incoming_message() || undef;
@@ -167,11 +167,11 @@ $distribute_verify_request_start_hook = q{
 </para>
 
 <para>
-�̲�Ȥ��Ƥϡ�
+別解としては、
 <screen>
 Content-Disposition: attachment;
 </screen>
-�Ȥ���ɽ���ˤʤ뤳�Ȥ�����ˡ��������ä�����Ȥ����Ƥ⤢��ޤ���
+という表示になることを前提に、これを引っかけるという案もあります。
 <screen>
 $distribute_verify_request_start_hook = q{
     my $msg = $curproc->incoming_message() || undef;
@@ -184,7 +184,7 @@ $distribute_verify_request_start_hook = q{
     }
 };
 </screen>
-2004/12/08 �� &fml8; �ʹߤʤ顢����ʤ��󤸡�
+2004/12/08 の &fml8; 以降なら、こんなかんじ。
 <screen>
 $distribute_verify_request_start_hook = q{
     my $msg  = $curproc->incoming_message() || undef;
@@ -209,50 +209,50 @@ $distribute_verify_request_start_hook = q{
 
 <question>
 <para>
-�ե��륿���Ƥ������ˡ����顼�᡼���ɤ����֤�
+フィルタで弾いた時に、エラーメールをどこへ返す
 </para>
 </question>
 
 <answer>
 
 <para>
-�ǥե���ȤǤ�
+デフォルトでは
 <screen>
 use_article_filter_reject_notice	=	yes
 article_filter_reject_notice_recipient	=	maintainer sender
 </screen>
-�ȤʤäƤ��ޤ���
-�Ĥޤꡢ
-(1) ���顼�᡼����֤�(yes)��
-(2) �֤���ϣ̤ͣδ����Ԥ������Ԥ�ξ��(maintainer sender)
-�Ǥ���
+となっています。
+つまり、
+(1) エラーメールを返し(yes)、
+(2) 返す先はＭＬの管理者と送信者の両方(maintainer sender)
+です。
 </para>
 
 
 <para>
-�����������������( From: �Υ��ɥ쥹 )"�Τ�"�ˤ���ˤ�
+返送する先を送信者( From: のアドレス )"のみ"にするには
 <screen>
 article_filter_reject_notice_recipient	=	sender
 </screen>
-�Ȥ��Ƥ���������
+としてください。
 </para>
 
 
 <para>
-�̤ͣδ����Ԥ�������( From: �Υ��ɥ쥹 )��ξ�����֤��ˤ�
+ＭＬの管理者と送信者( From: のアドレス )の両方に返すには
 <screen>
 article_filter_reject_notice_recipient	=	maintainer sender
 </screen>
-�Ȥ��Ƥ���������
+としてください。
 </para>
 
 
 <para>
-���⤽�⥨�顼�᡼����֤��ʤ��褦�ˤ���ˤϡ�
+そもそもエラーメールを返さないようにするには、
 <screen>
 use_article_filter_reject_notice	=	no
 </screen>
-�Ȥ��Ƥ���������
+としてください。
 </para>
 
 </answer>
@@ -264,7 +264,7 @@ use_article_filter_reject_notice	=	no
 
 <question>
 <para>
-spamassassin �� SPAM �᡼���̵�뤹�롣
+spamassassin で SPAM メールを無視する。
 </para>
 </question>
 
@@ -273,15 +273,15 @@ spamassassin �� SPAM �᡼���̵�뤹�롣
 <para>
 <caution>
 <para>
-���⤽�� spamassassin ���Ӥ�����¢�ե��륿������ΤǤ�����
-����򤢤��ƻȤ�ʤ���Ǥ���
+そもそも spamassassin をよびだす内蔵フィルタがあるのですが、
+それをあえて使わない例です。
 </para>
 
 </caution>
 </para>
 
 <para>
-1. ��¢�ե��륿��������Ǥ���
+1. 内蔵フィルタの設定例です。
 <screen>
 use_article_spam_filter         =       yes
 article_spam_filter_drivers     =       spamassassin
@@ -289,8 +289,8 @@ article_spam_filter_drivers     =       spamassassin
 </para>
 
 <para>
-2. ���Ʊ�ͤ� spamassassi ��ƤӽФ��ΤǤ�����
-����� HOOK �Ǥʤ�Ȥ�����/���ޤ�����ϼ����̤�Ǥ���
+2. 上と同様に spamassassi を呼び出すのですが、
+それを HOOK でなんとかする/ごまかす例は次の通りです。
 <screen>
 $distribute_verify_request_end_hook = q{
         my $spamassassin = '/usr/pkg/bin/spamc -c';
@@ -320,8 +320,8 @@ $distribute_verify_request_end_hook = q{
 <qandaentry>
 <question>
 <para>
-spamassassin �� SPAM �᡼���Ƚ�ꤷ���顢
-�إå��� X-Spam-Status: Yes ��Ĥ��롣
+spamassassin で SPAM メールと判定したら、
+ヘッダに X-Spam-Status: Yes をつける。
 </para>
 </question>
 
@@ -350,7 +350,7 @@ $distribute_verify_request_end_hook = q{
 </para>
 
 <para>
-����äȥȥ�å����Ǥ�����ư���ޤ���
+ちょっとトリッキーですが、動きます。
 </para>
 
 </answer>
@@ -362,13 +362,13 @@ $distribute_verify_request_end_hook = q{
 
 <question>
 <para>
-SPAM �к��Ȥ��ơ�To: ����� Cc: �� ML ̾��ɬ�ܤȤ�����
+SPAM 対策として、To: および Cc: に ML 名を必須としたい
 </para>
 </question>
 
 <answer>
 <para>
-HOOK �ǹԤʤ��ʤ鼡�Τ褦�ˤʤ�ޤ���
+HOOK で行なうなら次のようになります。
 <screen>
 $article_filter_end_hook = q{
 	my $header = $curproc->incoming_message_header();
@@ -406,28 +406,28 @@ $article_filter_end_hook = q{
 
 <question>
 <para>
-�ͣ��ȼ��� Message-ID: ��Ĥ��ƶ���������
+ＭＬ独自の Message-ID: をつけて矯正したい
 </para>
 </question>
 
 <answer>
 <para>
-̤�����Ǥ���
+未実装です。
 </para>
 
 <para>
-HOOK �Ǥʤ�Ȥ����뤳�ȤϽ���ޤ���
-�ֵ����� ML �ȼ��� Message-ID: ��Ĥ�������
-�Ȥ����쥷�Ԥ򻲾Ȥ��Ʋ�������
+HOOK でなんとかすることは出来ます。
+「記事に ML 独自の Message-ID: をつけたい」
+というレシピを参照して下さい。
 </para>
 
 <para>
-&fml4; �Ǥ�
-��In-Reply-To: �� References: ��Ĥ��Ƥ���ʤ� MUA �����뤿��ˡ�
-����åɤ����ޤ������ʤ��פȤ���������褹�뤿��ˡ�
-�ͣ��ȼ��� Message-ID: ��Ĥ��ƶ�������Ȥ�����ǽ������ޤ�����
-����Ǥϡ��������ä� MUA �����䤨���Ǥ��礦����
-&fml8; �ǤϹ�θ���ʤ����Ȥˤ��Ƥ��ޤ���
+&fml4; では
+「In-Reply-To: や References: をつけてくれない MUA があるために、
+スレッドがうまく扱えない」という問題を解決するために、
+ＭＬ独自の Message-ID: をつけて矯正するという機能がありました。
+現代では、そういった MUA も死に絶えたでしょうから
+&fml8; では考慮しないことにしています。
 </para>
 
 </answer>

@@ -136,7 +136,7 @@ sub header
     print "<sect1 id=\"recipes\">\n";
     print "<title>\n";
     if ($ENV{ LANG_HINT } eq 'ja') {
-	print "¥ì¥·¥Ô°ìÍ÷";
+	print "ãƒ¬ã‚·ãƒ”ä¸€è¦§";
     }
     else {
 	print "List of Recipes\n";

@@ -24,7 +24,7 @@ use vars qw($debug $buf $in_q $in_a $question);
 	}
 
 	if ($in_a) {
-	    if ($buf =~ /Ì¤¼ÂÁõ/) {
+	    if ($buf =~ /æœªå®Ÿè£…/) {
 		print "[TODO] ";
 		print $question;
 	    }

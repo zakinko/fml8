@@ -9,23 +9,23 @@
 
 <question>
 <para>
-Subject: �� [elena:00100] �Τ褦�ʥ�����Ĥ���
+Subject: に [elena:00100] のようなタグをつける
 </para>
 </question>
 
 <answer>
 <para>
-�ǥե���ȤǤϥ����ϤĤ��ޤ���
-�ޤ� &fml8; �Ǥϡ�
-������
-sprintf �ʤɤǻȤ������(strftime(3) �򻲾�)�ǻ��ꤹ�뤳�ȤˤʤäƤ��ޤ���
+デフォルトではタグはつきません。
+また &fml8; では、
+タグを
+sprintf などで使われる形式(strftime(3) を参照)で指定することになっています。
 <screen>
 [/var/spool/ml/elena/config.cf]
 
-# ������Ĥ���롼����ɲ�
+# タグをつけるルールを追加
 article_header_rewrite_rules    +=      rewrite_article_subject_tag
 
-# �����ο�����7�������
+# タグの数字を7桁へ設定
 article_subject_tag = [$ml_name:%05d]
 </screen>
 
@@ -39,22 +39,22 @@ article_subject_tag = [$ml_name:%05d]
 
 <question>
 <para>
-Subject: [elena:00100] �ο�����ʬ(00100)�η�����Ѥ���
+Subject: [elena:00100] の数字部分(00100)の桁数を変える
 </para>
 </question>
 
 <answer>
 <para>
-&fml8; �Ǥϥ�����
-sprintf ����(strftime(3) �򻲾�)�ǻ��ꤹ�뤳�ȤˤʤäƤ��ޤ���
-���Ȥ��У���ʤ� %07 �ʤɤȤ���Ф褤�����Ǥ���
+&fml8; ではタグを
+sprintf 形式(strftime(3) を参照)で指定することになっています。
+たとえば７桁なら %07 などとすればよいだけです。
 <screen>
 [/var/spool/ml/elena/config.cf]
 
-# ������Ĥ���롼����ɲ�
+# タグをつけるルールを追加
 article_header_rewrite_rules    +=      rewrite_article_subject_tag
 
-# �����ο�����7�������
+# タグの数字を7桁へ設定
 article_subject_tag = [$ml_name:%07d]
 </screen>
 
@@ -68,8 +68,8 @@ article_subject_tag = [$ml_name:%07d]
 
 <question>
 <para>
-Subject: �Υ����ο���(00100)��0�ѥǥ��󥰤�ʤ�������
-(strftime(3) �򻲾�)��
+Subject: のタグの数字(00100)の0パディングをなくしたい
+(strftime(3) を参照)。
 </para>
 </question>
 
@@ -79,7 +79,7 @@ Subject: �Υ����ο���(00100)��0�ѥǥ��󥰤�ʤ�������
 <screen>
 [/var/spool/ml/elena/config.cf]
 
-# ������Ĥ���롼����ɲ�
+# タグをつけるルールを追加
 article_header_rewrite_rules    +=      rewrite_article_subject_tag
 
 
@@ -96,19 +96,19 @@ article_subject_tag = [$ml_name:%d]
 
 <question>
 <para>
-Subject: �Υ�������ʸ���ˤ�������
+Subject: のタグを大文字にしたい。
 </para>
 </question>
 
 <answer>
 <para>
 <screen>
-# ������Ĥ���롼����ɲ�
+# タグをつけるルールを追加
 article_header_rewrite_rules    +=      rewrite_article_subject_tag
 
 article_subject_tag = [\U$ml_name\E:%05d]
 </screen>
-(����: ���ε�ǽ��Ȥ����ˤ� 2002/10/29 �ʹߤ� snapshot ��ȤäƤ�������)�� 
+(注意: この機能を使う場合には 2002/10/29 以降の snapshot を使ってください)。 
 </para>
 </answer>
 
@@ -119,22 +119,22 @@ article_subject_tag = [\U$ml_name\E:%05d]
 
 <question>
 <para>
-Subject: �Υ�����ʸ���ˤ�����
+Subject: のタグを小文字にしたい
 </para>
 </question>
 
 <answer>
 <para>
-Unix ��Ǥϡ������Ƥ���ʸ����Ȥ��Τǡ��ͣ�̾���⾮ʸ���Ǥ��礦��
-�����顢���̤ϲ��⤷�ʤ��Ƥ⾮ʸ���ΤϤ��Ǥ�����
-ǰ�Τ��ᡢ��ʸ�������������ʤ顢���Τ褦�ˤ��Ƥ���������
+Unix 上では、たいてい小文字を使うので、ＭＬ名前も小文字でしょう。
+だから、普通は何もしなくても小文字のはずですが、
+念のため、小文字を強制したいなら、次のようにしてください。
 <screen>
-# ������Ĥ���롼����ɲ�
+# タグをつけるルールを追加
 article_header_rewrite_rules    +=      rewrite_article_subject_tag
 
 article_subject_tag = [\L$ml_name\E:%05d]
 </screen>
-(����: ���ε�ǽ��Ȥ����ˤ� 2002/10/29 �ʹߤ� snapshot ��ȤäƤ�������)�� 
+(注意: この機能を使う場合には 2002/10/29 以降の snapshot を使ってください)。 
 </para>
 </answer>
 
@@ -145,14 +145,14 @@ article_subject_tag = [\L$ml_name\E:%05d]
 
 <question>
 <para>
-Subject �� [����] �Ȥ���������Ĥ�������
+Subject に [日付] というタグをつけたい。
 </para>
 </question>
 
 <answer>
 <para>
-[YYYYMMDD] (e.g. [20060101]) �Τ褦�����դ�Ĥ�������硢
-�ʲ��Τ褦�ˤ��Ʋ�������
+[YYYYMMDD] (e.g. [20060101]) のような日付をつけたい場合、
+以下のようにして下さい。
 <screen>
 $distribute_verify_request_start_hook = q{
 
@@ -162,8 +162,8 @@ $distribute_verify_request_start_hook = q{
 
 };
 </screen>
-�ʤ� strftime(3) �Ǥ��͡��ʥե����ޥåȤ����ѤǤ��ޤ���
-�ܤ����� Unix �ޥ˥奢�� strftime(3) �򻲾Ȥ��Ƥ���������
+なお strftime(3) では様々なフォーマットが利用できます。
+詳しくは Unix マニュアル strftime(3) を参照してください。
 </para>
 </answer>
 
@@ -174,20 +174,20 @@ $distribute_verify_request_start_hook = q{
 
 <question>
 <para>
-Reply-To: ��������ѥ��ɥ쥹�˶����ѹ����롣
+Reply-To: を常に投稿用アドレスに強制変更する。
 </para>
 </question>
 
 <answer>
 <para>
-���� HOOK �� config.cf �κǸ�(=cut �Ԥ�겼¦)�˽񤤤Ʋ�������
+次の HOOK を config.cf の最後(=cut 行より下側)に書いて下さい。
 <screen>
 $article_header_rewrite_end_hook = q{
     my $ml = $config->{ article_post_address };
     $header->replace('Reply-To', $ml);
 };
 </screen>
-�ʤ��إå��񤭴����롼��˰ʲ���̿����ɲä��Ƥ�Ʊ�����Ȥ�����ޤ���
+なおヘッダ書き換えルールに以下の命令を追加しても同じことが出来ます。
 <screen>
 article_header_rewrite_rules += rewrite_reply_to_enforce_article_post_address
 </screen>
@@ -201,13 +201,13 @@ article_header_rewrite_rules += rewrite_reply_to_enforce_article_post_address
 
 <question>
 <para>
-Reply-To: �������Ԥ����ꤹ�롣
+Reply-To: を送信者に設定する。
 </para>
 </question>
 
 <answer>
 <para>
-���� HOOK �� config.cf �κǸ�(=cut �Ԥ�겼¦)�˽񤤤Ʋ�������
+次の HOOK を config.cf の最後(=cut 行より下側)に書いて下さい。
 <screen>
 $article_header_rewrite_end_hook = q{
     my $cred   = $curproc->credential();
@@ -227,13 +227,13 @@ $article_header_rewrite_end_hook = q{
 
 <question>
 <para>
-Reply-To: ��������� �� �̡ͣפ����ꤹ�롣
+Reply-To: を「送信者 ＋ ＭＬ」に設定する。
 </para>
 </question>
 
 <answer>
 <para>
-���� HOOK �� config.cf �κǸ�(=cut �Ԥ�겼¦)�˽񤤤Ʋ�������
+次の HOOK を config.cf の最後(=cut 行より下側)に書いて下さい。
 <screen>
 $article_header_rewrite_end_hook = q{
     my $ml     = $config->{ article_post_address };
@@ -254,14 +254,14 @@ $article_header_rewrite_end_hook = q{
 
 <question>
 <para>
-�̥ͣ��С��������ƤǤ���С�
-Reply-To: ��������ԡܣ̡ͣפ����ꤹ�롣
+ＭＬメンバーからの投稿であれば、
+Reply-To: を「送信者＋ＭＬ」に設定する。
 </para>
 </question>
 
 <answer>
 <para>
-���� HOOK �� config.cf �κǸ�(=cut �Ԥ�겼¦)�˽񤤤Ʋ�������
+次の HOOK を config.cf の最後(=cut 行より下側)に書いて下さい。
 <screen>
 $article_header_rewrite_end_hook = q{
     my $ml     = $config->{ article_post_address };
@@ -285,26 +285,26 @@ $article_header_rewrite_end_hook = q{
 
 <question>
 <para>
-To: �� Cc: ����ˤ���
-&fml8; ���������Ƥ���̤ͣΥ��ɥ쥹������
-Reply-To: �����ꤹ�롣
+To: と Cc: の中にある
+&fml8; が管理しているＭＬのアドレスだけを
+Reply-To: に設定する。
 </para>
 </question>
 
 <answer>
 <para>
-�������ˤ���ư��Ǥ�����
-�褦����˵������鼫ʬ���Τ�ʤ����ɥ쥹��������Ȥ������ȤǤ���
+説明しにくい動作ですが、
+ようするに記事から自分の知らないアドレスを削除するということです。
 </para>
 
 <para>
-�إå��˽񤤤Ƥ������ƤΥ��ɥ쥹���ֿ�����ͤ�¿���Τǡ�
-�������ä�ư�ͭ�ѤǤ��뤳�Ȥ�����ޤ���
+ヘッダに書いてある全てのアドレスへ返信する人が多いので、
+こういった動作が有用であることがあります。
 </para>
 
 <para>
-����ϡ�������ʣ���Ǥ��� HOOK �����Ǽ¸��Ǥ��ޤ���
-���� HOOK �� config.cf �κǸ�(=cut �Ԥ�겼¦)�˽񤤤Ʋ�������
+設定は、だいぶ複雑ですが HOOK だけで実現できます。
+次の HOOK を config.cf の最後(=cut 行より下側)に書いて下さい。
 <screen>
 $article_header_rewrite_end_hook = q{
     my $to   = $header->get('to');
@@ -336,7 +336,7 @@ $article_header_rewrite_end_hook = q{
 
 <question>
 <para>
-���פʥإå��ե������ X-Face: ��ä�
+不要なヘッダフィールド X-Face: を消す
 </para>
 </question>
 
@@ -355,7 +355,7 @@ unsafe_header_fields  += x-face
 
 <question>
 <para>
-Sender: �� X-Sender: �˥��ԡ����롣
+Sender: を X-Sender: にコピーする。
 </para>
 </question>
 
@@ -363,17 +363,17 @@ Sender: �� X-Sender: �˥��ԡ����롣
 <para>
 
 <para>
-��Ƥ��줿�᡼��� Sender: �� X-Sender: �˥��ԡ����Ƥ����ޤ���
-&fml8; �������塢
-������ϩ��Τɤ����� Sender: ���ѹ����Ԥ�줿�Ȥ��Ƥ⡢
-���ꥸ�ʥ�������Ԥ�ʬ����褦�ˤ������Ȥ������ȤǤ���
+投稿されたメールの Sender: を X-Sender: にコピーしておきます。
+&fml8; の配送後、
+配送経路上のどこかで Sender: の変更が行われたとしても、
+オリジナルの送信者が分かるようにしたいということです。
 </para>
 
 <para>
-��äȤ� Sender: ��Ĥ��ʤ��ͤ⤤��Τǡ�
-�������ä��᡼����Ф��Ƥ��б��Ǥ��ޤ���
-Sender: ���ʤ����
-From: �� X-Sender: �˥��ԡ����Ƥ����Ȥ��ä����ʸ��ɬ�פ��⤷��ޤ���
+もっとも Sender: をつけない人もいるので、
+そういったメールに対しては対応できません。
+Sender: がない場合
+From: を X-Sender: にコピーしておくといった条件文も必要かもしれません。
 </para>
 
 <para>
@@ -394,13 +394,13 @@ $article_header_rewrite_end_hook = q{
 
 <question>
 <para>
-Received: �� X-Received: �ذ�ư���롣
+Received: を X-Received: へ移動する。
 </para>
 </question>
 
 <answer>
 <para>
-X-Received: �إ��ԡ�������� Received: ��ä��ޤ���
+X-Received: へコピーした後で Received: を消します。
 <screen>
 $article_header_rewrite_end_hook = q{
    my $header   = $curproc->article_message_header();
@@ -419,30 +419,30 @@ $article_header_rewrite_end_hook = q{
 
 <question>
 <para>
-���Υ᡼��� Reply-To: ���ʤ���С����Τޤޤˤ�������
+元のメールに Reply-To: がなければ、そのままにしたい。
 </para>
 </question>
 
 <answer>
 <para>
-config.cf ��
+config.cf で
 <screen>
 article_header_rewrite_rules    -=      rewrite_reply_to
 </screen>
-�Ȥ��Ƥ���������
+としてください。
 </para>
 
 <para>
-�ǥե���ȤǤ�
-Reply-To: �Τʤ��᡼��إå����Ф�
-��Reply-To: ����ѥ��ɥ쥹�פ��ɲä���ޤ���
-�����
-$article_header_rewrite_rules �ˤ��� 
+デフォルトでは
+Reply-To: のないメールヘッダに対し
+「Reply-To: 投稿用アドレス」が追加されます。
+これは
+$article_header_rewrite_rules にある 
 rewrite_reply_to
-̿��ˤ��ޤ���
-��äơ������롼�뤫�������Ƥ��ޤ���
-��Reply-To: ���Ф���񤭴����롼�뤬̵���Ȥʤ��
-�Ȥ����櫓�Ǥ���
+命令によります。
+よって、これをルールから削除してしまえば
+「Reply-To: に対する書き換えルールが無効となる」
+というわけです。
 </para>
 </answer>
 
@@ -453,22 +453,22 @@ rewrite_reply_to
 
 <question>
 <para>
-To: Cc: Reply-To: ���������Τޤ����̤��ˤ��롣
+To: Cc: Reply-To: を全部そのまま素通しにする。
 </para>
 </question>
 
 <answer>
 <para>
-���쥷�Ԥ�Ʊ���Ǥ���
+前レシピと同じです。
 </para>
 
 <para>
-To: �� Cc: �ϸ������ɤ����Ǥ���
-���Τ��� config.cf ��
+To: と Cc: は元々すどおしです。
+そのため config.cf で
 <screen>
 article_header_rewrite_rules    -=      rewrite_reply_to
 </screen>
-�Ȥ�������ǽ�ʬ�Ǥ���
+とするだけで十分です。
 </para>
 
 </answer>
@@ -480,13 +480,13 @@ article_header_rewrite_rules    -=      rewrite_reply_to
 
 <question>
 <para>
-������ Message-ID: �ϸ����ͤΤޤ��̤�������
+記事の Message-ID: は元の値のまま通したい。
 </para>
 </question>
 
 <answer>
 <para>
-���̤����ǥե���Ȥε�ư�Ǥ��Τǡ��ʤˤ⤹��ɬ�פϤ���ޤ���
+素通しがデフォルトの挙動ですので、なにもする必要はありません。
 </para>
 </answer>
 
@@ -497,13 +497,13 @@ article_header_rewrite_rules    -=      rewrite_reply_to
 
 <question>
 <para>
-������ ML �ȼ��� Message-ID: ��Ĥ�����
+記事に ML 独自の Message-ID: をつけたい
 </para>
 </question>
 
 <answer>
 <para>
-�ü�ʼ��פǤ�������ǽ�Ǥ���
+特殊な需要ですが、可能です。
 </para>
 
 <para>
@@ -514,22 +514,22 @@ article_header_rewrite_rules    -=      rewrite_reply_to
 $article_header_rewrite_end_hook = q{
 	my $header = $curproc->article_message_header();
 
-	# Message-Id ������ (�������Ŭ���Ǥ�)
+	# Message-Id を生成 (この例は適当です)
 	my $ml_name   = $config->{ ml_name };
 	my $ml_domain = $config->{ ml_domain };
 	my $new_id    = sprintf("%s-%d\@%s", $ml_name, $$, $ml_domain);
 
-	# X-Message-Id �˥��ꥸ�ʥ�� Message-Id ��Хå����åפ��Ƥ���
+	# X-Message-Id にオリジナルの Message-Id をバックアップしておく
 	$header->add('X-Message-Id', $header->get('Message-Id'));
 
-	# Message-Id �����촹����
+	# Message-Id を入れ換える
 	$header->replace('Message-Id', $new_id);
 };
 </screen>
 </para>
 
 <para>
-�Ρ���: ��Ȥ�Ȥ�˿�̤ͣ�ͷ�ӿ��ǻϤ᤿�ä����ͥ��Ǥ���
+ノート: もともとは某ＭＬで遊び心で始めた話が元ネタです。
 </para>
 
 </answer>
@@ -541,13 +541,13 @@ $article_header_rewrite_end_hook = q{
 
 <question>
 <para>
-X-ML-Info: �����Ƥ���ꤹ�롣
+X-ML-Info: の内容を指定する。
 </para>
 </question>
 
 <answer>
 <para>
-�褦����˥᡼��إå����ͤ������ꤷ�ޤ���
+ようするにメールヘッダの値を強制指定します。
 <screen>
 $article_header_rewrite_end_hook = q{
         my $header = $curproc->article_message_header();
@@ -565,24 +565,24 @@ $article_header_rewrite_end_hook = q{
 
 <question>
 <para>
-��ݡ��ȥ᡼��� Reply-To: ����ꤹ�롣
+レポートメールの Reply-To: を指定する。
 </para>
 </question>
 
 <answer>
 <para>
-̤�����Ǥ���
-���ߤ� &fml8; �Ǥ�
+未実装です。
+現在の &fml8; でも
 <screen>
-outgoing_mail_header_reply_to = ���ɥ쥹
+outgoing_mail_header_reply_to = アドレス
 </screen>
-�ѿ��ǡ�
-��ݡ��ȥ᡼��� Reply-To: �����Ǥ���ΤǤ�����
-����Ϻ��μ������ְ�äƤ��ޤ��� _o_
+変数で、
+レポートメールの Reply-To: を指定できるのですが、
+これは今の実装が間違っていますね _o_
 </para>
 
 <para>
-(����ϻȤ�ʤ��Ǥ�������)
+(これは使わないでください)
 </para>
 </answer>
 
@@ -593,20 +593,20 @@ outgoing_mail_header_reply_to = ���ɥ쥹
 
 <question>
 <para>
-����Υإå��������̤�����
+特定のヘッダだけを通したい
 </para>
 </question>
 
 <answer>
 <para>
-������ &fml8; �Ǥϡ����Τ褦�� HOOK �Ǽ¸����뤷������ޤ���
+現状の &fml8; では、次のような HOOK で実現するしかありません。
 <screen>
 
     $article_header_rewrite_end_hook = q{
 	my $header       = $curproc->article_message_header();
 	my (@tags)       = $header->tags();
 
-	# �̤������إå��ե�����ɤ�������� 	
+	# 通したいヘッダフィールドを定義する 	
 	my (@valid_tags) = qw(to from reply-to subject date message-id);
 
         for my $tag (@tags) {
@@ -625,8 +625,8 @@ outgoing_mail_header_reply_to = ���ɥ쥹
     };
 
 </screen>
-�����ѿ������椷�����ۤɡ����פ�����Ǥ��礦����
-����йͤ��ޤ�����
+設定変数で制御したいほど、需要があるでしょうか？
+あれば考えますが…
 </para>
 </answer>
 
@@ -637,31 +637,31 @@ outgoing_mail_header_reply_to = ���ɥ쥹
 
 <question>
 <para>
-In-Reply-To: �� References: ������������
+In-Reply-To: か References: を強制したい。
 </para>
 </question>
 
 <answer>
 <para>
-�����ؤ��ֿ��Ǥ���ˤ�ؤ�餺
-In-Reply-To: �� References: ��ʤ��᡼������äƤ���ͤ����¤ˤ��ޤ���
-����(����åɾ���κ��)�򤵤��ȡ������Ĥ������꤬�����ޤ���
+記事への返信であるにも関わらず
+In-Reply-To: も References: もないメールを送ってくる人が現実にいます。
+これ(スレッド情報の削除)をされると、いくつかの問題が生じます。
 </para>
 
 <para>
-���ˡ��᡼��֤Υ���åɴط���ʬ����ʤ��ʤ�ΤǸ��Ť餤�Ǥ���
-����ˡ��̾綠�����ä��᡼���̵��(���ʤ�)�Τǡ�
-�������ä��᡼���
-�����̤Υ᡼���
-�ǤϤʤ� 
-��SPAM �᡼���
-�ʤɤβ�ǽ�����⤤�Ȥߤʤ���ޤ���
+第一に、メール間のスレッド関係が分からなくなるので見づらいです。
+第二に、通常そういったメールは無い(少ない)ので、
+そういったメールは
+「普通のメール」
+ではなく 
+「SPAM メール」
+などの可能性が高いとみなされます。
 </para>
 
 <para>
-�ʲ������
-Subject ���ֻ��ΰ�( Re: �ʤ�)���ʤ���
-In-Reply-To: �ޤ��� References: �إå����ʤ��ʤ���ݤ��� HOOK �Ǥ���
+以下の例は
+Subject に返事の印( Re: など)がなく、
+In-Reply-To: または References: ヘッダがないなら拒否する HOOK です。
 <screen>
     $article_post_verify_request_end_hook = q{
 	my $header      = $curproc->incoming_message_header();
@@ -679,12 +679,12 @@ In-Reply-To: �ޤ��� References: �إå����ʤ��ʤ���ݤ��� HOOK �Ǥ���
 	}
     };
 </screen>
-���ݤ����ݤΥ᡼��������Ԥ����äƤ��ޤ���
-�⤷���顼��å������������Ԥ��֤���ñ��̵�뤹������Ǥ����ʤ�
+拒否した旨のメールを送信者へ送っています。
+もしエラーメッセージを送信者に返さず単に無視するだけでいいなら
 policy_reject_this_message
-��
+を
 policy_ignore_this_message
-�ˤ��Ƥ���������
+にしてください。
 </para>
 </answer>
 
@@ -695,13 +695,13 @@ policy_ignore_this_message
 
 <question>
 <para>
-���⤽�⡢������إå��񤭴���������ߤ᤿��
+そもそも、あらゆるヘッダ書き換え処理を止めたい
 </para>
 </question>
 
 <answer>
 <para>
-use_article_header_rewrite �� no �ˤ��ƽ񤭴�����ǽ���Τ�ߤ�Ʋ�������
+use_article_header_rewrite を no にして書き換え機能全体を止めて下さい。
 <screen>
 [/var/spool/ml/elena/config.cf]
 

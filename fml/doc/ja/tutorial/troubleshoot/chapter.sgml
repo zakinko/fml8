@@ -5,16 +5,16 @@
 
 <chapter id="troubleshoot">
 	<title>
-	¥È¥é¥Ö¥ë¥·¥å¡¼¥Æ¥£¥ó¥°
+	ãƒˆãƒ©ãƒ–ãƒ«ã‚·ãƒ¥ãƒ¼ãƒ†ã‚£ãƒ³ã‚°
 	</title>
 
 <sect1 id="troubleshoot.recipes">
 	<title>
-	¥ì¥·¥Ô¡Çs
+	ãƒ¬ã‚·ãƒ”â€™s
 	</title>
 
 <!-- TABLE_OF_RECIPES -->
-<!-- ´ðÁÃÅª¤Ê¥Ä¡¼¥ë -->
+<!-- åŸºç¤Žçš„ãªãƒ„ãƒ¼ãƒ« -->
 <qandaset>
 
 &troubleshoot.version.recipes;
@@ -28,10 +28,10 @@
 </sect1>
 
 
-<!-- ¥Õ¥¡¥¤¥ë¥·¥¹¥Æ¥à -->
+<!-- ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ã‚¹ãƒ†ãƒ  -->
 &sect.troubleshoot.filesystem;
 
-<!-- ÇÛÁ÷ -->
+<!-- é…é€ -->
 &sect.troubleshoot.delivery;
 
 </chapter>

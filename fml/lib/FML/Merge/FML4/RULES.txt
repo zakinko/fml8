@@ -2,20 +2,20 @@
 # $FML: RULES.txt,v 1.11 2006/04/30 07:01:33 fukachan Exp $
 #     BASED ON fml/cf/MANIFEST 1.104
 #
-#	.convert		��������Ѵ����ƴ�ĥ��
-#	.fml8_default		fml8 �Υǥե���Ȥ�Ʊ�������ˤ����
-#	.use_fml8_value		fml8 �Ǽ�ư���ꤵ����ͤ�Ȥ�
-#	.not_yet_implemented	�ޤ�����������Ƥʤ�
-#				�ޤ��������ѹ��Ǥ��ʤ�
-#	.ignore			�����������㤦�Τǡ��Ѵ���̵��̣
-#				�б������Τ��ʤ�������ͽ���ʤ�
+#	.convert		よろしく変換して頑張る
+#	.fml8_default		fml8 のデフォルトと同じ、気にするな
+#	.use_fml8_value		fml8 で自動設定される値を使う
+#	.not_yet_implemented	まだ、実装されてない
+#				まだ、設定変更できない
+#	.ignore			実装方式が違うので、変換が無意味
+#				対応するものがない、実装予定もない
 #
-# ��������ɡ�
-#	.convert		�Ѵ�����롼�����ƤӽФ�
-#	.use_fml8_value		fml8 �Υǥե���Ȥ�Ʊ�� or fml8 ���ͤ�ͥ�� 
-#	.not_yet_implemented	̤����(ͽ��Ϥ��뤬��������Ƥ��ʤ�)
-#	.not_support		fml8 �Ǥϥ��ݡ���ͽ��ʤ��ε�ǽ��
-#				��̵�뤹���(.ignore)�Ȥ��äƤ��ɤ�����
+# 新キーワード？
+#	.convert		変換するルーチンを呼び出す
+#	.use_fml8_value		fml8 のデフォルトと同じ or fml8 の値が優先 
+#	.not_yet_implemented	未実装(予定はあるが実装されていない)
+#	.not_support		fml8 ではサポート予定なしの機能。
+#				「無視する」(.ignore)といっても良いが…
 
 #########################################################################
 ##### Section: Fundamental Configuration (CF Version, debug, Language) ##
@@ -706,7 +706,7 @@
 # # value: 1/2/3
 # MODERATOR_FORWARD_TYPE:	2
 #
-# !!! MODERATOR_FORWARD_TYPE �� PERMIT_*_FROM �ξ��ʸ����ǥ����å� !!!
+# !!! MODERATOR_FORWARD_TYPE は PERMIT_*_FROM の条件文の中でチェック !!!
 #
 
 

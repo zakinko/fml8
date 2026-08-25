@@ -5,42 +5,42 @@
 
 <sect1 id="setup.qmail.aliases">
 	<title>
-	�᡼�륵���Ф����� (qmail)
+	メールサーバの設定 (qmail)
 	</title>
 
 <warning>
 <para>
-qmail ������ϡ�
-�ͣ��Ѥ˰�ĤΥɥᥤ���ޤ�ޤ�Ȥ����Ȥ�����Ȥ��Ƥ��ޤ���
+qmail の設定は、
+ＭＬ用に一つのドメインをまるまる使うことを前提としています。
 </para>
 
 </warning>
 
 <para>
-�ͣ��ѤΥɥᥤ������䤹���Ӥˡ��ɲ����꤬ɬ�פǤ�����
-fml ��ͭ�� qmail ��������פǤ���
+ＭＬ用のドメインを増やすたびに、追加設定が必要ですが、
+fml 固有の qmail 設定は不要です。
 </para>
 
 <para>
-�ͣ��Ѥ˥ɥᥤ������䤹�ݤˤ�
+ＭＬ用にドメインを増やす際には
 /var/qmail/control/virtualdomains 
-��
+と
 /var/qmail/control/rcpthosts
-��������ɲä� qmail-send �� HUP �����ʥ������ɬ�פ�����ޤ���
+に設定を追加し qmail-send に HUP シグナルを送る必要があります。
 </para>
 
 <para>
-�����������˰����Ф褤�����ǡ�����ʹߣ̤ͣκ����������
-&fml8; ������ġ��뤬����ư�ǹԤʤ��ޤ���
-���ޤ����ǣϣˤǤ���
+ただし、初回に一回やればよいだけで、それ以降ＭＬの作成・削除は
+&fml8; の設定ツールが全自動で行ないます。
+おまかせでＯＫです。
 </para>
 
 <para>
-�ܺ٤ϡ�qmail �ˤ�����̺ͣ�����ˡ
+詳細は、qmail におけるＭＬ作成方法
 <link linkend="install.qmail">
 <xref linkend="install.qmail">)
 </link>
-��򻲾Ȥ��Ʋ�������
+節を参照して下さい。
 </para>
 
 </sect1>

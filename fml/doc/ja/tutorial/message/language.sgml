@@ -5,57 +5,57 @@
 
 <sect1 id="message.nl">
 	<title>
-	��å�������¿��첽����: reply_message_nl() �λȤ���
+	メッセージの多国語化問題: reply_message_nl() の使い方
 	</title>
 
 <para>
-&fml8; �Ǥϡ���å�������¿��첽�Τ���ˡ�
+&fml8; では、メッセージの多国語化のために、
 reply_message_nl()
 	<footnote>
 	<para>
-	FML::Process::Kernel �򻲾�
+	FML::Process::Kernel を参照
 	</para>
 	</footnote>
-�᥽�åɤ�Ȥ���
+メソッドを使い、
 <screen>
 $curproc->reply_message_nl('error.already_member',
 			   'already member',
 			   { _arg_address => $address });
 </screen>
-�Τ褦�ʸƤӽФ����򤹤뤳�Ȥˤ��Ƥ��ޤ���
+のような呼び出し方をすることにしています。
 </para>
 
 <para>
-���δؿ���
-/usr/local/share/fml/�С������/message/����̾/error/already_member
-�Ȥ����ƥ�ץ졼�Ȥ��Ѥ��ƥ�å��������ۤ��ޤ���
+この関数は
+/usr/local/share/fml/バージョン/message/言語名/error/already_member
+というテンプレートを用いてメッセージを構築します。
 </para>
 
 <para>
-��å�������� $_arg_�ѿ�̾�����Ȥ��С�
+メッセージ中の $_arg_変数名、たとえば、
 <screen>
 $_arg_address
 </screen>
-��
+は
 reply_message_nl()
-�᥽�åɤΰ����Ȥ���Ϳ����줿�ϥå����ե��������ͤ�Ÿ������ޤ���
-�����Ǥ����С���å������ƥ�ץ졼�����
+メソッドの引数として与えられたハッシュリファレンス内の値へ展開されます。
+上の例でいえば、メッセージテンプレート中の
 $_arg_address 
-���᥽�åɤΰ����ˤ���
+がメソッドの引数にある
 _arg_address
-���ͤ�Ÿ������ޤ���
+の値で展開されます。
 </para>
 
 <para>
-�ޤ� config.cf ����������Ƥ����ѿ��ϥ�å�������Ǥ�Ÿ����ǽ�Ǥ���
-���Ȥ��Хƥ�ץ졼����� $ml_name �� 
-config.cf ���Ʊ�ͤˣͣ�̾�˼�ưŸ������ޤ���
+また config.cf 中で定義されている変数はメッセージ中でも展開可能です。
+たとえばテンプレート中の $ml_name は 
+config.cf 中と同様にＭＬ名に自動展開されます。
 </para>
 
 <para>
-���Τ��ᡢ
-�Ĥޤ� config.cf ���ѿ����Ȥ֤Ĥ���ʤ��褦�ˤ��뤿�ᡢ
-�Ϥ������� $_arg_ �ʤɤȤ��� prefix ��Ĥ��Ƥ���櫓�Ǥ���
+このため、
+つまり config.cf の変数群とぶつからないようにするため、
+渡す引数に $_arg_ などという prefix をつけているわけです。
 </para>
 
 </sect1>

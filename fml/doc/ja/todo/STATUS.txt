@@ -1,10 +1,10 @@
-		STATUS: fml8 �Ǹ��ߤǤ��뤳��/�Ǥ��ʤ�����
+		STATUS: fml8 で現在できること/できないこと
 		Last Modified: $Date$ (GMT)
 
-	* ���Υɥ�����Ȥ�"fml bible" ���ܼ��˱�äơ�fml version 8 ��
-          �����Ǥ��Ʋ����ޤ��Ǥ��ʤ�����ꥹ�ȥ��åפ�����ΤǤ���
+	* このドキュメントは"fml bible" の目次に沿って、fml version 8 で
+          何ができて何がまだできないかをリストアップしたものです。
 
-�� ư�����
+○ 動作実績
 	perl 5.10.0  on NetBSD 2.0.2				*
 	perl 5.10.0  on NetBSD 2.0				*
 	perl 5.8.8   on NetBSD 2.0.2				
@@ -22,223 +22,223 @@
 	perl 5.6.1   on Turbolinux Server 8 (qmail)		*
 	perl 5.6.1   on Redhat Linux 7.2 (postfix)		*
 	perl 5.00503 on Redhat Linux 6.2 (sendmail8.11.6)	*
-			smrsh �ϥ��ĥ��ɬ�פϤ���ޤ���
+			smrsh はリンク張る必要はあります。
 
 	postfix       + perl 5.6.1 on Solaris 7			*
 	postfix 2.0.3 + perl 5.6.1 on Solaris 9			*
 
-		[����]
-		  * �� installer �����ޤ�ư���Ƥ��� OS 
-		 () �ƥ�����
+		[注意]
+		  * 新 installer がうまく動いている OS 
+		 () テスト中
 
-3��
-	[TODO] �̥ͣ����Ф��������
+3章
+	[TODO] ＭＬサーバの理論を書く
 
 
-II����fml�Υ��åȥ��åס�ML�κ���
+II部　fmlのセットアップ〜MLの作成
 
-4�ϡ�Unix��Ǥ�fml�Υ��󥹥ȡ���
+4章　Unix上でのfmlのインストール
 
-	�֥桼�� root �ˤʤꡢconfigure ������ make install ��¹ԡפǤ���
-	�Ĥޤ�ե꡼���եȥ�������ŵ��Ū�ʥ��󥹥ȡ������ԤʤäƲ�������
+	「ユーザ root になり、configure そして make install を実行」です。
+	つまりフリーソフトウエアの典型的なインストール手順を行なって下さい。
 		# ./configure
 		# make install
 
-	fml �ץ������Υ桼������Ѥ���ǥ��쥯�ȥ��
-	configure �Υ��ץ������ѹ���ǽ�Ǥ���
+	fml プロセスのユーザや使用するディレクトリは
+	configure のオプションで変更可能です。
 
-	�᡼�륵���Ф������ 4.0 �ξ���Ʊ�ͤǤ���
+	メールサーバの設定は 4.0 の場合と同様です。
 
-	�桼�� fml ��������Ǥʤ���������ȥ桼�� fml ����Υۡ���ǥ�
-	�쥯�ȥ���äƲ��������Ȥ����Τ� ~fml/public_html �ǣ̤ͣθ�
-	���򤹤롢�ãǣɤ�ư�����Ȥ����Τ��ǥե���Ȥ����������Ǥ���
+	ユーザ fml を作るだけでなく、きちんとユーザ fml さんのホームディ
+	レクトリも作って下さい。というのは ~fml/public_html でＭＬの公
+	開をする、ＣＧＩを動かすというのがデフォルトの設定だからです。
 
-	�ѥå����������ԤΤ�����: 
-		fml8 �켰�� / �ʳ��ξ��إ��󥹥ȡ��뤹��ݤϡ�
-		�ʲ��Τ褦�� install_root �ǥǥ��쥯�ȥ����ꤷ�Ʋ�������
+	パッケージ作成者のかたへ: 
+		fml8 一式を / 以外の場所へインストールする際は、
+		以下のように install_root でディレクトリを指定して下さい。
 		# make install install_root=/tmp/dir
 	
-	[TODO] sendmail + smtpfeed �ξ��Υ��åȥ��å���ˡ
+	[TODO] sendmail + smtpfeed の場合のセットアップ方法
 
-	[TODO] MacOS X Server �ξ��Υ��åȥ��å���ˡ
+	[TODO] MacOS X Server の場合のセットアップ方法
 
 
-5�ϡ�Unix���ML����
+5章　Unix上でMLを作る
 
-	makefml���ޥ�ɤ�Ȥä�"makefml newml elena" �ʤɤȼ¹Ԥ��ޤ���
-	�Ĥޤ� fml 4 �ȻȤ����ϰ��Ǥ���
+	makefmlコマンドを使って"makefml newml elena" などと実行します。
+	つまり fml 4 と使い方は一緒です。
 
-	�̺ͣ������ˤ� postfix �� qmail��sendmail��procmail �����긫��
-	����ޤ���
+	ＭＬ作成時には postfix と qmail、sendmail、procmail の設定見本
+	を作ります。
 
-	[TODO] sendmail + smtpfeed �ξ��
-	[TODO] MacOS X Server �ξ��
+	[TODO] sendmail + smtpfeed の場合
+	[TODO] MacOS X Server の場合
 
-	�ʤ� fml8 �Ǥ� newml ���������� CGI �䡢HTML �����줿������
-	���ǥ��쥯�ȥ� ~fml/public_html/ .. �ʤɤ�������ޤ���
+	なお fml8 では newml 時に設定用 CGI や、HTML 化された記事をお
+	くディレクトリ ~fml/public_html/ .. なども作成します。
 
-	�С������ɥᥤ��ΰ����� fml4 �Ȱۤʤ�С������ɥᥤ����
-	������첽�����Ȥ�����ȤʤäƤ��ޤ����ʤΤǡ����ƤΣ̤ͣ�С�
-	�����ɥᥤ��Ȥ��ư��������������Ȼפ��ޤ���
+	バーチャルドメインの扱いは fml4 と異なりバーチャルドメインを含
+	めて統一化した使い勝手となっています。なので、全てのＭＬをバー
+	チャルドメインとして扱う方が便利だと思います。
 
-	���Ȥ��� nuinui.net ����ˤȤ�ޤ����ޤ��ǽ�� nuinui.net �Ѥ�
-	�ȥåץǥ��쥯�ȥ����ꤷ�ޤ���
+	たとえば nuinui.net を例にとります。まず最初に nuinui.net 用の
+	トップディレクトリを指定します。
 
-		% makefml newdomain nuinui.net �ǥ��쥯�ȥ�
+		% makefml newdomain nuinui.net ディレクトリ
 
-	newml �κݤˤ�
+	newml の際には
 
 		% makefml newml elena@nuinui.net
 
-	�Τ褦�˥ɥᥤ��Ĥ���̾������ꤷ�Ʋ�������
+	のようにドメインつきの名前を指定して下さい。
 
-	����: main.cf �θŤ��ѿ�̾ virtual_maps �� obsolete �Ǥ�������
-	�� ml_home_prefix_maps �ˤʤ�ޤ�����ml_home_prefix_maps ��
-	virtual_maps ��ޤ�Ǥ���Τ� virtual_maps �����Ĥ����ޤ���
-
-
-6�ϡ�Windows 2000/NT4��Ǥ�fml�Υ��󥹥ȡ���
-
-	[TODO]	Microsoft ��Τ��������Ĥ��Ƥ��ޤ���
-	[TODO]	Microsoft ��Τ� IMail ������Ĥ���Τ������󤸤�ʤ�����
-	[TODO]	sendmail (NT��)��Ȥä��ͣ�
-
-	[TODO]	IMAP4 �ǥ᡼������������ɤ��� fml ��¹Ԥ��롣
-
-	[DONE]	POP3  �ǥ᡼������������ɤ��� fml ��¹Ԥ��롣
-
-	�ʤ� fetchfml (POP/IMAP �����Ф���᡼�����Ф� MTA + ML��
-	�ߥ�졼�����)�ˤ�ꡢ�᡼�륵���Ф�Ω���夲�ʤ��Ȥ⼫��ǣ�
-	�̤�¹Ԥ���ȹԤä����Ȥ���ǽ�Ǥ����� fetchfml �ι��ܤ򸡺�
-
-	POP �ˤ��̤ͣμ¹Ԥϼ����ѤߤǤ�����IMAP �Ǥ�̤�����Ǥ���
-		�� fetchfml �ι��ܤ򸡺�
+	注意: main.cf の古い変数名 virtual_maps は obsolete です。これ
+	は ml_home_prefix_maps になりました。ml_home_prefix_maps が
+	virtual_maps を含んでいるので virtual_maps も一応つかえます。
 
 
-7�ϡ�fml8 �Υ��åץ��졼��
+6章　Windows 2000/NT4上でのfmlのインストール
 
-	�⤦���� fml8 �򥤥󥹥ȡ���򤷡�/usr/local/etc/fml/main.cf �� 
-	fml_version ���Խ����Ƥ������������������Ǥ�դΥС������ؤ�
-	���åץ��졼�ɤȥ����󥰥졼�ɤ���ǽ�Ǥ����Ĥޤ� main.cf ����
-	���򤹤�����ǥ��åץ��졼�ɤ�����󥰥졼�ɤ�פ��ΤޤޤǤ���
-	�����ƥॳ�����ȯ�����ߥ��äǡ�
+	[TODO]	Microsoft ものは全然手をつけていません。
+	[TODO]	Microsoft ものは IMail から手をつけるのがいいんじゃないかな
+	[TODO]	sendmail (NT版)を使ったＭＬ
 
-	main.cf ���Խ������Ǥ��Τǡ�fml8 �Υ��åץ��졼��/�����󥰥졼
-	�ɤκݤ˥᡼�륵���Ф���ߤ����פǤ���
+	[TODO]	IMAP4 でメールをダウンロードして fml を実行する。
 
-	�̸ͣ�ͭ�Υ��åץ��졼�ɤ˴ؤ������դϤʤ��Ȥ��⤤�ޤ���
-	������������Σ̤ͣ������åץ��졼��/�����󥰥졼�ɤȤ�����ˡ
-	�Ϥ���ޤ���
+	[DONE]	POP3  でメールをダウンロードして fml を実行する。
+
+	なお fetchfml (POP/IMAP サーバからメールを取り出す MTA + MLエ
+	ミュレーション)により、メールサーバを立ち上げなくとも自宅でＭ
+	Ｌを実行すると行ったことが可能です。→ fetchfml の項目を検索
+
+	POP によるＭＬの実行は実装済みですが、IMAP 版は未実装です。
+		→ fetchfml の項目を検索
 
 
-8�ϡ�Unix��Ǥ�CGI�Υ��åȥ��å�
+7章　fml8 のアップグレード
 
-	�̺ͣ������˥ǥե���Ȥ� CGI ������ץȤ��Ѱդ���ޤ���
-	�� ���� WWW �����Ф�����(CGI �����ǧ�ڤ�����)��ɬ�פǤ���
+	もう一度 fml8 をインストールをし、/usr/local/etc/fml/main.cf の 
+	fml_version を編集してください。これだけで任意のバージョンへの
+	アップグレードとダウングレードが可能です。つまり main.cf の編
+	集をするだけでアップグレードもダウングレードも思いのままです。
+	システムコール一発、数ミリ秒で。
 
-	�����ա�
-	(1) ���⤽�� WWW �����ФΥǥե��������Ǥ�
-	     ~fml/cgi-bin ���Ȥ��ʤ��Ϥ��Ǥ���
+	main.cf の編集だけですので、fml8 のアップグレード/ダウングレー
+	ドの際にメールサーバの停止は不要です。
 
-	(2) �̺ͣ������ˡ�̵���� .htaccess ���������ơ��ǥե���ȤǤ� 
-	    CGI ��ư��Ǥ��ʤ��褦�ˤ��Ƥ���ޤ���
+	ＭＬ固有のアップグレードに関する注意はないとおもいます。
+	さすがに特定のＭＬだけアップグレード/ダウングレードという方法
+	はありません。
 
-	[TODO] apache �����긫�ܤ�����
 
-	[TODO] .htaccess ������ٱ�ġ���
+8章　Unix上でのCGIのセットアップ
 
-		����ٱ�ġ��뤬�ޤ�����ޤ��󡣤��ޤΤȤ����ϡ����ǥ�
-		���ǥե������ä��ʤꡢ�Խ�����ʤꤷ�Ʋ�������
+	ＭＬ作成時にデフォルトで CGI スクリプトが用意されます。
+	＃ 別途 WWW サーバの設定(CGI および認証の設定)は必要です。
+
+	＊注意＊
+	(1) そもそも WWW サーバのデフォルト設定では
+	     ~fml/cgi-bin が使えないはずです。
+
+	(2) ＭＬ作成時に、無効の .htaccess を生成して、デフォルトでは 
+	    CGI が動作できないようにしてあります。
+
+	[TODO] apache の設定見本を生成
+
+	[TODO] .htaccess の設定支援ツール
+
+		設定支援ツールがまだありません。いまのところは、エディ
+		タでファイルを消すなり、編集するなりして下さい。
 
 	[TODO] config 
 
-	[TODO] $maintainer �Υꥹ�Ȥ� CGI �������ꤷ����
+	[TODO] $maintainer のリストを CGI から設定したい
 
-	[TODO]	cgi �Υ������륷�����б�
-		ʸ���򾮤����������������Ȥ��Ĥ��ࡣ
-		�����줫����äƤ��� ;)
+	[TODO]	cgi のスタイルシート対応
+		文字を小さくした方がいいとか…の類。
+		＃だれか、やってぇ〜 ;)
 
-	[TODO] ���顼�ե졼����
-		CGI ����Υ��顼�� __ERROR_.(�������)__ �� croak() 
-		���Ƥ��ޤ������⤦�����ɤ��ե졼����������Ȥ褤�Ǥ���
+	[TODO] エラーフレームワーク
+		CGI からのエラーは __ERROR_.(キーワード)__ で croak() 
+		していますが、もう少し良いフレームワークがあるとよいです。
 
-	[TODO] ������ɬ�ס� anonymous CGI: IP ��ƻ�
-		���Ԥ����� exponential back off 
+	[TODO] 本当に必要？ anonymous CGI: IP を監視
+		失敗したら exponential back off 
 	
-	[TODO] ������ɬ�ס� anonymous CGI: ���Ԥ����� exponential back off 
-		IP �ˤ�����餺 back off
-		source IP �ϻ��ͤˤʤ�ʤ�����
+	[TODO] 本当に必要？ anonymous CGI: 失敗したら exponential back off 
+		IP にかかわらず back off
+		source IP は参考にならないから
 
 
 
-9�ϡ�fml��ư���ǧ
+9章　fmlの動作確認
 
-	����� fml 4.0 ��Ʊ�ͤȤ��⤤�ޤ���
+	これは fml 4.0 と同様とおもいます。
 
 
-III����fml�Υ������ޥ���
-10�ϡ�ML�Υ��С����Ǥ��뤳��
+III部　fmlのカスタマイズ
+10章　MLのメンバーができること
 
-	(���̥桼����)���ޥ�ɥ᡼������Ѳ�ǽ�ʥ��ޥ�ɤ�
+	(一般ユーザが)コマンドメールで利用可能なコマンドは
 		$user_command_mail_allowed_commands
 		$anonymous_command_mail_allowed_commands 
-	�Ȥ������Ĥ��ѿ����������Ƥ��ޤ�����Ԥ� guide �� subscribe
-	�ʤɡ����С��Ǥʤ��Ƥ�Ȥ��ʤ��Ȥ����ʤ����ޥ�ɤΥꥹ�ȤǤ���
+	という２つの変数で定義されています。後者は guide や subscribe
+	など、メンバーでなくても使えないといけないコマンドのリストです。
 
-	���̥桼�������Υ��ޥ�ɤ��� ($user_command_mail_allowed_commands)
+	一般ユーザ向けのコマンドの例 ($user_command_mail_allowed_commands)
 		help get mget get mget send subscribe add unsubscribe
 		bye remove resign signoff chaddr confirm guide info
 		objective summary
 
-	ï�Ǥ�Ȥ��륳�ޥ�ɤ��� ($anonymous_command_mail_allowed_commands)
+	誰でも使えるコマンドの例 ($anonymous_command_mail_allowed_commands)
 		guide info add subscribe chaddr confirm
 
-	�����ϡ�FML::Command::User::���ޥ�ɡץ��饹���������Ƥ��ޤ���
-	fml8 �Ǥϥ��ޥ�ɤ��Ȥ˰ۤʤ�ե�����ˤʤ�ޤ�������Υ��ޥ�
-	�ɤ�����¤���뤳�Ȥ��ưפˤʤ�ޤ�����
+	これらは「FML::Command::User::コマンド」クラスで定義されています。
+	fml8 ではコマンドごとに異なるファイルになります。特定のコマン
+	ドだけ改造することが容易になりました。
 
-	��⡼�ȴ����Τ���Υ��ޥ�ɤ��̤Υ��饹�ˤʤäƤ��ޤ���
-	���Ѳ�ǽ�ʥ��ޥ�ɥꥹ�Ȥ� $admin_command_mail_allowed_commands �ǡ�
-	�⥸�塼��μ��Τϡ�FML::Command::Admin::���ޥ�ɡפˤ���ޤ���
+	リモート管理のためのコマンドは別のクラスになっています。
+	利用可能なコマンドリストは $admin_command_mail_allowed_commands で、
+	モジュールの実体は「FML::Command::Admin::コマンド」にあります。
 
-	�ʤ�����ñ�ʤޤȤᤪ������ǽ�Ǥ���
+	なお、簡単なまとめおくりも可能です。
 
 		use_article_digest_function = yes / no
 
-	�ˤ��Ȥ�/�Ȥ�ʤ�������Ǥ��ޤ�(�ǥե���Ȥ� yes)��
+	により使う/使わないが指定できます(デフォルトは yes)。
 
-	�ޤȤᤪ����� MIME/Multipart �Τߥ��ݡ��Ȥ��Ƥ��ޤ���
-	ʣ���� OS �Ķ�������Ȥ��������� MIME/Multipart �ʳ���Ȥ��Τ�
-	�󸽼�Ū�ʤΤ� MIME/Multipart �Τߥ��ݡ��Ȥ���Ĥ��Ǥ���
+	まとめおくりは MIME/Multipart のみサポートしています。
+	複数の OS 環境を前提とした世界で MIME/Multipart 以外を使うのは
+	非現実的なので MIME/Multipart のみサポートするつもりです。
 
-	[TODO] get: �ե��������¿����硢ʬ�䤷������(fml-devel 485)
-		reply_message() �ˤ�������͡��Ȥ������Ƥʤ��Τǡ�
-		�᡼�륭�塼����������ʬ�䡩
+	[TODO] get: ファイル数が多い場合、分割して送返(fml-devel 485)
+		reply_message() によろしくねーとしかしてないので、
+		メールキューに入れる時に分割？
 
-11�ϡ�fml�����Ԥ��Ǥ��뤳��
+11章　fml管理者ができること
 
-	CUI �Ĥޤꥳ�ޥ�ɥ饤��Ǥ����ˤĤ���:
+	CUI つまりコマンドラインでの操作について:
 
-	makefml ������ǽ�ʹ��ܤϡ�FML::Command::Admin::���ޥ�ɡץ�
-	�饹���Ѱդ���Ƥ��륳�ޥ�ɤ��٤ƤǤ���
-	$admin_command_mail_allowed_commands ��
-	���ޥ�ɥ᡼��ˤ���⡼�ȴ��������¤�ä��ޤ�����CUI
-	(makefml/fml)��ư��ˤ����¤�ä��Ƥ��ޤ���
+	makefml で操作可能な項目は「FML::Command::Admin::コマンド」ク
+	ラスで用意されているコマンドすべてです。
+	$admin_command_mail_allowed_commands は
+	コマンドメールによるリモート管理に制限を加えますが、CUI
+	(makefml/fml)の動作には制限を加えていません。
 
-	�Ĥޤ� CUI �ˤ��̥ͣ����о�Ǥ����Ǥϥ�⡼�ȥ��ޥ�ɤ�ꡢ
-	��������������ǽ�Ǥ������Ǥ��뼫ͳ�٤� 
+	つまり CUI によるＭＬサーバ上での操作ではリモートコマンドより、
+	いろいろな操作が可能です。操作できる自由度は 
 
-		CUI (makefml/fml ���ޥ��) > ���ޥ�ɥ᡼�� > GUI
+		CUI (makefml/fml コマンド) > コマンドメール > GUI
 
-	�ν���礭�ʤ�ΤȤʤäƤ��ޤ���
+	の順に大きなものとなっています。
 
-		�̤ͣκ���			OK
-		�̤ͣκ��			OK
-		�̤ͣΥ��С�����Ͽ�Ⱥ��	OK
-		��Ͽ���Ƥ��륢�ɥ쥹���ѹ�	OK
+		ＭＬの作成			OK
+		ＭＬの削除			OK
+		ＭＬのメンバーの登録と削除	OK
+		登録しているアドレスの変更	OK
 		off/on				OK
 
-	���ޥ�ɰ���: add add2active add2actives add2member
+	コマンド一覧: add add2active add2actives add2member
 	add2members add2recipient add2recipients addactive addactives
 	addadmin addmember addmembers addmoderator addpriv
 	addrecipient addrecipients adduser adminadd admindel bye
@@ -249,294 +249,294 @@ III����fml�Υ������ޥ���
 	off on pass passwd password remove resign rmdomain rmml
 	signoff spool subscribe summary thread unsubscribe useradd userdel
 
-	�̤ͣΥ������ޥ����ϥե�������Խ�����˥塼���(CUI/GUI)�Ǥ���
-	��˥塼�ϼ�������Ǥ���
+	ＭＬのカスタマイズはファイルの編集かメニュー操作(CUI/GUI)です。
+	メニューは実装途中です。
 
-	��⡼�ȴ����ϸ��ߥѥ����ǧ�ڤ�PGPǧ�ڤ����Ѳ�ǽ�Ǥ���
+	リモート管理は現在パスワード認証とPGP認証が利用可能です。
 
-	[���]	�ޤȤᤪ���� (fml 4 �Τ褦��ʣ���ʥС������)
+	[削除]	まとめおくり (fml 4 のような複雑なバージョン)
 
-		MIME/Multipart �ΤޤȤᤪ����ϼ�������Ƥ��ޤ���
+		MIME/Multipart のまとめおくりは実装されています。
 
-		�����Ԥ��Ȥ˻���䰵�̷������Ѥ���Ȥ��ä����ȤϽ����
-		���󡣤��� fml 1 ���߷פ��줿����ȴĶ����礭���ۤʤ�
-		����Ǥϡ�����ʻ��ͤϥ����С����ڥå������פʤΤǤϤ�
-		�����Ȥ�פ��ޤ���
+		受信者ごとに時刻や圧縮形式を変えるといったことは出来ま
+		せん。ただ fml 1 の設計された時代と環境が大きく異なる
+		現代では、こんな仕様はオーバースペックで不要なのではな
+		いかとも思います。
 
-		���������櫓�Ǵְ㤤�ʤ��������ʤ��Ǥ��礦��
+		そういうわけで間違いなく実装しないでしょう。
 
-	[DONE]	rmml �����̤ͣ����褵���� �� reviveml ���ޥ��
+	[DONE]	rmml したＭＬを復活させる → reviveml コマンド
 
-		1. �������դ��Ƕ�� @xxx.yyyymmdd ��õ��
-		2. ����򸵤��ᤷ��
-		3.�⤦���� newml ��¹Ԥ���aliases �ʤɤκ������Ԥʤ���
+		1. 一番日付が最近の @xxx.yyyymmdd を探し
+		2. それを元に戻し、
+		3.もう一度 newml を実行し、aliases などの再設定を行なう。
 
-		�Ȥ���ư��򤷤Ƥ��ޤ���
+		という動作をしています。
 
-	[TODO]	���¤Ĥ��Σͣ����� subscribe
+	[TODO]	期限つきのＭＬ入会 subscribe
 
-		subscribe -> �쥫���Ⱥ������롩
+		subscribe -> 一カ月すると削除される？
 
 			FML::User::Info -> FML::User::DB	ok
 
 		o.k. so, how to kick off removal process ?
 
 
-	[DONE]	ưŪ�ˣ̤ͣ�������� �� ��CREATE-ON-POST ��ǽ�פ򻲾�
+	[DONE]	動的にＭＬを作成する → 「CREATE-ON-POST 機能」を参照
 
-		�桼������ͳ�ˣ̤ͣ򿷵����������С��ɲä���ǽ�Ǥ���
-
-
-	[TODO]	���¤Ĥ��μ�ư�̺ͣ���
-
-		ưŪ�ˣ̤ͣ����(CREATE-ON-POST)����
-		�Ȥ��ʤ��ʤä���(�ȥ�ե��å����ʤ��ʤ�)��ư���
+		ユーザが自由にＭＬを新規作成、メンバー追加が可能です。
 
 
-	[TODO]	���¤Ĥ��Σ̺ͣ���
+	[TODO]	期限つきの自動ＭＬ作成
 
-		�ȥ�ե��å���̵���ʤäƣ�������������
-		���ˤ���̵ͭ�򤤤蘆�������
+		動的にＭＬを作成(CREATE-ON-POST)し、
+		使われなくなったら(トラフィックがないなら)自動削除
+
+
+	[TODO]	期限つきのＭＬ作成
+
+		トラフィックが無くなってＮ日したら削除？
+		日にちで有無をいわさず削除？
 
 
 
-12�ϡ�fml������ե�������ѹ�����
+12章　fmlの設定ファイルを変更する
 
-	�ƣ̤ͣ������ѹ���ˡ�ϡ��ƣ̤ͣΥۡ���ǥ��쥯�ȥ�ˤ��� 
-	config.cf ���Խ����Ƥ����������ե����ޥåȤ� Postfix ���Ǥ���
+	各ＭＬの設定変更方法は、各ＭＬのホームディレクトリにある 
+	config.cf を編集してください。フォーマットは Postfix 風です。
 
 		key = 	value
 
 		key = 	value1
 			value2	
 
-		��ĥ���ץ����Ȥ��� += �� -= ���Ȥ��ޤ���
+		拡張オプションとして += や -= が使えます。
 
 		key += value3
 
 		key -= value1
 
-	/usr/local/etc/fml/site_default_config.cf �ϡ����Υ����Фξ��
-	ư���Ƥ��뤹�٤ƤΣ̤ͣ�Ʊ������������ޤ�������� fml4 �� 
-	site_init.ph ����������ե�����Ǥ���
+	/usr/local/etc/fml/site_default_config.cf は、そのサーバの上で
+	動いているすべてのＭＬに同じ設定を強制します。これは fml4 の 
+	site_init.ph に相当するファイルです。
 
-	��˥塼�ˤ������ٱ�ġ���(CUI/GUI)�ϼ�������Ǥ����ޤ��¸�
-	Ū�ʤ�Τ���ư���ޤ���
+	メニューによる設定支援ツール(CUI/GUI)は実装途中です。まだ実験
+	的なものしか動きません。
 
-	[TODO]	fml4 �� site_force.ph �ˤ������ΤϤ���ޤ���ɬ�ס�
+	[TODO]	fml4 の site_force.ph にあたるものはありません。必要？
 
-		�ä�ɬ�פʤΤ��ʤ��ġ�����
-
-
-13�ϡ�ML�Υ�������Υ������ޥ��� (�����������ǥ�)
-
-	�� ��������Ƥ��Ф�������
-
-	��Ƥ������ $article_post_restrictions �����椷�ޤ���
-	restrictions �Ȥ���̾������ʬ�����̤� Postfix Ū�ʹͤ���������
-	��ˡ����Ѥ��Ƥ��ޤ���
-
-	���������פ��ѹ�������
-	2008/08/03 �ʹߤ� fml8 �Ǥϡ�SPAM �᡼��γ�Υ�פ��ǥե���Ȥ�
-	ư��Ǥ�(�ǥե���Ȥ� reject �� isolate �˽񤭴����Ƥޤ���)��
-
-	�Ť� fml8 �� restrictions �� config.cf �˽񤤤Ƥ����硢
-	��ľ����ɬ�פǤ����񤤤Ƥ��ʤ��ʤ顢���åץ��졼�ɤ��������
-	�᡼��γ�Υ��ư���褦�ˤʤ�ޤ���
+		って必要なのかなぁ…？？？
 
 
-	��: �ǥե���� (���С��Ǥ������Ʋ�ǽ��
+13章　MLのスタイルのカスタマイズ (ケーススタディ)
+
+	◎ 記事の投稿に対する制御
+
+	投稿の制御は $article_post_restrictions で制御します。
+	restrictions という名前から分かる通り Postfix 的な考え方の制御
+	方法を採用しています。
+
+	＊＊＊重要な変更＊＊＊
+	2008/08/03 以降の fml8 では「SPAM メールの隔離」がデフォルトの
+	動作です(デフォルトも reject を isolate に書き換えてました)。
+
+	古い fml8 で restrictions を config.cf に書いている場合、
+	書き直しが必要です。書いていないなら、アップグレードするだけで
+	メールの隔離が動作するようになります。
+
+
+	例: デフォルト (メンバーであれば投稿可能）
 
 		article_post_restrictions =
 				isolate_system_special_accounts
 				permit_member_maps
 				isolate
 
-	��: PGP �Żҽ�̾��ǧ��
+	例: PGP 電子署名で認証
 
 		article_post_restrictions =
 				isolate_system_special_accounts
 				check_pgp_signature
 				isolate
 
-	��: ï�Ǥ���Ʋ�ǽ
+	例: 誰でも投稿可能
 
 		article_post_restrictions = permit_anyone
 
-	����ϥ롼��˥ޥå����ʤ���� reject ̿��ǽ��äƤ��ޤ�����
-	����ϡ������Ԥ��ֻ���Ф��Ƥ��ޤ��ޤ���
+	従来はルールにマッチしない場合 reject 命令で終っていました。
+	これは、送信者に返事を出してしまいます。
 
-	isolate ̿��ϡ���Υ����������ֻ���Ф��ޤ���
+	isolate 命令は、隔離するだけで返事を出しません。
 
-	[TODO] ��Υ��ݡ��Ȥ�����Ԥ�������
+	[TODO] 隔離レポートを管理者へ送信。
 
-	[TODO] ��Υ�᡼���̤ͣ�ή��̿��μ���
+	[TODO] 隔離メールをＭＬに流す命令の実装
 
-	[TODO] ��Υ��ݡ��Ȥǡ��᡼���̤ͣ�ή�����Ϥɤ����롩
-
-
-	�� ���ޥ�ɥ᡼����Ф�������
-
-	(���̥桼�������)���ޥ�ɥ᡼��ˤ����������¤�
-	$command_mail_restrictions �����椷�ޤ���
-
-	���ޥ�ɥ᡼���ػߤ���ˤ� $use_command_mail_function �� no 
-	�ˤ���Ф褤�Ǥ�������ϥ��ޥ�ɥ᡼��ε�ǽ���Τ���ߤ��ޤ���
-	���ޥ�ɥ᡼��������ȼ����Ϥ��ޤ��������Τޤ�̵�뤷�ޤ���
-
-	$command_mail_restrictions �� reject �Ȥ������ꤷ�Ƥ⥳�ޥ��
-	�᡼��ζػߤˤʤ�ޤ��������ξ�祳�ޥ�ɥ᡼��ν������Ԥʤ�
-	��Ƥ��ޤ��ޤ���
-
-	���������פ��ѹ�������
-	2008/08/03 �ʹߤ� fml8 �Ǥϡ�SPAM �᡼��γ�Υ�פ��ǥե���Ȥ�
-	ư��Ǥ�(�ǥե���Ȥ� reject �� isolate �˽񤭴����Ƥޤ���)��
-
-	�Ť� fml8 �� restrictions �� config.cf �˽񤤤Ƥ����硢
-	��ľ����ɬ�פǤ����񤤤Ƥ��ʤ��ʤ顢���åץ��졼�ɤ��������
-	�᡼��γ�Υ��ư���褦�ˤʤ�ޤ���
-
-	restrictions��Ʊ�ͤ˥��С��ꥹ�Ȥ� member_maps �Τ褦��
-	ʣ�������뤳�Ȥ�����Ǥ���*_restrictions �� *_maps �κ٤�����
-	����Ȥ������̤ʲ�¤�ʤ��Ǥ⤤�������ʤ��Ȥ��Ǥ��ޤ���
-
-	��: �᡼��ޥ�����
-		$member_maps ���� $primary_member_map ��Ϥ�����
-		$member_maps ����Ʋ�ǽ�ʥ��С��Υꥹ�Ȥ��ɲ�
-		����� MTA ������� IP ���ɥ쥹���¤ʤɤ����Ƥ͡�
-
-		��ƼԤ� PGP ǧ�ڤ����¤���Τ�褤���ȤǤ���
-
-	��: ���ز����줿�ͣ�:
-		 $member_maps $recipient_maps ���������񤯤����Ǥ���
-
-	��: procmail �ˤ��ͣ�
-		makefml newml �����ܤ���Τǡ������Ȥ������Ǥ���
+	[TODO] 隔離レポートで、メールをＭＬに流す操作はどうする？
 
 
-	[DONE] ��ư��Ͽ/��ư��Ͽ��ɤ��ǻ��ꤹ��Ρ��ǥե���Ȥϼ�ư
+	◎ コマンドメールに対する制御
 
-		���ޥ�ɤ��Ȥ˻���Ǥ���褦�ˤ��롣
+	(一般ユーザからの)コマンドメールにたいする制限は
+	$command_mail_restrictions で制御します。
+
+	コマンドメールを禁止するには $use_command_mail_function を no 
+	にすればよいです。これはコマンドメールの機能自体を停止します。
+	コマンドメールを受けると受信はしますが、そのまま無視します。
+
+	$command_mail_restrictions で reject とだけ指定してもコマンド
+	メールの禁止になりますが、この場合コマンドメールの処理が行なわ
+	れてしまいます。
+
+	＊＊＊重要な変更＊＊＊
+	2008/08/03 以降の fml8 では「SPAM メールの隔離」がデフォルトの
+	動作です(デフォルトも reject を isolate に書き換えてました)。
+
+	古い fml8 で restrictions を config.cf に書いている場合、
+	書き直しが必要です。書いていないなら、アップグレードするだけで
+	メールの隔離が動作するようになります。
+
+	restrictionsと同様にメンバーリストも member_maps のように
+	複数かけることが前提です。*_restrictions と *_maps の細かな定
+	義を使うと特別な改造なしでもいろいろなことができます。
+
+	例: メールマガジン型
+		$member_maps から $primary_member_map をはずす。
+		$member_maps に投稿可能なメンバーのリストを追加
+		さらに MTA の設定で IP アドレス制限などかけてね。
+
+		投稿者を PGP 認証で制限するのもよいことです。
+
+	例: 階層化されたＭＬ:
+		 $member_maps $recipient_maps をよろしく書くだけです。
+
+	例: procmail によるＭＬ
+		makefml newml が見本を作るので、それを使うだけです。
+
+
+	[DONE] 自動登録/手動登録をどこで指定するの？デフォルトは自動
+
+		コマンドごとに指定できるようにする。
 
 		$subscribe_command_operation_mode   = automatic / manual
 		$chaddr_command_operation_mode      = automatic / manual
 		$unsubscribe_command_operation_mode = automatic / manual
 
-	[DONE] ��ư��Ͽ�� confirmation �ʳ��Υ⡼�ɤ�ɬ�פ��� 
+	[DONE] 自動登録の confirmation 以外のモードは必要か？ 
 
-		confirmation �ǤϤʤ��ꥯ�����Ȥ򤽤Τޤ�
-		�����Ԥإե���ɤ��륪�ץ���󤢤ꡣ
+		confirmation ではなくリクエストをそのまま
+		管理者へフォワードするオプションあり。
 
 		$subscribe_command_auth_type   = confirmation / manual
 		$chaddr_command_auth_type      = confirmation / manual
 		$unsubscribe_command_auth_type = confirmation / manual
 
-	[DONE] ���ޥ�ɥ᡼��ˤ���ư��Ͽ
+	[DONE] コマンドメールによる手動登録
 
-		confirmation �� fml8 �ǡ���Ͽ��Ȥ� makefml ���ޥ�ɤʤɡ�
+		confirmation は fml8 で、登録作業は makefml コマンドなど。
 
-		������: subscribe ��
+		設定例: subscribe を
 		$subscribe_command_auth_type      = confirmation
 		$subscribe_command_operation_mode = manual
 
-	[DONE] ��ǥ졼�� 
+	[DONE] モデレータ 
 
-		fml4 �Υ����� 2 �����������ޤ����� 1 �� 3 ��̤����
+		fml4 のタイプ 2 だけ実装しましたが 1 と 3 は未実装
 
-	[DONE] ʣ���δ����Ԥˤ�뱿��
+	[DONE] 複数の管理者による運用
 
-		$maintainer_recipient_maps ���������С�
-		���δ����Ԥ�����ž������롣 
+		$maintainer_recipient_maps を定義すれば、
+		その管理者たちへ転送される。 
 
-	[DONE] qmail-ext ��Ȥä����ޥ�� e.g ML-subscribe@DOMAIN ��ǽ
+	[DONE] qmail-ext を使ったコマンド e.g ML-subscribe@DOMAIN 可能
 
-	[���] �ͣ����Τǥ��ޥ�ɥ᡼���������뵡ǽ
+	[削除] ＭＬ本体でコマンドメールも受けられる機能
 
-	[TODO] ��Ͽ�Ⱥ����ޤȤ�Ƥ����ʤ� (���ޥ�ɰ�ġ�ʣ�����ɥ쥹)
+	[TODO] 登録と削除をまとめておこなう (コマンド一つ＋複数アドレス)
 
-	[TODO] listserv ���Υ��ޥ�ɥ��ɥ쥹
-
-
-
-14�ϡ��إå��ν񤭴���
-
-	FML::Header �ȥեå���Ȥ��ФǤ��ޤ���
-	¿���Υإå����� FML::Header ���饹���󶡤��륢�������᥽��
-	�ɤˤʤäƤ��ޤ���
-
-	[TODO] RFC 3282 (Content Language Headers) ���θ����
+	[TODO] listserv 風のコマンドアドレス
 
 
-15�ϡ�fml���֤���å������򥫥����ޥ�������
+
+14章　ヘッダの書き換え
+
+	FML::Header とフックを使えばできます。
+	多くのヘッダ操作は FML::Header クラスの提供するアクセスメソッ
+	ドになっています。
+
+	[TODO] RFC 3282 (Content Language Headers) を考慮する
+
+
+15章　fmlの返すメッセージをカスタマイズする
 
 	/usr/local/share/fml/$fml_version/message/$charset/
-	�ˤ���ޤ���
+	にあります。
 
 	Accept-Language: X-Accept-Language: Content-Type: 
-	�ʤɤ򸫤ơ��֤���å������θ������Ƥ��ޤ���
-	ۣ��ʾ�硢ʣ���θ�����֤��ޤ�(mime/multipart�ˤʤ�ޤ�)��
+	などを見て、返すメッセージの言語を決めています。
+	曖昧な場合、複数の言語で返します(mime/multipartになります)。
 
 
-	[TODO] ��å������������ޥ�������λٱ�ġ���
+	[TODO] メッセージカスタマイズ設定の支援ツール
 
 
-	[TODO] site local �Υǥ��쥯�ȥ�����
-		/etc/fml/ �ʲ�?
+	[TODO] site local のディレクトリを決める
+		/etc/fml/ 以下?
 		site_local/ ?
 		$domain/ ?
 
-	Q: ML LOCAL �ʥ�å��������ѹ��ϡ�
+	Q: ML LOCAL なメッセージの変更は？
 
-		�㤨�С�ʸ�������ɤ� euc-jp �Υ�å��������ƥ�ץ졼�Ȥ�
+		例えば、文字コードが euc-jp のメッセージ・テンプレートは
 
 			$ml_home_dir/local/share/message/euc-jp/
 	
-		���֤��Ȥ����餬ͥ�褵���
+		に置くとそちらが優先される
 
 
-16�ϡ������Υե��륿���
+16章　記事のフィルタリング
 
-	[DONE] �ե��륿�ϼ����Ѥ� (FML::Filter ���饹)
-		�إå��ե��륿
-		��ʸ���Ф���ե��륿
-		text/plain ���Ф���ե��륿
-		MIME ��¤�˴�Ť��ե��륿
-		����¾
-			�ü�ʥ����륹�ʤɤ�ޤ�
+	[DONE] フィルタは実装済み (FML::Filter クラス)
+		ヘッダフィルタ
+		本文に対するフィルタ
+		text/plain に対するフィルタ
+		MIME 構造に基づくフィルタ
+		その他
+			特殊なウィルスなども含む
 
-	4.0 �� ContertFilter ������ǽ�� mime_component_filter �Ǥ���
-		�ե�����̾��	/etc/fml/mime_component_filter
-		�ǥե�����ͤ�  /etc/fml/mime_component_filter
+	4.0 の ContertFilter 相当機能は mime_component_filter です。
+		ファイル名は	/etc/fml/mime_component_filter
+		デフォルト値は  /etc/fml/mime_component_filter
 	
-	[TODO] ���פ�Ȥꤿ��(�ɤΥ롼��ˤɤΤ��餤���ä����ä�����)
+	[TODO] 統計をとりたい(どのルールにどのくらい引っかかったか？)
 		
-	[TODO] ���פ򸫤��륳�ޥ�ɡ�ɬ�ס���
+	[TODO] 統計を見せるコマンド（必要？）
 
-	[TODO] ���פΤ���Υǡ����١���
+	[TODO] 統計のためのデータベース
 
-	[TODO] �ե��륿�γ�ĥ��ǽ�� content-type �����������ɤ�����Ĵ�٤�
+	[TODO] フィルタの拡張機能？ content-type が正しいかどうかを調べる
 
-		Q: content-type �����������ɤ�����Ĵ�٤�
-			image/gif �ʤ������� gif ?
+		Q: content-type が正しいかどうかを調べる
+			image/gif なら本当に gif ?
 
-		A: ���������̵�����ʤ���File::�ʤ�Ȥ��ǡ�
-		   �ե�����Υ����פ��̤���⥸�塼��Ȥ������ OK 
-		   �ʤΤ��⤷�줺(?)
+		A: ん〜全部は無理だなぁ。File::なんとかで、
+		   ファイルのタイプを識別するモジュールとかあれば OK 
+		   なのかもしれず(?)
 
-		Q: �ޤ���text/plain ��ʬ�ϸ����¸�ѡ��ȤˤʤäƤʤ��ʡ���
+		Q: まだ、text/plain 部分は言語依存パートになってない（？）
 
-			�������������¸�Ȥ������ʤ� virus checker ��
-			�ڤ�Υ���� �� ����
+			だいたい言語依存とかいうなら virus checker を
+			切り離せよ ＞ おれ
 
-			�ʤɡ��Ƥ󤳤��ʤΤǡ�text_plain_filter �ä�
-			����ä����������Ѥ��ʤȡ�
+			など、てんこもりなので、text_plain_filter って
+			ちょっと整理が大変だなと。
 
-		Q: �Ť��᡼��� SPAM �˰㤤�ʤ�
+		Q: 古いメールは SPAM に違いない
 
 
-	[TODO] ź�եե�����򥵥����ǥ����å� ������ɬ�ס�
+	[TODO] 添付ファイルをサイズでチェック 本当に必要？
 
-		mime component filter �Ǥ���ʴ�����
+		mime component filter でこんな感じ？
 
 		# allow only text/plain messages.
 		text/plain	*		permit
@@ -545,302 +545,302 @@ III����fml�Υ������ޥ���
 		multipart/*	!text/plain	reject
 
 
-	[TODO]	mime component filter ��ź�եե������ػߤ���
+	[TODO]	mime component filter で添付ファイルを禁止する
 
-		����ʤ��󤸡�
+		こんなかんじ？
 
 		use_article_mime_component_filter       =       yes
-		article_mime_component_filter_rules     = 	�ե�����
+		article_mime_component_filter_rules     = 	ファイル
 
-		[�ե�����]
+		[ファイル]
 		multipart/*	*;name=.*\.exe 	reject
 		multipart/*	attachment	reject
 
-		�⤷���ϡ�����ʤΡ�
+		もしくは、こんなの？
 
 		[config.cf]
-		article_mime_component_filter_rules     = 	�ե�����
+		article_mime_component_filter_rules     = 	ファイル
 							reject_attachment
 
 		article_mime_component_filter_unsafe_attachments = exe
 
 
 
-17�ϡ��ȥ�ե��å������¤���ʥ᡼�������к���
+17章　トラフィックを制限する（メール爆弾対策）
 
-	���ޥ�ɥ᡼��ǡ����ޥ�ɤ��ȤΥꥯ�����ȿ����¤ϼ�������Ƥ��롣
+	コマンドメールで、コマンドごとのリクエスト数制限は実装されている。
 
-	�ͣ����Τ�Ʊ���ǡ����١�����Ȥ���
-		�������Ϥ��Ƥ��� �� UDB 
+	ＭＬ全体で同じデータベースを使う。
+		下準備はしてある → UDB 
 	
-	[TODO] �ȥ�ե��å��ե��륿���Τ�̤����
+	[TODO] トラフィックフィルタ自体は未実装
 
-	[TODO]	���⤽��ɬ�פ��� �ȥ�ե��å��ե��륿
-		fml 4.0 �� MTI �����ʤΤ��ȡ� 
-		ñ�̻��֤��������ƿ������¤�����
-		ñ�̻��֤�����Υ��ޥ�ɥ᡼��������¤�����
-		MTI �Υǡ����١����� dbmopen() �ʳ��Τ�Τ��Ȥ�����
-		MTI �η�̤�¾�Υץ������Ǥ�Ȥ�����
-		��⡼�ȴ����Ԥ� MTI ���оݤˤ��ʤ�
-
-
-18�ϡ���⡼�ȴ����ʥ᡼���fml�������
-
-	�����Ԥ����ޥ�ɥ᡼��ǻȤ����ø����ޥ�ɤĤޤ� admin ���ޥ�
-	�ɤ� $admin_command_mail_allowed_commands �Ȥ����ѿ������
-	����Ƥ����Τ����Ѳ�ǽ�Ǥ���
-
-	���Ѳ�ǽ�ʥ��ޥ�ɤ� FML::Command::Admin:: ���饹����ʬ����Ǥ�
-
-	�ƣ̤ͣΥۡ���ǥ��쥯�ȥ�/etc/passwd-admin
-		fml4 �� etc/passwd �� fml8 �� etc/passwd-admin �Ǥ���
-		fml4 �Ȥϥե����ޥåȤ���̯�˰㤤�ޤ��ʳ�ĥ����Ƥ����
-		���ġ���䥳�ޥ�ɤλȤ����� fml4 ��Ʊ���Ǥ���
-
-	[DONE] ���̸��Ź�ǧ��
-
-	[DONE] �������Ź�ǧ�� (�Żҽ�̾���������ʤ�ǧ��OK)
-
-	[TODO] "approve �ѥ���� ���ޥ��"����ʸ���ݡ���
+	[TODO]	そもそも必要か？ トラフィックフィルタ
+		fml 4.0 の MTI 相当品のこと。 
+		単位時間あたりの投稿数を制限したい
+		単位時間あたりのコマンドメール数を制限したい
+		MTI のデータベースで dbmopen() 以外のものが使いたい
+		MTI の結果を他のプログラムでも使いたい
+		リモート管理者は MTI の対象にしない
 
 
-19�ϡ�ML�ΰŹ沽 (�������ΰŹ沽)
+18章　リモート管理（メールでfmlを操作する）
 
-	[TODO] �������ΰŹ沽 ���̸��Ź�ǧ��
+	管理者がコマンドメールで使える特権コマンドつまり admin コマン
+	ドは $admin_command_mail_allowed_commands という変数で定義
+	されているものが利用可能です。
 
-	[TODO] �������ΰŹ沽 �������Ź�ǧ��
+	利用可能なコマンドは FML::Command::Admin:: クラスの部分集合です
+
+	各ＭＬのホームディレクトリ/etc/passwd-admin
+		fml4 の etc/passwd は fml8 の etc/passwd-admin です。
+		fml4 とはフォーマットが微妙に違います（拡張されている）
+		操作ツールやコマンドの使い方は fml4 と同じです。
+
+	[DONE] 共通鍵暗号認証
+
+	[DONE] 公開鍵暗号認証 (電子署名が正しいなら認証OK)
+
+	[TODO] "approve パスワード コマンド"型構文サポート
 
 
-20�ϡ�ML�ε�����WWW�Ǹ�������
+19章　MLの暗号化 (配送時の暗号化)
 
-	[DONE] ������ WWW ���������� �� �ǥե���ȤǺ�����
+	[TODO] 配送時の暗号化 共通鍵暗号認証
 
-		�ǥե���ȤǤ�
+	[TODO] 配送時の暗号化 公開鍵暗号認証
+
+
+20章　MLの記事をWWWで公開する
+
+	[DONE] 記事の WWW アーカイブ → デフォルトで作成。
+
+		デフォルトでは
 
 		~fml/public_html/fml/mlarchive/$domain/$ml_name/
 
-		�Ȥ����ǥ��쥯�ȥ�˺��ޤ������Τޤ޺��ʤꡢŬ��
-		alias ���ڤ�ʤꤷ�ƻȤ��Ȥ褤�Ǥ��礦��
+		というディレクトリに作ります。このまま作るなり、適宜
+		alias を切るなりして使うとよいでしょう。
 
-	[TODO] permission �Ϥ���Ǥ�����
+	[TODO] permission はこれでいい？
 
 	[TODO]	Mail::Message::ToHTML
 		X-Sequence: fml-devel 515
 
-		2) index���ס����פˤĤ���
+		2) indexの要、不要について
 
-		�����Ǥ�all,monthly,thread������뤬������������Ǥ���ۤ���
-		�ɤ�����#�����̰ʾ��ML�������all�����פȻפ��Ƥ���...
+		現状ではall,monthly,threadが出来るが、これらも選択できるほうが
+		良いかも#２万通以上のMLがあるとallは不要と思えてくる...
 
-		3) thread.html�η��̤κ����������еս�Τ��
-
-
-
-21�ϡ��ޤȤ�����
-
-	�ʰ��ǤΤޤȤᤪ����ϥ��ݡ��Ȥ���Ƥ��롣
-
-	[���] fml 4 �Τ褦��γ�٤κ٤��ʤޤȤ�����
+		3) thread.htmlの月別の作成＆出来れば逆順のもの
 
 
-IV�����ȥ�֥륷�塼�ƥ���
 
-	[TODO] �ȥ�֥륷�塼�ƥ��󥰻���򽸤��
+21章　まとめ送り
+
+	簡易版のまとめおくりはサポートされている。
+
+	[削除] fml 4 のような粒度の細かなまとめ送り
 
 
-V��������¾�Υȥԥå�
+IV部　トラブルシューティング
 
-26�ϡ������α��ѤˤĤ���
+	[TODO] トラブルシューティング事例を集める
 
-	���ס���Ͽ���ʿ�� or �쳬�ع�¤�Τɤ���Ǥ�Ȥ�ޤ���
-	�����̤�ή�줽���ʣ̤ͣǤϰ쳬�ع�¤��������Ǥ���
-	�ǥե���Ȥ� fml4 �Ȥθߴ����Τ��῿��ʿ��Ǥ���
 
-	�ǥХå��Τ���˥᡼�������̤Ĥͤ���¸���Ƥ��ޤ���
-	����ϵ�������¸�Ȥ��̤λ��Ȥߤǡ����ץ������������Ϥε�Ͽ�Ǥ���
+V部　その他のトピック
 
-	   �����Ȥä��᡼��(incoming mails)�򤹤٤���¸���롣
-		var/mail/incoming/ �ʲ�����¸���ޤ���
-		fml4 �Ȱۤʤ���¸���ǥե���Ȥε�ư�Ǥ���
+26章　日々の運用について
 
-	   �ФƤ����᡼�����¸���롣
-		var/mail/outgoing/ �ʲ�����¸���ޤ���
-		fml4 �Ȱۤʤ���¸���ǥե���Ȥε�ư�Ǥ���
+	スプールは真っ平ら or 一階層構造のどちらでもとれます。
+	何万通も流れそうなＭＬでは一階層構造がお薦めです。
+	デフォルトは fml4 との互換性のため真っ平らです。
 
-	�����ե�����ؤ� newsyslog (fml4 �� $LOGFILE_NEWSYSLOG_LIMIT)
+	デバッグのためにメールを一定量つねに保存しています。
+	これは記事の保存とは別の仕組みで、全プロセスの入出力の記録です。
+
+	   受けとったメール(incoming mails)をすべて保存する。
+		var/mail/incoming/ 以下に保存します。
+		fml4 と異なり保存がデフォルトの挙動です。
+
+	   出ていくメールを保存する。
+		var/mail/outgoing/ 以下に保存します。
+		fml4 と異なり保存がデフォルトの挙動です。
+
+	ログファイルへの newsyslog (fml4 の $LOGFILE_NEWSYSLOG_LIMIT)
 		use_log_rotate = yes
 
-		log_rotate_size = �Х��ȿ�
+		log_rotate_size = バイト数
 
-	[���]	��var/log/_smtplog.�����ץե������̵���ʤ�ޤ�����
+	[削除]	「var/log/_smtplog.数字」ファイルは無くなりました。
 
-	[DONE] ���ס���� expire (mode_expire)
+	[DONE] スプールの expire (mode_expire)
 
-	[DONE] log suffix extension: log.YYYYMMDD �Ȥ��ϡ�
+	[DONE] log suffix extension: log.YYYYMMDD とかは？
 
-	[DONE] �Ť������μ�ư�õ�
+	[DONE] 古い記事の自動消去
 
-		use_article_expire = yes (�ǥե���Ȥ� no)
+		use_article_expire = yes (デフォルトは no)
 
-		�ǥե���ȤΥ�ߥåȤ� 90 ����	
+		デフォルトのリミットは 90 日。	
 		article_expire_limit = 90d
 
-	[TODO] ���ס���ΰ���
+	[TODO] スプールの圧縮
 
-	[TODO] ���ס���� tar �ʤɤˤޤȤ�� (mode_archive)
+	[TODO] スプールを tar などにまとめる (mode_archive)
 
-	[TODO] ����ե�����ʤɤ� RCS ����
+	[TODO] 設定ファイルなどの RCS 管理
 
-	[TODO] ����ե�����ʤɤ� CVS ����
+	[TODO] 設定ファイルなどの CVS 管理
 
-	[TODO] log suffix extension: log.YYYYMMDD �Ȥ��ϡ�
+	[TODO] log suffix extension: log.YYYYMMDD とかは？
 
-	[TODO] �֤��Σ̤ͣϤ⤦����ޤ���ץ��ץ����
+	[TODO] 「このＭＬはもうありません」オプション
 
-		libexec/ �β��������Υץ�������������б����ơ�
-		ml �� ml-ctl �����褿�᡼��ˤߤ���ֻ����֤��٤�����
-		��������negative cache �Ĥ��ǡ�Ʊ�����ɥ쥹�ˤϰ��
-		���ֻ��򤷤ʤ�)�����ޥ�ɤ���ʤ����ѿ��Ǥ��礦�ͤ���
-		�ǥե���ȤǤ� off (SPAM �к��Τ���ˡ�
-
-
-27�ϡ����顼�᡼���ư���Ϥ���
-
-	Mail::Bounce �⥸�塼���Ȥ���
-	��ư������ǽ��
-
-	[TODO] �������ޥ������ǽ�ˤ���
-
-	[TODO] �������ޥ������줿�⥸�塼����֤����
-
-	[TODO] ���顼�᡼��Υե���ɤˤĤ��Ʋ��� (fml-devel 451)
-
-		maintainer_recipient_maps �ϼ����Ѥ�
-		�ǥե���Ȥ�̤������ե���ǥ��󥰤Ϥ��ʤ�
-
-		�ܡʥإå�����ܤ��Υ��顼�᡼��Υ��ɥ쥹��ʬ�ϥ�ݡ�
-		�ȡˤȤ��ʤ��դ����������
+		libexec/ の下の全部のプログラム全部が対応して、
+		ml や ml-ctl 宛に来たメールにみんな返事を返すべきだ。
+		ただし、negative cache つきで（同じアドレスには一回し
+		か返事をしない)。コマンドじゃなくて変数でしょうねぇ。
+		デフォルトでは off (SPAM 対策のため）。
 
 
-28�ϡ��᡼�륵���Ф��ѹ�/���ۤ�
+27章　エラーメールを自動解析する
 
-	��֤� 4.0 �ȤۤȤ��Ʊ������
+	Mail::Bounce モジュールを使う。
+	自動削除も可能。
 
-	[TODO] fml8 �ؤΰܹԥ�����Ĥ����ȡ�	
+	[TODO] カスタマイズを可能にする
 
+	[TODO] カスタマイズされたモジュールの置き場所
 
-29�ϡ��С������ɥᥤ��
+	[TODO] エラーメールのフォワードについて改良 (fml-devel 451)
 
-	[DONE] �ǥե���Ȥǹͤ��Ƥ��롣
+		maintainer_recipient_maps は実装済み
+		デフォルトは未定義、フォワーディングはしない
 
-
-VI����fml��������¤�ȵ�ǽ��ĥ
-
-30�ϡ��ѿ��ȴؿ�
-
-	�ѿ������Ͼ�˹�������Ƥ��롣
-
-	�� fml8 ���塼�ȥꥢ��򻲾ȡ�
+		＋（ヘッダ情報＋そのエラーメールのアドレスの分析レポー
+		ト）とかなんか付けると便利？
 
 
-31�ϡ��ꥹ�ȥե�����Υե����ޥå�
+28章　メールサーバの変更/引越し
 
-	�� fml8 ���塼�ȥꥢ��򻲾ȡ�
+	手間は 4.0 とほとんど同じかな
 
-
-32�ϡ�fml.pl�ץ�������ư��
-
-	[TODO] ���ѥ��顼�ȥ�åץե졼����
-		CGI ��ޤ�����ѤΥե졼�������ۤ���
-
-		���顼��ɤΤ褦�˸ƤӤ���¦���ȿ�Ū�������뤫��
-
-		$curproc->error_regist( { ���� => ���֥������� } );
-		croak(���顼�Υ���);
-
-		�� ɬ�פʾ�ꤹ�٤Ƥ� $curproc �äƤΤ��񤷤�����
-
-		���顼��ɤΤ褦�˸ƤӤ���¦���ȿ�Ū�������뤫��
-		���֥������Ȥ� HASH_REF ���Ȥ錄���ʤ�����
+	[TODO] fml8 への移行ログを残すこと。	
 
 
-33�ϡ��ǥХå��򤹤�
+29章　バーチャルドメイン
 
-	�⥸�塼��ñ�̤� $debug �Ȥ����ѿ��������礬���롣
-	�ǥХå��λ��ϥ⥸�塼���ľ�ܽ񤭴����뤷���ʤ�����
-
-	�ǥХå��ѤΥǥ��쥯�ȥ���ä� main.cf �����椷�Ƥ�褤��
+	[DONE] デフォルトで考えてある。
 
 
-34�ϡ����ޥ�ɥ᡼��Υ������ޥ���
+VI部　fmlの内部構造と機能拡張
 
-	Q: �������ޥ������줿�⥸�塼����֤����ϡ�
+30章　変数と関数
 
-	$ml_home_dir �β��� local/lib �äƤΤ����롢���β��ˤ���
+	変数一覧は常に更新されている。
 
-	��: $ml_home_dir/local/lib/FML/Command/User/help.pm
-
-		����ȡ����Σͣ��ȼ��Υإ�ץ��ޥ�ɤȤʤ�
+	→ fml8 チュートリアルを参照。
 
 
-35�ϡ������������ǥ���HOOK�ˤ���ĥ
+31章　リストファイルのフォーマット
 
-	[TODO] �쥷��: Subject �ˤ�äƥե��������Ѥ����롩
-
-
-VII����Advanced Study
-
-36�ϡ�fml����ǡ����١����ؤΥ�������
-
-	�Ϥ��ᤫ������Ǥ���
-		IO::Adapter ���Ȥ߹��ޤ�Ƥ���
-
-	[���] replace �᥽�åɤϺ������
-
-	[DONE] PostgreSQL �б�
+	→ fml8 チュートリアルを参照。
 
 
-37�ϡ������ι�®���ˤĤ��� (+ �����ط��� TIPS )
+32章　fml.plプロセスの動作
 
-	[���] Mail::Delivery �� LMTP �⡼�� 
-		���塼�������ʤ��Ȥ����ʤ�
-		�� ̵�̤��񤷤��Τ����פǤϡ�
+	[TODO] 汎用エラートラップフレームワーク
+		CGI も含めて汎用のフレームワークがほしい
 
-	[TODO] �쥷��: �ե���ɤ���ؿ�
-		multipart �Ȥ������ȤǤϤʤ��������ʤ�ʤ���
-		������Ѥ���Ȥ������Ȥ���
+		エラーをどのように呼びだし側へ組織的に伝えるか？
 
-	[TODO] �����롼���󤬼�ưʬ����ĥ�륪�ץ����
-		reply_message() ���衩
-		����äơ��᡼�����⤹�뤢�줫�� ;) 
-		text/plain ��Ŭ�����ڤ���ɤ�ʤ��褦�ʵ������뤬��
+		$curproc->error_regist( { キー => オブジェクト } );
+		croak(エラーのキー);
+
+		？ 必要な場所すべてに $curproc ってのが難しそう？
+
+		エラーをどのように呼びだし側へ組織的に伝えるか？
+		オブジェクトか HASH_REF ごとわたせないか？
+
+
+33章　デバッグをする
+
+	モジュール単位で $debug という変数がある場合がある。
+	デバッグの時はモジュールを直接書き換えるしかないけど
+
+	デバッグ用のディレクトリを作って main.cf で制御してもよいね
+
+
+34章　コマンドメールのカスタマイズ
+
+	Q: カスタマイズされたモジュールを置く場所は？
+
+	$ml_home_dir の下に local/lib ってのがある、その下におく
+
+	例: $ml_home_dir/local/lib/FML/Command/User/help.pm
+
+		を作ると、そのＭＬ独自のヘルプコマンドとなる
+
+
+35章　ケーススタディ：HOOKによる拡張
+
+	[TODO] レシピ: Subject によってフォワード先を変えられる？
+
+
+VII部　Advanced Study
+
+36章　fmlからデータベースへのアクセス
+
+	はじめから前提です。
+		IO::Adapter に組み込まれている
+
+	[削除] replace メソッドは削除した
+
+	[DONE] PostgreSQL 対応
+
+
+37章　配送の高速化について (+ 配送関係の TIPS )
+
+	[削除] Mail::Delivery の LMTP モード 
+		キュー管理しないといけない
+		→ 無駄に難しいので不要では？
+
+	[TODO] レシピ: フォワードする関数
+		multipart ということではなく、いきなり曲げる
+		宛先を変えるということか？
+
+	[TODO] 配送ルーチンが自動分割を頑張るオプション
+		reply_message() の先？
+		それって、メール爆撃するあれか？ ;) 
+		text/plain を適当に切ると読めないような気がするが…
 
 	[TODO] outgoing address hack
-		SPAM �к��ˤĤ��ƥɥ�����Ȥ��
+		SPAM 対策についてドキュメントを書く
 
 	[TODO] execute $program on the disk NOT IPC.
 
 
-38�ϡ�����������Ū�����Хǥ�����ˤĤ���
+38章　試論：現代的サーバデザインについて
 
-	��fml �Х��֥�פ򻲾ȡ�
+	「fml バイブル」を参照。
 
 
-VIII������Ͽ
+VIII部　付録
 
-��ϿD��virus_check.ph����
+付録D　virus_check.phの例
 
 
         ********* ********* ********* ********* ********* ********* 
-	���ޤҤȤ�ʬ��Ǥ��ʤ����ʡ�
+	いまひとつ分類できないかな？
 
-* �������塼��
-	alarm() �ˤ�륹�����塼��
+* スケジューラ
+	alarm() によるスケジューラ
 	queue manager for LMTP ? 
 
 
         ********* ********* ********* ********* ********* ********* 
-	fml8 ��ͭ�� TODO
+	fml8 固有の TODO
 
 
 ------------------------------------------------------------

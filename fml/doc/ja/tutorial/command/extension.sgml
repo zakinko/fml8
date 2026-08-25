@@ -4,50 +4,50 @@
 
 
 <!--
-	���ޥ�ɥ᡼��γ�ĥ
-	makefml �γ�ĥ
-	CGI �γ�ĥ
+	コマンドメールの拡張
+	makefml の拡張
+	CGI の拡張
 -->
 
 
 <sect1 id="fml.command.hack.commandmail">
 	<title>
-	���ޥ�ɤγ�ĥ: ���ޥ�ɥ᡼��ξ��
+	コマンドの拡張: コマンドメールの場合
 	</title>
 
 
 <warning>
 <para>
-�ֳ�ĥ������ǽ����Ĥ����ϰϡפ�����Ǥ��ޤ���
+「拡張した機能を許可する範囲」が制御できます。
 </para>
 
 <para>
-���Υۥ��Ⱦ�Ρ����ƤΣ̤ͣ����Ѳ�ǽ�ʡץ��ޥ�ɤ��ꤿ�����ϡ�
-��ĥ�����⥸�塼���
+このホスト上の「全てのＭＬで利用可能な」コマンドを作りたい場合は、
+拡張したモジュールを
 <screen>
 /usr/local/lib/fml/site_local/
 </screen>
-�ʲ������֤��Ʋ�������
+以下に配置して下さい。
 </para>
 
 <para>
-����������Σ̤ͣ��������Ѳ�ǽ�ʵ�ǽ��ĥ�Ǥ���С�
-�ƣ̤ͣΥۡ���ʲ��� local/lib/ �ʲ��ˤ����Ʋ�������
+一方、特定のＭＬだけで利用可能な機能拡張であれば、
+各ＭＬのホーム以下の local/lib/ 以下において下さい。
 <screen>
-�̤ͣΥۡ���/local/lib/
+ＭＬのホーム/local/lib/
 
-��: elena ( ML �Υۡ��ब /var/spool/ml/elena/ )
+例: elena ( ML のホームが /var/spool/ml/elena/ )
 /var/spool/ml/elena/local/lib/
 </screen>
 </para>
 
 <!--
 <para>
-�ʲ��Ǥϡ����٤ƤΣ̤ͣ�ͭ���ˤ������ͤ��ޤ���
+以下では、すべてのＭＬで有効にする場合を考えます。
 </para>
 
 <para>
-������󡢤ɤ���Υ������Ǥ�⥸�塼��ν����ϰ��Ǥ���
+もちろん、どちらのケースでもモジュールの書き方は一緒です。
 </para>
 -->
 
@@ -56,35 +56,35 @@
 
 <sect2>
 	<title> 
-	���̥桼���Ѥ��ȼ����ޥ�ɤ��롣
+	一般ユーザ用の独自コマンドを作る。
 	</title>
 
 <para>
-�桼�������Υ��ޥ�� uja ���ꤿ����硢
+ユーザ向けのコマンド uja を作りたい場合、
 (1)
-FML::Command::User �ʲ��Υ⥸�塼�뤫��Ŭ���˥��ԡ����ڡ����Ȥ���
+FML::Command::User 以下のモジュールから適当にコピー＆ペーストして
 <screen>
 /usr/local/lib/fml/site_local/FML/Command/User/uja.pm
 </screen>
-�Ȥ����ե�������äƤ���������
-(2) ���ˡ�����ե������ uja ����Ĥ��Ƥ���������
+というファイルを作ってください。
+(2) 次に、設定ファイルで uja を許可してください。
 </para>
 
 <para>
-���٤ƤΣ̤ͣ�ͭ���ˤ�����ϡ�
-site_default_config.cf �ǡ�
-�ֵ��Ĥ��륳�ޥ�ɤΥꥹ�ȡפ��ɲä��Ƥ���������
+すべてのＭＬで有効にする場合は、
+site_default_config.cf で、
+「許可するコマンドのリスト」に追加してください。
 <screen>
 user_command_mail_allowed_commands += uja
 </screen>
-user_command_mail_allowed_commands �ѿ��ϡ�
-���̥桼���˵������ޥ�ɤΥꥹ�Ȱ����Ǥ���
+user_command_mail_allowed_commands 変数は、
+一般ユーザに許すコマンドのリスト一覧です。
 </para>
 
 <para>
-elena M�̤�����ͭ���ˤ�����ϡ�
-elena �̤ͣ� config.cf �ǡ�
-���Ĥ��륳�ޥ�ɥꥹ�Ȥ��ɲä��Ƥ���������
+elena MＬだけで有効にする場合は、
+elena ＭＬの config.cf で、
+許可するコマンドリストに追加してください。
 <screen>
 user_command_mail_allowed_commands += uja
 </screen>
@@ -95,33 +95,33 @@ user_command_mail_allowed_commands += uja
 
 <sect2>
 	<title> 
-	admin uja ���ޥ�ɤ��롣
+	admin uja コマンドを作る。
 	</title>
 
 <para>
-�����Ը����Υ��ޥ��(admin ���ޥ��)�� uja ���ꤿ����硢
-FML::Command::Admin �ʲ�����Ŭ���˥��ԡ����ڡ����Ȥ���
+管理者向けのコマンド(admin コマンド)の uja を作りたい場合、
+FML::Command::Admin 以下から適当にコピー＆ペーストして
 <screen>
 /usr/local/lib/fml/site_local/FML/Command/Admin/uja.pm
 </screen>
-�Ȥ����ե������Ĥ��äƤ���������
+というファイルをつくってください。
 </para>
 
 <para>
-���٤ƤΣ̤ͣǥ��ޥ�ɤ�ͭ���ˤ�����ϡ�
-site_default_config.cf �ǡ�
-���Ĥ��륳�ޥ�ɥꥹ�Ȥ��ɲä��Ƥ���������
+すべてのＭＬでコマンドを有効にする場合は、
+site_default_config.cf で、
+許可するコマンドリストに追加してください。
 <screen>
 admin_command_mail_allowed_commands += uja
 </screen>
-admin_command_mail_allowed_commands �ѿ���
-�����Ԥ˵������ޥ�ɤΥꥹ�Ȱ����Ǥ���
+admin_command_mail_allowed_commands 変数は
+管理者に許すコマンドのリスト一覧です。
 </para>
 
 <para>
-elena �̤ͣ�����ͭ���ˤ�����ϡ�
-elena �̤ͣ� config.cf �ǡ�
-���Ĥ��륳�ޥ�ɥꥹ�Ȥ��ɲä��Ƥ���������
+elena ＭＬだけで有効にする場合は、
+elena ＭＬの config.cf で、
+許可するコマンドリストに追加してください。
 <screen>
 admin_command_mail_allowed_commands += uja
 </screen>
@@ -134,53 +134,53 @@ admin_command_mail_allowed_commands += uja
 
 <sect1 id="fml.command.hack.makefml">
 	<title>
-	���ޥ�ɤγ�ĥ: makefml �ξ��
+	コマンドの拡張: makefml の場合
 	</title>
 
 
 <warning>
 <para>
-���Υۥ������Ƥ� ML ��ͭ���ˤ����硢
-��ĥ����⥸�塼���
+このホスト全ての ML で有効にする場合、
+拡張するモジュールを
 <screen>
 /usr/local/lib/fml/site_local/
 </screen>
-�ʲ������֤��Ʋ�������
-����������Σ̤ͣ������ĥ������ϡ�
-�ƣ̤ͣΥۡ���ʲ��� local/lib/
-�ʲ��ˤ����Ʋ�������
+以下に配置して下さい。
+一方、特定のＭＬだけを拡張する場合は、
+各ＭＬのホーム以下の local/lib/
+以下において下さい。
 <screen>
-�̤ͣΥۡ���/local/lib/
+ＭＬのホーム/local/lib/
 
-��:
+例:
 /var/spool/ml/elena/local/lib/
 </screen>
 </para>
 
 <para>
-�ʲ��Ǥϡ����٤ƤΣ̤ͣ�ͭ���ˤ������ͤ��ޤ���
+以下では、すべてのＭＬで有効にする場合を考えます。
 </para>
 </warning>
 
 
 <para>
-makefml �ǥ��ޥ�� uja ���ꤿ����硢
-FML::Command::Admin �ʲ�����Ŭ���˥��ԡ����ڡ����Ȥ���
+makefml でコマンド uja を作りたい場合、
+FML::Command::Admin 以下から適当にコピー＆ペーストして
 <screen>
 /usr/local/lib/fml/site_local/FML/Command/Admin/uja.pm
 </screen>
-�Ȥ����ե������Ĥ��������ͭ���ˤʤ�ޤ�
+というファイルをつくるだけで有効になります
 </para>
 
 <para>
-makefml �Ǥϡ֥⥸�塼����֤�������ͭ���פˤʤ�ޤ���
-������륳�ޥ�ɰ��� *_allowed_commands �Ϥ��ѿ������ѹ������פǤ���
+makefml では「モジュールを置くだけで有効」になります。
+許されるコマンド一覧 *_allowed_commands 系の変数設定変更は不要です。
 </para>
 
 <para>
-makefml �����ѤǤ�������ǡ�
-���Σ̥ͣ����Ф��ø����¤�å��Ǥ��Ƥ���櫓�Ǥ����顢
-����ʾ�ʣ�������¤�Ĥ��Ƥ�Ȥ��ˤ��������Ǥ��礦���顣
+makefml を利用できる時点で、
+そのＭＬサーバの特権権限を奪取できているわけですから、
+それ以上複雑な制限をつけても使いにくいだけでしょうから。
 </para>
 
 
@@ -190,74 +190,74 @@ makefml �����ѤǤ�������ǡ�
 
 <sect1 id="fml.command.hack.cgi">
 	<title>
-	���ޥ�ɤγ�ĥ: CGI �ξ��
+	コマンドの拡張: CGI の場合
 	</title>
 
 
 <warning>
 
 <para>
-�ʲ��ε��Ҥǡ����Ѳ�ǽ�ʵ�ǽ���ɲáפ�����ޤ�����
-���� CGI ���̤κ����ߤ�ɬ�פǤ���
+以下の記述で「利用可能な機能の追加」が出来ますが、
+別途 CGI 画面の作り込みが必要です。
 </para>
 
 <para>
-���Υۥ��Ⱦ�Τ��٤ƤΣ̤ͣ�ͭ���ˤ����硢
-��ĥ����⥸�塼���
+このホスト上のすべてのＭＬで有効にする場合、
+拡張するモジュールを
 <screen>
 /usr/local/lib/fml/site_local/
 </screen>
-�ʲ������֤��Ʋ�������
+以下に配置して下さい。
 </para>
 
 <para>
-������
-����Σ̤ͣ������ĥ������ϡ�
-�ƣ̤ͣΥۡ���ʲ��� local/lib/
-�ʲ��ˤ����Ʋ�������
+一方、
+特定のＭＬだけを拡張する場合は、
+各ＭＬのホーム以下の local/lib/
+以下において下さい。
 <screen>
-�̤ͣΥۡ���/local/lib/
+ＭＬのホーム/local/lib/
 
-��:
+例:
 /var/spool/ml/elena/local/lib/
 </screen>
 </para>
 
 <para>
-�ʲ��Ǥϡ����٤ƤΣ̤ͣ�ͭ���ˤ������ͤ��ޤ���
+以下では、すべてのＭＬで有効にする場合を考えます。
 </para>
 </warning>
 
 <para>
-CGI �Ǥγ�ĥ�ϡ����̥桼�������Ȥ������ȤϾ��ʤ���
-�����Ƥ��ϴ����Ը����Τ�Τȹͤ��ޤ���
-��äơ��ʲ��������Ը�����ǽ��ĥ�Τߤ���夲�ޤ���
+CGI での拡張は、一般ユーザ向けということは少なく、
+たいていは管理者向けのものと考えます。
+よって、以下、管理者向け機能拡張のみを取り上げます。
 </para>
 
 <para>
-�����Ը����Υ��ޥ�� uja ���ꤿ����硢
-FML::Command �ʲ�����Ŭ���˥��ԡ����ڡ����Ȥ���
+管理者向けのコマンド uja を作りたい場合、
+FML::Command 以下から適当にコピー＆ペーストして
 <screen>
 /usr/local/lib/fml/site_local/FML/Command/Admin/uja.pm
 </screen>
-�Ȥ����ե�������äƤ���������
+というファイルを作ってください。
 </para>
 
 <para>
-���٤ƤΣ̤ͣ� uja ���ޥ�ɤ�ͭ���ˤ�������硢
-site_default_config.cf �ǡ�
-���Ĥ��륳�ޥ�ɥꥹ�Ȥ��ɲä��Ƥ���������
+すべてのＭＬで uja コマンドを有効にしたい場合、
+site_default_config.cf で、
+許可するコマンドリストに追加してください。
 <screen>
 admin_cgi_allowed_commands += uja
 </screen>
-admin_cgi_allowed_commands �ѿ��ϡ�
-�������� CGI ���󥿡��ե������ǵ��Ĥ��륳�ޥ�ɤΰ����Ǥ���
+admin_cgi_allowed_commands 変数は、
+管理者用 CGI インターフェイスで許可するコマンドの一覧です。
 </para>
 
 <para>
-elena �̤ͣ�����ͭ���ˤ�����ϡ�
-elena �̤ͣ� config.cf �ǡ�
-���Ĥ��륳�ޥ�ɥꥹ�Ȥ��ɲä��Ƥ���������
+elena ＭＬだけで有効にする場合は、
+elena ＭＬの config.cf で、
+許可するコマンドリストに追加してください。
 <screen>
 admin_cgi_allowed_commands += uja
 </screen>

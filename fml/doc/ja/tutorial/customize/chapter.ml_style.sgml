@@ -5,7 +5,7 @@
 
 <chapter id="cuctomize">
 	<title>
-	ฅซฅนฅฟฅÞฅคฅบคฮป๖ฮใ
+	ใซในใฟใใคใบใฎไบไพ
 	</title>
 
 
@@ -22,13 +22,13 @@
 <!-- procmail -->
 &sect.usage.procmail;
 
-<!-- ผยบÝคฮฅฑกผฅนฅนฅฟฅวฅฃ -->
+<!-- ๅฎ้ใฎใฑใผในในใฟใใฃ -->
 &sect.customize.casestudies;
 
 
 <sect1 id="cuctomize.recipes.auth">
 	<title>
-	ฅ์ฅทฅิกวs [วงพฺ]
+	ใฌใทใ”โ€s [่ช่จผ]
 	</title>
 
 <!-- TABLE_OF_RECIPES -->
@@ -38,7 +38,7 @@
 
 <sect1 id="cuctomize.recipes.subscribe">
 	<title>
-	ฅ์ฅทฅิกวs [ละฯฟดุฯข]
+	ใฌใทใ”โ€s [็ป้ฒ้–ข้€ฃ]
 	</title>
 
 <!-- TABLE_OF_RECIPES -->
@@ -48,7 +48,7 @@
 
 <sect1 id="cuctomize.recipes.delivery">
 	<title>
-	ฅ์ฅทฅิกวs [วÛม๗ดุฯข]
+	ใฌใทใ”โ€s [้…้€้–ข้€ฃ]
 	</title>
 
 <!-- TABLE_OF_RECIPES -->

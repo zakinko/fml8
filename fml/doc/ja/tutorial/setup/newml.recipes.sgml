@@ -5,7 +5,7 @@
 
 <sect1 id="setup.newml.recipies">
         <title>
-        �쥷�ԡ�s
+        レシピ’s
         </title>
 
 <!-- TABLE_OF_RECIPES -->
@@ -17,35 +17,35 @@
 
 <question>
 <para>
-newml ���ˣ̴ͣ����ԤΥ᡼�륢�ɥ쥹����ꤷ������
+newml 時にＭＬ管理者のメールアドレスを指定したい。
 </para>
 </question>
 
 <answer>
 <para>
-newml ���ˡ����Σͣ��ѤΥ����ꥢ������������ޤ���
-���κݡ�
+newml 時に、そのＭＬ用のエイリアスが準備されます。
+その際、
 <screen>
-${ml_name}-admin: �����ԤΥ᡼�륢�ɥ쥹 
+${ml_name}-admin: 管理者のメールアドレス 
 </screen>
-��ʬ�ˤ�
+部分には
 $newml_command_ml_admin_default_address 
-�ѿ����ͤ�����ޤ���
+変数の値が入ります。
 
-�ǥե���ȤǤϡ�
-�ɤΣ̤ͣǤ�
-/usr/local/etc/fml/main.cf ���������Ƥ�������ԤΥ��ɥ쥹 $fml_owner
-���Ȥ��ޤ���
+デフォルトでは、
+どのＭＬでも
+/usr/local/etc/fml/main.cf で定義されている管理者のアドレス $fml_owner
+が使われます。
 
-����ʳ��Υ��ɥ쥹���ѹ���������硢
-site_default_config.cf ��
+それ以外のアドレスに変更したい場合、
+site_default_config.cf で
 $newml_command_ml_admin_default_address 
-�˥᡼�륢�ɥ쥹�����ꤷ�Ʋ�������
+にメールアドレスを設定して下さい。
 <screen>
-$newml_command_ml_admin_default_address = �᡼�륢�ɥ쥹
+$newml_command_ml_admin_default_address = メールアドレス
 </screen>
 
-�ޤ���$ml_name �ʤɡ�¾���ѿ��˰�¸�����ͤ��ѹ��ĤǤ���
+また、$ml_name など、他の変数に依存した値も変更可です。
 <screen>
 $newml_command_ml_admin_default_address = $ml_name-owner@$ml_domain
 </screen>
@@ -61,25 +61,25 @@ $newml_command_ml_admin_default_address = $ml_name-owner@$ml_domain
 
 <question>
 <para>
-�Ȥ�ʤ� MTA �Ѥθ���������ߤ᤿����
+使わない MTA 用の見本生成を止めたい。
 </para>
 </question>
 
 <answer>
 <para>
-newml_command_mta_config_list �˥��󥹥ȡ��뤵���
-MTA �Υꥹ�Ȥ��������Ƥ��ޤ���
-�����������פ� MTA ��ȴ���Ʋ�������
+newml_command_mta_config_list にインストールされる
+MTA のリストが定義されています。
+そこから不要の MTA を抜いて下さい。
 </para>
 
 <para>
-���Ȥ��С�qmail �����פǤ����
+たとえば、qmail が不要であれば
 <screen>
 [/usr/local/etc/fml/site_default_config.cf]
 
 newml_command_mta_config_list -= qmail
 </screen>
-�Ȥ��Ƥ���������~/.qmail-* �ե����������������ʤ��ʤ�ޤ���
+としてください。~/.qmail-* ファイルの生成がされなくなります。
 </para>
 
 </answer>
@@ -90,24 +90,24 @@ newml_command_mta_config_list -= qmail
 <qandaentry>
 <question>
 	<para>
-	���̥桼������������/����ѤΥ����֥ڡ������Ѱդ������ΤǤ�����
+	一般ユーザ向けに入会/退会用のウエブページを用意したいのですが？
 	</para>
 </question>
 
 <answer>
 	<para>
-	2008/09/09 �ʹߤ� &fml8; �ϡ�newml ���ˡ�
-	���̥桼����������/����� CGI ��������Ƥ��ޤ���
-	���� CGI �� URL ����������ƤߤƲ�������
+	2008/09/09 以降の &fml8; は、newml 時に、
+	一般ユーザ向け入会/退会用 CGI を作成しています。
+	その CGI の URL を案内に入れてみて下さい。
 	</para>
 
 	<para>
-	�ʤ���
-	�ǥե���ȤǤ� CGI ���Ȥ��ʤ��褦�ˤʤäƤ���Τǡ�CGI �������
+	なお、
+	デフォルトでは CGI が使えないようになっているので、CGI の設定は
 	<link linkend="setupcgi">
 	<xref linkend="setupcgi">
 	</link>
-	�ξϤ򻲾Ȥ��� CGI ��ͭ���ˤ��Ʋ�������
+	の章を参照して CGI を有効にして下さい。
 	</para>
 
 </answer>

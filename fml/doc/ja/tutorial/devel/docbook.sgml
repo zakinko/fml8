@@ -5,128 +5,128 @@
 
 <appendix id="docbook">
 	<title>
-	SGML �ν���
+	SGML の書き方
 	</title>
 
 <para>
-&fml8; �Υɥ�����ȤǤϡ�SGML �� DTD 
+&fml8; のドキュメントでは、SGML の DTD 
 
 	<ulink url="http://www.oasis-open.org/docbook/">
 	"DOCBOOK"
 	</ulink>
 
-�򤴤��������̤˻Ȥ����Ȥˤ��Ƥ��ޤ���
+をごくごく普通に使うことにしています。
 </para>
 
 <para>
-�ܾϤ� SGML �ǽ񤯤���˺Ǿ���ɬ�פ��μ��ˤĤ��ƤΥ��Ǥ���
+本章は SGML で書くために最小限必要な知識についてのメモです。
 </para>
 
 <para>
-����Ū�� SGML �ν񼰤ϡ���������
+基本的な SGML の書式は、当たり前
 	<footnote>
         <para>
-        HTML �� SGML �����α��Ѥ�(�Ǥ�ͭ̾��)����Ǥ���
-        ���Τ����ܼ�Ū�ʥ��󥿥å����� HTML ��Ʊ���Ȥ������Ȥˤʤ�ޤ���
+        HTML は SGML 形式の応用の(最も有名な)一例です。
+        そのため本質的なシンタックスは HTML と同じということになります。
         </para>
 	</footnote>
-�Ǥ����������� HTML �ν�����Ʊ�ͤǤ���
-����Ͽ�ǡ�2��3 ��ŵ��Ū�� SGML �ƥ�ץ졼�Ȥ��⤷�Ƥ����Τǡ�
-������Ŭ�����ڤ��������Ƥ����С��ʤ�Ȥ��ʤ�Ϥ��Ǥ���
+ですが、正しい HTML の書き方と同様です。
+本付録で、2、3 の典型的な SGML テンプレートをメモしておくので、
+それらを適当に切り剥ぎしていけば、なんとかなるはずです。
 </para>
 
 
 <!--  =========================================================  -->
 <sect1>
    <title>
-   SGML �γ�ǰ
+   SGML の概念
    </title>
 
 <para>
-SGML ���ܤ�û��ʸ��(����)���������ݤ˻Ȥ��ޤ���
-ʸ�Ϥ�������¤�򵭽Ҥ��뤿��ε��ʤǤ���
-HTML �Τ�äȸ�̩�ʤ�Τ��ȻפäƲ�������
+SGML は本や短い文書(記事)を作成する際に使われます。
+文章の論理構造を記述するための規格です。
+HTML のもっと厳密なものだと思って下さい。
   <footnote>
   <para>
-  ���Τˤϡ�SGML �ΰ����˥ե����ޥå������Ǥ����Τ�����Ρפ� HTML �Ǥ���
-  HTML �������Ϥ뤫��ͭ̾�ˤʤäƤ��ޤä��Τǡ�
-  ��HTML �Τ�äȸ�̩�ʤ�ΡġפȤ��ä��������ɤ�����ޤ� :)
+  正確には「SGML の一部にフォーマッタの要素が合体したもの」が HTML です。
+  HTML の方がはるかに有名になってしまったので、
+  「HTML のもっと厳密なもの…」といった説明が良くされます :)
   </para>
   </footnote>
 </para>
 
 <para>
-���Ȥ��С����ܡɤȤ�����ǰ��ͤ��Ƥߤޤ���
-�ޤ����ܡɤˤϾϡ���Ȥ��ä�����ñ�̤�����ޤ���
-�����ˤϥѥ饰��դ�����ޤ�����ʸ�ˤϵ������Ĥ����ꡢ
-�ޤʤɤ����߹��ޤ줿�ꤷ�ޤ���
+たとえば、”本”という概念を考えてみます。
+まず”本”には章、節といった構成単位があります。
+節の中にはパラグラフがありますし、文には脚注がついたり、
+図などが挟み込まれたりします。
 </para>
 
 <para>
-�����γ�ǰ�ˤϡ�����ط�������ޤ���
-���Ȥ��Сɾϡɤϡ���ɤ�ޤߤޤ���������ɤϡɾϡɤ�ޤߤޤ���
-�����ơ�ʸ��ɬ���֤���ѥ饰��աפ���ˡ֤���פ�ΤǤ���
+これらの概念には、ある関係があります。
+たとえば”章”は”節”を含みますが、”節”は”章”を含みません。
+そして、文は必ず「あるパラグラフ」の中に「ある」ものです。
 </para>
 
 <para>
-�������ä���ǰ��ɤ�ɽ������٤��������ꤷ����Τ� 
-DTD (Data Type Definition)�Ȥ����ޤ���
+そういった概念をどう表現するべきか？を規定したものが 
+DTD (Data Type Definition)といえます。
 </para>
 
 <para>
-DTD �ϼ�ͳ������Ǥ��ޤ�����������Τ����Ѥʺ�ȤǤ���
-�������ʤ��� ï������ä� DTD ���쥯�����������ˤϤ���Τǡ�
-�����Ȥ��Τ������Ǥ���
-�桹�� DTD �Ȥ��� docbook �Ȥ�����Τ�Ȥ�
+DTD は自由に定義できますが、定義自体が大変な作業です。
+しかしながら 誰かが作った DTD コレクションが世の中にはあるので、
+それを使うのが便利です。
+我々は DTD として docbook というものを使う
    <footnote>
    <para>
-   �桹�� DOCBOOK ���������ͳ�ϴ�ñ�ǡ�
-   ¿���ξ��ǻȤ��Ƥ��뤫��Ǥ���
-   �Ĥޤꡢdocbook �Υ�����񤱤�ͤ��������¿���Ȥ�����̣�Ǥ⤢��ޤ���
+   我々が DOCBOOK を選んだ理由は簡単で、
+   多くの場所で使われているからです。
+   つまり、docbook のタグを書ける人が世の中に多いという意味でもあります。
    </para>
    </footnote>
-���Ȥˤ��Ƥ��ޤ���
+ことにしています。
 </para>
 
 <para>
-DOCBOOK �� OASIS-0PEN.ORG ���ݼ餷�Ƥ��� DTD ���Ǥ���
-����ͭ̾�ʤ�Τǡ��ǥե����ȥ���������ɤȤ��äƤ�褤�Ǥ��礦��
-(�狼��䤹�����ɤ������̤Ȥ���;)��ե���󥹤����饤�꡼�����ܤ�ФƤ��ޤ�����
-�ɥ�����Ȥ�˭�٤Ǥ���
-Free �� Unix �ʤɤ�Ϥ��ᡢ¿���Υץ��������ȤǻȤ��Ƥ��ޤ���
+DOCBOOK は OASIS-0PEN.ORG が保守している DTD 集です。
+非常に有名なもので、デファクトスタンダードといってもよいでしょう。
+(わかりやすいかどうかは別として;)リファレンスがオライリーから本も出ていますし、
+ドキュメントも豊富です。
+Free の Unix などをはじめ、多くのプロジェクトで使われています。
 </para>
 
 <para>
-�ĤޤꡢSGML ��Ȥ����Ȥ����������ΰյ���
-�֤�����Ȥʤ��Ρפ˵��ʲ��ʤ����϶��������Ȥ������ȤǤ���
-����� SGML �ι�ʸ�ˤ�뵬���Ȥ�����̣�ǤϤ���ޤ���
-���복ǰ�˽������Ȥ˶�������褦�Ȥ������ȤǤ���
+つまり、SGML を使うことで得られる最大の意義は
+「ある基準となるもの」に規格化ないしは強制されるということです。
+これは SGML の構文による規制という意味ではありません。
+ある概念に従うことに強制されようということです。
 </para>
 
 <para>
-�����ǡɳ�ǰ�ɤȤ��äƤ���ΤǤ��äơ�
-�ɸ��ɤ��ɤˤĤ��ƤϤդ�Ƥ��ʤ����Ȥ����դ��Ʋ�������
-���Ȥ��� HTML �Ǥϳ�ǰ�ȸ��ɤ���(�ष���ռ�Ū��)�Ϥä���ʬΥ���Ƥ��ޤ���
+ここで”概念”といっているのであって、
+”見栄え”についてはふれていないことに注意して下さい。
+たとえば HTML では概念と見栄えは(むしろ意識的に)はっきり分離していません。
 </para>
 
 <para>
-���ɤ��� DTD �Ȥ��̤β������������ޤ���
-�̾凉�����륷���ȤȤ�����ΤǤ���
-HTML 4.0 �� CSS ��Ʊ����ǰ�Ǥ���
+見栄えは DTD とは別の何かで定義されます。
+通常スタイルシートというものです。
+HTML 4.0 の CSS と同じ概念です。
 </para>
 
 <para>
-�������륷���Ȥε��Ҥˤ�ץ�����ߥ󥰸��줬ɬ�פǤ���
-docbook �Ǥ� schema (lisp �ΰ��) �١�����
+スタイルシートの記述にもプログラミング言語が必要です。
+docbook では schema (lisp の一種) ベースの
 DSSSL (Document Style Semantics and Specification Language)
-��Ȥ��ޤ���
+を使います。
 </para>
 
 <para>
-�ޤ� SGML �Ǥ�������¤�������Ҥ��ʤ��Τǡ�
-���ɤ��ϥ���С�������Ǥɤ��ȤǤ�ʤ�ޤ���
-HTML���ƥ����ȡ�ROFF��PS��PDF��RTF ��Ϥ��ᡢ
-���������ʤ�Τ��Ѵ������������Ѱդ���Ƥ��ޤ���
+また SGML では論理構造しか記述しないので、
+見栄えはコンバータ次第でどうとでもなります。
+HTML、テキスト、ROFF、PS、PDF、RTF をはじめ、
+いろいろなものへ変換するやり方が用意されています。
 </para>
 
 
@@ -136,16 +136,16 @@ HTML���ƥ����ȡ�ROFF��PS��PDF��RTF ��Ϥ��ᡢ
 <!--  =========================================================  -->
 <sect1 id="book.sgml">
 	<title>
-	��( book )�����Υƥ�ץ졼��
+	本( book )形式のテンプレート
 	</title>
 
 <para>
-docbook DTD �ˤ�
-book �� article �Ȥ��ä���ɽŪ�ʷ����ˤĤ��Ƥ����������ޤ���
+docbook DTD には
+book や article といった代表的な形式についての定義があります。
 </para>
 
 <para>
-book ���������ŵ��Ū�� SGML �Υƥ�ץ졼�Ȥϼ��Τ褦�ˤʤ�ޤ���
+book スタイルの典型的な SGML のテンプレートは次のようになります。
 
 <screen>
 &lt;!doctype book public "-//OASIS//DTD DocBook V3.1//EN" [
@@ -159,14 +159,14 @@ book ���������ŵ��Ū�� SGML �Υƥ�ץ졼�Ȥϼ��Τ褦�ˤʤ�ޤ���
   &lt;toc&gt;&lt;/toc&gt;
 
   &lt;part&gt;
-	&lt;title&gt; �����ȥ� &lt;/title&gt;
+	&lt;title&gt; タイトル &lt;/title&gt;
 	&lt;partintro&gt;
 	&lt;para&gt;
-	�ܥѡ��Ȥϡ��ܻؤ��Ƥ��ޤ���
+	本パートは…目指しています。
 	&lt;/para&gt;
 	&lt;/partintro&gt;
 
-	&lt;!-- �ʲ����ƾϤ��¤� --&gt;
+	&lt;!-- 以下、各章が並ぶ --&gt;
 	&amp;overview;
   &lt;/part&gt;
 &lt;/book&gt;
@@ -174,35 +174,35 @@ book ���������ŵ��Ū�� SGML �Υƥ�ץ졼�Ȥϼ��Τ褦�ˤʤ�ޤ���
 </para>
 
 <para>
-part �� title ��ʸ���̤�ΰ�̣�Ǥ���
+part や title は文字通りの意味です。
 </para>
 
 <para>
-���������ܤ���٤��ϡ�SYSTEM �Ȥ���������ɤΤ��롢
-2 ���ܤǤ���
-����� include.sgml ���ɤ߹���( include ����)̿��Ǥ���
-C ����� #include ��
-perl �� require() ��Ʊ�ͤ�Ư���򤷤Ƥ��ޤ���
+ここで注目するべきは、SYSTEM というキーワードのある、
+2 行目です。
+これは include.sgml を読み込む( include する)命令です。
+C 言語の #include や
+perl の require() と同様の働きをしています。
 </para>
 
 <para>
-����ˡ� include.sgml ����Ǥϼ��Τ褦��̿�᤬�������Ƥ��ޤ���
+さらに、 include.sgml の中では次のような命令が定義されています。
 
 <screen>
-&lt;!-- include ���� SGML �ե����뷲 --&gt;
+&lt;!-- include する SGML ファイル群 --&gt;
 &lt;!entity bookinfo  SYSTEM "bookinfo.sgml"&gt;
 &lt;!entity overview  SYSTEM "overview.sgml"&gt;
 </screen>
 
-����������ˤ��
+これらの定義により
 &amp;bookinfo;
-̿���
+命令で
 bookinfo.sgml
-�� include �����褦�ˤʤ�ޤ���
+が include されるようになります。
 
-���Τ褦�ˤ��ơ�ʸ�����Τ�
-include ����٤�����ե������
-ʬΥ���뤳�Ȥ��Ǥ��ޤ���
+このようにして、文書本体と
+include するべき定義ファイルを
+分離することができます。
 </para>
 
 </sect1>
@@ -211,7 +211,7 @@ include ����٤�����ե������
 <!--  =========================================================  -->
 <sect1>
 	<title>
-	HTML �� &lt;UL&gt; ����
+	HTML の &lt;UL&gt; 相当
 	</title>
 
 <screen>
@@ -219,13 +219,13 @@ include ����٤�����ե������
 
    &lt;listitem&gt;
 	&lt;para&gt;
-		�����ƥࣱ
+		アイテム１
 	&lt;/para&gt;
    &lt;/listitem&gt;
 
    &lt;listitem&gt;
 	&lt;para&gt;
-		�����ƥࣲ
+		アイテム２
 	&lt;/para&gt;
    &lt;/listitem&gt;
 
@@ -233,45 +233,45 @@ include ����٤�����ե������
 </screen>
 
 <para>
-���Ȥ���
+たとえば
 
 <screen>
 &lt;itemizedlist&gt;
 
    &lt;listitem&gt;
 	&lt;para&gt;
-		���󤱤�Ϥ������Ĥ�
+		けんけんはきたきつね
 	&lt;/para&gt;
    &lt;/listitem&gt;
 
    &lt;listitem&gt;
 	&lt;para&gt;
-		��ɤ�ɤϤФ󤶤��٥�
+		るどるどはばんざいベア
 	&lt;/para&gt;
    &lt;/listitem&gt;
 
 &lt;/itemizedlist&gt;
 </screen>
 
-�ϼ��Τ褦�ˤʤ�ޤ���
+は次のようになります。
 
 <itemizedlist>
    <listitem>
-	<para>		���󤱤�Ϥ������Ĥ�	</para>
+	<para>		けんけんはきたきつね	</para>
    </listitem>
    <listitem>
-	<para>		��ɤ�ɤϤФ󤶤��٥�	</para>
+	<para>		るどるどはばんざいベア	</para>
    </listitem>
 </itemizedlist>
 
-�����դΥ����ƥ�� orderedlist �Ǥ���
+数字付のアイテムは orderedlist です。
 
 <orderedlist>
    <listitem>
-	<para>		���󤱤�Ϥ������Ĥ�	</para>
+	<para>		けんけんはきたきつね	</para>
    </listitem>
    <listitem>
-	<para>		��ɤ�ɤϤФ󤶤��٥�	</para>
+	<para>		るどるどはばんざいベア	</para>
    </listitem>
 </orderedlist>
 
@@ -282,30 +282,30 @@ include ����٤�����ե������
 
 <!--  =========================================================  -->
 <sect1>
-	<title> HTML �� &lt;TABLE&gt; ���� </title>
+	<title> HTML の &lt;TABLE&gt; 相当 </title>
 
 <screen>
 &lt;para&gt;
   &lt;table&gt;
-    &lt;title&gt; �ơ��֥�Υ����ȥ� &lt;/title&gt;
+    &lt;title&gt; テーブルのタイトル &lt;/title&gt;
     &lt;tgroup cols=2&gt;
 
       &lt;thead&gt;
         &lt;row&gt;
-          &lt;entry&gt; ���� 		&lt;/entry&gt;
-          &lt;entry&gt; ��		&lt;/entry&gt;
+          &lt;entry&gt; キー 		&lt;/entry&gt;
+          &lt;entry&gt; 値		&lt;/entry&gt;
         &lt;/row&gt;
       &lt;/thead&gt;
 
       &lt;tbody&gt;
         &lt;row&gt;
-          &lt;entry&gt; ���� 1 		&lt;/entry&gt;
-          &lt;entry&gt; �� 1		&lt;/entry&gt;
+          &lt;entry&gt; キー 1 		&lt;/entry&gt;
+          &lt;entry&gt; 値 1		&lt;/entry&gt;
         &lt;/row&gt;
 
         &lt;row&gt;
-          &lt;entry&gt; ���� 2  	&lt;/entry&gt;
-          &lt;entry&gt; �� 2		&lt;/entry&gt;
+          &lt;entry&gt; キー 2  	&lt;/entry&gt;
+          &lt;entry&gt; 値 2		&lt;/entry&gt;
         &lt;/row&gt;
       &lt;/tbody&gt;
 
@@ -315,7 +315,7 @@ include ����٤�����ե������
 </screen>
 
 <para>
-���Ȥ���
+たとえば
 
 <screen>
 &lt;para&gt;
@@ -325,20 +325,20 @@ include ����٤�����ե������
 
       &lt;thead&gt;
         &lt;row&gt;
-          &lt;entry&gt; ̾�� 		&lt;/entry&gt;
-          &lt;entry&gt; ����		&lt;/entry&gt;
+          &lt;entry&gt; 名前 		&lt;/entry&gt;
+          &lt;entry&gt; 説明		&lt;/entry&gt;
         &lt;/row&gt;
       &lt;/thead&gt;
 
       &lt;tbody&gt;
         &lt;row&gt;
-          &lt;entry&gt; ���󤱤�	&lt;/entry&gt;
-          &lt;entry&gt; �������Ĥ�	&lt;/entry&gt;
+          &lt;entry&gt; けんけん	&lt;/entry&gt;
+          &lt;entry&gt; きたきつね	&lt;/entry&gt;
         &lt;/row&gt;
 
         &lt;row&gt;
-          &lt;entry&gt; ��� 		&lt;/entry&gt;
-          &lt;entry&gt; �Ф󤶤��٥�	&lt;/entry&gt;
+          &lt;entry&gt; るど 		&lt;/entry&gt;
+          &lt;entry&gt; ばんざいベア	&lt;/entry&gt;
         &lt;/row&gt;
       &lt;/tbody&gt;
 
@@ -347,28 +347,28 @@ include ����٤�����ե������
 &lt;/para&gt;
 </screen>
 
-�ϼ��Τ褦�ˤʤ�ޤ���
+は次のようになります。
 
   <table>
-    <title> �ơ��֥�θ��� </title>
+    <title> テーブルの見本 </title>
     <tgroup cols=2>
 
       <thead>
         <row>
-          <entry> ̾�� 		</entry>
-          <entry> ����		</entry>
+          <entry> 名前 		</entry>
+          <entry> 説明		</entry>
         </row>
       </thead>
 
       <tbody>
         <row>
-          <entry> ���󤱤�	</entry>
-          <entry> �������Ĥ�	</entry>
+          <entry> けんけん	</entry>
+          <entry> きたきつね	</entry>
         </row>
 
         <row>
-          <entry> ��� 		</entry>
-          <entry> �Ф󤶤��٥�	</entry>
+          <entry> るど 		</entry>
+          <entry> ばんざいベア	</entry>
         </row>
       </tbody>
 
@@ -380,61 +380,61 @@ include ����٤�����ե������
 
 
 
-<!--                �ץ�����ߥ󥰡��ġ��뷲      -->
+<!--                プログラミング、ツール群      -->
 <sect1>
-<title> �ġ��뷲 </title>
+<title> ツール群 </title>
 
 <para>
-SGML �� HTML �ʤɤ��������뤿��ˡ������Ĥ��Υġ��뤬ɬ�פǤ���
-�ޤ� DTD �� DSL �ε���ʸ�񷲤�ɬ�ܤǤ���
-�����ϤȤ��Ƥ� openjade �� opensp
+SGML を HTML などに翻訳するために、いくつかのツールが必要です。
+また DTD と DSL の規格文書群も必須です。
+処理系としては openjade と opensp
 	<footnote>
 	<para>
-	opensp �� openjade �ѥå������˴ޤޤ�Ƥ��ޤ���
+	opensp は openjade パッケージに含まれています。
 	</para>
 	</footnote>
-��ɬ�ܤΥץ������Ǥ��礦��
-����¾�ϥ��ץ���ʥ�ǡ��Ƽ��������ˤ���Ф褤�褦�Ǥ���
+が必須のプログラムでしょう。
+その他はオプショナルで、各自が好きにすればよいようです。
 </para>
 
 <para>
-&fml8; �Ǥϡ�
-�ʲ��Υץ�������Ȥä� HTML ��ƥ����ȥե������������Ƥ��ޤ���
+&fml8; では、
+以下のプログラムを使って HTML やテキストファイルを作成しています。
 <itemizedlist>
 
    <listitem>
 	<para>
-           openjade       1.3 �ʹ�
+           openjade       1.3 以降
 	</para>
    </listitem>
 
    <listitem>
 	<para>
-           opensp         1.3.4 �ʹ�
+           opensp         1.3.4 以降
 	</para>
    </listitem>
 
 </itemizedlist>
-¿���� OS �ǤϤ����Υץ���������°�Υѥå����������ƥ�Ǵ�ñ��
-���󥹥ȡ���Ǥ���Ǥ��礦��
+多くの OS ではこれらのプログラムを附属のパッケージシステムで簡単に
+インストールできるでしょう。
 </para>
 
 <para>
-�ޤ���SGML ������Ѵ��ˤ� fml/doc/share/sgml/ �ˤ���
-fml.dtd �� fml.dsl ������Ȥ��ƻȤäƤ��ޤ���
-�� Makefile ��ˡ������Υե������ƥġ���Ǥɤ��Ȥ��������
-(openjade ��Ϳ���륪�ץ���� -c �� -d ���ץ����)�����Ҥ���Ƥ��ޤ���
+また、SGML からの変換には fml/doc/share/sgml/ にある
+fml.dtd と fml.dsl を定義として使っています。
+各 Makefile 内に、これらのファイルを各ツールでどう使うかの定義
+(openjade に与えるオプション -c や -d オプション)が記述されています。
 </para>
 
 <!--
 <warning>
 <para>
-NetBSD 1.5-stable ����(����Ӥ�������ΥС������)���
-openjade �� compile ����ˤ� unproven-pthreads ��ɬ�פǤ�����
-������ä������Ѥ� include �ե����뤬�ĤäƤ���
-openjade �򤦤ޤ� compile �Ǥ��ʤ����Ȥ�����ޤ�����
+NetBSD 1.5-stable 系列(およびそれ以前のバージョン)上で
+openjade を compile するには unproven-pthreads が必要ですが、
+以前作った時の変な include ファイルが残っていて
+openjade をうまく compile できないことがありました。
 
-���ޤ������ʤ����Ϥޤä���ˤ����������ľ���Ƥߤޤ��礦��
+うまくいかない時はまっさらにして全部やり直してみましょう。
 </para>
 </warning>
 -->
@@ -444,12 +444,12 @@ openjade �򤦤ޤ� compile �Ǥ��ʤ����Ȥ�����ޤ�����
 <!--
 <sect1>
    <title>
-   ��: SGML ���� HTML ���� (sgmltools ��Ȥ���)
+   例: SGML から HTML を作る (sgmltools を使う例)
    </title>
 
 <warning>
 <para>
-obsolete �Ǥ�(���Ǥ� sgmltools �ϻȤäƤ��ޤ���)��
+obsolete です(すでに sgmltools は使っていません)。
 </para>
 </warning>
 
@@ -457,25 +457,25 @@ obsolete �Ǥ�(���Ǥ� sgmltools �ϻȤäƤ��ޤ���)��
 <link linkend="book.sgml">
 book.sgml
 </link>
-���� html �ե��������ˤ� sgmltools �򼡤Τ褦�˼¹Ԥ��ޤ���
+から html ファイルを作るには sgmltools を次のように実行します。
 <screen>
 % sgmltools -b html book.sgml
 </screen>
-������ư���С�
-��������� book/ �ǥ��쥯�ȥ�β��� HTML �ե����뤬���������Ϥ��Ǥ���
+正しく動けば、
+これだけで book/ ディレクトリの下に HTML ファイルが作成されるはずです。
 </para>
 
 <para>
-�⤷���ȼ��Υ��������� DSSSL �Υե��������ꤹ��ɬ�פ������
+もし、独自のカタログや DSSSL のファイルを指定する必要があれば
 <screen>
 % sgmltools -b html -j '-c /some/where/catalog -d /some/where/your.dsl' book.sgml
 </screen>
-�ʤɤȤ��ޤ���
+などとします。
 -j
-�� openjade ��Ϳ���륪�ץ�������ꤷ�Ƥ��ޤ���
+は openjade に与えるオプションを指定しています。
 -c
-�ǥ�����������ꤷ�ʤ���硢
-sgmltools �� /etc/sgml/catalog �ե������Ȥ��ޤ���
+でカタログを指定しない場合、
+sgmltools は /etc/sgml/catalog ファイルを使います。
 </para>
 
 </sect1>
@@ -485,34 +485,34 @@ sgmltools �� /etc/sgml/catalog �ե������Ȥ��ޤ���
 <!--  =========================================================  -->
 <sect1>
 	<title>
-	���ɤ����ѹ�����
+	見栄えを変更する
 	</title>
 
 <para>
-SGML ������Ū�ʹ�¤�򵭽Ҥ��Ƥ������Ǥ���
-HTML �γƥڡ����� URL ��Ĥ������Ȥ���������Ĥ������Ȥ��ä�
-"���ɤ��ε���"�� SGML ��ľ���ѹ����뤳�ȤϤǤ��ޤ���
+SGML は論理的な構造を記述している言語です。
+HTML の各ページに URL をつけたいとか、画像をつけたいといった
+"見栄えの記述"を SGML で直接変更することはできません。
 </para>
 
 <para>
-���ɤ��� DSL �ˤ�국�Ҥ򤹤뤳�Ȥˤʤ�ޤ���
-�������ʤ��顢DSL ���ܼ�Ū�� LISP (List Processor) ����ʤΤǡ�
-LISP ���Τ�ʤ��Ȥ���äȼ꤬�Фʤ��Ǥ��礦��
+見栄えは DSL により記述をすることになります。
+しかしながら、DSL は本質的に LISP (List Processor) 言語なので、
+LISP を知らないとちょっと手が出ないでしょう。
 </para>
 
 <para>
-���ɤ���ï������ĥ�ä���̤����Ȥ��Ȥ������ȤʤΤ��⤷��ޤ���
+見栄えは誰かが頑張った結果だけ使えということなのかもしれません。
 </para>
 
 <para>
-���ʤߤ� &fml8; �� DSL �ε��Ҥ�
+ちなみに &fml8; の DSL の記述は
 
    <ulink url="../../../fml/doc/share/sgml/fml.dsl">
    fml/doc/share/sgml/fml.dsl
    </ulink>
 
-�ˤ���ޤ���
-�������ä���Τ�񤫤ʤ��ȸ��ɤ����Ѥ��뤳�Ȥ��Ǥ��ޤ��� ;)
+にあります。
+こういったものを書かないと見栄えを変えることができません ;)
 </para>
 
 </sect1>
@@ -520,35 +520,35 @@ LISP ���Τ�ʤ��Ȥ���äȼ꤬�Фʤ��Ǥ��礦��
 
 <sect1>
 	<title>
-	����¾�ξ���
+	その他の情報源
 	</title>
 
 <para>
-SGML �ν����ˤĤ��Ƥ�
+SGML の書き方については
 
 	<ulink url="http://www.freebsd.org/tutorials/docproj-primer/index.html">
-	FreeBSD �ν鿴�Ը������塼�ȥꥢ��
+	FreeBSD の初心者向けチュートリアル
 	</ulink>
 
-�ʤɤ򻲾Ȥ��Ʋ�������
+などを参照して下さい。
 </para>
 
 <para>
-ɬ�פʥġ���Υ��󥹥ȡ���ˤĤ��Ƥ�
+必要なツールのインストールについては
         <ulink url="http://www.linuxdoc.org/HOWTO/mini/DocBook-Install/">
         http://www.linuxdoc.org/HOWTO/mini/DocBook-Install/
 	</ulink>
-�򻲾Ȥ��Ʋ�������
+を参照して下さい。
 </para>
 
 <para>
-SGML �Υ����ΰ�����
+SGML のタグの一覧は
 
 	<ulink url="http://www.oasis-open.org/docbook/documentation/reference/html/docbook.html">
 	DOCBOOK definitive guide (O'reilly)
 	</ulink>
 
-�Υ���饤���Ǥ򻲾Ȥ���Τ������Ǥ���
+のオンライン版を参照するのが便利です。
 </para>
 
 </sect1>

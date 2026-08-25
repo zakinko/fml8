@@ -6,65 +6,65 @@
 
 			fml5 project
 
-¡û ´ðËÜÍýÇ°
+â—‹ åŸºæœ¬ç†å¿µ
 
-	(²¾¾Î) fml5 == Fml Modular Listmanager based on perl 5
+	(ä»®ç§°) fml5 == Fml Modular Listmanager based on perl 5
 		(recursive definition)
 
-	sendmail -> postfix Åª¤ÊÃÖ¤­´¹¤¨¥×¥í¥°¥é¥à
-	Îã¤¨¤Ð
-		/etc/aliaes ¤ä .forward ¤Ï¤½¤Î¤Þ¤Þ»È¤¤¤Ä¤Å¤±¤é¤ì¤ë
-		¤·¤«¤· sendmail.cf ¤Ï²ò¼á¤·¤Ê¤¤¤È¤¤¤Ã¤¿¥¤¥á¡¼¥¸
+	sendmail -> postfix çš„ãªç½®ãæ›ãˆãƒ—ãƒ­ã‚°ãƒ©ãƒ 
+	ä¾‹ãˆã°
+		/etc/aliaes ã‚„ .forward ã¯ãã®ã¾ã¾ä½¿ã„ã¤ã¥ã‘ã‚‰ã‚Œã‚‹
+		ã—ã‹ã— sendmail.cf ã¯è§£é‡ˆã—ãªã„ã¨ã„ã£ãŸã‚¤ãƒ¡ãƒ¼ã‚¸
 
 		/var/spool/ml
-		/var/spool/ml/MLÌ¾
+		/var/spool/ml/MLå
 
-	¤È¤¤¤¦¹½Â¤¤Ï»Ä¤·¤¿¤¤¤È¤ª¤â¤¦¤¬¡¢
-	¤½¤ì°Ê³°¤Î¸ß´¹À­¤òÊÝ¾Ú¤¹¤ë¤«¤Ï¤«¤Ê¤êÉÔÌÀ
+	ã¨ã„ã†æ§‹é€ ã¯æ®‹ã—ãŸã„ã¨ãŠã‚‚ã†ãŒã€
+	ãã‚Œä»¥å¤–ã®äº’æ›æ€§ã‚’ä¿è¨¼ã™ã‚‹ã‹ã¯ã‹ãªã‚Šä¸æ˜Ž
 
-	Q: ?     ~¥æ¡¼¥¶Ì¾/fml/MLÌ¾
-	   suEXEC ¤ß¤¿¤¤¤Ê¤â¤Î¤«¤¤?
+	Q: ?     ~ãƒ¦ãƒ¼ã‚¶å/fml/MLå
+	   suEXEC ã¿ãŸã„ãªã‚‚ã®ã‹ã„?
 
-		¥æ¡¼¥¶¤¬»à¤Ë¤½¤¦¤Ë¤¤¤ë¥µ¡¼¥Ð¾å¤Ç¤Ï uniqueness ¤ò¥Á¥§¥Ã
-		¥¯¤¹¤ë¤Î¤¬¤È¤Æ¤âÂçÊÑ¤½¤¦¡©
+		ãƒ¦ãƒ¼ã‚¶ãŒæ­»ã«ãã†ã«ã„ã‚‹ã‚µãƒ¼ãƒä¸Šã§ã¯ uniqueness ã‚’ãƒã‚§ãƒƒ
+		ã‚¯ã™ã‚‹ã®ãŒã¨ã¦ã‚‚å¤§å¤‰ãã†ï¼Ÿ
 
 
-¡û fml.pl ¤Ï wrapper ¤Ç
+â—‹ fml.pl ã¯ wrapper ã§
 
 	/usr/local/libexec/fml/$VERSION/ ...
 
-	LDAP ¤È¤« SQL ¤ò¤·¤ã¤Ù¤ì¤Æ¤Û¤·¤¤¤Ç¤¹¤Ê > Netscape
+	LDAP ã¨ã‹ SQL ã‚’ã—ã‚ƒã¹ã‚Œã¦ã»ã—ã„ã§ã™ãª > Netscape
 
 
-¡û ¥á¥¤¥ó¥×¥í¥°¥é¥à¥Ç¥£¥ì¥¯¥È¥ê³¬ÁØ¤ÎÎã
-	( ¸½ºß¤Î /usr/local/local/fml ¤Ë¤¢¤¿¤ë¤â¤Î )
-	ports, packages, RPM, .deb ¥Õ¥ì¥ó¥É¥ê¥£¤Ë(?)
+â—‹ ãƒ¡ã‚¤ãƒ³ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªéšŽå±¤ã®ä¾‹
+	( ç¾åœ¨ã® /usr/local/local/fml ã«ã‚ãŸã‚‹ã‚‚ã® )
+	ports, packages, RPM, .deb ãƒ•ãƒ¬ãƒ³ãƒ‰ãƒªã‚£ã«(?)
 
    /usr/local/libexec/fml/
 
-	/usr/local/libexec/fml/distribute		(ÇÛÁ÷¥×¥í¥°¥é¥à)
-	/usr/local/libexec/fml/command		(¥³¥Þ¥ó¥É½èÍý¥×¥í¥°¥é¥à)
-	/usr/local/libexec/fml/mead			(¥¨¥é¡¼²òÀÏ)
+	/usr/local/libexec/fml/distribute		(é…é€ãƒ—ãƒ­ã‚°ãƒ©ãƒ )
+	/usr/local/libexec/fml/command		(ã‚³ãƒžãƒ³ãƒ‰å‡¦ç†ãƒ—ãƒ­ã‚°ãƒ©ãƒ )
+	/usr/local/libexec/fml/mead			(ã‚¨ãƒ©ãƒ¼è§£æž)
 	/usr/local/libexec/fml/confirmd
 
-		Ãí: --ctladdr ¤Ï¤Ä¤«¤ï¤Ê¤¤¡£¤Ç¤­¤ë¤À¤± DO NOT PARSE
-		    ¤Ç¤Ê¤¤¤Èµ¡³£Åª¤Ê½èÍý¤¬¤·¤Ë¤¯¤¤¤¿¤á
-		   # Îã¤¨¤Ð CGI ¤Ç¤Ï include-ctl ¥Õ¥¡¥¤¥ë¤ÎÊÔ½¸¤ÎºÝ
+		æ³¨: --ctladdr ã¯ã¤ã‹ã‚ãªã„ã€‚ã§ãã‚‹ã ã‘ DO NOT PARSE
+		    ã§ãªã„ã¨æ©Ÿæ¢°çš„ãªå‡¦ç†ãŒã—ã«ãã„ãŸã‚
+		   # ä¾‹ãˆã° CGI ã§ã¯ include-ctl ãƒ•ã‚¡ã‚¤ãƒ«ã®ç·¨é›†ã®éš›
 		   s/distribute/command/g
-		   ¤¹¤ë¤À¤±¤ÎÊý¤¬³Ú¤Ê¤É¤È¤¤¤Ã¤¿¶ñ¹ç(?)
+		   ã™ã‚‹ã ã‘ã®æ–¹ãŒæ¥½ãªã©ã¨ã„ã£ãŸå…·åˆ(?)
 
    /usr/local/libexec/fml/emul/
 
 	/usr/local/libexec/fml/emul/fml.pl
-		--ctladdr ¤Ê¤·¤Ï /usr/local/libexec/fml/distribute ¤ò
-		--ctladdr ¤Ä¤­¤Ï /usr/local/libexec/fml/command ¤ò¼Â¹Ô¤¹¤ë
+		--ctladdr ãªã—ã¯ /usr/local/libexec/fml/distribute ã‚’
+		--ctladdr ã¤ãã¯ /usr/local/libexec/fml/command ã‚’å®Ÿè¡Œã™ã‚‹
 
 	/usr/local/libexec/fml/emul/XXX
-	 	Îã: emul/listserv
+	 	ä¾‹: emul/listserv
 
 
    /usr/local/lib/fml/
-		¥É¥­¥å¥á¥ó¥È¤ä perl module ¤Ê¤É¤ò¤ª¤¯ ?
+		ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã‚„ perl module ãªã©ã‚’ãŠã ?
 
 		/usr/local/lib/fml/doc/text/
 		/usr/local/lib/fml/doc/html/
@@ -89,59 +89,59 @@
 		/usr/local/lib/fml/contrib/
 
 
-¡û ´ðËÜÀßÄê¤ÎÎã
+â—‹ åŸºæœ¬è¨­å®šã®ä¾‹
 
-   ( makefml ¤¬»È¤¦¤¿¤á, virtual domain/host ¤ò¹ÍÎ¸¤¹¤ë )
+   ( makefml ãŒä½¿ã†ãŸã‚, virtual domain/host ã‚’è€ƒæ…®ã™ã‚‹ )
 
 	/etc/fml/$domain/fml.cf
 	/etc/fml/$domain/cgi.cf
 
-	¤³¤¦¤¹¤ì¤Ð
+	ã“ã†ã™ã‚Œã°
 		# makefml newml elena@fml.org
 		# makefml newml elena@nuinui.net
-	¤È¤¤¤Ã¤¿Áàºî¤Ç¥Ð¡¼¥Á¥ã¥ë¥É¥á¥¤¥ó¤Î¾ì¹ç¤Ë´ÊÃ±¤Ë¤Ç¤­¤Ê¤¤¤«?
+	ã¨ã„ã£ãŸæ“ä½œã§ãƒãƒ¼ãƒãƒ£ãƒ«ãƒ‰ãƒ¡ã‚¤ãƒ³ã®å ´åˆã«ç°¡å˜ã«ã§ããªã„ã‹?
 
    elena ML
-	/var/spool/ml/elena/ÀßÄê¥Õ¥¡¥¤¥ë (²¾¾Î: config.cf )
-		# ¤â¤Ã¤ÈÎÉ¤¤Ì¾Á°Êç½¸Ãæ
+	/var/spool/ml/elena/è¨­å®šãƒ•ã‚¡ã‚¤ãƒ« (ä»®ç§°: config.cf )
+		# ã‚‚ã£ã¨è‰¯ã„åå‰å‹Ÿé›†ä¸­
 
 
-   :include:/var/spool/ml/elena ¤Ï
+   :include:/var/spool/ml/elena ã¯
 
 	"| /usr/local/libexec/fml/distribute /var/spool/ml/elena"
 
-   :include:/var/spool/ml/elena-ctl ¤Ï
+   :include:/var/spool/ml/elena-ctl ã¯
 
 	"| /usr/local/libexec/fml/command /var/spool/ml/elena"
 
-   ¤ò¸Æ¤Ó½Ð¤¹¡£
+   ã‚’å‘¼ã³å‡ºã™ã€‚
 
-   Q: ¼Â¤Ï¼ÂÂÎ¤Ï1¤Ä¤Ç¡¢$0 ¤Ç½èÍý¤¬Ê¬¤«¤ì¤ë¤è¤¦¤Ë¤·¤Æ¤¤¤Æ¤â¤è¤¤
+   Q: å®Ÿã¯å®Ÿä½“ã¯1ã¤ã§ã€$0 ã§å‡¦ç†ãŒåˆ†ã‹ã‚Œã‚‹ã‚ˆã†ã«ã—ã¦ã„ã¦ã‚‚ã‚ˆã„
 
 
-¡û ºÆÍøÍÑ²ÄÇ½À­
+â—‹ å†åˆ©ç”¨å¯èƒ½æ€§
 
-  ¤¿¤È¤¨¤Ð confirmation module ¤ÎÎã
+  ãŸã¨ãˆã° confirmation module ã®ä¾‹
 
-	subscribe ¥¨¥ó¥¸¥ó	---> confirmation module
-	¥â¥Ç¥ì¡¼¥¿		---> confirmation module
+	subscribe ã‚¨ãƒ³ã‚¸ãƒ³	---> confirmation module
+	ãƒ¢ãƒ‡ãƒ¬ãƒ¼ã‚¿		---> confirmation module
 	confirmd		---> confirmation module
 
 		/usr/local/lib/fml/lib/base/Confirm.pm
 
 
-¡û ÀßÄê¥Õ¥¡¥¤¥ë
+â—‹ è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
 
-   ÌäÂêÅÀ
-	perl ¤Ç¤«¤¯¤È parser ¤¬¤«¤±¤Ê¤¤(perl ¤¬½ÀÆð²á¤®¤ë¤«¤é)
-	1/0 ¤Ï¤¤¤ä¤ó¡¢yes/no ¤Î¤Û¤¦¤¬¤Þ¤·
-	ÇÛÎó¤¬É½¸½¤Ç¤­¤Ê¤¤
-	·¿¥Á¥§¥Ã¥¯¤ò¤·¤¿¤¤¤Î¤À¤¬¡Ä
+   å•é¡Œç‚¹
+	perl ã§ã‹ãã¨ parser ãŒã‹ã‘ãªã„(perl ãŒæŸ”è»ŸéŽãŽã‚‹ã‹ã‚‰)
+	1/0 ã¯ã„ã‚„ã‚“ã€yes/no ã®ã»ã†ãŒã¾ã—
+	é…åˆ—ãŒè¡¨ç¾ã§ããªã„
+	åž‹ãƒã‚§ãƒƒã‚¯ã‚’ã—ãŸã„ã®ã ãŒâ€¦
 
 
-   config.cf ¤ÎÎã # ÃÊÍî¶èÀÚ¤ê ( postfix ¤È¤ª¤Ê¤¸·Á¼°¤Ç )
+   config.cf ã®ä¾‹ # æ®µè½åŒºåˆ‡ã‚Š ( postfix ã¨ãŠãªã˜å½¢å¼ã§ )
 
-	# ¤³¤ì¤Ï¼«Æ°ÀßÄê¤µ¤ì¤ë¤Ï¤º
+	# ã“ã‚Œã¯è‡ªå‹•è¨­å®šã•ã‚Œã‚‹ã¯ãš
 	# myhomedir	= /var/spool/ml/elena
 
 	myfqdn		= ahodori.fml.org
@@ -150,31 +150,31 @@
 	mail_list	= elena@$mydomain
 	control_address	= elena-ctl@$mydomain
 
-	# ¥á¥ó¥Ð¡¼¥ê¥¹¥È´Ø·¸
+	# ãƒ¡ãƒ³ãƒãƒ¼ãƒªã‚¹ãƒˆé–¢ä¿‚
 	members_maps		=	$myhomedir/members
 	admin_members_maps	=	$myhomedir/members-admin
 
 	# definition of recipients: fml uses recipient lists in this order
-	# [a-z]+: ¤Î¤¦¤Á file: ¤À¤±¤Ï¾ÊÎ¬¤·¤Æ¤âÎÉ¤¤
-	# ¤³¤ì¤ÇÇÛÎó¤ÎÉ½¸½¤¬¤Ç¤­¤ë
+	# [a-z]+: ã®ã†ã¡ file: ã ã‘ã¯çœç•¥ã—ã¦ã‚‚è‰¯ã„
+	# ã“ã‚Œã§é…åˆ—ã®è¡¨ç¾ãŒã§ãã‚‹
 	recipients_maps = 	$myhomedir/recipients
 				file:$myhomedir/actives
 				mysql:$sysconfdir/mysql.cf
 
 
-	# makefml add ¤ÎºÝ¤Ë¤Ï¤É¤Î maps ¤ò¥¢¥Ã¥×¥Ç¡¼¥È¤¹¤ë¤«?
-	#    ¤¿¤È¤¨¤Ð¥Õ¥¡¥¤¥ë¤ËÄÉ²Ã¤Ç¤¢¤Ã¤Æ¡¢mysql ¤Ø¤Ç¤Ï¤Ê¤¤
-	# XXX ¤³¤ÎÌ¾Á°¤Å¤±¥ë¡¼¥ë¤ÏÎÉ¤¯¤Ê¤¤¤È»×¤¦ > postfix
-	# XXX ¤â¤Ã¤È¤è¤¤Ì¾Á°¤ò
+	# makefml add ã®éš›ã«ã¯ã©ã® maps ã‚’ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã™ã‚‹ã‹?
+	#    ãŸã¨ãˆã°ãƒ•ã‚¡ã‚¤ãƒ«ã«è¿½åŠ ã§ã‚ã£ã¦ã€mysql ã¸ã§ã¯ãªã„
+	# XXX ã“ã®åå‰ã¥ã‘ãƒ«ãƒ¼ãƒ«ã¯è‰¯ããªã„ã¨æ€ã† > postfix
+	# XXX ã‚‚ã£ã¨ã‚ˆã„åå‰ã‚’
 	recipient_database = $myhomedir/recipients
 
 
-	# ¤«¤Ê¤é¤º use_* ¤È *_type ¤¬¤³¤ó¤Ó(¤«?)
+	# ã‹ãªã‚‰ãš use_* ã¨ *_type ãŒã“ã‚“ã³(ã‹?)
 	use_verps	= yes
 	verps_type	= qmail
 
 
-	# ÇÛÁ÷¥â¡¼¥É ( REJECT_POST_HANDLER ¤ò¤ä¤á¤è¤¦ )
+	# é…é€ãƒ¢ãƒ¼ãƒ‰ ( REJECT_POST_HANDLER ã‚’ã‚„ã‚ã‚ˆã† )
 	# distribute_mode	= 	forward
 	distribute_mode		= 	forward_if_moderator_allow
 
@@ -198,7 +198,7 @@
 					reject
 
 
-	# µÕ¤Ë¥â¥Ç¥ì¡¼¥¿ ¤Ï use_moderator (¤Ë¤¹¤ë¤ÈÊÑ¤ÊÎã?)
+	# é€†ã«ãƒ¢ãƒ‡ãƒ¬ãƒ¼ã‚¿ ã¯ use_moderator (ã«ã™ã‚‹ã¨å¤‰ãªä¾‹?)
 	use_moderator		= 	yes
 	moderator_type		= 	otp
 	moderator_maps		= 	$myhomedir/moderators
@@ -209,54 +209,54 @@
 
 
 
-¡û ¥Õ¥Ã¥¯¡©
+â—‹ ãƒ•ãƒƒã‚¯ï¼Ÿ
 
-  ÊÌ°Æ£±
+  åˆ¥æ¡ˆï¼‘
 
 	# hooks
 	hooks			= 	$myhomedir/hooks.ph
 
-  ÊÌ°Æ£²
+  åˆ¥æ¡ˆï¼’
 
 	=head1 configurations
 
-	postfix ¥¹¥¿¥¤¥ë¡Ê¤Ê¤ó¤Ç¤¹¤è¡¢¤³¤ì¤Ï¡Ë
+	postfix ã‚¹ã‚¿ã‚¤ãƒ«ï¼ˆãªã‚“ã§ã™ã‚ˆã€ã“ã‚Œã¯ï¼‰
 
 	=head1 hooks
 	=cut
 
-	# ¸½ºß¤Î LOCAL_CONFIG ¤ÇÊÌ¤ìÌÜ¤Ë¤Ê¤ë¹Ô
+	# ç¾åœ¨ã® LOCAL_CONFIG ã§åˆ¥ã‚Œç›®ã«ãªã‚‹è¡Œ
 	# HOOK
 
 
-¡û Â¿¹ñ¸ì²½
+â—‹ å¤šå›½èªžåŒ–
 
-	¡Ödeveloppers ¤Ï¥á¥Ã¥»¡¼¥¸¤ÎÂ¾¹ñ¸ì²½¤ÏÁ°Äó¤Ë¤·¤Æ¤¯¤ì¤ì¤Ð¤¤¤¤¤À
-	¤±¤Ç¡¢¤Ù¤Ä¤Ë±Ñ¸ì¤Î¸«ËÜ¤ò½ñ¤«¤Ê¤¯¤Æ¤â¤¤¤¤¤Ç¤¹¤è¡Á¤ó¡×
+	ã€Œdeveloppers ã¯ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ä»–å›½èªžåŒ–ã¯å‰æã«ã—ã¦ãã‚Œã‚Œã°ã„ã„ã 
+	ã‘ã§ã€ã¹ã¤ã«è‹±èªžã®è¦‹æœ¬ã‚’æ›¸ã‹ãªãã¦ã‚‚ã„ã„ã§ã™ã‚ˆã€œã‚“ã€
 
-	¤³¤Î»þÂå¡¢ÆüËÜ¿Í¤¬±¿ÍÑ¤·¤Æ¤¤¤Æ¤â¤½¤Î ML ¤Î¥á¥ó¥Ð¡¼¤¬³°¹ñ¿Í¤Î¤Ð
-	¤¢¤¤¤Ï¤¢¤ê¤Þ¤¹¡£¤À¤«¤é¥µ¥Ý¡¼¥È¤·¤¿¤¤¤Ç¤¹¡£
+	ã“ã®æ™‚ä»£ã€æ—¥æœ¬äººãŒé‹ç”¨ã—ã¦ã„ã¦ã‚‚ãã® ML ã®ãƒ¡ãƒ³ãƒãƒ¼ãŒå¤–å›½äººã®ã°
+	ã‚ã„ã¯ã‚ã‚Šã¾ã™ã€‚ã ã‹ã‚‰ã‚µãƒãƒ¼ãƒˆã—ãŸã„ã§ã™ã€‚
 
-	¤Þ¤¿¡¢IETF ¤Ç¤ÏÍèÇ¯¤¢¤¿¤ê¤Ë¡¢¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Ê¤É¤ÎÂ¿¹ñ¸ì²½Ìä
-	Âê¤È¤«¤¢¤ë¤Î¤Ç¡¢MLM (MTA ¤â¤É¤­)¤Ç¤¢¤Ã¤Æ¤â¡¢Â¿¹ñ¸ì¤«¤ÏÉ¬Í×¤È¤ª
-	¤â¤¤¤Þ¤¹¡£¡ô¤Ê¤Ë¤ò¤â¤Ã¤Æ¤¨¤é¡¼¤á¤Ã¤»¡¼¤¸¤«¤Ë¤è¤ê¤Þ¤¹¤±¤É¡Ä
-
-
-¡û ÀßÄê¥Õ¥¡¥¤¥ë¤Î¥í¡¼¥É½ç
+	ã¾ãŸã€IETF ã§ã¯æ¥å¹´ã‚ãŸã‚Šã«ã€ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãªã©ã®å¤šå›½èªžåŒ–å•
+	é¡Œã¨ã‹ã‚ã‚‹ã®ã§ã€MLM (MTA ã‚‚ã©ã)ã§ã‚ã£ã¦ã‚‚ã€å¤šå›½èªžã‹ã¯å¿…è¦ã¨ãŠ
+	ã‚‚ã„ã¾ã™ã€‚ï¼ƒãªã«ã‚’ã‚‚ã£ã¦ãˆã‚‰ãƒ¼ã‚ã£ã›ãƒ¼ã˜ã‹ã«ã‚ˆã‚Šã¾ã™ã‘ã©â€¦
 
 
-	¸½ºß¤Î cf ¤Ç¤¹¤éÀßÄê¤·¤Æ¤ë¹àÌÜ¤¬Â¿¤¹¤®¤ë
-	¡Ö¼Â¤Ï¤³¤ó¤Ê¹àÌÜ¤âconfig.ph¤ÇÀßÄê¤µ¤ì¤Á¤ã¤Ã¤Æ¤¤¤ë¤Î¤Í¡×¤Ï¤À¤á
+â—‹ è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ­ãƒ¼ãƒ‰é †
 
- 	¤¢¤É¤ì¤¹
+
+	ç¾åœ¨ã® cf ã§ã™ã‚‰è¨­å®šã—ã¦ã‚‹é …ç›®ãŒå¤šã™ãŽã‚‹
+	ã€Œå®Ÿã¯ã“ã‚“ãªé …ç›®ã‚‚config.phã§è¨­å®šã•ã‚Œã¡ã‚ƒã£ã¦ã„ã‚‹ã®ã­ã€ã¯ã ã‚
+
+ 	ã‚ã©ã‚Œã™
  	POST_RESTRICTION
  	COMMAND_RESTRICTION
- 	REGISTRATION_TYPE	auto_confirmation (¤È¤«¤«?)
+ 	REGISTRATION_TYPE	auto_confirmation (ã¨ã‹ã‹?)
 
- °Ê³°¤Ï¥Ç¥Õ¥©¥ë¥È¤Î¤Þ¤Þ¤Ë¤·¤¿¤¤¤Ê¤¡¡£
- ¤Ü¤¯¡¢º¹Ê¬¤À¤±¤¬°ì²èÌÌ¤¯¤é¤¤¤¢¤ë¤À¤±¤Ê¤Î¤¬´õË¾¤Ç¤¹¤¥¡£
+ ä»¥å¤–ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã¾ã¾ã«ã—ãŸã„ãªãã€‚
+ ã¼ãã€å·®åˆ†ã ã‘ãŒä¸€ç”»é¢ãã‚‰ã„ã‚ã‚‹ã ã‘ãªã®ãŒå¸Œæœ›ã§ã™ã…ã€‚
 
- ¤È¤¤¤¦¤³¤È¤Ï
+ ã¨ã„ã†ã“ã¨ã¯
 
  	use FML::LoadConfig;
  	my $rcf = new FML::LoadConfig;
@@ -264,6 +264,6 @@
  	$rcf->load( /etc/fml/$DOMAIN/default_config.cf );
  	$rcf->load( /var/spool/ml/elena/config.cf );
 
-  ¤È¤«¤¤¤¦¥í¡¼¥Ç¥£¥ó¥°¤ò¤·¤Ê¤¤¤È¤¤¤±¤Ê¤¤¤è¤¦¤Êµ¤¤¬¤¹¤ë
+  ã¨ã‹ã„ã†ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã‚’ã—ãªã„ã¨ã„ã‘ãªã„ã‚ˆã†ãªæ°—ãŒã™ã‚‹
 
-  ¡ö ¥á¥Ë¥å¡¼¤ÇÌÀ¼¨Åª¤ËÊÑ¹¹¤¹¤ë¤È¡¢¤½¤ì¤À¤±¤Ï¿·¤¿¤ËÉÕ¤±²Ã¤ï¤ë > config.cf
+  ï¼Š ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã§æ˜Žç¤ºçš„ã«å¤‰æ›´ã™ã‚‹ã¨ã€ãã‚Œã ã‘ã¯æ–°ãŸã«ä»˜ã‘åŠ ã‚ã‚‹ > config.cf

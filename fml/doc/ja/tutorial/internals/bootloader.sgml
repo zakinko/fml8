@@ -5,15 +5,15 @@
 
 <chapter id="bootloader">
 	<title>
-	�С�������¸�����褹�뤿��� fml �֡��ȥ�����
+	バージョン依存性を解決するための fml ブートローダ
 	</title>
 
 <para>
-&fml8; �ˤϡ�
-���󥹥ȡ��뤵��Ƥ��� fml �ΥС�������¸�����褹�뤿��ˡ�
-�ܾϤǽҤ٤�֡��ȥ��ȥ�åײ���������ޤ���
+&fml8; には、
+インストールされている fml のバージョン依存性を解決するために、
+本章で述べるブートストラップ過程があります。
 <screen>
-fml (libexec/distribute) �� boot ���Ƥ����ͻ�
+fml (libexec/distribute) が boot していく様子
 
        functions                class
        ----------------------------------------
@@ -37,48 +37,48 @@ fml (libexec/distribute) �� boot ���Ƥ����ͻ�
 
 <sect1 id="bootloader.example.distribute">
 	<title>
-	��: ���������ξ��
+	例: 配送処理の場合
 	</title>
 
 <para>
-���Ȥ������������ξ�硢
-loader ���鼡���ȥ⥸�塼�뤬�ƤФ�Ƥ����ͻҤϼ��Τ褦�ˤʤ�ޤ���
+たとえば配送処理の場合、
+loader から次々とモジュールが呼ばれていく様子は次のようになります。
 </para>
 
 <para>
 /usr/local/libexec/fml/distributre
-(�μ��Τ� /usr/local/libexec/fml/loader)
-��
-/usr/local/etc/fml/main.cf ���ɤߤ��ߡ�
-fml_version �ѿ�����Ȥ��٤��饤�֥��ΥС���������ޤ���
-���Ȥ��� fml_vesrion �� 8.0.0 �ȤʤäƤ���С�
+(の実体は /usr/local/libexec/fml/loader)
+は
+/usr/local/etc/fml/main.cf を読みこみ、
+fml_version 変数から使うべきライブラリのバージョンを決めます。
+たとえば fml_vesrion が 8.0.0 となっていれば、
 /usr/local/lib/fml/8.0.0/
-�ʲ��ˤ���饤�֥���Ȥ��Ȥ��ä����Ǥ���
+以下にあるライブラリを使うといった具合です。
 </para>
 
 <para>
-@INC ������ꤷ���塢
-loader �� FML::Process::Switch ������ɤ���
-$0 (�ץ�����̾)��Ĵ�٤ޤ���
-�ץ�����̾���鼫ʬ�λŻ������������ʤΤǡ�
-FML::Process::Distribute ���饹������ɤ���Ф褤���Ȥ����򤷤ޤ���
-���Υ��饹������ɤ������������˰ܤ�ޤ���
-�����ǡ��ץ�����̾�ȥ����ɤ���٤����饹���б��ط��� 
-/usr/local/etc/fml/defaults/�С������/modules
-(�� /usr/local/etc/fml/defaults/8.0.0/modules)
-���������Ƥ��ޤ���
+@INC を再設定した後、
+loader は FML::Process::Switch をロードし、
+$0 (プロセス名)を調べます。
+プロセス名から自分の仕事は配送処理なので、
+FML::Process::Distribute クラスをロードすればよいことを理解します。
+このクラスをロードし、配送処理に移ります。
+ここで、プロセス名とロードするべきクラスの対応関係は 
+/usr/local/etc/fml/defaults/バージョン/modules
+(例 /usr/local/etc/fml/defaults/8.0.0/modules)
+に定義されています。
 </para>
 
 <para>
-�������ä������ϡ�
-��������
+こういった処理は、
+見かけ上
 FML::Process::Flow::ProcessStart()
-�Ȥ����ؿ������椷�Ƥ��ޤ���
-ProcessStart() �������Ȥ���
+という関数が制御しています。
+ProcessStart() が引数として
 FML::Process::Distribute 
-���֥������Ȥ��Ϥ��졢
+オブジェクトを渡され、
 FML::Process::Distribute
-���֥������Ȥ�¹Ԥ��Ƥ����Ȥ���ή��ˤʤ�ޤ���
+オブジェクトを実行していくという流れになります。
 </para>
 
 </sect1>
@@ -86,7 +86,7 @@ FML::Process::Distribute
 
 <sect1 id="bootloader.classes">
 	<title>
-	FML::Process:: ���饹�γ��ع�¤
+	FML::Process:: クラスの階層構造
 	</title>
 
 <para>
@@ -97,7 +97,7 @@ FML::Process::Mead       >-|    |
                                 |-use-a FML::Parse
                                 |-use-a FML::Config
                                 |-use-a FML::Log
-                                |-use-a  ... ����¾ ...
+                                |-use-a  ... その他 ...
 </screen>
 
 </para>
@@ -106,98 +106,98 @@ FML::Process::Mead       >-|    |
 
 <sect1 id="bootloader.classes2">
 	<title>
-	�ץ������¹Ի����ͻ�
+	プロセス実行時の様子
 	</title>
 
 <itemizedlist>
 
    <listitem>
 	<para>
-	[/usr/local/libexec/fml/loader (wrapper)�μ¹�]
+	[/usr/local/libexec/fml/loader (wrapper)の実行]
 	</para>
 	
 	<para>
-	�����ʳ��Ǥϡ��ޤ� &fml8; Perl �⥸�塼�뷲�����椬�ܤäƤ��ޤ���
-	���Υץ������ϡ�loader ��δؿ� Bootstrap() ��¹Ԥ��ޤ���
+	この段階では、まだ &fml8; Perl モジュール群に制御が移っていません。
+	このプログラムは、loader 内の関数 Bootstrap() を実行します。
 	</para>
 	
 	<para>
-	distribute �ʤ� libexec/ �ʲ��ˤ���ץ�����ෲ�ϡ�
-	�ɤ�⡢���� loader �ؤΥ���ܥ�å���󥯤Ǥ���
-	/usr/local/libexec/fml/ �ʲ��򻲾Ȥ��Ƥ���������
+	distribute など libexec/ 以下にあるプログラム群は、
+	どれも、この loader へのシンボリックリンクです。
+	/usr/local/libexec/fml/ 以下を参照してください。
 	</para>
    </listitem>
 
    <listitem>
 	<para>
-	[loader �� Bootstrap() �ؿ��μ¹�]
+	[loader 内 Bootstrap() 関数の実行]
 	</para>
 	
 	<para>
-	/usr/local/etc/fml/main.cf ���ɤ߹��ߡ�
-	�¹Ԥ���٤� fml �ΥС��������Τ�ޤ���
-	�ޤ���
-	main.cf ���ͤ���
-	@INC (Perl �Υ饤�֥�ꥵ�����ѥ�)������ꤷ��
-	�ɤ߹���٤��饤�֥��ΥС�������¸�����褷�ޤ���
-	default_config.cf.{ja,en} �ϥС�������¸�Ǥ��Τǡ�
-	����ե�������ɤ߹������ˡ�
-	�����ʳ��ǥС�������ɾ�����ʤ���Ф����ޤ���
+	/usr/local/etc/fml/main.cf を読み込み、
+	実行するべき fml のバージョンを知ります。
+	また、
+	main.cf の値から
+	@INC (Perl のライブラリサーチパス)を再設定し、
+	読み込むべきライブラリのバージョン依存性を解決します。
+	default_config.cf.{ja,en} はバージョン依存ですので、
+	設定ファイルを読み込む前に、
+	この段階でバージョンを評価しなければいけません。
 	</para>
 
 	<para>
-	@ARGV (�¹Ԥ��줿�ץ������ΰ���)��ɾ������
-	�ɤΣ̤ͣ� config.cf (����ե�����)�����ɤ߹���٤�������Ƚ�Ǥ��ޤ���
+	@ARGV (実行されたプログラムの引数)を評価し、
+	どのＭＬの config.cf (設定ファイル)群を読み込むべきか？を判断します。
 	</para>
    </listitem>
 
    <listitem>
 	<para>
-	���Τ��ȡ��褦�䤯
+	このあと、ようやく
 	FML::Process::Switch
-	(�С�������¸)���饹������ɤ��ޤ���
+	(バージョン依存)クラスをロードします。
 	</para>
 
 	<para>
-	Bootstrap2() ����� ProcessSwitch() ��¹Ԥ���
-	FML::Process::Flow ��ͳ�ǡ�
-	�����ѡ����ޥ�ɥ᡼���Ѥʤɤγƥץ������������ܤ��Ƥ����ޤ���
+	Bootstrap2() および ProcessSwitch() を実行し、
+	FML::Process::Flow 経由で、
+	配送用、コマンドメール用などの各プロセスへ制御を移していきます。
 	</para>
 	
 	<para>
-	���λ����ǡ�
-	�ɤΥ⥸�塼��(��: FML::Process::Distribute)
-	������ɤ���Τ���ʬ���äƤ��ޤ���
-	FML::Process::Distribute ���֥������Ȥʤɤϡ�
-	FML::Process::Flow �δؿ���ƤӽФ��ݤ˰����Ȥ����Ϥ���Ƥ��ޤ���
+	この時点で、
+	どのモジュール(例: FML::Process::Distribute)
+	をロードするのかは分かっています。
+	FML::Process::Distribute オブジェクトなどは、
+	FML::Process::Flow の関数を呼び出す際に引数として渡されています。
 	</para>
 
    </listitem>
 
    <listitem>
 	<para>
-	FML::Process::Flow ��ͳ�ǡ�	
-	�ƥ⥸�塼��(��: FML::Process::Distribute)
-	�Υ᥽�åɤ�ƤӽФ��ޤ���
+	FML::Process::Flow 経由で、	
+	各モジュール(例: FML::Process::Distribute)
+	のメソッドを呼び出します。
 	</para>
 	
 	<para>
-	FML::Process::Flow ����ˤϡ�
-	�ɤΤ褦�� &fml8; �ץ�������¹Ԥ��뤫�����ʲ�/�������Ƥ��ޤ���
-	������͡��ɤΥץ�������
+	FML::Process::Flow の中には、
+	どのように &fml8; プロセスを実行するかが規格化/定義されています。
+	おおむね、どのプロセスも
 <screen>
-$process = new FML::Process::�ʤˤʤ�;
+$process = new FML::Process::なになに;
 $process->prepare($args);
 $process->verify_request($args);
 $process->run($args);
 $process->finish($args);
 </screen>
-	��¹Ԥ��Ƥ����ޤ���
-	�Τ��ᡢ�ƥץ������ϡ�
-	���줾��ˤĤ���Ŭ���ʥ᥽�åɤ�
-	��FML::Process::�ʤˤʤˡ�
-	�ʲ��Υ��饹���Ѱդ���ɬ�פ�����ޤ���
-	���ߡ��Ǥ⤤���Τǡ����᥽�åɤ������ɬ�פǤ���
+	を実行していきます。
+	のため、各プロセスは、
+	それぞれについて適当なメソッドを
+	「FML::Process::なになに」
+	以下のクラスに用意する必要があります。
+	ダミーでもいいので、全メソッドの定義が必要です。
 	</para>
     </listitem>
 </itemizedlist>
@@ -206,58 +206,58 @@ $process->finish($args);
 
 <sect1 id="bootloader.resolv.mlxxx">
 	<title>
-	����: ml_name �� ml_domain ���ͤϤɤ��ǲ�褹��Τ�����������
+	議論: ml_name と ml_domain の値はどこで解決するのが正しいか？
 	</title>
 
 <para>
-���ߤ�
-��FML::Process::�ʤˤʤˡ�
-�� prepare() �᥽�åɤ�����ǲ�褷�Ƥ��ޤ���
+現在は
+「FML::Process::なになに」
+の prepare() メソッドあたりで解決しています。
 </para>
 
 <para>
-�ʲ���������¤�ˤĤ��Ƥ������/���ܤ������Ǥ���
-������������ä���¤���θ���ơ�
+以下、内部構造についての走り書き/おぼえがきです。
+一応、こういった構造を考慮して、
 prepare()
-�˻��äƤ��Ƥ��ޤ��� 
+に持ってきています。 
 <screen>
 main::Bootstrap()
 
-	main.cf ���� fml �ΥС�������¸�����
+	main.cf から fml のバージョン依存性を解く
 
-	hints ���Ϥ� (CGI �Τ�)	
-		�� CGI ����
-		�������Ϥ����ꤦ��
-		���Τ��ᡢloader �� hints �Ȥ���
-		ml_domain �� ml_name ���ϡ��ɥ����ɤ���Ƥ��롣 
+	hints を渡す (CGI のみ)	
+		◎ CGI だけ
+		嘘の入力がありうる
+		そのため、loader に hints として
+		ml_domain や ml_name がハードコードされている。 
 
 
 main::Bootstrap2()
 ProcessSwitch()
 
-	�Ȥ��⥸�塼��( Process::�ʤ� )����ꤹ��
-		�ɤ߹���٤� cf �ե�����η���ʤʤ�ǡ���
-		�饤�֥��ѥ��η���� @INC �ν����ʤɤ�Ԥ�
+	使うモジュール( Process::なんか )を決定する
+		読み込むべき cf ファイルの決定（なんで？）
+		ライブラリパスの決定や @INC の修正などを行う
 
-	hints ���Ϥ����Ȥ��� (CGI �Τߡ�)	
+	hints を渡す？使う？ (CGI のみ？)	
 
 
 ProcessStart($obj, $args)
 
-   �������ΤΥ�������
+   処理本体のスタート
 
 	new
 
 	prepare
-		ml_name �� ml_domain �η���
-		CGI ��������Ϥ���Ϥ���
-			hints ��Ȥ���(CGI �Τߡ�)	
+		ml_name と ml_domain の決定
+		CGI からの入力を解析する
+			hints を使う？(CGI のみ？)	
 
-		�ɤ߹���٤� cf �ե�����η���
+		読み込むべき cf ファイルの決定
 
 		parse
-			�᡼����ɤ߹���
-			���ޥ�ɥ饤�����Ϥ���
+			メールを読み込む
+			コマンドラインを解析する
 </screen>
 </para>
 

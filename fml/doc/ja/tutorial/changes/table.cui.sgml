@@ -1,22 +1,22 @@
 
-<!-- -*- mode:text coding:euc-jp -*- ����!!! ��ư�������줿�ե����롢��ư�Խ��ػ� !!! -->
+<!-- -*- mode:text coding:euc-jp -*- 注意!!! 自動生成されたファイル、手動編集禁止 !!! -->
 
 <!-- 1 -->
 <row>
 
 <entry>
-�إ�פ�ɽ��
+ヘルプの表示
 </entry>
 
 <entry>
 makefml help ML
-�⤷���� makefml info ML ��¹Ԥ���ȥإ�פ�ɽ������롣
-�ɤ���Ǥ�Ʊ��ư�
-ɽ���κݤˡ��Ķ��ѿ� PAGER �����ꤵ��Ƥ���С������Ȥ���
+もしくは makefml info ML を実行するとヘルプが表示される。
+どちらでも同じ動作。
+表示の際に、環境変数 PAGER が指定されていれば、それを使う。
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -25,16 +25,16 @@ makefml help ML
 <row>
 
 <entry>
-fml �Υ��󥹥ȡ�����ˡ
+fml のインストール方法
 </entry>
 
 <entry>
-�ȥåץǥ��쥯�ȥ�� make install (���Τ� makefml install)��¹Ԥ���
+トップディレクトリで make install (実体は makefml install)を実行する
 </entry>
 
 <entry>
-�ȥåץǥ��쥯�ȥ��
-configure ����� make install (���Τ� install.pl ������ץ�)
+トップディレクトリで
+configure および make install (実体は install.pl スクリプト)
 </entry>
 
 </row>
@@ -43,15 +43,15 @@ configure ����� make install (���Τ� install.pl ������ץ�)
 <row>
 
 <entry>
-���󥹥ȡ��륹����ץȤε�ư
+インストールスクリプトの挙動
 </entry>
 
 <entry>
-����ˡ�����ǥե���ȡ��ǽ��׹��ܤ�����Ū�����꤬��ǽ��
+対話法式がデフォルト。最重要項目は対話的に設定が可能。
 </entry>
 
 <entry>
-����ˡ���ǤϤʤ����ǽ��׹��ܤ� configure ���ץ����ǻ��ꤹ�롣
+対話法式ではない。最重要項目は configure オプションで指定する。
 </entry>
 
 </row>
@@ -60,11 +60,11 @@ configure ����� make install (���Τ� install.pl ������ץ�)
 <row>
 
 <entry>
-�̤ͣκ���
+ＭＬの作成
 </entry>
 
 <entry>
-makefml newml ML �⤷���� makefml new ML
+makefml newml ML もしくは makefml new ML
 </entry>
 
 <entry>
@@ -77,15 +77,15 @@ makefml newml ML
 <row>
 
 <entry>
-newml ���ޥ�ɤ���륨���ꥢ��(����)�ե�����
+newml コマンドが作るエイリアス(見本)ファイル
 </entry>
 
 <entry>
-sendmail �� (�ߴ��������뤿�� postfix �ѤȤ��Ƥ���Ѳ�ǽ)
+sendmail 用 (互換性があるため postfix 用としても使用可能)
 </entry>
 
 <entry>
-postfix, sendmail, qmail, procmail ���٤Ƥ���
+postfix, sendmail, qmail, procmail すべてを作る
 </entry>
 
 </row>
@@ -94,7 +94,7 @@ postfix, sendmail, qmail, procmail ���٤Ƥ���
 <row>
 
 <entry>
-newml ���ޥ�ɤ���륨���ꥢ��(����)�ե�����Υѥ�
+newml コマンドが作るエイリアス(見本)ファイルのパス
 </entry>
 
 <entry>
@@ -111,7 +111,7 @@ newml ���ޥ�ɤ���륨���ꥢ��(����)�ե�����Υѥ�
 <row>
 
 <entry>
-qmail �Ѥ��������
+qmail 用の設定を作る
 </entry>
 
 <entry>
@@ -119,7 +119,7 @@ makefml qmail-setup ML
 </entry>
 
 <entry>
-���� (�ǥե���ȤǺ�������)
+不要 (デフォルトで作成する)
 </entry>
 
 </row>
@@ -128,7 +128,7 @@ makefml qmail-setup ML
 <row>
 
 <entry>
-aliaes �����������
+aliaes を再生成する
 </entry>
 
 <entry>
@@ -136,7 +136,7 @@ makefml recollect-aliases ML
 </entry>
 
 <entry>
-���������ΤϤʤ�
+該当するものはない
 </entry>
 
 </row>
@@ -145,7 +145,7 @@ makefml recollect-aliases ML
 <row>
 
 <entry>
-ML �κ��
+ML の削除
 </entry>
 
 <entry>
@@ -162,15 +162,15 @@ makefml rmml ML
 <row>
 
 <entry>
-���顼�᡼�뼫ư���ϥġ�������ꤹ��
+エラーメール自動解析ツールを設定する
 </entry>
 
 <entry>
-makefml mead ML ��¹Ԥ��������ꥢ����Ŭ���������ѹ����롣
+makefml mead ML を実行し、エイリアスも適宜、設定変更する。
 </entry>
 
 <entry>
-���ס��ǥե���Ȥ����ꤵ��Ƥ���
+不要、デフォルトで設定されている
 </entry>
 
 </row>
@@ -179,7 +179,7 @@ makefml mead ML ��¹Ԥ��������ꥢ����Ŭ���������ѹ����롣
 <row>
 
 <entry>
-fml ���ΤΥƥ��Ȥ򤷤Ƥߤ�
+fml 自体のテストをしてみる
 </entry>
 
 <entry>
@@ -187,7 +187,7 @@ makefml test ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -196,16 +196,16 @@ makefml test ML
 <row>
 
 <entry>
-LISTSERV ��������Υ��ޥ�ɤΥ��åȥ��åס�
+LISTSERV スタイルのコマンドのセットアップ。
 </entry>
 
 <entry>
 makefml fmlserv ML
-listserv majordomo �Ǥ�Ʊ����
+listserv majordomo でも同じ。
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -214,25 +214,25 @@ listserv majordomo �Ǥ�Ʊ����
 <row>
 
 <entry>
-���ɥ쥹��(�����ԡ������ԥꥹ��ξ����)�ɲä���
+アドレスを(受信者、送信者リスト両方に)追加する
 </entry>
 
 <entry>
 makefml add ML ADDRESS
-�⤷���� adduser �Ǥ�褤��
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� actives �� members �ե����롣
+もしくは adduser でもよい。
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は actives と members ファイル。
 </entry>
 
 <entry>
 makefml subscribe ML ADDRESS
-�ʤ�
+なお
 add subscribe adduser useradd
-���ޥ�ɤ�����Ʊ����̣�Ǥ��롣
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
-�ǥե���Ȥ�����оݤ�
-$primary_recipient_maps �� $primary_member_maps �ǡ�
-����Ū�ˤ� recipients �� members �ե����롣
+コマンドは全て同じ意味である。
+エラーにならない限り、画面表示はなく、静かに終る。
+デフォルトの操作対象は
+$primary_recipient_maps と $primary_member_maps で、
+具体的には recipients と members ファイル。
 </entry>
 
 </row>
@@ -241,25 +241,25 @@ $primary_recipient_maps �� $primary_member_maps �ǡ�
 <row>
 
 <entry>
-���ɥ쥹��(�����ԡ������ԥꥹ��ξ������)�������
+アドレスを(受信者、送信者リスト両方から)削除する
 </entry>
 
 <entry>
 makefml bye ML ADDRESS
-�⤷���� byeuser �Ǥ�褤��
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� actives �� members �ե����롣
+もしくは byeuser でもよい。
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は actives と members ファイル。
 </entry>
 
 <entry>
 makefml unsubscribe ML ADDRESS
-�ʤ�
+なお
 bye unsubscribe deluser remove resign signoff userdel
-���ޥ�ɤ�����Ʊ����̣�Ǥ��롣
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
-�ǥե���Ȥ�����оݤ�
-$primary_recipient_maps �� $primary_member_maps �ǡ�
-����Ū�ˤ� recipients �� members �ե����롣
+コマンドは全て同じ意味である。
+エラーにならない限り、画面表示はなく、静かに終る。
+デフォルトの操作対象は
+$primary_recipient_maps と $primary_member_maps で、
+具体的には recipients と members ファイル。
 </entry>
 
 </row>
@@ -268,21 +268,21 @@ $primary_recipient_maps �� $primary_member_maps �ǡ�
 <row>
 
 <entry>
-���ɥ쥹���ѹ�����(�����ԥꥹ�ȡ����С��ꥹ�ȤȤ���ѹ�����)
+アドレスを変更する(受信者リスト、メンバーリストともに変更する)
 </entry>
 
 <entry>
 makefml chaddr ML OLD_ADDRESS NEW_ADDRESS
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� actives �� members �ե����롣
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は actives と members ファイル。
 </entry>
 
 <entry>
 makefml chaddr ML OLD_ADDRESS NEW_ADDRESS
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
-�ǥե���Ȥ�����оݤ�
-$primary_recipient_maps �� $primary_member_maps �ǡ�
-����Ū�ˤ� recipients �� members �ե����롣
+エラーにならない限り、画面表示はなく、静かに終る。
+デフォルトの操作対象は
+$primary_recipient_maps と $primary_member_maps で、
+具体的には recipients と members ファイル。
 </entry>
 
 </row>
@@ -291,22 +291,22 @@ $primary_recipient_maps �� $primary_member_maps �ǡ�
 <row>
 
 <entry>
-�����ԥꥹ�ȤˤΤߥ��ɥ쥹���ɲä��롣
+受信者リストにのみアドレスを追加する。
 </entry>
 
 <entry>
 makefml addactives ML ADDRESS
-����� addactive add2active add2actives �Ǥ�Ʊ����̣��
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� actives �ե����롣
+これは addactive add2active add2actives でも同じ意味。
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は actives ファイル。
 </entry>
 
 <entry>
 makefml addactives ML ADDRESS 
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
-�ǥե���Ȥ�����оݤ�
-$primary_recipient_maps �ǡ�
-����Ū�ˤ� recipients �ե����롣
+エラーにならない限り、画面表示はなく、静かに終る。
+デフォルトの操作対象は
+$primary_recipient_maps で、
+具体的には recipients ファイル。
 </entry>
 
 </row>
@@ -315,22 +315,22 @@ $primary_recipient_maps �ǡ�
 <row>
 
 <entry>
-���С��ꥹ�ȤˤΤߥ��ɥ쥹���ɲä��롣
+メンバーリストにのみアドレスを追加する。
 </entry>
 
 <entry>
 makefml addmembers ML ADDRESS
-����� addmember add2member add2members �Ǥ�Ʊ����
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� members �ե����롣
+これは addmember add2member add2members でも同じ。
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は members ファイル。
 </entry>
 
 <entry>
 makefml addmembers ML ADDRESS
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
-�ǥե���Ȥ�����оݤ�
-$primary_recipient_maps �� $primary_member_maps �ǡ�
-����Ū�ˤ� recipients �� members �ե����롣
+エラーにならない限り、画面表示はなく、静かに終る。
+デフォルトの操作対象は
+$primary_recipient_maps と $primary_member_maps で、
+具体的には recipients と members ファイル。
 </entry>
 
 </row>
@@ -339,19 +339,19 @@ $primary_recipient_maps �� $primary_member_maps �ǡ�
 <row>
 
 <entry>
-�ꥢ�륿����������ߤ��
+リアルタイム配送を止める
 </entry>
 
 <entry>
 makefml off ML ADDRESS
-����� skip �Ǥ�褤��
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� actives �ե����롣
+これは skip でもよい。
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は actives ファイル。
 </entry>
 
 <entry>
 makefml off ML ADDRESS
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
+エラーにならない限り、画面表示はなく、静かに終る。
 </entry>
 
 </row>
@@ -360,18 +360,18 @@ makefml off ML ADDRESS
 <row>
 
 <entry>
-�ꥢ�륿����������Ƴ�����
+リアルタイム配送を再開する
 </entry>
 
 <entry>
 makefml on  ML ADDRESS
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� actives �ե����롣
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は actives ファイル。
 </entry>
 
 <entry>
-makefml digestoff ML ADDRESS �⤷���� makefml digest ML ADDRESS off
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
+makefml digestoff ML ADDRESS もしくは makefml digest ML ADDRESS off
+エラーにならない限り、画面表示はなく、静かに終る。
 </entry>
 
 </row>
@@ -380,19 +380,19 @@ makefml digestoff ML ADDRESS �⤷���� makefml digest ML ADDRESS off
 <row>
 
 <entry>
-�ޤȤᤪ����������
+まとめおくり配送へ
 </entry>
 
 <entry>
 makefml matome ML ADDRESS
-���ޥ�ɤ� digest �Ǥ�褤��
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� actives �ե����롣
+コマンドは digest でもよい。
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は actives ファイル。
 </entry>
 
 <entry>
-makefml digeston ML ADDRESS �⤷���� makefml digest ML ADDRESS on
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣	
+makefml digeston ML ADDRESS もしくは makefml digest ML ADDRESS on
+エラーにならない限り、画面表示はなく、静かに終る。	
 </entry>
 
 </row>
@@ -401,19 +401,19 @@ makefml digeston ML ADDRESS �⤷���� makefml digest ML ADDRESS on
 <row>
 
 <entry>
-��⡼�ȴ����Ԥ��ɲä��롣
+リモート管理者を追加する。
 </entry>
 
 <entry>
 makefml addadmin ML ADDRESS
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� members-admin �ե����롣
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は members-admin ファイル。
 </entry>
 
 <entry>
 makefml addadmin ML ADDRESS
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
-�ǥե���Ȥ�����оݤ� recipients-admin �� members-admin �ե����롣
+エラーにならない限り、画面表示はなく、静かに終る。
+デフォルトの操作対象は recipients-admin と members-admin ファイル。
 </entry>
 
 </row>
@@ -422,19 +422,19 @@ makefml addadmin ML ADDRESS
 <row>
 
 <entry>
-��⡼�ȴ����Ԥ������롣
+リモート管理者を削除する。
 </entry>
 
 <entry>
 makefml byeadmin ML ADDRESS
-��λ�塢�ե�������ѹ�����ɽ������롣
-�ǥե���Ȥ�����оݤ� members-admin �ե����롣
+終了後、ファイルの変更点が表示される。
+デフォルトの操作対象は members-admin ファイル。
 </entry>
 
 <entry>
 makefml byeadmin ML ADDRESS
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
-�ǥե���Ȥ�����оݤ� recipients-admin �� members-admin �ե����롣
+エラーにならない限り、画面表示はなく、静かに終る。
+デフォルトの操作対象は recipients-admin と members-admin ファイル。
 </entry>
 
 </row>
@@ -443,16 +443,16 @@ makefml byeadmin ML ADDRESS
 <row>
 
 <entry>
-��⡼�ȴ����ԤΥѥ���ɤ����ꤹ��(1)
+リモート管理者のパスワードを設定する(1)
 </entry>
 
 <entry>
 makefml passwd ML
-���å⡼�ɤˤʤꡢ���ɥ쥹�ȥѥ���ɤ����Ϥ�¥����롣
+対話モードになり、アドレスとパスワードの入力を促される。
 </entry>
 
 <entry>
-makefml passwd ML �ϥ��顼�ˤʤ롣(̤����?)
+makefml passwd ML はエラーになる。(未実装?)
 </entry>
 
 </row>
@@ -461,18 +461,18 @@ makefml passwd ML �ϥ��顼�ˤʤ롣(̤����?)
 <row>
 
 <entry>
-��⡼�ȴ����ԤΥѥ���ɤ����ꤹ��(2)
+リモート管理者のパスワードを設定する(2)
 </entry>
 
 <entry>
 makefml passwd ML ADDRESS
-���å⡼�ɤˤʤꡢ�ѥ���ɤ����Ϥ�¥����롣
+対話モードになり、パスワードの入力を促される。
 </entry>
 
 <entry>
 makefml passwd ML ADDRESS
-������ PASSWORD �����Ϥ��ʤ����ϡ�
-���å⡼�ɤˤʤꡢ�ѥ���ɤ����Ϥ�¥����롣
+引数で PASSWORD を入力しない場合は、
+対話モードになり、パスワードの入力を促される。
 </entry>
 
 </row>
@@ -481,19 +481,19 @@ makefml passwd ML ADDRESS
 <row>
 
 <entry>
-��⡼�ȴ����ԤΥѥ���ɤ����ꤹ��(3)
+リモート管理者のパスワードを設定する(3)
 </entry>
 
 <entry>
 makefml passwd ML ADDRESS PASSWORD
-�������ͻҤ�ɽ������롣
-�ǥե���Ȥ�����оݤ� etc/passwd �ե����롣
+処理の様子が表示される。
+デフォルトの操作対象は etc/passwd ファイル。
 </entry>
 
 <entry>
 makefml passwd ML ADDRESS PASSWORD
-���顼�ˤʤ�ʤ��¤ꡢ����ɽ���Ϥʤ����Ť��˽��롣
-�ǥե���Ȥ�����оݤ� etc/passwd-admin �ե����롣
+エラーにならない限り、画面表示はなく、静かに終る。
+デフォルトの操作対象は etc/passwd-admin ファイル。
 </entry>
 
 </row>
@@ -502,7 +502,7 @@ makefml passwd ML ADDRESS PASSWORD
 <row>
 
 <entry>
-��˥塼������������ѹ�����
+メニュー形式で設定を変更する
 </entry>
 
 <entry>
@@ -510,7 +510,7 @@ makefml config ML
 </entry>
 
 <entry>
-�������Ƥ��뤬���ޤ�����Ⱦü��
+実装しているが、まだ中途半端。
 </entry>
 
 </row>
@@ -519,22 +519,22 @@ makefml config ML
 <row>
 
 <entry>
-����ե�������Խ�����
+設定ファイルを編集する
 </entry>
 
 <entry>
 makefml edit ML
-�Ȥ����ǥ��������Ϥ�¥����
-���Υ��ǥ����� config.ph ���Խ��Ǥ���褦�ˤ��롣
-���ǥ����Υǥե���Ȥ� vi ��
+使うエディタの入力を促し、
+そのエディタで config.ph を編集できるようにする。
+エディタのデフォルトは vi 。
 </entry>
 
 <entry>
 makefml edit ML
-���ǥ����� config.cf ���Խ��Ǥ���褦�ˤ��롣
-�Ȥ����ǥ�����Ҥͤ���Ϥ��ʤ���
-�Ķ��ѿ� EDITOR �����ꤵ��Ƥ���С������ͤ��Ȥ��롣
-���ǥ����Υǥե���Ȥ� vi ��
+エディタで config.cf を編集できるようにする。
+使うエディタを尋ねたりはしない。
+環境変数 EDITOR が設定されていれば、その値が使われる。
+エディタのデフォルトは vi 。
 </entry>
 
 </row>
@@ -543,17 +543,17 @@ makefml edit ML
 <row>
 
 <entry>
-fml4 ��ͭ������ե������Ѵ�( cf ���� config.ph �����������)
+fml4 固有の設定ファイル変換( cf から config.ph を再生成する)
 </entry>
 
 <entry>
 makefml update-config ML
-����� update��config-update��update-config.ph ���ޥ�ɤǤ�Ʊ����
-�������ͻҤ�ɽ������롣	
+これは update、config-update、update-config.ph コマンドでも同じ。
+処理の様子が表示される。	
 </entry>
 
 <entry>
-����ե������ config.cf �����ʤ����ᳺ�������������ס�
+設定ファイルは config.cf しかないため該当する操作は不要。
 </entry>
 
 </row>
@@ -562,7 +562,7 @@ makefml update-config ML
 <row>
 
 <entry>
-��˥塼��Ȥ���cf �Υƥ�ץ졼�ȥե�������Խ�����
+メニューを使い、cf のテンプレートファイルを編集する
 </entry>
 
 <entry>
@@ -570,7 +570,7 @@ makefml config-template ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -579,16 +579,16 @@ makefml config-template ML
 <row>
 
 <entry>
-newml �κݤ˻Ȥ���Ƽ�ƥ�ץ졼�ȥե�������Խ�����
+newml の際に使われる各種テンプレートファイルを編集する
 </entry>
 
 <entry>
 makefml edit-template FILE
-�ʤ� FILE �ʤ��Ǽ¹Ԥ���ȡ������ǽ�ʥե����������ɽ������롣
+なお FILE なしで実行すると、指定可能なファイル一覧が表示される。
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -597,7 +597,7 @@ makefml edit-template FILE
 <row>
 
 <entry>
-�̤ͣΥۡ���ǥ��쥯�ȥ�ˤ���إ�פʤɤΥե���������������
+ＭＬのホームディレクトリにあるヘルプなどのファイルを再生成する
 </entry>
 
 <entry>
@@ -605,8 +605,8 @@ makefml create-doc-template ML
 </entry>
 
 <entry>
-���ס�¸�ߤ��ʤ���
-�⤷�֤���Ƥ���ʤ顢����ϴ����Ԥ��Ĥ��ä��֤�����ΤΤϤ���
+不要。存在しない。
+もし置かれているなら、それは管理者がつくって置いたもののはず。
 </entry>
 
 </row>
@@ -615,7 +615,7 @@ makefml create-doc-template ML
 <row>
 
 <entry>
-������ SRC �ե������ DST �ء��ե���������ѿ����Ѵ����Ĥ��������롣
+引数の SRC ファイルを DST へ、ファイル内の変数を変換しつつ生成する。
 </entry>
 
 <entry>
@@ -623,7 +623,7 @@ makefml conv ML SRC DST
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -632,17 +632,17 @@ makefml conv ML SRC DST
 <row>
 
 <entry>
-������ߤ롣�ǥե���ȤǤϺǸ��100�Ԥ�ɽ������롣
+ログをみる。デフォルトでは最後の100行が表示される。
 </entry>
 
 <entry>
-makefml log ML [���ץ����]
-����� makefml tail ML �Ǥ�Ʊ��ư��ˤʤ롣
+makefml log ML [オプション]
+これは makefml tail ML でも同じ動作になる。
 </entry>
 
 <entry>
 makefml log ML
-���ץ�����̤����
+オプションは未実装
 </entry>
 
 </row>
@@ -651,16 +651,16 @@ makefml log ML
 <row>
 
 <entry>
-admin.cgi �Υ��åȥ��å�(������ץ�������apache������ٱ�)
+admin.cgi のセットアップ(スクリプト生成、apacheの設定支援)
 </entry>
 
 <entry>
 makefml admin.cgi ML
-����Ū�˹Ԥʤ��롣
+対話的に行なわれる。
 </entry>
 
 <entry>
-Ⱦʬ̤������Ⱦʬ���� (������ץȤ� makefml newml ���˼�ưŪ�˺���)
+半分未実装、半分不要 (スクリプトは makefml newml 時に自動的に作成)
 </entry>
 
 </row>
@@ -669,17 +669,17 @@ makefml admin.cgi ML
 <row>
 
 <entry>
-ml-admin.cgi �Υ��åȥ��å�(������ץ�������apache������ٱ�)
+ml-admin.cgi のセットアップ(スクリプト生成、apacheの設定支援)
 </entry>
 
 <entry>
 makefml ml-admin.cgi ML
-makefml mladmin.cgi ML �Ǥ�Ʊ����
-����Ū�˹Ԥʤ��롣
+makefml mladmin.cgi ML でも同じ。
+対話的に行なわれる。
 </entry>
 
 <entry>
-Ⱦʬ̤������Ⱦʬ���� (������ץȤ� makefml newml ���˼�ưŪ�˺���)
+半分未実装、半分不要 (スクリプトは makefml newml 時に自動的に作成)
 </entry>
 
 </row>
@@ -688,7 +688,7 @@ makefml mladmin.cgi ML �Ǥ�Ʊ����
 <row>
 
 <entry>
-admin.cgi �� .htpasswd �����ꤹ��
+admin.cgi の .htpasswd を設定する
 </entry>
 
 <entry>
@@ -696,7 +696,7 @@ makefml html_cgiadmin_passwd ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -710,12 +710,12 @@ html_config
 
 <entry>
 makefml html_config ML
-���Υ��ޥ�ɤ� html_config_set �Ǥ�Ʊ����
-CGI ����������ѹ�����ݤ˻Ȥ��Ƥ��������ѥ��ޥ�ɡ�
+このコマンドは html_config_set でも同じ。
+CGI から設定を変更する際に使われている内部用コマンド。
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -724,9 +724,9 @@ CGI ����������ѹ�����ݤ˻Ȥ��Ƥ��������ѥ��ޥ�ɡ�
 <row>
 
 <entry>
-��⡼�ȴ����ԤΥѥ���ɤ����ꤷ������
-ml-admin.cgi �� .htpasswd ��(��⡼�ȴ����Υѥ���ɤ�Ʊ����
-�Τ�)���ꤹ��
+リモート管理者のパスワードを設定し、かつ
+ml-admin.cgi の .htpasswd を(リモート管理のパスワードと同じも
+のに)設定する
 </entry>
 
 <entry>
@@ -734,7 +734,7 @@ makefml html_passwd ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -743,7 +743,7 @@ makefml html_passwd ML
 <row>
 
 <entry>
-ml-admin.cgi �� .htpasswd �����ꤹ��
+ml-admin.cgi の .htpasswd を設定する
 </entry>
 
 <entry>
@@ -751,7 +751,7 @@ makefml htpasswd ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -760,7 +760,7 @@ makefml htpasswd ML
 <row>
 
 <entry>
-pgp ���ޥ�� WRAPPER
+pgp コマンド WRAPPER
 </entry>
 
 <entry>
@@ -768,7 +768,7 @@ makefml pgp ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -777,7 +777,7 @@ makefml pgp ML
 <row>
 
 <entry>
-pgp2 ���ޥ�� WRAPPER
+pgp2 コマンド WRAPPER
 </entry>
 
 <entry>
@@ -785,7 +785,7 @@ makefml pgp2 ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -794,7 +794,7 @@ makefml pgp2 ML
 <row>
 
 <entry>
-pgpe ���ޥ�� WRAPPER
+pgpe コマンド WRAPPER
 </entry>
 
 <entry>
@@ -802,7 +802,7 @@ makefml pgpe ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -811,7 +811,7 @@ makefml pgpe ML
 <row>
 
 <entry>
-pgpk ���ޥ�� WRAPPER
+pgpk コマンド WRAPPER
 </entry>
 
 <entry>
@@ -819,7 +819,7 @@ makefml pgpk ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -828,7 +828,7 @@ makefml pgpk ML
 <row>
 
 <entry>
-pgps ���ޥ�� WRAPPER
+pgps コマンド WRAPPER
 </entry>
 
 <entry>
@@ -836,7 +836,7 @@ makefml pgps ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -845,7 +845,7 @@ makefml pgps ML
 <row>
 
 <entry>
-pgpv ���ޥ�� WRAPPER
+pgpv コマンド WRAPPER
 </entry>
 
 <entry>
@@ -853,7 +853,7 @@ makefml pgpv ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -862,7 +862,7 @@ makefml pgpv ML
 <row>
 
 <entry>
-gpg ���ޥ�� WRAPPER
+gpg コマンド WRAPPER
 </entry>
 
 <entry>
@@ -870,7 +870,7 @@ makefml gpg ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -879,7 +879,7 @@ makefml gpg ML
 <row>
 
 <entry>
-admin-auth (PGP, GPG KEY RING �����)
+admin-auth (PGP, GPG KEY RING の操作)
 </entry>
 
 <entry>
@@ -887,7 +887,7 @@ makefml admin-auth ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -896,7 +896,7 @@ makefml admin-auth ML
 <row>
 
 <entry>
-admin-encrypt (PGP, GPG KEY RING �����)
+admin-encrypt (PGP, GPG KEY RING の操作)
 </entry>
 
 <entry>
@@ -904,7 +904,7 @@ makefml admin-encrypt ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -913,7 +913,7 @@ makefml admin-encrypt ML
 <row>
 
 <entry>
-dist-auth (PGP, GPG KEY RING �����)
+dist-auth (PGP, GPG KEY RING の操作)
 </entry>
 
 <entry>
@@ -921,7 +921,7 @@ makefml dist-auth ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -930,7 +930,7 @@ makefml dist-auth ML
 <row>
 
 <entry>
-dist-encrypt (PGP, GPG KEY RING �����)
+dist-encrypt (PGP, GPG KEY RING の操作)
 </entry>
 
 <entry>
@@ -938,7 +938,7 @@ makefml dist-encrypt ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -947,7 +947,7 @@ makefml dist-encrypt ML
 <row>
 
 <entry>
-popfml (POP ��MTA��ML�򥨥ߥ�졼����󤹤� fml) �Υ��åȥ��åפ򤹤�
+popfml (POP でMTAとMLをエミュレーションする fml) のセットアップをする
 </entry>
 
 <entry>
@@ -955,7 +955,7 @@ makefml popfml
 </entry>
 
 <entry>
-���⤽�� popfml ���Τ�̤����
+そもそも popfml 自体が未実装
 </entry>
 
 </row>
@@ -964,7 +964,7 @@ makefml popfml
 <row>
 
 <entry>
-POP �Υѥ���ɤ����ꤹ��
+POP のパスワードを設定する
 </entry>
 
 <entry>
@@ -972,7 +972,7 @@ makefml pop_passwd
 </entry>
 
 <entry>
-���⤽�� popfml ���Τ�̤����
+そもそも popfml 自体が未実装
 </entry>
 
 </row>
@@ -981,7 +981,7 @@ makefml pop_passwd
 <row>
 
 <entry>
-�̤ͣ�ư�����å�����
+ＭＬの動作をロックする
 </entry>
 
 <entry>
@@ -989,7 +989,7 @@ makefml lock ML
 </entry>
 
 <entry>
-�б������Τ��ʤ������⤽�� giant lock ���ʤ���
+対応するものがない。そもそも giant lock がない。
 </entry>
 
 </row>
@@ -998,16 +998,16 @@ makefml lock ML
 <row>
 
 <entry>
-�Х���ݡ��Ȥ��Խ��ƥ�ץ졼�Ȥ���
+バグレポートの編集テンプレートを作る
 </entry>
 
 <entry>
 makefml bug-report-template ML
-send-pr �Ǥ�褤
+send-pr でもよい
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -1016,7 +1016,7 @@ send-pr �Ǥ�褤
 <row>
 
 <entry>
-���ޥ�ɤμ¹�
+コマンドの実行
 </entry>
 
 <entry>
@@ -1024,7 +1024,7 @@ makefml command ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -1033,7 +1033,7 @@ makefml command ML
 <row>
 
 <entry>
-�����⡼�ɤ�����
+配送モードの設定
 </entry>
 
 <entry>
@@ -1041,7 +1041,7 @@ makefml delivery_mode ML
 </entry>
 
 <entry>
-̤����
+未実装
 </entry>
 
 </row>
@@ -1050,7 +1050,7 @@ makefml delivery_mode ML
 <row>
 
 <entry>
-makefml ����ѿ����ѹ�����
+makefml 中の変数を変更する
 </entry>
 
 <entry>
@@ -1058,7 +1058,7 @@ makefml setq ML
 </entry>
 
 <entry>
-�б������Τ��ʤ�
+対応するものがない
 </entry>
 
 </row>
@@ -1067,16 +1067,16 @@ makefml setq ML
 <row>
 
 <entry>
-fml ��ư���Ƥ���Ķ��ˤĤ��ƥ��ޥ��ɽ������
+fml が動いている環境についてサマリを表示する
 </entry>
 
 <entry>
 makefml showconfig ML
-showconf �Ǥ�褤
+showconf でもよい
 </entry>
 
 <entry>
-̤���� / ����ͽ��ʤ�
+未実装 / 実装予定なし
 </entry>
 
 </row>
@@ -1085,15 +1085,15 @@ showconf �Ǥ�褤
 <row>
 
 <entry>
-��show ���ޥ�ɡץ�������� OS �����ɽ��������ˡ
+「show コマンド」スタイルの OS 情報を表示する方法
 </entry>
 
 <entry>
-makefml show ���ޥ��
+makefml show コマンド
 </entry>
 
 <entry>
-̤���� / ����ͽ��ʤ�
+未実装 / 実装予定なし
 </entry>
 
 </row>
@@ -1102,7 +1102,7 @@ makefml show ���ޥ��
 <row>
 
 <entry>
-�ե����������
+ファイルを送る
 </entry>
 
 <entry>
@@ -1110,7 +1110,7 @@ makefml resend ML
 </entry>
 
 <entry>
-̤���� / ����ͽ��ʤ�
+未実装 / 実装予定なし
 </entry>
 
 </row>
@@ -1119,7 +1119,7 @@ makefml resend ML
 <row>
 
 <entry>
-upgrade ���ޥ��: fml 2.0 ���� 3.0 �ؤΥ���С���
+upgrade コマンド: fml 2.0 から 3.0 へのコンバート
 </entry>
 
 <entry>
@@ -1127,7 +1127,7 @@ makefml upgrade ML
 </entry>
 
 <entry>
-����
+不要
 </entry>
 
 </row>

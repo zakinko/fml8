@@ -2,8 +2,8 @@
 <screen>
 
 # Descriptions:
-#      History: fml8 ¤Ç¤Ï¡¢¤¤¤¯¤Ä¤«¤Î¥Õ¥£¥ë¥¿¤äÀ©¸Â¤¬À°ÍıÅı¹ç¤µ¤ì¤¿¡£
-#		fml4 ¤Ç¤Ï¡¢¤ª¤ª¤à¤Í¼¡¤Î£³¤Ä¤Îµ¡Ç½¤ËÁêÅö¤·¤Æ¤¤¤ë¡£
+#      History: fml8 ã§ã¯ã€ã„ãã¤ã‹ã®ãƒ•ã‚£ãƒ«ã‚¿ã‚„åˆ¶é™ãŒæ•´ç†çµ±åˆã•ã‚ŒãŸã€‚
+#		fml4 ã§ã¯ã€ãŠãŠã‚€ã­æ¬¡ã®ï¼“ã¤ã®æ©Ÿèƒ½ã«ç›¸å½“ã—ã¦ã„ã‚‹ã€‚
 #		$USE_DISTRIBUTE_FILTER
 #		$INCOMING_MAIL_SIZE_LIMIT
 #		ADD_CONTENT_HANDLER()
@@ -33,15 +33,15 @@ article_filter_functions	=	article_size_filter
 					article_virus_filter
 
 
-# Descriptions: ¥µ¥¤¥º¾ğÊó¤òº¬µò¤Ë¤·¤¿¥Õ¥£¥ë¥¿¥ê¥ó¥°¤ò¤¹¤ë¤«¡©
+# Descriptions: ã‚µã‚¤ã‚ºæƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹ã‹ï¼Ÿ
 #      History: no
 #        Value: YES_OR_NO
 #     Examples:
 use_article_size_filter	=	yes
 
 
-# Descriptions: ¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£
-#               ¤É¤Î¥ë¡¼¥ë¤Ë¤â¥Ş¥Ã¥Á¤·¤Ê¤¤¤Ê¤é¡¢µ­»ö¤ÎÅê¹Æ¤ÏÇ§¤á¤é¤ì¤ë¡£
+# Descriptions: ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚
+#               ã©ã®ãƒ«ãƒ¼ãƒ«ã«ã‚‚ãƒãƒƒãƒã—ãªã„ãªã‚‰ã€è¨˜äº‹ã®æŠ•ç¨¿ã¯èªã‚ã‚‰ã‚Œã‚‹ã€‚
 #      History:
 #        Value: MIX (	check_header_size
 #			check_body_size
@@ -53,7 +53,7 @@ article_size_filter_rules	=	check_header_size
 					permit
 
 
-# Descriptions: ¥Ø¥Ã¥À¾ğÊó¤òº¬µò¤Ë¤·¤¿¥Õ¥£¥ë¥¿¥ê¥ó¥°¤ò¤¹¤ë¤«¡©
+# Descriptions: ãƒ˜ãƒƒãƒ€æƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹ã‹ï¼Ÿ
 #      History: disabled by default.
 #               "yes" always if $USE_DISTRIBUTE_FILTER is yes.
 #        Value: YES_OR_NO
@@ -61,9 +61,9 @@ article_size_filter_rules	=	check_header_size
 use_article_header_filter		=	yes
 
 
-# Descriptions: ¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£
-#               ¤É¤Î¥ë¡¼¥ë¤Ë¤â¥Ş¥Ã¥Á¤·¤Ê¤¤¤Ê¤é¡¢µ­»ö¤ÎÅê¹Æ¤ÏÇ§¤á¤é¤ì¤ë¡£
-#      History: check_date ¤Ë³ºÅö¤¹¤ë¤â¤Î¤Ï¤Ê¤¤¡£
+# Descriptions: ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚
+#               ã©ã®ãƒ«ãƒ¼ãƒ«ã«ã‚‚ãƒãƒƒãƒã—ãªã„ãªã‚‰ã€è¨˜äº‹ã®æŠ•ç¨¿ã¯èªã‚ã‚‰ã‚Œã‚‹ã€‚
+#      History: check_date ã«è©²å½“ã™ã‚‹ã‚‚ã®ã¯ãªã„ã€‚
 #        Value: MIX (
 #			check_message_id
 #			check_date
@@ -75,48 +75,48 @@ article_header_filter_rules		=	check_message_id
 						permit
 
 
-# Descriptions: ¤È¤ê¤¢¤¨¤º¡¢¤À¤ß¡Á
-#      History: 4.0 ¤Î content filter ¤Ç¡¢!MIME ¤Ë¤¢¤¿¤ëÉôÊ¬¡£
-#		¤è¤Ã¤Æ¡¢¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï no ¤È¤¤¤¦¤³¤È¤Ë¤Ê¤ë¡£
+# Descriptions: ã¨ã‚Šã‚ãˆãšã€ã ã¿ã€œ
+#      History: 4.0 ã® content filter ã§ã€!MIME ã«ã‚ãŸã‚‹éƒ¨åˆ†ã€‚
+#		ã‚ˆã£ã¦ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ no ã¨ã„ã†ã“ã¨ã«ãªã‚‹ã€‚
 #        Value: YES_OR_NO
 #     Examples:
 use_article_non_mime_filter		=	yes
 
 
-# Descriptions: ¤È¤ê¤¢¤¨¤º¡¢¤À¤ß¡Á
-#      History: ¤Ê¤·
+# Descriptions: ã¨ã‚Šã‚ãˆãšã€ã ã¿ã€œ
+#      History: ãªã—
 #        Value: MIX ( permit reject_empty_content_type )
 #     Examples: permit
 article_non_mime_filter_rules		=	reject_empty_content_type
 						permit
 
 
-# Descriptions: MIME ¤Î¹½Â¤¤Ë´ğ¤Å¤¤¤¿¥Õ¥£¥ë¥¿¤ò¹Ô¤Ê¤¦
-#      History: 4.0 ¤Î content filter ÁêÅö¡£¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï no ¤À¡£
+# Descriptions: MIME ã®æ§‹é€ ã«åŸºã¥ã„ãŸãƒ•ã‚£ãƒ«ã‚¿ã‚’è¡Œãªã†
+#      History: 4.0 ã® content filter ç›¸å½“ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ no ã ã€‚
 #        Value: YES_OR_NO
 #     Examples:
 use_article_mime_component_filter	=	yes
 
 
-# Descriptions: ¥Õ¥¡¥¤¥ëÌ¾
-#      History: 4.0 ¤Î @CONTENT_HANDLER ÁêÅö
+# Descriptions: ãƒ•ã‚¡ã‚¤ãƒ«å
+#      History: 4.0 ã® @CONTENT_HANDLER ç›¸å½“
 #        Value: FILE
 #     Examples:
 article_mime_component_filter_rules	= $fml_config_dir/mime_component_filter
 
 
-# Descriptions: ÀèÆ¬¤Î text/plain ÉôÊ¬¤ËÂĞ¤¹¤ë¥Õ¥£¥ë¥¿¡£
-#		´ÊÃ±¤Ê¥·¥ó¥¿¥Ã¥¯¥¹¥Á¥§¥Ã¥¯
-#      History: 4.0 ¤Î EnvelopeFilter ÁêÅö¡£
-#		$USE_DISTRIBUTE_FILTER ¤¬ yes ¤Î¾ì¹ç¡¢
-#		°Ê²¼¤Î¥ë¡¼¥ë¤ÎÈ¾Ê¬¤¯¤é¤¤¤¬¼«Æ°Åª¤ËÅ¬ÍÑ¤µ¤ì¤Æ¤¤¤¿¡£
+# Descriptions: å…ˆé ­ã® text/plain éƒ¨åˆ†ã«å¯¾ã™ã‚‹ãƒ•ã‚£ãƒ«ã‚¿ã€‚
+#		ç°¡å˜ãªã‚·ãƒ³ã‚¿ãƒƒã‚¯ã‚¹ãƒã‚§ãƒƒã‚¯
+#      History: 4.0 ã® EnvelopeFilter ç›¸å½“ã€‚
+#		$USE_DISTRIBUTE_FILTER ãŒ yes ã®å ´åˆã€
+#		ä»¥ä¸‹ã®ãƒ«ãƒ¼ãƒ«ã®åŠåˆ†ãã‚‰ã„ãŒè‡ªå‹•çš„ã«é©ç”¨ã•ã‚Œã¦ã„ãŸã€‚
 #        Value: YES_OR_NO
 #     Examples:
 use_article_text_plain_filter		=	yes
 
 
-# Descriptions: ¥Æ¥­¥¹¥ÈÉôÊ¬¤Ø¤Î¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£
-#               Àµ³Î¤Ë¤ÏÃÆ¤¯¤Ù¤­ÆÃÊÌ¤Ê¤â¤Î¤Î¥ë¡¼¥ë(¥Ş¥Ã¥Á¤·¤Ê¤¤¤Ê¤éÄÌ¤¹)
+# Descriptions: ãƒ†ã‚­ã‚¹ãƒˆéƒ¨åˆ†ã¸ã®ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚
+#               æ­£ç¢ºã«ã¯å¼¾ãã¹ãç‰¹åˆ¥ãªã‚‚ã®ã®ãƒ«ãƒ¼ãƒ«(ãƒãƒƒãƒã—ãªã„ãªã‚‰é€šã™)
 #      History: See kern/libenvf.pl for more detail.
 #		[DISABLED BY DEFAULT]
 #
@@ -160,74 +160,74 @@ article_text_plain_filter_rules	=	reject_not_iso2022jp_japanese_string
 					permit
 
 
-# Descriptions: ³°Éô¤ÎSPAM¥Á¥§¥Ã¥«¤ò»È¤Ã¤¿¸¡ºº¡¢¥Ç¥Õ¥©¥ë¥È¤Ç¤ÏÌµ¸ú¡£
-#		¤Ş¤¿Í­¸ú¤Ë¤·¤¿¾ì¹ç¡¢¥Ø¥Ã¥À¤ËSPAM¤Ç¤¢¤ë¤³¤È¤òÃÎ¤é¤»¤ë
-#		¥Õ¥é¥Ã¥°¤ò¤Ä¤±ÄÌ²á¤µ¤»¤ëÆ°ºî¤¬¥Ç¥Õ¥©¥ë¥È¡£
+# Descriptions: å¤–éƒ¨ã®SPAMãƒã‚§ãƒƒã‚«ã‚’ä½¿ã£ãŸæ¤œæŸ»ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ç„¡åŠ¹ã€‚
+#		ã¾ãŸæœ‰åŠ¹ã«ã—ãŸå ´åˆã€ãƒ˜ãƒƒãƒ€ã«SPAMã§ã‚ã‚‹ã“ã¨ã‚’çŸ¥ã‚‰ã›ã‚‹
+#		ãƒ•ãƒ©ãƒƒã‚°ã‚’ã¤ã‘é€šéã•ã›ã‚‹å‹•ä½œãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã€‚
 #      History: none
 #        Value: YES_OR_NO
 #     Examples: no
 use_article_spam_filter		=	no
 
 
-# Descriptions: SPAM¤À¤ÈÈ½Äê¤µ¤ì¤¿¾ì¹ç¡¢¤É¤¦¤¹¤ë¤«¡©
+# Descriptions: SPAMã ã¨åˆ¤å®šã•ã‚ŒãŸå ´åˆã€ã©ã†ã™ã‚‹ã‹ï¼Ÿ
 #      History: none
 #        Value: MIX ( reject ignore header_rewrite )
 #     Examples: header_rewrite
 article_spam_filter_rules	=	header_rewrite
 
 
-# Descriptions: SPAM¥Á¥§¥Ã¥«¤È¤·¤Æ»È¤¦³°Éô¥×¥í¥°¥é¥à¡£
-#		Ê£¿ô»ØÄê¤¹¤ë¤È¡¢Ê£¿ô¤Î¥×¥í¥°¥é¥à¤ò½ç¤Ë»î¤¹¡£
+# Descriptions: SPAMãƒã‚§ãƒƒã‚«ã¨ã—ã¦ä½¿ã†å¤–éƒ¨ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã€‚
+#		è¤‡æ•°æŒ‡å®šã™ã‚‹ã¨ã€è¤‡æ•°ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’é †ã«è©¦ã™ã€‚
 #      History: none
 #        Value: MIX ( spamassasin spamc bogofilter )
 #     Examples: bogofilter
 article_spam_filter_drivers	=	bogofilter
 
 
-# Descriptions: ³°Éô¤ÎVirus¥Á¥§¥Ã¥«¤ò»È¤Ã¤¿¸¡ºº¡¢¥Ç¥Õ¥©¥ë¥È¤Ç¤ÏÌµ¸ú¡£
+# Descriptions: å¤–éƒ¨ã®Virusãƒã‚§ãƒƒã‚«ã‚’ä½¿ã£ãŸæ¤œæŸ»ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ç„¡åŠ¹ã€‚
 #      History: none
 #        Value: YES_OR_NO
 #     Examples: no
 use_article_virus_filter	=	no
 
 
-# Descriptions: ¥¦¥£¥ë¥¹¤À¤ÈÈ½Äê¤µ¤ì¤¿¾ì¹ç¡¢¤É¤¦¤¹¤ë¤«¡©
+# Descriptions: ã‚¦ã‚£ãƒ«ã‚¹ã ã¨åˆ¤å®šã•ã‚ŒãŸå ´åˆã€ã©ã†ã™ã‚‹ã‹ï¼Ÿ
 #      History: none
 #        Value: MIX ( reject ignore header_rewrite )
 #     Examples: reject
 article_virus_filter_rules	=	reject
 
 
-# Descriptions: ¥¦¥£¥ë¥¹¥Á¥§¥Ã¥«¤È¤·¤Æ»È¤¦³°Éô¥×¥í¥°¥é¥à
-#		Ê£¿ô»ØÄê¤¹¤ë¤È¡¢Ê£¿ô¤Î¥×¥í¥°¥é¥à¤ò½ç¤Ë»î¤¹¡£
+# Descriptions: ã‚¦ã‚£ãƒ«ã‚¹ãƒã‚§ãƒƒã‚«ã¨ã—ã¦ä½¿ã†å¤–éƒ¨ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
+#		è¤‡æ•°æŒ‡å®šã™ã‚‹ã¨ã€è¤‡æ•°ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’é †ã«è©¦ã™ã€‚
 #      History: none
 #        Value: MIX ( clamscan )
 #     Examples: clamscan
 article_virus_filter_drivers	=	clamscan
 
 
-# Descriptions: ¥Õ¥£¥ë¥¿¤ÇÃÆ¤«¤ì¤¿¤³¤È¤ò¶µ¤¨¤ë
-#      History: maintainer ¤Ë¤Ï¾ï¤ËÃÆ¤«¤ì¤¿¤³¤È¤òÃÎ¤é¤»¤ë¤¬¡¢
-#		sender ¤ËÂĞ¤·¤Æ¤Ï $FILTER_NOTIFY_REJECTION (= 0 by default)¡£
-#		¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢´ÉÍı¼Ô¤Ë¤Î¤ßÃÎ¤é¤»¤ë¡£
+# Descriptions: ãƒ•ã‚£ãƒ«ã‚¿ã§å¼¾ã‹ã‚ŒãŸã“ã¨ã‚’æ•™ãˆã‚‹
+#      History: maintainer ã«ã¯å¸¸ã«å¼¾ã‹ã‚ŒãŸã“ã¨ã‚’çŸ¥ã‚‰ã›ã‚‹ãŒã€
+#		sender ã«å¯¾ã—ã¦ã¯ $FILTER_NOTIFY_REJECTION (= 0 by default)ã€‚
+#		ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ã€ç®¡ç†è€…ã«ã®ã¿çŸ¥ã‚‰ã›ã‚‹ã€‚
 #        Value: YES_OR_NO
 #     Examples: yes
 use_article_filter_reject_notice	=	yes
 
 
-# Descriptions: ¥¨¥é¡¼¤Î¤ªÃÎ¤é¤»¤Î¼õ¿®¼Ô
-#      History: 4.0 ¤Ç¤Ï maintainer ¤¢¤Æ¤Ï¥Ï¡¼¥É¥³¡¼¥Ç¥¤¥ó¥°¤Ç¾ï¤ËÃÎ¤é¤»¤ë¡£
-#		sender °¸¤Æ¤Ï $FILTER_NOTIFY_REJECTION ¤ÇÀ©¸æ¤µ¤ì¤Æ¤¤¤Æ
-#		¥Ç¥Õ¥©¥ë¥È¤Ç¤ÏÃÎ¤é¤»¤Ê¤¤¡£
+# Descriptions: ã‚¨ãƒ©ãƒ¼ã®ãŠçŸ¥ã‚‰ã›ã®å—ä¿¡è€…
+#      History: 4.0 ã§ã¯ maintainer ã‚ã¦ã¯ãƒãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‡ã‚¤ãƒ³ã‚°ã§å¸¸ã«çŸ¥ã‚‰ã›ã‚‹ã€‚
+#		sender å®›ã¦ã¯ $FILTER_NOTIFY_REJECTION ã§åˆ¶å¾¡ã•ã‚Œã¦ã„ã¦
+#		ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯çŸ¥ã‚‰ã›ãªã„ã€‚
 #        Value: MIX ( maintainer sender )
 #     Examples: maintainer sender
 article_filter_reject_notice_recipients	=	maintainer
 						sender
 
 
-# Descriptions: ÃÆ¤¤¤¿¥á¡¼¥ë¤ò¤É¤Î¤è¤¦¤Ë¥Õ¥©¥ï¡¼¥É¤¹¤ë¤«¡©
-#               ¥¦¥£¥ë¥¹¤Ê¤É¤ò¹ÍÎ¸¤¹¤ë¤È¡¢Ê¸»úÎó¤¬¤¤¤¤¤È¤ª¤â¤¦
-#      History: 4.0 ¤Ç¤ÏÊ¸»úÎó¤Ç¡¢¤³¤ì¤Ï¥Ï¡¼¥É¥³¡¼¥Ç¥£¥ó¥°¤µ¤ì¤Æ¤¤¤¿¡£
+# Descriptions: å¼¾ã„ãŸãƒ¡ãƒ¼ãƒ«ã‚’ã©ã®ã‚ˆã†ã«ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰ã™ã‚‹ã‹ï¼Ÿ
+#               ã‚¦ã‚£ãƒ«ã‚¹ãªã©ã‚’è€ƒæ…®ã™ã‚‹ã¨ã€æ–‡å­—åˆ—ãŒã„ã„ã¨ãŠã‚‚ã†
+#      History: 4.0 ã§ã¯æ–‡å­—åˆ—ã§ã€ã“ã‚Œã¯ãƒãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã•ã‚Œã¦ã„ãŸã€‚
 #        Value: SELECT ( multipart string )
 #     Examples: string
 article_filter_reject_notice_data_type	=	string
@@ -303,38 +303,38 @@ use_command_mail_filter	= 	yes
 command_mail_filter_functions	=	command_mail_size_filter
 
 
-# Descriptions: ¥Õ¥£¥ë¥¿¤ÇÃÆ¤«¤ì¤¿¤³¤È¤ò¶µ¤¨¤ë
-#      History: 4.0 ¤Ç¤Ï¥Ï¡¼¥É¥³¡¼¥É¤À¤Ã¤¿¤è¤¦¤Ê¡Ä
+# Descriptions: ãƒ•ã‚£ãƒ«ã‚¿ã§å¼¾ã‹ã‚ŒãŸã“ã¨ã‚’æ•™ãˆã‚‹
+#      History: 4.0 ã§ã¯ãƒãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‰ã ã£ãŸã‚ˆã†ãªâ€¦
 #        Value: YES_OR_NO
 #     Examples: yes
 use_command_mail_filter_reject_notice	=	yes
 
 
-# Descriptions: ¥¨¥é¡¼¤Î¤ªÃÎ¤é¤»¤Î¼õ¿®¼Ô
-#      History: 4.0 ¤Ç¤Ï¥Ï¡¼¥É¥³¡¼¥É¤À¤Ã¤¿¤è¤¦¤Ê¡Ä
+# Descriptions: ã‚¨ãƒ©ãƒ¼ã®ãŠçŸ¥ã‚‰ã›ã®å—ä¿¡è€…
+#      History: 4.0 ã§ã¯ãƒãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‰ã ã£ãŸã‚ˆã†ãªâ€¦
 #        Value: MIX ( maintainer sender )
 #     Examples: maintainer sender
 command_mail_filter_reject_notice_recipients	=	maintainer
 							sender
 
 
-# Descriptions: ÃÆ¤¤¤¿¥á¡¼¥ë¤ò¤É¤Î¤è¤¦¤Ë¥Õ¥©¥ï¡¼¥É¤¹¤ë¤«¡©
-#               ¥¦¥£¥ë¥¹¤Ê¤É¤ò¹ÍÎ¸¤¹¤ë¤È¡¢Ê¸»úÎó¤¬¤¤¤¤¤È¤ª¤â¤¦
-#      History: 4.0 ¤Ç¤ÏÊ¸»úÎó¤Ç¡¢¤³¤ì¤Ï¥Ï¡¼¥É¥³¡¼¥Ç¥£¥ó¥°¤µ¤ì¤Æ¤¤¤¿¡£
+# Descriptions: å¼¾ã„ãŸãƒ¡ãƒ¼ãƒ«ã‚’ã©ã®ã‚ˆã†ã«ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰ã™ã‚‹ã‹ï¼Ÿ
+#               ã‚¦ã‚£ãƒ«ã‚¹ãªã©ã‚’è€ƒæ…®ã™ã‚‹ã¨ã€æ–‡å­—åˆ—ãŒã„ã„ã¨ãŠã‚‚ã†
+#      History: 4.0 ã§ã¯æ–‡å­—åˆ—ã§ã€ã“ã‚Œã¯ãƒãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã•ã‚Œã¦ã„ãŸã€‚
 #        Value: SELECT ( multipart string )
 #     Examples: string
 command_mail_filter_reject_notice_data_type	=	string
 
 
-# Descriptions: ¥µ¥¤¥º¾ğÊó¤òº¬µò¤Ë¤·¤¿¥Õ¥£¥ë¥¿¥ê¥ó¥°¤ò¤¹¤ë¤«¡©
+# Descriptions: ã‚µã‚¤ã‚ºæƒ…å ±ã‚’æ ¹æ‹ ã«ã—ãŸãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹ã‹ï¼Ÿ
 #      History:
 #        Value: YES_OR_NO
 #     Examples:
 use_command_mail_size_filter	=	yes
 
 
-# Descriptions: ¥Õ¥£¥ë¥¿¥ê¥ó¥°¤Î¥ë¡¼¥ë¡£
-#               ¤É¤Î¥ë¡¼¥ë¤Ë¤â¥Ş¥Ã¥Á¤·¤Ê¤¤¤Ê¤é¡¢¥³¥Ş¥ó¥É¥á¡¼¥ë¤ÏÇ§¤á¤é¤ì¤ë¡£
+# Descriptions: ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã®ãƒ«ãƒ¼ãƒ«ã€‚
+#               ã©ã®ãƒ«ãƒ¼ãƒ«ã«ã‚‚ãƒãƒƒãƒã—ãªã„ãªã‚‰ã€ã‚³ãƒãƒ³ãƒ‰ãƒ¡ãƒ¼ãƒ«ã¯èªã‚ã‚‰ã‚Œã‚‹ã€‚
 #      History:
 #        Value: MIX (
 #			check_header_size

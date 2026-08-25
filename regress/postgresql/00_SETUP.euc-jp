@@ -1,27 +1,27 @@
 
-		PostgreSQL 7.4.8 �Ǥμ¹���
+		PostgreSQL 7.4.8 での実行例
 
 
-0) PostgreSQL �򥹥�����( postmaster �򥹥����� )�����롣
+0) PostgreSQL をスタート( postmaster をスタート )させる。
 
 	/etc/rc.d/pgsql start
 
 
-1) �桼�� fml �κ���
+1) ユーザ fml の作成
 
 	% su root
 	# su pgsql
 	> createuser --password fml
 
 
-2) �ǡ����١��� fml �κ���
+2) データベース fml の作成
 
 	% su root
 	# su pgsql
 	> createdb fml
 
 
-3) �ơ��֥� ml ����
+3) テーブル ml を作る
 	
 	% su root
 	# su pgsql
@@ -36,7 +36,7 @@
 
 	fml=# 
 
-�⤷���ϰ��̥桼����������Ȥ���ľ�ܥ����������롣
+もしくは一般ユーザアカウントから直接アクセスする。
 
 	% psql -h localhost -U fml --password
 	Password: 
@@ -51,7 +51,7 @@
 	fml=# 
 
 
-	[INFO] mysql �θ��ܤ�Ʊ����Τ�(����)�Ȥ���Τǡ������Ȥ���
+	[INFO] mysql の見本と同じものが(当然)使えるので、それを使う。
 
 	% psql -h localhost -U fml --password < create_table.sql
 	% psql -h localhost -U fml --password < test.sql
@@ -64,17 +64,17 @@
 
 
 
-��Ͽa)	�ǡ����١��� fml �κ����
+付録a)	データベース fml の削除。
 
 	% su root
 	# su pgsql
 	> dropdb fml
 
-��Ͽb)	�桼�����ѥ���ɤǤΥ�������
+付録b)	ユーザ＆パスワードでのアクセス
 
 	% psql -h localhost -U fml --password
 
-��Ͽz)	documents
+付録z)	documents
 
 	http://www.postgresql.jp/document/pg746doc/html/
 
