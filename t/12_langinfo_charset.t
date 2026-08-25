@@ -378,4 +378,100 @@ subtest 'the hint branch and the Accept-Language branch disagree' => sub {
        'and there is no reply_message_charset_ja to read instead');
 };
 
+
+
+# ---------------------------------------------------------------------
+# 11. the Accept-Language branch is unreachable from CGI
+#
+# The branch above reads the category's configuration key, so it looks
+# like the path that would give a CGI page cgi_charset_ja.  It is not
+# reached from CGI at all, and the reason is that nothing fills the list
+# it tests.
+#
+# langinfo_set_accept_language_list() has exactly one call site.  It is
+# in _inject_charset_hints(), which is called from one place, inside
+# incoming_message_parse() -- and every process that calls that one is a
+# mail process: Command, CreateOnPost, Distribute, Emulate, Error, Fake.
+# _inject_charset_hints() takes a Mail::Message, and a CGI request has
+# no message to give it.
+#
+# So on a CGI request all three sources are empty -- no charset in the
+# PCB, no accept-language list, no language hint -- and the answer is
+# always $cgi_default_charset.  us-ascii, whatever cgi_charset_ja says.
+#
+# The source-level half of this is the part worth having.  The day
+# _inject_charset_hints() gains a CGI caller, or the list gets filled
+# from HTTP_ACCEPT_LANGUAGE, this stops being true and the charset a
+# page is served as changes.  A test that only measured behaviour would
+# go on passing.
+# ---------------------------------------------------------------------
+subtest 'nothing fills the accept-language list on a CGI request' => sub {
+    my %config = (
+	cgi_default_charset => 'us-ascii',
+	cgi_charset_ja      => 'euc-jp',
+	cgi_charset_en      => 'us-ascii',
+    );
+
+    # The PCB is process-wide, so the hint the subtest above set for
+    # this very category is still in it.  Clear it: what is being
+    # measured here is a request that has had nothing set at all.
+    my $pcb = FML::PCB->new();
+    $pcb->set("language_hint", "cgi", "");
+    $pcb->set("charset",       "cgi", "");
+
+    # A process that has parsed no message: the shape of a CGI request.
+    my $curproc = t::Curproc->new(\%config, $pcb);
+
+    my $list = $curproc->langinfo_get_accept_language_list();
+    ok(!defined $list || !@$list, 'the accept-language list is empty');
+
+    my ($charset, $warn) =
+	warnings_from(sub { $curproc->langinfo_get_charset('cgi') });
+
+    is($charset, 'us-ascii', 'so the answer is cgi_default_charset');
+    isnt($charset, $config{ cgi_charset_ja },
+	 'and cgi_charset_ja is not reached');
+    isnt($charset, 'iso-2022-jp',
+	 'and neither is the hint branch, there being no hint');
+    is(scalar(@$warn), 0, 'nothing warned') or diag("warnings: @$warn");
+
+    # Now the source, which is what actually holds this in place.
+    my $kernel = 'fml/lib/FML/Process/Kernel.pm';
+    open(my $fh, '<', $kernel) or die "cannot read $kernel: $!";
+    local $/ = undef;
+    my $src = <$fh>;
+    close($fh);
+
+    my @set = ($src =~ /langinfo_set_accept_language_list\(/g);
+    is(scalar(@set), 1,
+       'the list is filled in exactly one place in Kernel.pm');
+
+    my @inject = ($src =~ /\$curproc->_inject_charset_hints\(/g);
+    is(scalar(@inject), 1,
+       'and that place is reached from exactly one caller');
+
+    # Every process that reaches it is a mail process.  Listed rather
+    # than counted, so a CGI one appearing here is a failure with a name
+    # on it.
+    my @caller = ();
+    for my $path (glob('fml/lib/FML/Process/*.pm'),
+		  glob('fml/lib/FML/Process/CGI/*.pm')) {
+	open(my $h, '<', $path) or next;
+	local $/ = undef;
+	my $s = <$h>;
+	close($h);
+	next unless $s =~ /->incoming_message_parse\(/;
+	(my $name = $path) =~ s{.*/}{};
+	push @caller, $name;
+    }
+
+    is_deeply([ sort @caller ],
+	      [ sort qw(Command.pm CreateOnPost.pm Distribute.pm Emulate.pm			Error.pm Fake.pm) ],
+	      'only mail processes parse an incoming message');
+
+    my @cgi = grep { /^CGI/ } @caller;
+    is(scalar(@cgi), 0, 'no CGI process does')
+	or diag("CGI callers: @cgi");
+};
+
 done_testing();
