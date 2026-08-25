@@ -44,7 +44,8 @@ sub new
 
     # parse it by Mail::Address.
     my (@addrs) = Mail::Address->parse($str);
-    my $addr    = $addrs[0]->address;
+    _repair_group_syntax(\@addrs);
+    my $addr    = @addrs ? $addrs[0]->address : '';
 
     # XXX in-core data area.
     # XXX if we manipulate Mail::Address object, it is dangerous. So
@@ -60,6 +61,85 @@ sub new
     return bless $me, $type;
 }
 
+
+# Descriptions: undo what Mail::Address does to RFC 5322 group syntax.
+#
+#               RFC 5322 section 3.4 defines
+#
+#                   group = display-name ":" [group-list] ";" [CFWS]
+#
+#               which is part of the core grammar, not an extension.
+#               Mail::Address does not implement it.  Given
+#
+#                   friends: taro@example.jp, hanako@example.jp;
+#
+#               it returns two addresses and both are wrong:
+#               "friends:taro@example.jp" carries the group name and
+#               "hanako@example.jp;" carries the terminator.  With a
+#               group name of more than one word it is worse still --
+#
+#                   A Group: a@x.jp, b@y.jp; c@z.jp
+#                     -> "A", "Group:a@x.jp", "b@y.jp;c@z.jp"
+#
+#               -- so the count is wrong too, not just the strings.
+#
+#               fml8 decides who is a member by comparing addresses, so
+#               none of those match anybody: a member posting to that
+#               header is treated as a stranger.
+#
+#               Repairing afterwards is the small fix.  The other way --
+#               Mail::Message, whose parser is correct -- pulls in 223
+#               modules and reaches XS, which fml8 cannot bundle.
+#
+#               A colon cannot appear in an unquoted local part and a
+#               semicolon cannot appear in a domain (RFC 5322 section
+#               3.2.3 and 3.4.1), so neither rule can fire on an
+#               address that is not part of a group.
+#
+#    Arguments: ARRAY_REF($addrs)
+# Side Effects: replace the contents of $addrs.
+# Return Value: none
+sub _repair_group_syntax
+{
+    my ($addrs) = @_;
+
+    return unless ref($addrs) eq 'ARRAY';
+    return unless @$addrs;
+
+    my @out = ();
+    for my $a (@$addrs) {
+	next unless defined $a;
+	my $addr = eval { $a->address() };
+	next unless defined $addr;
+
+	# XXX A semicolon inside the string means two addresses were run
+	# XXX together across a group terminator.  Split first, repair
+	# XXX each piece, and let the count come out right.
+	for my $part (split(/;/, $addr)) {
+	    $part =~ s/^[^"<>@]*://;   # the group name and its colon
+	    $part =~ s/^\s+//;
+	    $part =~ s/\s+$//;
+
+	    # XXX What is left of an empty group ("undisclosed-recipients:;")
+	    # XXX or of a mangled group name ("A") is not an address.
+	    next unless length $part;
+	    next unless $part =~ /\@/;
+
+	    if ($part eq $addr) {
+		push @out, $a;      # untouched; keep the original object
+		next;
+	    }
+
+	    # XXX Build a new object rather than reaching inside this one.
+	    # XXX Mail::Address is an ARRAY underneath in 2.x and was a
+	    # XXX HASH earlier; either way its layout is not ours to
+	    # XXX write to.
+	    push @out, Mail::Address->new($a->phrase(), $part, $a->comment());
+	}
+    }
+
+    @$addrs = @out;
+}
 
 # Descriptions: return date as string.
 #    Arguments: OBJ($self)
