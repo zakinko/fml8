@@ -304,4 +304,200 @@ subtest 'a header value keeps its octets' => sub {
     }
 };
 
+# ---------------------------------------------------------------------
+# The places RFC 5322 is awkward, and whether this one gets them right
+#
+# Mail::Header's own documentation says it "does not always follow the
+# RFCs strict enough, does not help you with character encodings", and
+# points at Mail::Message::Head as "much newer and therefore better".
+# Taking that advice is not free: Mail-Message wants Log::Report,
+# User::Identity, URI, IO-stringy and TimeDate behind it, some 223
+# modules against the seven cpan/lib now holds, and it requires
+# Mail::Address, so MailTools would not even leave.
+#
+# So the question is not whether Mail::Header is imperfect in general.
+# It is whether fml8 stands anywhere near the imperfection.  These are
+# the awkward parts of RFC 5322 and 2047 for the eight methods fml8
+# inherits, and the answers are recorded rather than argued about: if
+# one of them starts failing, that is the day the trade becomes worth
+# making, and the failure says which input to take to the maintainer.
+# ---------------------------------------------------------------------
+subtest 'the awkward parts of RFC 5322' => sub {
+    my $folded = _header("Subject: a long subject\n which continues\n\tand again");
+    my $got    = $folded->get('Subject');
+    like($got, qr/which continues/, 'a folded line keeps its middle');
+    like($got, qr/and again/,       'and its tail');
+
+    my $case = _header("Subject: hello");
+    ok(defined $case->get('subject'), 'field names are matched case-insensitively');
+    ok(defined $case->get('SUBJECT'), 'in either direction');
+
+    # Received: is the one field whose order carries meaning.
+    my $rcvd = _header("Received: from a\nReceived: from b\nReceived: from c");
+    my @r    = $rcvd->get('Received');
+    is(scalar(@r), 3, 'every Received: is kept, not just the first');
+    like($r[0], qr/from a/, 'and they come back in the order they arrived');
+
+    # A subject tag holds a colon, and so does the Re: in front of it.
+    my $colon = _header("Subject: Re: [elena:00123] hello");
+    like($colon->get('Subject'), qr/^Re: \[elena:00123\] hello/,
+         'a colon in the value does not split the field');
+
+    my $empty = _header("X-Empty:\nSubject: after");
+    ok(defined $empty->get('X-Empty'), 'an empty value is a value');
+    like($empty->get('Subject'), qr/after/, 'and does not swallow what follows');
+
+    # RFC 2047 is somebody else's job -- FML::Message::Encode's -- and
+    # the header must hand it over untouched for that to work.
+    my $ew = _header("Subject: =?ISO-2022-JP?B?GyRCJUYlOSVIGyhC?=");
+    like($ew->get('Subject'), qr/\Q=?ISO-2022-JP?B?\E/,
+         'an encoded-word is passed through, not decoded here');
+
+    # A line with no colon is not a header field.  What matters is that
+    # the fields after it are still found.
+    my $addr = 'a@b.jp';
+    my $junk = _header("Subject: ok\nthis line has no colon\nFrom: $addr");
+    like($junk->get('From'), qr/\Q$addr\E/,
+         'a malformed line does not lose the fields behind it');
+};
+
+
+# ---------------------------------------------------------------------
+# Writing a header out again
+#
+# RFC 5322 puts a hard limit of 998 characters on a line, and RFC 2047
+# says an encoded-word may not be split across a fold.  A Japanese
+# subject is where both meet: it arrives as one long encoded-word and
+# has to leave as something a receiving MTA will accept.
+# ---------------------------------------------------------------------
+subtest 'a long Japanese subject survives being written out' => sub {
+    my $word = "=?ISO-2022-JP?B?" . ("GyRCJUYlOSVIGyhC" x 6) . "?=";
+
+    my $head = Mail::Header->new;
+    $head->add('Subject', $word);
+    my $out = $head->as_string;
+
+    my ($longest) = sort { $b <=> $a } map { length } split /\n/, $out;
+    cmp_ok($longest, '<=', 998, 'no line exceeds what RFC 5322 allows')
+	or diag("longest line is $longest characters");
+
+    my $split = 0;
+    for my $line (split /\n/, $out) {
+	$split++ if $line =~ /=\?[^?]*\?[BQ]\?[^?]*$/;
+    }
+    is($split, 0, 'and no encoded-word is broken across a fold');
+};
+
+
+# ---------------------------------------------------------------------
+# Where it does get RFC 5322 wrong
+#
+# The group syntax -- "friends: a@x.jp, b@y.jp;" -- is a legal way to
+# write a To: or Cc:, and Mail::Address does not take the group name
+# off the first address in it.  fml8 decides who is a member by
+# comparing addresses, so a post whose To: is written that way has one
+# recipient it will not recognise.
+#
+# Recorded as TODO rather than worked around here.  It is the first
+# thing found that Mail::Message::Head would answer correctly, and it
+# is the sort of evidence that decides whether carrying 223 modules is
+# worth it -- an input that fails, rather than a sentence in somebody's
+# documentation.
+# ---------------------------------------------------------------------
+subtest 'the group syntax loses an address' => sub {
+    my @addr = Mail::Address->parse('friends: a@x.jp, b@y.jp;');
+
+    is(scalar(@addr), 2, 'both members of the group are found');
+
+    # The second one is right, which is what makes the first a bug
+    # rather than a decision not to support groups at all.
+    is($addr[1]->address, 'b@y.jp', 'the last address in a group is clean');
+
+    local $TODO = 'Mail::Address keeps the group name on the first address';
+    is($addr[0]->address, 'a@x.jp',
+       'the first address in a group is not prefixed with the group name');
+    is($addr[0]->user, 'a',
+       'and its user part is the user part');
+};
+
+
+# ---------------------------------------------------------------------
+# The rest of what fml8 inherits, held to its answers
+# ---------------------------------------------------------------------
+subtest 'replace, delete, count and dup' => sub {
+    my $head = _header("X-A: 1\nX-A: 2\nX-B: 3");
+
+    $head->replace('X-B', '9');
+    like($head->get('X-B'), qr/9/, 'replace() puts the new value in');
+
+    $head->delete('X-A');
+    is(scalar($head->count('X-A')), 0, 'delete() takes every copy of a field');
+
+    my $orig = _header("Subject: orig");
+    my $copy = $orig->dup;
+    $copy->replace('Subject', 'changed');
+
+    like($orig->get('Subject'), qr/orig/,
+	 'dup() gives a copy that can be changed without touching the original');
+    like($copy->get('Subject'), qr/changed/, 'and the copy did change');
+};
+
+
+subtest 'a header keeps octets it does not understand' => sub {
+    # EUC-JP straight into the field, which is what fml8 hands it after
+    # FML::Message::Encode has converted an article.
+    my $jp   = "\xc6\xfc\xcb\xdc\xb8\xec";
+    my $head = _header("Subject: $jp");
+    my $got  = $head->get('Subject');
+    chomp $got;
+
+    is($got, $jp, 'the bytes come back as the bytes that went in')
+	or diag(sprintf("in %s, out %s", unpack("H*", $jp), unpack("H*", $got)));
+
+    # And an encoded-word that was folded onto two lines is still two
+    # encoded-words afterwards, not one run-together string.
+    my $folded = _header("Subject: =?ISO-2022-JP?B?GyRCJUYlOSVIGyhC?=\n"
+			 . " =?ISO-2022-JP?B?GyRCJUYlOSVIGyhC?=");
+    my $count = () = $folded->get('Subject') =~ /=\?ISO/g;
+    is($count, 2, 'both encoded-words survive the unfolding');
+};
+
+
+subtest 'addresses that are legal but unusual' => sub {
+    my %case = (
+	'a@[192.0.2.1]' => 'a@[192.0.2.1]',   # domain literal
+	'"a b"@x.jp'    => '"a b"@x.jp',      # quoted local part
+    );
+
+    for my $in (sort keys %case) {
+	my @p = Mail::Address->parse($in);
+	is(scalar(@p), 1, "$in: one address");
+	is($p[0]->address, $case{$in}, "$in: kept as written");
+    }
+
+    # An empty element between two commas is not an address.
+    my @p = Mail::Address->parse('a@x.jp, , b@y.jp');
+    is(scalar(@p), 2, 'an empty list element is skipped, not counted');
+
+    # The empty angle pair is the null return path, and has no address.
+    my @null = Mail::Address->parse('<>');
+    is(scalar(@null), 0, '<> yields no address at all');
+};
+
+
+# Descriptions: build a Mail::Header from a string of header lines.
+#    Arguments: STR($text)
+# Side Effects: none
+# Return Value: OBJ
+sub _header
+{
+    my ($text) = @_;
+    my $head = Mail::Header->new;
+
+    $head->extract([ map { "$_\n" } split(/\n/, $text) ]);
+
+    return $head;
+}
+
+
 done_testing();
