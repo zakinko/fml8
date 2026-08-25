@@ -130,10 +130,20 @@ sub _set_charset
 
     if ($charset) {
 	$curproc->langinfo_set_charset("template_file", $charset);
+
+	# XXX prepare() reads the "cgi" category, not "template_file", so
+	# XXX the language asked for by language= or by Accept-Language:
+	# XXX never reached it.  Every page fell back to
+	# XXX $cgi_default_charset, us-ascii, while the body written out
+	# XXX below it is euc-jp.
+	$curproc->langinfo_set_charset("cgi", $charset);
     }
     else {
 	my $default = $obj->internal_default_charset();
 	$curproc->langinfo_set_charset("template_file", $default);
+
+	# XXX no language was asked for, so leave the "cgi" category
+	# XXX unset and let $cgi_default_charset answer for it.
     }
 }
 
