@@ -1,7 +1,6 @@
-
 package Time::Timezone;
 
-require 5.002;
+require 5.008001;
 
 require Exporter;
 @ISA = qw(Exporter);
@@ -15,7 +14,7 @@ use strict;
 
 use vars qw($VERSION);
 
-$VERSION = 2006.0814;
+$VERSION = 2026.0330;
 
 sub tz2zone
 {
@@ -32,7 +31,7 @@ sub tz2zone
 
 	if (! defined $isdst) {
 		my $j;
-		$time = time() unless $time;
+		$time = time() unless defined $time;
 		($j, $j, $j, $j, $j, $j, $j, $j, $isdst) = localtime($time);
 	}
 
@@ -61,7 +60,7 @@ sub tz_local_offset
 {
 	my ($time) = @_;
 
-	$time = time() unless $time;
+	$time = time() unless defined $time;
 
     return &calc_off($time);
 }
@@ -88,7 +87,7 @@ sub calc_off
 	} elsif ($l[7] == $g[7] - 1) {
 		$off -= 86400;
 	} elsif ($l[7] < $g[7]) {
-		# crossed over a year boundry!
+		# crossed over a year boundary!
 		# localtime is beginning of year, gmt is end
 		# therefore local is ahead
 		$off += 86400;
@@ -249,7 +248,7 @@ sub tz_offset
 
 	return &tz_local_offset() unless($zone);
 
-	$time = time() unless $time;
+	$time = time() unless defined $time;
 	my(@l) = localtime($time);
 	my $dst = $l[8];
 
@@ -271,7 +270,7 @@ sub tz_name
 {
 	my ($off, $time) = @_;
 
-	$time = time() unless $time;
+	$time = time() unless defined $time;
 	my(@l) = localtime($time);
 	my $dst = $l[8];
 
@@ -306,10 +305,10 @@ Time::Timezone -- miscellaneous timezone manipulations routines
 This is a collection of miscellaneous timezone manipulation routines.
 
 C<tz2zone()> parses the TZ environment variable and returns a timezone
-string suitable for inclusion in L<date>-like output.  It opionally takes
+string suitable for inclusion in L<date>-like output.  It optionally takes
 a timezone string, a time, and a is-dst flag.
 
-C<tz_local_offset()> determins the offset from GMT time in seconds.  It
+C<tz_local_offset()> determines the offset from GMT time in seconds.  It
 only does the calculation once.
 
 C<tz_offset()> determines the offset from GMT in seconds of a specified
@@ -317,14 +316,18 @@ timezone.
 
 C<tz_name()> determines the name of the timezone based on its offset
 
-=head1 AUTHORS
+=head1 AUTHOR
 
-Graham Barr <bodg@tiuk.ti.com>
-David Muir Sharnoff <muir@idiom.org>
-Paul Foley <paul@ascent.com>
+Best Practical Solutions, LLC E<lt>modules@bestpractical.comE<gt>
 
-=head1 LICENSE
+=head1 ORIGINAL AUTHORS
 
-David Muir Sharnoff disclaims any copyright and puts his contribution
-to this module in the public domain.
+Graham Barr, David Muir Sharnoff, Paul Foley
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2026 Best Practical Solutions, LLC.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
