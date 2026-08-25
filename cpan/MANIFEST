@@ -2,8 +2,6 @@
 
 				version		license	type
 ----------------------------------------------------------------
-Crypt-UnixCrypt			1.0		perl itself
-
 Email-Find			0.10		perl itself
 				Email::Find::addrspec only
 

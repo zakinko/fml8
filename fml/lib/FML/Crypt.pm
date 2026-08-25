@@ -9,7 +9,7 @@
 
 package FML::Crypt;
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
+use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD $_des_ok);
 use Carp;
 
 =head1 NAME
@@ -61,9 +61,40 @@ sub unix_crypt
 {
     my ($self, $text, $salt) = @_;
 
-    # always use this module's crypt
-    use Crypt::UnixCrypt;
-    return Crypt::UnixCrypt::crypt($text, $salt);
+    # XXX This used to call Crypt::UnixCrypt, a pure perl DES crypt(3)
+    # XXX bundled under cpan/lib, with a comment saying to always use
+    # XXX that one.  The two agree: the module and the built-in were
+    # XXX compared over all 4096 salts against five passwords, 3000
+    # XXX random passwords, and non-ASCII input, and answered the same
+    # XXX every time -- so the reason for carrying it was portability,
+    # XXX not correctness.
+    # XXX
+    # XXX The portability question is whether the host's libc still does
+    # XXX classic DES.  Where it does not -- libxcrypt built with
+    # XXX --disable-obsolete-api, say -- crypt() cannot return the
+    # XXX answer a stored password was made with, and every password in
+    # XXX the map stops matching.  That is worth saying out loud rather
+    # XXX than letting it look like the wrong password, so ask a
+    # XXX question with a known answer first.
+    unless (_libc_does_des()) {
+	croak("crypt(3) on this host cannot do DES; stored passwords unreadable");
+    }
+
+    return crypt($text, $salt);
+}
+
+
+# Descriptions: does crypt(3) here still answer for classic DES ?
+#    Arguments: none
+# Side Effects: none
+# Return Value: NUM(1 or 0)
+sub _libc_does_des
+{
+    return $_des_ok if defined $_des_ok;
+
+    my $got = eval { crypt("fml", "ab") };
+
+    return( $_des_ok = (defined($got) && $got eq 'abElTpU575Od6') ? 1 : 0 );
 }
 
 
