@@ -110,7 +110,20 @@ sub Bootstrap
 
     # 2.1.1 set up @INC to load FML::Process::Switch
     if (defined $main_cf->{ lib_dir }) {
-	push(@INC, split(/\s+/, $main_cf->{ lib_dir }));
+	my @dir = split(/\s+/, $main_cf->{ lib_dir });
+	push(@INC, @dir);
+
+	# XXX 3rdparty/ is where a site puts modules of its own, and it
+	# XXX goes after fml8's own lib rather than before it.  A module
+	# XXX dropped in there that happens to be called FML::Message
+	# XXX would otherwise answer instead of fml8's, and which one
+	# XXX won would be a property of the install rather than of the
+	# XXX code.  Later in @INC means a site can add what fml8 does
+	# XXX not have, and cannot quietly replace what it does.
+	for my $d (@dir) {
+	    my $third = sprintf("%s/3rdparty", $d);
+	    push(@INC, $third) if -d $third;
+	}
     }
     else {
 	__CROAK("\$lib_dir not defined in main.cf");

@@ -15,16 +15,39 @@
 合にそなえて用意されています。
 
 
-<EM><B>TODO</B></EM>
+<EM><H2>インストール先と @INC</H2>
 
-3rdparty 以下は
-/usr/local/fml/lib/バージョン/
-直下にインストールされるのか？それとも
+<P>
+3rdparty/ は
+<PRE>
 /usr/local/fml/lib/バージョン/3rdparty/
-とするか？
+</PRE>
+にインストールされ、@INC には fml8 本体の lib
+<STRONG>より後ろ</STRONG>に積まれます。
 
-@INC が変わるわけですが、どっちにするかは未決定です。
+<P>
+後ろに置くのは、ここに置かれたモジュールが fml8 のクラスを黙って
+置き換えられないようにするためです。たとえば 3rdparty/ に
+FML::Message があると、どちらが答えるかは @INC の順序 --
+つまりコードではなくインストールの都合 -- で決まってしまいます。
+後ろであれば、fml8 に無いものを足すことはできて、あるものを
+すり替えることはできません。
 
-<!-- =================================================================== -->
+<P>
+demo/ がその見本です。カレンダーとガントチャートとスケジューラで、
+fml8 の本体には要らないものです。自分の依存モジュール
+(HTML::CalendarMonthSimple) も自分の lib/ に持っていて、
+fml8 の cpan/ には置いていません。3rdparty/ に置くものは
+そのようにしてください。
+
+<PRE>
+3rdparty/demo/
+        bin/            fmlsch, fmlproj
+        lib/FML/Demo/   Calendar, Chart, Project
+        lib/FML/Process/Calendar, Project, Scheduler
+        lib/FML/CGI/    Calendar
+        lib/HTML/       CalendarMonthSimple  -- demo 自身の依存
+</PRE>
+
 </BODY>
 </HTML>

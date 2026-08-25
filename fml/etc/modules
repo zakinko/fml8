@@ -71,7 +71,8 @@ mead.pl                  FML::Process::Emulate            $ml
 loader                   FML::Process::Distribute         $ml
 loader__--ctladdr        FML::Process::Command
 
-# demo
+# demo -- 3rdparty/demo/ にあり、fml8 本体には無い。
+# 3rdparty/ を入れていない場合はここの三つは解決しない。
 fmlsch                   FML::Process::Calendar
 fmlsch.cgi               FML::CGI::Calendar
 fmlproj                  FML::Process::Project

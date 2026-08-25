@@ -188,8 +188,8 @@ AC_OUTPUT(\
 	fml/bin/fmlconf \
 	fml/bin/fmldoc \
 	fml/bin/fmlhtmlify \
-	fml/bin/fmlsch \
-	fml/bin/fmlproj \
+	3rdparty/demo/bin/fmlsch \
+	3rdparty/demo/bin/fmlproj \
 	fml/bin/fmlpgp  \
 	fml/bin/fmlpgp5 \
 	fml/bin/fmlpgpe \

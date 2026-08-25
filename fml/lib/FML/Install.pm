@@ -455,6 +455,37 @@ sub install_lib_dir
 
     print STDERR "updating $dst_dir\n";
     $self->copy_dir( $src_dir, $dst_dir );
+
+    $self->install_3rdparty_dir();
+}
+
+
+=head2 install_3rdparty_dir()
+
+install 3rdparty/ under lib_dir.
+
+=cut
+
+
+# Descriptions: install 3rdparty/ under lib_dir.
+#    Arguments: OBJ($self)
+# Side Effects: update lib_dir/3rdparty/.
+# Return Value: none
+sub install_3rdparty_dir
+{
+    my ($self)  = @_;
+    my $src_dir = "3rdparty";
+
+    return unless -d $src_dir;
+
+    # XXX Under lib_dir rather than beside it, and read after it -- see
+    # XXX libexec/loader for why a site's own modules must not be able
+    # XXX to answer in place of fml8's.
+    my $dst_dir = File::Spec->catfile($install_root,
+				      $self->path('lib_dir'), "3rdparty");
+
+    print STDERR "updating $dst_dir\n";
+    $self->copy_dir( $src_dir, $dst_dir );
 }
 
 
