@@ -9,12 +9,6 @@ package HTML::FromText;
 
 use Email::Find::addrspec 0.09  qw[$Addr_spec_re];
 use Exporter 5.58         qw[import];
-# XXX HTML::Entities comes from HTML-Parser, which is XS, so fml8
-# XXX cannot carry it the way it carries the rest of cpan/lib.
-# XXX fukachan\@fml.org substituted HTML::EntitiesLite here in 2.05
-# XXX for that reason and the substitution is carried forward; what
-# XXX HTML::EntitiesLite contains has since been rewritten.
-use HTML::EntitiesLite      qw[encode_entities];
 use Scalar::Util 1.12     qw[blessed];
 use Text::Tabs 98.1128    qw[expand];
 
@@ -271,7 +265,28 @@ sub bold {
 
 sub metachars {
     my ($self) = @_;
-    $self->{html} = encode_entities( $self->{html} );
+
+    # XXX upstream escapes here with HTML::Entities, which comes from
+    # XXX HTML-Parser and is XS, so fml8 cannot carry it alongside the
+    # XXX pure perl it does carry.  fukachan@fml.org met this in 2.05 and
+    # XXX substituted a cut of HTML::Entities named HTML::EntitiesLite;
+    # XXX that module was on no CPAN mirror, so it is gone and the five
+    # XXX substitutions it was kept for are written out here instead.
+    #
+    # XXX Only those five.  HTML::Entities also escapes every byte with
+    # XXX the high bit set, which is right for a string of characters and
+    # XXX wrong for the octets fml8 hands it: EUC-JP arrived a byte at a
+    # XXX time, was read as Latin-1, and 日本語 came back as
+    # XXX &AElig;&uuml;&Euml;&Uuml;&cedil;&igrave;.  Mail::Message::ToHTML
+    # XXX converts an article to euc-jp before calling text2html, so that
+    # XXX was every Japanese article in every HTML archive.
+    my %entity = ('&' => '&amp;',
+		  '<' => '&lt;',
+		  '>' => '&gt;',
+		  '"' => '&quot;',
+		  "'" => '&#39;');
+
+    $self->{html} =~ s/([&<>"'])/$entity{$1}/g;
 }
 
 # private
