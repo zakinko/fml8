@@ -2112,6 +2112,29 @@ sub text2html
     # XXX its twelve protocols, tabs, EUC-JP, an empty string, a URL in
     # XXX parentheses, entity-worthy punctuation -- across both options,
     # XXX 80 comparisons, identical output.
+    #
+    # XXX The escaping below answers as HTML::Entities does.  It was
+    # XXX checked against HTML-Parser 3.85, the current release, with
+    # XXX the character set restricted to these five: same output on
+    # XXX every input tried, the apostrophe included -- 3.85 deletes it
+    # XXX from its table on purpose ("only one-way decoding") so that it
+    # XXX comes back as &#39; rather than &apos;, and so does this.
+    #
+    # XXX HTML::Entities is
+    # XXX
+    # XXX   Copyright 1995-2009 Gisle Aas.  All rights reserved.
+    # XXX   Copyright 1999-2000 Michael A. Chase.  All rights reserved.
+    # XXX
+    # XXX   This library is free software; you can redistribute it and/or
+    # XXX   modify it under the same terms as Perl itself.
+    # XXX
+    # XXX and fml8 reached it through HTML::EntitiesLite, the cut
+    # XXX fukachan@fml.org made from HTML-Parser 3.69 and carried under
+    # XXX cpan/lib with that notice on it.  Five substitutions of HTML's
+    # XXX own characters are hardly anyone's to own, so this is written
+    # XXX out rather than copied.  The notice stays anyway: the line of
+    # XXX descent is real, and dropping the names of the people it came
+    # XXX from to save four lines is not a trade worth making.
     my %entity = ('&' => '&amp;',
 		  '<' => '&lt;',
 		  '>' => '&gt;',
