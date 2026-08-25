@@ -564,8 +564,17 @@ sub _speculate_timezone
 {
     my ($_offset) = @_;
 
-    use Time::Timezone;
-    my $offset = $_offset || tz_local_offset();
+    # XXX tz_local_offset() came from Time::Timezone, whose upstream
+    # XXX distribution fml8 no longer carries.  The offset it returns is
+    # XXX the difference between local time and UTC for the moment asked
+    # XXX about, which timegm() and localtime() give between them.
+    use Time::Local;
+    my $offset = $_offset;
+    unless (defined $offset) {
+	my $now = time;
+	my @lt  = localtime($now);
+	$offset = timegm(@lt[0..5]) - $now;
+    }
     my $hour   = int(abs($offset)/3600);
     my $shift  = (abs($offset) - $hour*3600)/3600;
 
