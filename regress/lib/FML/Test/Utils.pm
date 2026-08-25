@@ -58,8 +58,8 @@ sub copy
 {
     my ($self, $src, $dst) = @_;
 
-    use IO::Adapter::AtomicFile;
-    my $io = new IO::Adapter::AtomicFile;
+    use FML::IO::Adapter::AtomicFile;
+    my $io = new FML::IO::Adapter::AtomicFile;
     $io->copy($src, $dst) || croak("fail to copy $src $dst");
 }
 

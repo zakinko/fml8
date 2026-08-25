@@ -3,10 +3,10 @@
 # $FML$
 #
 
-use Mail::Message::Charset;
+use FML::Message::Charset;
 
-use Mail::Message::Charset;
-my $mc = new Mail::Message::Charset;
+use FML::Message::Charset;
+my $mc = new FML::Message::Charset;
 
 
 

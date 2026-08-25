@@ -14,7 +14,7 @@ use Carp;
 use File::Spec;
 use FML::Credential;
 use FML::Restriction::Base;
-use IO::Adapter;
+use FML::IO::Adapter;
 
 # disable debug by default.
 $debug = 0;
@@ -93,8 +93,8 @@ sub _sanity_check
 
     if ($map) {
 	unless (-f $map) {
-	    use IO::Adapter;
-	    my $obj = new IO::Adapter $map;
+	    use FML::IO::Adapter;
+	    my $obj = new FML::IO::Adapter $map;
 	    $obj->touch();
 	}
 
@@ -134,8 +134,8 @@ sub add
     $self->_sanity_check();
 
     # 1. add domain into ml_home_prefix map.
-    use IO::Adapter;
-    my $obj = new IO::Adapter $pri_map;
+    use FML::IO::Adapter;
+    my $obj = new FML::IO::Adapter $pri_map;
     $obj->touch();
 
     my $_domain   = quotemeta($domain);
@@ -232,7 +232,7 @@ sub delete
     }
 
     # remove hash entry.
-    my $obj = new IO::Adapter $pri_map;
+    my $obj = new FML::IO::Adapter $pri_map;
     $obj->open();
     $obj->delete($domain);
     $obj->close();

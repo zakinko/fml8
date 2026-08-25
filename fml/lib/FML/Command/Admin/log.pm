@@ -153,8 +153,8 @@ sub _show_log_grep
 	croak("no regexp");
     }
 
-    use Mail::Message::Encode;
-    my $encode = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $encode = new FML::Message::Encode;
 
     use FileHandle;
     my $fh = new FileHandle $log_file;
@@ -203,8 +203,8 @@ sub _show_log_tail
     my $config       = $curproc->config();
     my $last_n_lines = $config->{ log_command_tail_starting_location } || 100;
 
-    use Mail::Message::Encode;
-    my $encode = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $encode = new FML::Message::Encode;
 
     use FileHandle;
     my $fh = new FileHandle $log_file;
@@ -272,8 +272,8 @@ sub _log_date_string
 {
     my ($self, $when) = @_;
 
-    use Mail::Message::Date;
-    my $date     = new Mail::Message::Date;
+    use FML::Message::Date;
+    my $date     = new FML::Message::Date;
     my $log_date = $date->log_file_style($when);
     return (split(/\s+/, $log_date))[0];
 }

@@ -43,7 +43,7 @@ RDBMS (MySQL と PostgreSQL) および LDAP です。
 <para>
 DBMS との通信は
 <link linkend="module.io.adapter">
-IO::Adapter
+FML::IO::Adapter
 </link>
 クラス経由で通信することが前提です。
 </para>
@@ -55,7 +55,7 @@ IO::Adapter
 <para>
 逆に言うと、
 それらの原始的な機能を組み合わせた複雑な操作は
-IO::Adapter の前段階で処理する必要があります。
+FML::IO::Adapter の前段階で処理する必要があります。
 </para>
 
 </sect1>

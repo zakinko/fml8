@@ -14,7 +14,7 @@ use Carp;
 
 =head1 NAME
 
-FML::Cache::Journal - interface into Tie::JournaledDir.
+FML::Cache::Journal - interface into FML::Tie::JournaledDir.
 
 =head1 SYNOPSIS
 
@@ -28,7 +28,7 @@ constructor.
 
 =head2 open($cache_dir, $class)
 
-open database via Tie::JournaledDir.
+open database via FML::Tie::JournaledDir.
 
 =head2 close()
 
@@ -51,7 +51,7 @@ sub new
 }
 
 
-# Descriptions: open database via Tie::JournaledDir.
+# Descriptions: open database via FML::Tie::JournaledDir.
 #    Arguments: OBJ($self) STR($cache_dir) STR($class)
 # Side Effects: open database, mkdir if needed
 # Return Value: HASH_REF to dabase
@@ -69,8 +69,8 @@ sub open
 	$curproc->mkdir($dir, $mode);
     }
 
-    use Tie::JournaledDir;
-    tie %db, 'Tie::JournaledDir', { dir => $dir };
+    use FML::Tie::JournaledDir;
+    tie %db, 'FML::Tie::JournaledDir', { dir => $dir };
 
     $self->{ _db } = \%db;
 

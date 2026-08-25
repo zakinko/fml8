@@ -105,7 +105,7 @@ test:
 	@ rm -f $(TMPFILE)
 
 _test:
-	@ echo "* IO::Adapter module test"
+	@ echo "* FML::IO::Adapter module test"
 	@ for x in IO/t/*pl; do perl -I ../lib -I . $$x; done
 	@ echo "* base"
 	@ test -d /tmp/fml5 || mkdir /tmp/fml5

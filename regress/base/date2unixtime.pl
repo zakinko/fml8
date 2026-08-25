@@ -8,7 +8,7 @@
 #
 
 use strict;
-use Mail::Message::Date;
+use FML::Message::Date;
 
 my $debug = defined $ENV{'debug'} ? 1 : 0;
 
@@ -19,15 +19,15 @@ my $t    = time;
 my $date = ctime( $t );
 $date =~ s/[\s\n]*$//;
 
-my $dp = new Mail::Message::Date;
+my $dp = new FML::Message::Date;
 my $tx = $dp->date_to_unixtime( $date );
 
 use FML::Test::Utils;
 my $tool = new FML::Test::Utils;
-$tool->set_title("Mail::Message::Date");
+$tool->set_title("FML::Message::Date");
 
 if ($debug) {
-    print STDERR "Mail::Message::Date ";
+    print STDERR "FML::Message::Date ";
     print STDERR "(date -> unixtime): $t => $date => $tx\n";
 }
 

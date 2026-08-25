@@ -10,10 +10,10 @@
 
 use strict;
 use Carp;
-use IO::Adapter;
+use FML::IO::Adapter;
 my $debug = defined $ENV{'debug'} ? 1 : 0;
 my $map   = 'pcre:/var/spool/ml/elena/sender.pcre';
-my $obj   = new IO::Adapter $map;
+my $obj   = new FML::IO::Adapter $map;
 
 my $key = 'fukachan@sapporo.iij.ad.jp';
 print "search $key\n";

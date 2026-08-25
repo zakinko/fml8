@@ -6,10 +6,10 @@
 BEGIN {
     my $debug = defined $ENV{'debug'} ? 1 : 0;
     $| = 1; 
-    print "Tie::JournaledDir init  journaleddir ...\n" if $debug;
+    print "FML::Tie::JournaledDir init  journaleddir ...\n" if $debug;
 };
 
-use Tie::JournaledDir;
+use FML::Tie::JournaledDir;
 
 $| = 1; 
 
@@ -20,7 +20,7 @@ my $debug = defined $ENV{'debug'} ? 1 : 0;
 
 use FML::Test::Utils;
 my $tool = new FML::Test::Utils;
-$tool->set_title("Tie::JournaledDir");
+$tool->set_title("FML::Tie::JournaledDir");
 
 if (-d $dir) {
     use DirHandle;
@@ -48,23 +48,23 @@ for my $k (keys %$testpat) {
 }
 
 # 1.1 write/read
-$tool->set_title("Tie::JournaledDir write [1]");
+$tool->set_title("FML::Tie::JournaledDir write [1]");
 &_write($testpat);
 &_read($testpat);
 
 # 1.2 write/read
-$tool->set_title("Tie::JournaledDir write [2]");
+$tool->set_title("FML::Tie::JournaledDir write [2]");
 &_write2($testpat);
 &_write($testpat);
 &_write2($testpat);
 &_read($testpat);
 
 # 2. keys
-$tool->set_title("Tie::JournaledDir keys");
+$tool->set_title("FML::Tie::JournaledDir keys");
 &_keys($testpat);
 
 # 3. get_all_values()
-$tool->set_title("Tie::JournaledDir get_all_values");
+$tool->set_title("FML::Tie::JournaledDir get_all_values");
 &_get_all_values($testpat);
 
 exit 0;
@@ -74,7 +74,7 @@ sub _read
 {
     my ($pat) = @_;
 
-    tie %db, 'Tie::JournaledDir', { 
+    tie %db, 'FML::Tie::JournaledDir', { 
 	unit => $unit,
 	dir  => $dir,
     };
@@ -128,7 +128,7 @@ sub _write
 
     print "write journaleddir " if $debug;
     for my $key (keys %$pat) {
-	tie %db, 'Tie::JournaledDir', { 
+	tie %db, 'FML::Tie::JournaledDir', { 
 	    unit => $unit,
 	    dir  => $dir,
 	};
@@ -151,7 +151,7 @@ sub _write2
 {
     my ($pat, $mode) = @_;
 
-    tie %db, 'Tie::JournaledDir', { 
+    tie %db, 'FML::Tie::JournaledDir', { 
 	unit => $unit,
 	dir  => $dir,
     };
@@ -196,7 +196,7 @@ sub _keys
     }
 
     # go!
-    tie %db, 'Tie::JournaledDir', { 
+    tie %db, 'FML::Tie::JournaledDir', { 
 	unit => $unit,
 	dir  => $dir,
     };
@@ -217,7 +217,7 @@ sub _get_all_values
     }
 
     # go!
-    tie %db, 'Tie::JournaledDir', { 
+    tie %db, 'FML::Tie::JournaledDir', { 
 	unit => $unit,
 	dir  => $dir,
     };
@@ -226,7 +226,7 @@ sub _get_all_values
 
     untie %db;
 
-    my $obj = new Tie::JournaledDir { 
+    my $obj = new FML::Tie::JournaledDir { 
 	unit => $unit,
 	dir  => $dir,
     };

@@ -174,8 +174,8 @@ sub ml_home_prefix
     my ($self, $domain) = @_;
     my $_domain = quotemeta($domain);
 
-    use IO::Adapter;
-    my $obj = new IO::Adapter "/etc/fml/ml_home_prefix";
+    use FML::IO::Adapter;
+    my $obj = new FML::IO::Adapter "/etc/fml/ml_home_prefix";
     my $ent = $obj->find($_domain, { want => 'key,value', all => 1 });
 
     # debug

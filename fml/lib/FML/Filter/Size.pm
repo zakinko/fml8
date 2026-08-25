@@ -118,7 +118,7 @@ sub set_class
 
 =head2 size_check($msg)
 
-C<$msg> is C<Mail::Message> object.
+C<$msg> is C<FML::Message> object.
 
 C<Usage>:
 

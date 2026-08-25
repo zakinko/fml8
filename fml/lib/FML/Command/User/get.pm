@@ -134,7 +134,7 @@ sub process
     my ($self, $curproc, $command_context) = @_;
 
     # call send_article() without checking here but
-    # Mail::Message::MH checks and expands the specified targets
+    # FML::Message::MH checks and expands the specified targets
     # to HASH_ARRAY of numbers: [ \d+, \d+, ... ].
     $self->send_article($curproc, $command_context);
 }

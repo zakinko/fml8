@@ -29,19 +29,19 @@ flock(2) もしくは lockf(2) を元にしたロック機構のみです。
 </para>
 
 <para>
-たとえば、Mail::Delivery 関連はメンバーリストにアクセスするので、
+たとえば、FML::Delivery 関連はメンバーリストにアクセスするので、
 いろいろとロックが必要です。
 </para>
 
 <para>
-Mail::Delivery::SMTP の操作の際にはメンバーリストのロックが必要です。
-現在は、Mail::Delivery::SMTP を呼び出す FML のクラス
+FML::Delivery::SMTP の操作の際にはメンバーリストのロックが必要です。
+現在は、FML::Delivery::SMTP を呼び出す FML のクラス
 (実は FML::Send と FML::Process::Delivery の２箇所しかない)
 の中でロック処理をしています。
 </para>
 
 <para>
-一方、Mail::Delivery::Queue は見るだけ (mailq コマンド)か、
+一方、FML::Delivery::Queue は見るだけ (mailq コマンド)か、
 並列操作可能なものだけなので、ロックは考えなくて良いはずです。
 </para>
 
@@ -80,7 +80,7 @@ RWlock が必要なほど並列度の高い読み込み要求は来ない気がします)。
 </para>
 
 <para>
-IO::Adapter 経由でメンバーリストを読む際には
+FML::IO::Adapter 経由でメンバーリストを読む際には
 READER WRITER LOCK が欲しい気がしますが、
 それが必要なほど並列度の高い読み込み要求は来ない気がします。
 <footnote>

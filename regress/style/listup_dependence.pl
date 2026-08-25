@@ -40,14 +40,14 @@ use vars qw(@filter %MODULE %LOCK_CHANNEL);
 	     MIME::Base64
 	     MIME::QuotedPrint
 	     Mail::Address
-	     Mail::Bounce
+	     FML::Bounce
 	     Mail::Header
-	     Mail::Message
+	     FML::Message
 	       Socket
 	       Socket6
 	       Something
 	     Term::ReadLine
-	     Tie::JournaledFile 
+	     FML::Tie::JournaledFile 
 	     Time::ParseDate
 	     Unicode::Japanese
 	     User::grent

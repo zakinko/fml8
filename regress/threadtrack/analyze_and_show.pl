@@ -22,9 +22,9 @@ for my $f (@ARGV) {
 	article_id  => $fn,
     };
 
-    use Mail::Message;
+    use FML::Message;
     my $fh  = new FileHandle $f;
-    my $msg = Mail::Message->parse({ fd => $fh });
+    my $msg = FML::Message->parse({ fd => $fh });
 
     use Mail::ThreadTrack;
     my $ticket = new Mail::ThreadTrack $args;

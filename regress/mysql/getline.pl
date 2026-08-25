@@ -7,7 +7,7 @@ use strict;
 use Carp;
 use lib qw(../../regress/mysql ../../fml/lib ../../cpan/lib ../../img/lib);
 use Test;
-use IO::Adapter;
+use FML::IO::Adapter;
 use FML::Config;
 
 my $config = new FML::Config;
@@ -17,8 +17,8 @@ $config->set("ml_domain", "home.fml.org");
 
 my $driver = $ARGV[0] || 'mysql';
 my $map    = "$driver:fml";
-print STDERR "TEST of \"IO::Adapter $map, \$config;\"\n\n";
-my $obj    = new IO::Adapter $map, $config;
+print STDERR "TEST of \"FML::IO::Adapter $map, \$config;\"\n\n";
+my $obj    = new FML::IO::Adapter $map, $config;
 unless (defined $obj) { croak "cannot set up $map\n";}
 
 # TEST 1.

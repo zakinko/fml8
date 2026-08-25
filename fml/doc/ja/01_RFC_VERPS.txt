@@ -1,7 +1,7 @@
-		Mail::Delivery の VERPs 対応
+		FML::Delivery の VERPs 対応
 
 
-$service = new Mail::Delivery {
+$service = new FML::Delivery {
     log_function       => $fp,
     smtp_log_function  => $sfp,
     smtp_log_handle    => $handle,

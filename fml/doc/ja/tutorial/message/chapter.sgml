@@ -11,19 +11,19 @@
 <para>
 メール(オブジェクト)を扱うメソッドの詳細については
 <link linkend="module.mail.message">
-Mail::Message クラス
+FML::Message クラス
 </link>
 を見て下さい。
 この
 <link linkend="module.mail.message">
-Mail::Message クラス
+FML::Message クラス
 </link>
 が基本的な操作法を提供しています。
-Mail::Bounce や Mail::Delivery をはじめ、
+FML::Bounce や FML::Delivery をはじめ、
 あらゆる関数が、
 この
 <link linkend="module.mail.message">
-Mail::Message クラス
+FML::Message クラス
 </link>
 に依存しています。
 </para>
@@ -32,7 +32,7 @@ Mail::Message クラス
 <!-- ======================================= -->
 <sect1>
 	<title>
-	Mail::Message クラス
+	FML::Message クラス
 	</title>
 
 <para>
@@ -61,28 +61,28 @@ header -> preamble -> part1 -> part2 -> trailor
 <para>
 それらの処理をするモジュールのために
 <link linkend="module.mail.message">
-Mail::Message クラス
+FML::Message クラス
 </link>
 があり、
 メールの内部構造を表現するために用いられています。
 この
 <link linkend="module.mail.message">
-Mail::Message クラス
+FML::Message クラス
 </link>
 は
-Mail::Bounce や Mail::Delivery を始め、
+FML::Bounce や FML::Delivery を始め、
 多くのモジュールで使われています。
 </para>
 
 <para>
 たとえば、
 <link linkend="module.mail.message">
-Mail::Message クラス
+FML::Message クラス
 </link>
 を使い、このようなコードを書く想定です。
 <screen>
     my $fh  = new FileHandle $file;
-    my $msg = Mail::Message->parse( { fd => $fh } );
+    my $msg = FML::Message->parse( { fd => $fh } );
 
     use FML::Mailer;
     my $obj = new FML::Mailer;
@@ -114,19 +114,19 @@ while ((c = getchar()) != EOF) { putchar(c);}
 <!-- ======================================= -->
 <sect1>
 	<title>
-	Mail::Message::Parse クラス
+	FML::Message::Parse クラス
 	</title>
 
 <para>
 ダミーの派生クラスです。
-これは Mail::Message::Compose と同様の階層を便宜上作っています。
+これは FML::Message::Compose と同様の階層を便宜上作っています。
 あまり深い意味はありません。
 </para>
 
 <para>
 パーサの実体は
 	<link linkend="module.mail.message">
-	Mail::Message
+	FML::Message
 	</link>
 クラスの中にあります。
 </para>
@@ -137,7 +137,7 @@ while ((c = getchar()) != EOF) { putchar(c);}
 <!-- ======================================= -->
 <sect1>
 	<title>
-	Mail::Message::Compose クラス
+	FML::Message::Compose クラス
 	</title>
 
 <para>

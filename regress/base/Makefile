@@ -15,7 +15,7 @@ _base_test:
 	@ $(PERL) ../base/journaleddir.pl
 
 _message_test:
-	@ echo "* Mail::Message module test"
+	@ echo "* FML::Message module test"
 	@ sh ../base/multipart_io.sh
 	@ sh ../base/multipart_maker.sh
 

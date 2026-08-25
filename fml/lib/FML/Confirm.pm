@@ -103,8 +103,8 @@ sub assign_id
     my $pid     = $$;
     my $string  = "$time $pid $addr $buffer";
 
-    use Mail::Message::Checksum;
-    my $cksum  = new Mail::Message::Checksum;
+    use FML::Message::Checksum;
+    my $cksum  = new FML::Message::Checksum;
     my $md5sum = $cksum->md5( \$string );
 
     # $id is returned but not primary key.
@@ -322,7 +322,7 @@ sub is_expired
 
 =head1 Cache database
 
-This cache uses C<FML::Cache::Journal> based on C<Tie::JournaledDir>.
+This cache uses C<FML::Cache::Journal> based on C<FML::Tie::JournaledDir>.
 
 These are private methods.
 

@@ -28,7 +28,7 @@ on the internal use database.
 Communication with DBMS (database management system)
 via 
 <link linkend="module.io.adapter">
-IO::Adapter
+FML::IO::Adapter
 </link>
 class.
 </para>
@@ -36,7 +36,7 @@ class.
 <para>
 This class provides fundamental functions such as insersion and
 deletion of data. If more complex operation is needed, the
-preprocessing module calling IO::Adapter should handle it.
+preprocessing module calling FML::IO::Adapter should handle it.
 </para>
 
 </sect1>

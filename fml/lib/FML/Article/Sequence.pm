@@ -49,9 +49,9 @@ sub increment_id
 
     $curproc->lock($lock_channel);
 
-    # XXX-TODO: we should enhance sequence_file to all IO::Adapter classes.
-    use IO::Adapter;
-    my $io = new IO::Adapter "file:$seq_file";
+    # XXX-TODO: we should enhance sequence_file to all FML::IO::Adapter classes.
+    use FML::IO::Adapter;
+    my $io = new FML::IO::Adapter "file:$seq_file";
     my $id = $io->sequence_increment();
     if ($io->error()) {
 	my $err = $io->error();
@@ -117,8 +117,8 @@ sub get_number_from_map
     my ($self, $map) = @_;
     my $n = 0;
 
-    use IO::Adapter;
-    my $io = new IO::Adapter $map;
+    use FML::IO::Adapter;
+    my $io = new FML::IO::Adapter $map;
     if (defined $io) {
 	$io->open();
 	$n  = $io->getline() || 0;

@@ -89,8 +89,8 @@ sub rewrite_article_subject_tag_obsolete
     # $subject IS DECODED ALREADY.
     $self->_cutoff_reply(\$subject);
 
-    use Mail::Message::Encode;
-    my $obj = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $obj = new FML::Message::Encode;
 
     # add(prepend) the rewrited tag with mime encoding.
     $tag = sprintf($tag, $rw_args->{ id });
@@ -132,8 +132,8 @@ sub decode
     }
 
     if ($subject =~ /=\?([-\w\d]+)\?/i) {
-	use Mail::Message::Charset;
-	my $mc    = new Mail::Message::Charset;
+	use FML::Message::Charset;
+	my $mc    = new FML::Message::Charset;
 	my $lang  = $mc->message_charset_to_language($1);
 	$in_code  = $mc->language_to_message_charset($lang)  || '';
 	$out_code = $mc->language_to_internal_charset($lang) || '';
@@ -143,8 +143,8 @@ sub decode
     }
 
     # decode mime
-    use Mail::Message::Encode;
-    my $obj  = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $obj  = new FML::Message::Encode;
     $subject = $obj->decode_mime_string($subject, $out_code);
 
     return ($subject, $tag, $in_code, $out_code);
@@ -241,15 +241,15 @@ sub is_reply
     #
     # XXX WE NEED $subject IS DECODED ALREADY.
     #
-    # XXX-TODO: Mail::Message::Subject class should provide this function ?
+    # XXX-TODO: FML::Message::Subject class should provide this function ?
     #
 
     return 1 if $subject =~ /^\s*Re:/io;
 
     # XXX-TODO: care for not Japanese string!
     eval q{
-	use Mail::Message::Language::Japanese::Subject;
-	my $sbj = new Mail::Message::Language::Japanese::Subject;
+	use FML::Message::Language::Japanese::Subject;
+	my $sbj = new FML::Message::Language::Japanese::Subject;
 	return 1 if $sbj->is_reply($subject);
     };
 
@@ -271,8 +271,8 @@ sub _cutoff_reply
     #
 
     # XXX-TODO: care for not Japanese string!
-    use Mail::Message::Language::Japanese::Subject;
-    my $obj = new Mail::Message::Language::Japanese::Subject;
+    use FML::Message::Language::Japanese::Subject;
+    my $obj = new FML::Message::Language::Japanese::Subject;
     $$r_subject = $obj->cutoff_reply_tag($$r_subject);
 }
 

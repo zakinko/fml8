@@ -752,8 +752,8 @@ sub get_version
     }
 
     unless ($vers) {
-	use Mail::Message::Date;
-	my $date = new Mail::Message::Date time;
+	use FML::Message::Date;
+	my $date = new FML::Message::Date time;
 	$vers    = sprintf("current-%s", $date->{ YYYYMMDD });
     }
 
@@ -1078,8 +1078,8 @@ sub md5
 	$fh->close();
     }
 
-    use Mail::Message::Checksum;
-    my $cksum = new Mail::Message::Checksum;
+    use FML::Message::Checksum;
+    my $cksum = new FML::Message::Checksum;
     my $sum   = $cksum->md5( \$buf );
 
     return $sum;

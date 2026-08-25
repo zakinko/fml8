@@ -143,9 +143,9 @@ sub _queue_init
     my $queue_dir    = $config->{ moderate_queue_dir };
     my $expire_limit = $config->as_second('moderate_queue_expire_limit');
 
-    use Mail::Delivery::Queue;
+    use FML::Delivery::Queue;
     if ($qid) {
-	return new Mail::Delivery::Queue {
+	return new FML::Delivery::Queue {
 	    directory    => $queue_dir,
 	    local_class  => [ $moderation_queue ],
 	    id           => $qid,
@@ -153,7 +153,7 @@ sub _queue_init
 	};
     }
     else {
-	return new Mail::Delivery::Queue {
+	return new FML::Delivery::Queue {
 	    directory    => $queue_dir,
 	    local_class  => [ $moderation_queue ],
 	    expire_limit => $expire_limit,

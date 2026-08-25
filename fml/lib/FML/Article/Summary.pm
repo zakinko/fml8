@@ -11,7 +11,7 @@ package FML::Article::Summary;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
-use Mail::Message::Date;
+use FML::Message::Date;
 
 
 =head1 NAME
@@ -94,22 +94,22 @@ sub _prepare_info
 
     my $file = $article->filepath($id);
     if (-f $file) {
-	use Mail::Message;
-	my $msg      = new Mail::Message->parse( { file => $file } );
+	use FML::Message;
+	my $msg      = new FML::Message->parse( { file => $file } );
 	my $header   = $msg->whole_message_header();
 	my $address  = $header->get('from')    || '';
 	my $date_str = $header->get('date')    || '';
 	my $subject  = $header->get('subject') || '';
 
 	# data -> unix time.
-	use Mail::Message::Date;
-	my $date     = new Mail::Message::Date $date_str;
+	use FML::Message::Date;
+	my $date     = new FML::Message::Date $date_str;
 	my $unixtime = $date->as_unixtime();
 
 	# log the first 15 bytes of user@domain in From: header field.
 	if ($address) {
-	    use Mail::Message::Address;
-	    my $addr = new Mail::Message::Address $address;
+	    use FML::Message::Address;
+	    my $addr = new FML::Message::Address $address;
 	    $addr->cleanup();
 	    $address = $addr->substr(0, $addrlen) || '';
 	}
@@ -120,8 +120,8 @@ sub _prepare_info
 	# XXX The "printable" string is used for output to local files
 	# XXX e.g. "summary", "log" NOT mail tranfer.
 	if ($subject) {
-	    use Mail::Message::Subject;
-	    my $sbj = new Mail::Message::Subject $subject;
+	    use FML::Message::Subject;
+	    my $sbj = new FML::Message::Subject $subject;
 	    $sbj->mime_header_decode();
 	    $sbj->unfold();
 	    $sbj->delete_tag($tag);
@@ -176,8 +176,8 @@ sub _fml4_compatible_style_one_line_summary
     my $rdate   = undef;
 
     if ($time) {
-	use Mail::Message::Date;
-	$rdate = new Mail::Message::Date $time;
+	use FML::Message::Date;
+	$rdate = new FML::Message::Date $time;
     }
     else {
 	$curproc->logerror("unix time undefined");

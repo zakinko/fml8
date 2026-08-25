@@ -26,7 +26,7 @@ later.
 </para>
 
 <para>
-Mail::Delivery::Queue class processes the incoming queue.
+FML::Delivery::Queue class processes the incoming queue.
 The queus is removed when the process ends.
 </para>
 
@@ -39,14 +39,14 @@ The queus is removed when the process ends.
 	</TITLE>
 
 <para>
-Mail::Delivery::Queue class inserts a message to send back into the
+FML::Delivery::Queue class inserts a message to send back into the
 mail queue. Later FML::Process::QueueManager handles the real delivery
 process.
 </para>
 
 <para>
 Article delivery processing is a little diffferent but based on
-queueing by Mail::Delivery::Queue. If someting error occurs in
+queueing by FML::Delivery::Queue. If someting error occurs in
 delivery, another fml process tries to deliver it later.
 </para>
 
@@ -97,10 +97,10 @@ $curproc->reply_message( {
 
 <para>
 FML::Process::QueueManager picks up one queue from the queue directory.
-Mail::Message parses it.
-Mail::Delivery processes the real delivery via FML::Mailer.
+FML::Message parses it.
+FML::Delivery processes the real delivery via FML::Mailer.
 <screen>
-Mail::Delivery::Queue
+FML::Delivery::Queue
    |
    | ---> queue directory
    V
@@ -111,7 +111,7 @@ FML::Process::QueueManager
 FML::Mailer
    |
    V
-Mail::Delivery
+FML::Delivery
 </screen>
 </para>
 

@@ -89,8 +89,8 @@ sub db_open
 	}
 
 	my %db = ();
-	use Tie::JournaledDir;
-	tie %db, 'Tie::JournaledDir', { dir => $dir };
+	use FML::Tie::JournaledDir;
+	tie %db, 'FML::Tie::JournaledDir', { dir => $dir };
 
 	$self->{ _db } = \%db;
 	return \%db;

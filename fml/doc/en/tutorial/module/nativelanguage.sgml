@@ -37,7 +37,7 @@ Language dependent module locates at Something::Language.
 For example, there are
 <screen>
 FML::Language::Japanese::String
-Mail::Bounce::Language::Japanese
+FML::Bounce::Language::Japanese
 </screen>
 ,
 The former provides Japanese dependent string functions.

@@ -510,8 +510,8 @@ sub is_valid_map
     my $status          = 0;
     my $curproc         = $self->{ _curproc };
 
-    use IO::Adapter;
-    my $io = new IO::Adapter $map, $config;
+    use FML::IO::Adapter;
+    my $io = new FML::IO::Adapter $map, $config;
     my $rh = $io->open( { flag => 'r' } );
     if (defined $rh) {
 	$rh->close();
@@ -538,8 +538,8 @@ sub has_address_in_map
     # reset the matched result;
     $self->_save_address('');
 
-    use IO::Adapter;
-    my $obj = new IO::Adapter $map, $config;
+    use FML::IO::Adapter;
+    my $obj = new FML::IO::Adapter $map, $config;
 
     # 1. get all entries match /^$user/ from $map.
     # XXX-TODO: case sensitive / insensitive ?

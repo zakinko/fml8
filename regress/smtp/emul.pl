@@ -49,16 +49,16 @@ sub send_file
     my ($file) = @_;
     my $sfp = sub { print STDERR @_;};
 
-    use Mail::Delivery;
-    my $service = new Mail::Delivery {
+    use FML::Delivery;
+    my $service = new FML::Delivery {
 	protocol           => 'SMTP',
 	default_io_timeout => 10,
 	smtp_log_function  => $sfp,
     };
     if ($service->error) { croak($service->error); return;}
 
-    use Mail::Message;
-    my $msg = Mail::Message->parse( { file => $file } ); 
+    use FML::Message;
+    my $msg = FML::Message->parse( { file => $file } ); 
       
 
     $service->deliver(

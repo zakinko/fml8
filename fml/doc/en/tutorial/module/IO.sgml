@@ -5,22 +5,22 @@
 
 <chapter id="module.io.adapter">
 	<title>
-	IO Abstraction Layer (IO::Adapter Class)
+	IO Abstraction Layer (FML::IO::Adapter Class)
 	</title>
 
 
 <sect1 id="module.io.adapter.overview">
 	<title>
-	IO::Adapter Overview
+	FML::IO::Adapter Overview
 	</title>
 
 <para>
-All IO of &fmldevel; should use IO::Adapter class like vfs/vnode
+All IO of &fmldevel; should use FML::IO::Adapter class like vfs/vnode
 framework. For example, read/write member list, add/remove a user.
 The usage is like this:
 <screen>
-use IO::Adapter;
-$obj = new IO::Adapter $map, $map_params;
+use FML::IO::Adapter;
+$obj = new FML::IO::Adapter $map, $map_params;
 $obj->open || croak("cannot open $map");
 while ($x = $obj->get_next_key()) { ... }
 $obj->close;
@@ -47,7 +47,7 @@ ldap:id
 "mysql:id" map implies the use of MySQL.
 Parameters for MySQL access is defined in "mysql:id" entry.
 These paraemeters should be specified before calling "new
-IO::Adapter".
+FML::IO::Adapter".
 </para>
 
 </sect1>
@@ -55,11 +55,11 @@ IO::Adapter".
 
 <sect1 id="module.io.adapter.methods">
 	<title>
-	IO::Adapter Methods
+	FML::IO::Adapter Methods
 	</title>
 
 <para>
-Official methods IO::Adapter provides currently follow:
+Official methods FML::IO::Adapter provides currently follow:
 <screen>
 new()
 open()
@@ -94,7 +94,7 @@ methods.
 <para>
 The currently implemented methods are selected by test and our
 operations. If could, we refer SQL IO more than file IO as an
-abstraction base model of IO::Adapter. It introduces difference
+abstraction base model of FML::IO::Adapter. It introduces difference
 between &fml4; and &fml8; but it is mandatory for further abstraction.
 </para>
 
@@ -189,14 +189,14 @@ For example, the access to
 <screen>
 wheel:*:0:root,rudo,kenken
 </screen>
-in /etc/group is "unixgroup:wheel" map in IO::Adapter.
+in /etc/group is "unixgroup:wheel" map in FML::IO::Adapter.
 <screen>
-$obj = new IO::Adapter "unixgroup:wheel";
+$obj = new FML::IO::Adapter "unixgroup:wheel";
 </screen>
 If you call get_next_key() method for this object,
 you will get the member of wheel group sequentially.
 In other words the wheel group is regarded as the following file
-by IO::Adapter.
+by FML::IO::Adapter.
 <screen>
 root
 rudo
@@ -257,9 +257,9 @@ sql_find	=	select * from ...
 </para>
 
 <para>
-In calling IO::Adapter, use 
+In calling FML::IO::Adapter, use 
 <screen>
-new IO::Adapter "mysql:members", $config;
+new FML::IO::Adapter "mysql:members", $config;
 </screen>
 where $config is a hash reference holding some paremeters like this:
 <screen>
@@ -271,7 +271,7 @@ $config => {
 }
 </screen>
 FML::Config prepares this $config by reading .cf files. Hence, we
-usually use FML::Config object as an argument of IO::Adapter::new()
+usually use FML::Config object as an argument of FML::IO::Adapter::new()
 method.
 </para>
 

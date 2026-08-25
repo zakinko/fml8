@@ -63,8 +63,8 @@ sub rearrange
     my $queue_dir = $config->{ mail_queue_dir };
 
     # 1. open the isolated queue.
-    use Mail::Delivery::Queue;
-    my $queue = new Mail::Delivery::Queue {
+    use FML::Delivery::Queue;
+    my $queue = new FML::Delivery::Queue {
 	directory => $queue_dir,
     };
 

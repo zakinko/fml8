@@ -121,23 +121,23 @@ available all processes which eats message via STDIN.
 The following functions return the whole or a part of the incoming
 message corresponding to the current process.
 
-The message is a chain of C<Mail::Message> objects such as
+The message is a chain of C<FML::Message> objects such as
 
    header -> body
 
    header -> multipart-preamble -> multipart-separator -> part1 -> ...
 
-See L<Mail::Message> for more details.
+See L<FML::Message> for more details.
 
 =head2 incoming_message_header()
 
 return the header part for the incoming message.
-It is the head of a chain of Mail::Message objects.
+It is the head of a chain of FML::Message objects.
 
 =head2 incoming_message_body()
 
 return the body part for the incoming message.
-It is the 2nd part of a chain of Mail::Message objects and after.
+It is the 2nd part of a chain of FML::Message objects and after.
 For example,
 
    body
@@ -680,8 +680,8 @@ sub mkfile
     my ($curproc, $file) = @_;
 
     unless (-f $file) {
-	use IO::Adapter;
-	my $obj = new IO::Adapter $file;
+	use FML::IO::Adapter;
+	my $obj = new FML::IO::Adapter $file;
 	$obj->touch();
 
 	# verify
@@ -715,8 +715,8 @@ sub copy
 {
     my ($curproc, $src, $dst) = @_;
 
-    use IO::Adapter::AtomicFile;
-    my $obj = new IO::Adapter::AtomicFile;
+    use FML::IO::Adapter::AtomicFile;
+    my $obj = new FML::IO::Adapter::AtomicFile;
     $obj->new->copy($src, $dst);
 }
 
@@ -868,8 +868,8 @@ sub ml_home_dir_deleted_path
     my $count  = 0;
     my $result = '';
 
-    use Mail::Message::Date;
-    my $date  = new Mail::Message::Date time;
+    use FML::Message::Date;
+    my $date  = new FML::Message::Date time;
     my $yymd  = $date->{ YYYYMMDD };
 
     use File::Spec;
@@ -1506,7 +1506,7 @@ sub __ml_home_prefix_from_main_cf
 #               HASH_REF($main_cf)
 #               STR($domain)
 #               ARRAY_REF($prefix_maps)
-#         bugs: currently support the only file type of IO::Adapter.
+#         bugs: currently support the only file type of FML::IO::Adapter.
 #               This limit comes from the architecture
 #               since this function may be used
 #               before $curproc and $config is allocated.
@@ -1522,12 +1522,12 @@ sub ___search_in_ml_home_prefix_maps
     if (@$prefix_maps) {
 	my $dir  = '';
 	my $dirs = ();
-	eval q{ use IO::Adapter; };
+	eval q{ use FML::IO::Adapter; };
 	unless ($@) {
 	  MAP:
 	    for my $map (@$prefix_maps) {
 		# XXX only support file:// map
-		my $obj = new IO::Adapter $map;
+		my $obj = new FML::IO::Adapter $map;
 		if (defined $obj) {
 		    $obj->open();
 
@@ -1556,7 +1556,7 @@ sub ___search_in_ml_home_prefix_maps
 	    }
 	}
 	else {
-	    croak("cannot load IO::Adapter");
+	    croak("cannot load FML::IO::Adapter");
 	}
     }
 
@@ -2115,8 +2115,8 @@ sub langinfo_get_charset
 
 	unless ($found) {
 	    # Content-Type:
-	    use Mail::Message::Charset;
-	    my $c    = new Mail::Message::Charset;
+	    use FML::Message::Charset;
+	    my $c    = new FML::Message::Charset;
 	    my $hint = $curproc->langinfo_get_language_hint($category);
 	    $charset = $c->language_to_message_charset($hint);
 	}
@@ -2215,8 +2215,8 @@ sub article_thread_init
     unless (-d $udb_dir) { $curproc->mkdir($udb_dir);}
 
     # hints
-    use Mail::Message::Subject;
-    my $subj = new Mail::Message::Subject;
+    use FML::Message::Subject;
+    my $subj = new FML::Message::Subject;
     my $subject_tag_regexp = $subj->regexp_compile($subject_tag);
 
     # XXX-TODO: care for non Japanese.

@@ -50,7 +50,7 @@ $digest_recipient_maps is this recipients-digest file only by default.
 </para>
 
 <para>
-The argument of $digest_recipient_maps is IO::Adapter, 
+The argument of $digest_recipient_maps is FML::IO::Adapter, 
 so you can use mysql here.
 </para>
 

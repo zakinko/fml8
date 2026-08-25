@@ -87,7 +87,7 @@ sub set_rules
 
 =head2 body_check($msg)
 
-C<$msg> is C<Mail::Message> object.
+C<$msg> is C<FML::Message> object.
 
 C<Usage>:
 
@@ -178,8 +178,8 @@ sub reject_not_iso2022jp_japanese_string
     my $buf = $first_msg->nth_paragraph(1);
 
     # XXX-TODO: is_iso2022jp_or_ascii_string() ?
-    use Mail::Message::Encode;
-    my $obj = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $obj = new FML::Message::Encode;
     unless ($obj->is_iso2022jp_string($buf)) {
 	croak "Japanese but not ISO-2022-JP";
     }
@@ -276,8 +276,8 @@ sub _decode_mime_buffer
     # cheap diagnostic check
     return $buf unless $encoding;
 
-    use Mail::Message::Encode;
-    my $encode = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $encode = new FML::Message::Encode;
     if ($encoding eq 'base64') {
 	$buf = $encode->raw_decode_base64($buf);
     }
@@ -367,10 +367,10 @@ sub reject_japanese_command_syntax
     if ($buf =~ /\033\044\102(\043[\101-\132\141-\172])/) {
 	# trap /JIS"2byte"[A-Za-z]+/
 
-	# XXX-TODO: Mail::Message::String->to_euc_jp() ?
+	# XXX-TODO: FML::Message::String->to_euc_jp() ?
 	# EUC-fy for further investigation
-	use Mail::Message::Encode;
-	my $obj = new Mail::Message::Encode;
+	use FML::Message::Encode;
+	my $obj = new FML::Message::Encode;
 	my $s   = $obj->convert( $buf, 'euc-jp' );
 	$s      = (split(/\n/, $s))[0]; # check the first line only
 
@@ -427,8 +427,8 @@ sub is_citation
 {
     my ($self, $data) = @_;
 
-    use Mail::Message::String;
-    my $str = new Mail::Message::String $data;
+    use FML::Message::String;
+    my $str = new FML::Message::String $data;
     return $str->is_citation();
 }
 
@@ -444,8 +444,8 @@ sub is_signature
 {
     my ($self, $data) = @_;
 
-    use Mail::Message::String;
-    my $str = new Mail::Message::String $data;
+    use FML::Message::String;
+    my $str = new FML::Message::String $data;
     return $str->is_signature();
 }
 

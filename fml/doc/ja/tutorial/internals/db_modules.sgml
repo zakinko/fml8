@@ -49,12 +49,12 @@
 </screen>
 このスレッド DB は 
 <link linkend="threadtrack.db">
-Mail::Message::DB
+FML::Message::DB
 </link>
 のようなものとし、アダプタ層が差異を吸収して欲しいと考えました。
 そこで、
 キャッシュについては、
-現在のところ Tie::JournaledDir もしくは FML::Cache::Ring
+現在のところ FML::Tie::JournaledDir もしくは FML::Cache::Ring
 のいづれかが使われています。
 </para>
 
@@ -117,14 +117,14 @@ DBMS
 
 <sect1 id="db.module.Tie.JournaledFile">
 	<title>
-	Tie::JournaledFile クラス
+	FML::Tie::JournaledFile クラス
 	</title>
 
 <para>
 これは、一つのファイルに append していくタイプです。
 この機能は
-	<ulink url="../../en/modules/Tie/JournaledFile.txt">
-	Tie::JournaledFile
+	<ulink url="../../en/modules/FML/Tie/JournaledFile.txt">
+	FML::Tie::JournaledFile
 	</ulink>
 クラスが提供します。
 </para>

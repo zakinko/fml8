@@ -168,8 +168,8 @@ sub run
 
     unless ($curproc->is_refused()) {
 	eval q{
-	    use Mail::Bounce;
-	    my $bouncer = new Mail::Bounce;
+	    use FML::Bounce;
+	    my $bouncer = new FML::Bounce;
 	    $bouncer->analyze( $msg );
 
 	    use FML::Error;

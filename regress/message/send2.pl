@@ -11,7 +11,7 @@
 use strict;
 use Carp;
 use lib qw(../../cpan/lib ../../fml/lib);
-use Mail::Message;
+use FML::Message;
 use FileHandle;
 use Time::localtime; # require 'ctime.pl';
 
@@ -25,8 +25,8 @@ my $tmpf   = "/tmp/buf$$";
 
 chop $date;
 
-use Mail::Message::Compose;
-my $msg = Mail::Message::Compose->new(
+use FML::Message::Compose;
+my $msg = FML::Message::Compose->new(
   From    => $sender,
   To      => $rcpt,
   Subject => 'test',
@@ -40,8 +40,8 @@ $msg->attach(Type => 'text/plain; charset=us-ascii',
 
 print "-" x 60; print "\n";
 
-use Mail::Delivery::Queue;
-my $obj = new Mail::Delivery::Queue { directory => "/tmp" };
+use FML::Delivery::Queue;
+my $obj = new FML::Delivery::Queue { directory => "/tmp" };
 $obj->in( $msg ) || croak("fail to queue in");
 $obj->setrunnable() || croak("fail to activate queue");
 

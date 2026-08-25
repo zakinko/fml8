@@ -82,8 +82,8 @@ while (<>) {
     # 
     # 1. check the usage of open() and close() under not check of defined()
     # 
-    if (/IO::Adapter/) { $ioadapter = 1;};
-    if (/Mail::Delivery::Queue/) { $mdqueue = 1;}
+    if (/FML::IO::Adapter/) { $ioadapter = 1;};
+    if (/FML::Delivery::Queue/) { $mdqueue = 1;}
     if (/defined/) { $defined = 1;}
     if (/\$\S+\-\>(close|open)\(/ && (!/^sub /) && (!/^=head/) && (!/\$self/)) {
 	unless ($defined || $ioadapter || $mdqueue) {

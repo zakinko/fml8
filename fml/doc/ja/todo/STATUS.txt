@@ -624,7 +624,7 @@ III部　fmlのカスタマイズ
 
 	[TODO] permission はこれでいい？
 
-	[TODO]	Mail::Message::ToHTML
+	[TODO]	FML::Message::ToHTML
 		X-Sequence: fml-devel 515
 
 		2) indexの要、不要について
@@ -706,7 +706,7 @@ V部　その他のトピック
 
 27章　エラーメールを自動解析する
 
-	Mail::Bounce モジュールを使う。
+	FML::Bounce モジュールを使う。
 	自動削除も可能。
 
 	[TODO] カスタマイズを可能にする
@@ -793,7 +793,7 @@ VII部　Advanced Study
 36章　fmlからデータベースへのアクセス
 
 	はじめから前提です。
-		IO::Adapter に組み込まれている
+		FML::IO::Adapter に組み込まれている
 
 	[削除] replace メソッドは削除した
 
@@ -802,7 +802,7 @@ VII部　Advanced Study
 
 37章　配送の高速化について (+ 配送関係の TIPS )
 
-	[削除] Mail::Delivery の LMTP モード 
+	[削除] FML::Delivery の LMTP モード 
 		キュー管理しないといけない
 		→ 無駄に難しいので不要では？
 

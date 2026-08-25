@@ -11,18 +11,18 @@
 <para>
 See
 <link linkend="module.mail.message">
-Mail::Message class
+FML::Message class
 </link>
-for the mail message object handling. Mail::Message class provides
+for the mail message object handling. FML::Message class provides
 fundamental methods. Several message handling modules e.g.
-Mail::Bounce, Mail::Delivery depend on this class.  
+FML::Bounce, FML::Delivery depend on this class.  
 </para>
 
 
 <!-- ======================================= -->
 <sect1>
 	<title>
-	Mail::Message Class
+	FML::Message Class
 	</title>
 
 <para>
@@ -38,17 +38,17 @@ But the filter system needs to know the structure of the message.
 <para>
 These modules depend
 <link linkend="module.mail.message">
-Mail::Message class
+FML::Message class
 </link>
 to know the message structure.
-For example, Mail::Bounce, Mail::Delivery et.al. use this class.
+For example, FML::Bounce, FML::Delivery et.al. use this class.
 </para>
 
 <para>
 The usage is as follows:
 <screen>
     my $fh  = new FileHandle $file;
-    my $msg = Mail::Message->parse( { fd => $fh } );
+    my $msg = FML::Message->parse( { fd => $fh } );
 
     use FML::Mailer;
     my $obj = new FML::Mailer;
@@ -66,7 +66,7 @@ The usage is as follows:
 <!-- ======================================= -->
 <sect1>
 	<title>
-	Mail::Message::Parse Class
+	FML::Message::Parse Class
 	</title>
 
 <para>
@@ -76,7 +76,7 @@ dummy.
 <para>
 The real functions are within
 	<link linkend="module.mail.message">
-	Mail::Message
+	FML::Message
 	</link>
 class.
 </para>
@@ -87,7 +87,7 @@ class.
 <!-- ======================================= -->
 <sect1>
 	<title>
-	Mail::Message::Compose Class
+	FML::Message::Compose Class
 	</title>
 
 <para>

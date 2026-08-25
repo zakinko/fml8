@@ -1,4 +1,4 @@
-		IO::Adapter の改造
+		FML::IO::Adapter の改造
 
    [用語]
 	KEY = STR		
@@ -25,7 +25,7 @@
 				(KEY, [])	*	←要拡張？
 	delete			(KEY)		*
 
-	＊ Mail::Delivery::SMTP でつこうてる
+	＊ FML::Delivery::SMTP でつこうてる
 	getpos			()		NUM
 	setpos			(NUM)		NUM
 	eof			()		*
@@ -46,10 +46,10 @@
 *** TODO ***
 
    File::Sequence
-	IO::Adapter 経由にするべきでし
+	FML::IO::Adapter 経由にするべきでし
 
-   Tie::JournaledFile
-	IO::Adapter で journaled file をサポートしてほしい
+   FML::Tie::JournaledFile
+	FML::IO::Adapter で journaled file をサポートしてほしい
 
 	[BUG] ?
 	この negative cache ってまちがってないか？

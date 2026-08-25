@@ -52,12 +52,12 @@ $ml-admin アドレス宛のメールは
 /usr/local/libexec/fml/distribute などと同様に 
 /usr/local/libexec/fml/error 
 は標準入力からメールを読みこみ、
-それを解析し、Mail::Message オブジェクトの鎖を作ります。
-そして Mail::Bounce クラスがエラー内容の解析をします。
+それを解析し、FML::Message オブジェクトの鎖を作ります。
+そして FML::Bounce クラスがエラー内容の解析をします。
 </para>
 
 <para>
-Mail::Bounce は、エラーメールについて
+FML::Bounce は、エラーメールについて
 「どの MTA が生成したものか？」
 「エラーを引き起こしたメールアドレス」
 「エラーの理由」
@@ -177,11 +177,11 @@ $error_mail_analyzer_cache_dir
 
 <para>
 現在、キャッシュの入出力には
-Tie::JournaledDir
+FML::Tie::JournaledDir
 クラスを使っています。
 正確には
-FML::Error::Cache というアダプタ層が Tie::JournaledDir の直前に位置し、
-FML::Error::Cache 経由で Tie::JournaledDir への IO を行ないます。
+FML::Error::Cache というアダプタ層が FML::Tie::JournaledDir の直前に位置し、
+FML::Error::Cache 経由で FML::Tie::JournaledDir への IO を行ないます。
 すべての IO は、FML::Error::Cache が提供する 
 primitive
 なメソッドを通じてのみ行なわなければなりません。

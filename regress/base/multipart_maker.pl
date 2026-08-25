@@ -5,7 +5,7 @@
 
 use strict;
 use File::Basename;
-use Mail::Message;
+use FML::Message;
 use Getopt::Std;
 
 my $debug = defined $ENV{'debug'} ? 1 : 0;
@@ -43,7 +43,7 @@ for $msg (@ARGV) {
 	$args->{ charset   } = 'iso-2022-jp';
     }
 
-    my $m = new Mail::Message $args;
+    my $m = new FML::Message $args;
     push(@m, $m);
 }
 

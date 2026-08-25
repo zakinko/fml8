@@ -99,8 +99,8 @@ sub set
     if ($map) {
 	if ($debug) { print STDERR "open map=$map\n";}
 
-	use IO::Adapter;
-	my $obj = new IO::Adapter $map;
+	use FML::IO::Adapter;
+	my $obj = new FML::IO::Adapter $map;
 	$obj->open();
 	$obj->touch();
 	if ($self->find($class, $key)) { # avoid duplication.
@@ -131,8 +131,8 @@ sub get
     if ($map) {
 	if ($debug) { print STDERR "open map=$map\n";}
 
-	use IO::Adapter;
-	my $obj = new IO::Adapter $map;
+	use FML::IO::Adapter;
+	my $obj = new FML::IO::Adapter $map;
 	$obj->open();
 	my $result = $self->find($class, $key);
 	$obj->close();
@@ -178,8 +178,8 @@ sub get_key_as_array_ref
     if ($map) {
 	if ($debug) { print STDERR "open map=$map\n";}
 
-	use IO::Adapter;
-	my $obj = new IO::Adapter $map;
+	use FML::IO::Adapter;
+	my $obj = new FML::IO::Adapter $map;
 	$obj->open();
 	my $buf = undef;
 	my $result = [];
@@ -229,8 +229,8 @@ sub find
 
       MAP:
 	for my $map (@$maps) {
-	    use IO::Adapter;
-	    $obj = new IO::Adapter $map;
+	    use FML::IO::Adapter;
+	    $obj = new FML::IO::Adapter $map;
 	    $obj->open();
 	    $obj->touch();
 

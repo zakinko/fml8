@@ -11,7 +11,7 @@
 use strict;
 use Carp;
 use lib qw(../../cpan/lib);
-use Mail::Message;
+use FML::Message;
 
 use FML::Test::Utils;
 my $tool = new FML::Test::Utils;
@@ -19,11 +19,11 @@ my $tool = new FML::Test::Utils;
 for my $f (@ARGV) {
     print "// check $f\n" if $ENV{'debug'};
     my $fh  = new FileHandle $f;
-    my $msg = Mail::Message->parse( { fd => $fh } );
+    my $msg = FML::Message->parse( { fd => $fh } );
     my $r   = {};
 
-    use Mail::Bounce;
-    my $bouncer = new Mail::Bounce;
+    use FML::Bounce;
+    my $bouncer = new FML::Bounce;
     $bouncer->analyze( $msg );
     print "\n--- result (debug)\n\n" if $ENV{'debug'};
     printf "# %-40s ... %s\n", $f, ($bouncer->address_list ? "ok" : "fail");

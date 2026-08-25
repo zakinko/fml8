@@ -195,8 +195,8 @@ sub check_admin_member_password
     # { $user => $encrypted_passwrod }.
     my $maplist = $config->get_as_array_ref('admin_member_password_maps');
     for my $map (@$maplist) {
-	use IO::Adapter;
-	my $obj   = new IO::Adapter $map, $config;
+	use FML::IO::Adapter;
+	my $obj   = new FML::IO::Adapter $map, $config;
 	my $_user = quotemeta($user);
 	my $pwent = $obj->find($_user , { want => 'key,value', all => 1 });
 
@@ -284,8 +284,8 @@ sub change_password
 
     $curproc->lock($lock_channel);
 
-    use IO::Adapter;
-    my $obj = new IO::Adapter $map;
+    use FML::IO::Adapter;
+    my $obj = new FML::IO::Adapter $map;
     if (defined $obj) {
 	$obj->open();
 	$obj->touch();

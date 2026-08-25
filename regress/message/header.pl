@@ -11,14 +11,14 @@
 use strict;
 use Carp;
 use lib qw(../../cpan/lib);
-use Mail::Message;
+use FML::Message;
 
 my $tmp = "/tmp/buf$$";
 
 for my $f (@ARGV) {
     my $fh   = new FileHandle $f;
     my $wh   = new FileHandle "> $tmp";
-    my $obj  = Mail::Message->parse( { fd => $fh } );
+    my $obj  = FML::Message->parse( { fd => $fh } );
     my $hdr  = $obj->whole_message_header();
     my $from = $hdr->get('from');
 

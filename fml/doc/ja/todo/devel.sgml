@@ -17,7 +17,7 @@ smtpfeed を直接叩きたい。
 </para>
 
 <para>
-Mail::Delivery::Queue クラスが実装済み。
+FML::Delivery::Queue クラスが実装済み。
 これによりキューファイルの出し入れはできる。
 あとは LMTP か？
 </para>
@@ -33,7 +33,7 @@ Mail::Delivery::Queue クラスが実装済み。
 
 <para>
 mead の改造をするために、きちんと
-Mail::Bounce
+FML::Bounce
 を実装する。
 </para>
 

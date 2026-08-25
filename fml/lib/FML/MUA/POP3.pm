@@ -255,8 +255,8 @@ sub _new_queue_file
 	return undef;
     } 
 
-    use Mail::Delivery::Queue;
-    my $queue = new Mail::Delivery::Queue {
+    use FML::Delivery::Queue;
+    my $queue = new FML::Delivery::Queue {
 	directory   => $queue_dir,
 	local_class => $opt_class,
     };
@@ -291,8 +291,8 @@ sub pickup_queue
 	return undef;
     } 
 
-    use Mail::Delivery::Queue;
-    my $queue      = new Mail::Delivery::Queue {
+    use FML::Delivery::Queue;
+    my $queue      = new FML::Delivery::Queue {
 	directory   => $queue_dir,
 	local_class => $opt_class,
     };
@@ -300,7 +300,7 @@ sub pickup_queue
     my $list     = $queue->list($class, "oldest");
     my $queue_id = $list->[ 0 ] || '';
     if (defined $queue_id && $queue_id) {
-	my $queue       = new Mail::Delivery::Queue {
+	my $queue       = new FML::Delivery::Queue {
 	    id          => $queue_id,
 	    directory   => $queue_dir,
 	    local_class => $opt_class,

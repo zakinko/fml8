@@ -71,7 +71,7 @@ It contains several references to other data structures.
 	config           => C<FML::Config OBJECT>,
 
 	# struct incoming_message holds the mail input from STDIN.
-	incoming_message => C<Mail::Message OBJECT>,
+	incoming_message => C<FML::Message OBJECT>,
 
 	...
     };
@@ -569,7 +569,7 @@ sub merge_into_file
     my ($self, $file, $hash_ref) = @_;
     my $done = 0; # NOT USED ?
 
-    my ($rh, $wh) = IO::Adapter::AtomicFile->rw_open($file);
+    my ($rh, $wh) = FML::IO::Adapter::AtomicFile->rw_open($file);
 
     if (defined $rh && defined $wh) {
 	my $buf;
@@ -624,10 +624,10 @@ sub write
 
     # 1. check whether I can open $file or not in atomic way.
     #    XXX get handle to update $file
-    my $fh = IO::Adapter::AtomicFile->open($file);
+    my $fh = FML::IO::Adapter::AtomicFile->open($file);
 
     # 2. back up config.cf firstly
-    my $status = IO::Adapter::AtomicFile->copy($file, "${file}.bak");
+    my $status = FML::IO::Adapter::AtomicFile->copy($file, "${file}.bak");
     unless ($status) {
 	croak "cannot backup $file";
     }

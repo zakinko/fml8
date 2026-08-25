@@ -134,7 +134,7 @@ sub queue_file_path
 }
 
 
-# Descriptions: send $queue_file by Mail::Delivery.
+# Descriptions: send $queue_file by FML::Delivery.
 #    Arguments: OBJ($self) HASH_REF($args)
 # Side Effects: queue removed if suceeded.
 # Return Value: none
@@ -144,8 +144,8 @@ sub _send_file
     my $config    = $self->{ _config };
     my $queue_dir = $config->{ queue_dir };
 
-    use Mail::Message;
-    my $message = Mail::Message->parse( { file => $queue_file } );
+    use FML::Message;
+    my $message = FML::Message->parse( { file => $queue_file } );
     unless (defined $message) {
 	$self->logerror("undefined message");
 	return 0;
@@ -161,8 +161,8 @@ sub _send_file
 	return 0;
     }
 
-    use Mail::Delivery::Queue;
-    my $queue = new Mail::Delivery::Queue { directory => $queue_dir };
+    use FML::Delivery::Queue;
+    my $queue = new FML::Delivery::Queue { directory => $queue_dir };
 
     my $validater = sub {
 	my ($address) = @_; 
@@ -171,10 +171,10 @@ sub _send_file
 	return $restriction->regexp_match( 'address', $address );
     };
 
-    use Mail::Delivery;
+    use FML::Delivery;
     my $logfp_normal = sub { $self->log(@_); };
     my $logfp_error  = sub { $self->logerror(@_); };
-    my $service = new Mail::Delivery {
+    my $service = new FML::Delivery {
 	log_info_function  => $logfp_normal,
 	log_error_function => $logfp_error,
 	log_debug_function => undef,
@@ -184,7 +184,7 @@ sub _send_file
     };
     if ($service->error) { 
 	$self->logerror($service->error);
-	$self->logerror("cannot initialize Mail::Delivery object");
+	$self->logerror("cannot initialize FML::Delivery object");
 	return 0;
     }
 
@@ -282,13 +282,13 @@ sub resend
     my $config    = $self->{ _config };
     my $queue_dir = $config->{ queue_dir };
 
-    use Mail::Delivery::Queue;
-    my $queue = new Mail::Delivery::Queue { directory => $queue_dir };
+    use FML::Delivery::Queue;
+    my $queue = new FML::Delivery::Queue { directory => $queue_dir };
     $queue->reschedule();
     my $qlist = $queue->list();
 
     for my $qid (@$qlist) {
-	my $q = new Mail::Delivery::Queue { 
+	my $q = new FML::Delivery::Queue { 
 	    id        => $qid,
 	    directory => $queue_dir,
 	};

@@ -40,7 +40,7 @@ MTA の再送処理でリトライが行なわれ、ＭＬの処理が行なわれます。
 </para>
 
 <para>
-incoming queue の処理は Mail::Delivery::Queue を使い、
+incoming queue の処理は FML::Delivery::Queue を使い、
 ＭＬ固有の queue で管理されます。
 一連の処理が終ると、たいてい、そのプロセスの最後に、このキューは消されます。
 </para>
@@ -55,7 +55,7 @@ incoming queue の処理は Mail::Delivery::Queue を使い、
 
 <para>
 送り返すべきメールは
-Mail::Delivery::Queue
+FML::Delivery::Queue
 クラスを用いて、ＭＬ固有のキューに入ります。
 キューに入ったメールは、のちに
 FML::Process::QueueManager
@@ -64,7 +64,7 @@ FML::Process::QueueManager
 
 <para>
 微妙に処理が異なりますが、記事の配送もコマンドメールも同様に
-Mail::Delivery::Queue ベースのキューイング処理をしています。
+FML::Delivery::Queue ベースのキューイング処理をしています。
 そのため、
 配送処理の途中でエラーが起きた場合、
 別の &fml8; プロセスにより再送処理が行なわれます。
@@ -117,10 +117,10 @@ $curproc->reply_message( {
 <para>
 FML::Process::QueueManager により
 (1) 特定のキューファイルがメールキューディレクトリから pickup され、
-(2) Mail::Message で parse され、
-(3) FML::Mailer 経由で Mail::Delivery が実際のメール配送処理を行ないます。
+(2) FML::Message で parse され、
+(3) FML::Mailer 経由で FML::Delivery が実際のメール配送処理を行ないます。
 <screen>
-Mail::Delivery::Queue
+FML::Delivery::Queue
    ↓
    ↓→→→ キューディレクトリ
    ↓
@@ -130,7 +130,7 @@ FML::Process::QueueManager
    ↓
 FML::Mailer
    ↓
-Mail::Delivery
+FML::Delivery
 </screen>
 </para>
 

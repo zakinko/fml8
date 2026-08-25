@@ -11,7 +11,7 @@
 use strict;
 use Carp;
 use lib qw(../../cpan/lib ../../fml/lib);
-use Mail::Message;
+use FML::Message;
 use FileHandle;
 
 my $sender = 'elena-admin@sapporo.iij.ad.jp';
@@ -20,7 +20,7 @@ my $array  = [ $rcpt ];
 
 for my $file (@ARGV) {
     my $fh  = new FileHandle $file;
-    my $msg = Mail::Message->parse( { fd => $fh } );
+    my $msg = FML::Message->parse( { fd => $fh } );
 
     use FML::Mailer;
     my $obj = new FML::Mailer;

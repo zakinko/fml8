@@ -11,7 +11,7 @@
 use strict;
 use Carp;
 use lib qw(../../cpan/lib);
-use Mail::Message;
+use FML::Message;
 
 my $debug = $ENV{ debug } ? 1 : 0;
 
@@ -26,7 +26,7 @@ my $tmp = "/tmp/buf$$";
 for my $f (@ARGV) {
     my $fh  = new FileHandle $f;
     my $wh  = new FileHandle "> $tmp";
-    my $obj = Mail::Message->parse( { fd => $fh } );
+    my $obj = FML::Message->parse( { fd => $fh } );
 
     $wh->autoflush(1);
     $obj->print($wh);

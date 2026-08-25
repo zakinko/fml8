@@ -9,13 +9,13 @@
 
 use strict;
 use lib qw(../../fml/lib);
-use Tie::JournaledFile;
+use FML::Tie::JournaledFile;
 
 $| = 1;
 
 use FML::Test::Utils;
 my $tool = new FML::Test::Utils;
-$tool->set_title("Tie::JournaledFile write");
+$tool->set_title("FML::Tie::JournaledFile write");
 
 #
 # 1. read/write
@@ -27,13 +27,13 @@ my $buf  = '';
 my $key  = "rudo$$";
 chomp($buf = `date`);
 
-tie %db, 'Tie::JournaledFile', { file => $file };
+tie %db, 'FML::Tie::JournaledFile', { file => $file };
 $db{ $key } = $buf;
 untie %db;
 
 print "   ", `ls -l $file` if $debug;
 
-tie %db, 'Tie::JournaledFile', { file => $file };
+tie %db, 'FML::Tie::JournaledFile', { file => $file };
 
 print "verify written string ... " if $debug;
 $tool->diff($db{ $key }, $buf);
@@ -42,7 +42,7 @@ $tool->diff($db{ $key }, $buf);
 #
 # 2. keys
 #
-$tool->set_title("Tie::JournaledFile keys");
+$tool->set_title("FML::Tie::JournaledFile keys");
 
 my @p = keys %db;
 my $count_orig = ` awk '{print $1}' $file | sort | uniq | wc -l `;

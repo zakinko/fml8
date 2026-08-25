@@ -44,7 +44,7 @@ IO に使われるクラスの各メソッドです。
 
 <para>
 &fml8; では
-IO::Adapter クラスという抽象化されたインターフェイスを使います。
+FML::IO::Adapter クラスという抽象化されたインターフェイスを使います。
 このクラスは、
 たいていはメールアドレスの一覧という行指向のリスト型データに対する
 IO を抽象化したものです。
@@ -53,13 +53,13 @@ IO を抽象化したものです。
 
 <sect1 id="io.abstraction.overview">
 	<title>
-	IO::Adapter の基本形
+	FML::IO::Adapter の基本形
 	</title>
 
 <para>
 &fml8; の設計上の手本となるクラスは 
 <link linkend="module.io.adapter">
-IO::Adapter
+FML::IO::Adapter
 </link>
 といえるでしょう。
 実装もすでに完成形であり、
@@ -69,7 +69,7 @@ primitive なメソッドは何か？
 
 <para>
 <link linkend="module.io.adapter">
-IO::Adapter
+FML::IO::Adapter
 </link>
 クラスは
 <screen>
@@ -91,7 +91,7 @@ KEY4 VALUE4-1 VALUE4-2 VALUE4-3
 
 <para>
 ユーザリストを管理する上で必要最低限の基本メソッド群は、
-IO::Adapter の
+FML::IO::Adapter の
 <screen>
 open()
 close()
@@ -116,7 +116,7 @@ get_next_key()
 	</title>
 
 <para>
-前述のように IO::Adapter の基本メソッドは次の通りです。
+前述のように FML::IO::Adapter の基本メソッドは次の通りです。
 <screen>
 open()
 close()
@@ -141,11 +141,11 @@ get_next_key()
 
 <para>
 オブジェクトを生成するのは new() です。
-たとえば IO::Adapter であれば、
+たとえば FML::IO::Adapter であれば、
 <screen>
-$obj = new IO::Adapter マップ;
+$obj = new FML::IO::Adapter マップ;
 もしくは
-$obj = new IO::Adapter マップ, パラメータ(ハッシュリファレンス);
+$obj = new FML::IO::Adapter マップ, パラメータ(ハッシュリファレンス);
 </screen>
 などとオブジェクトタイプを引数(マップ)で指定するため、
 マップに応じた初期化を行ないます。
@@ -155,7 +155,7 @@ $obj = new IO::Adapter マップ, パラメータ(ハッシュリファレンス);
 呼び出しの基本形は引数の多い方に合わせるので、次のようになります。
 <screen>
 my $config = $curproc->config();
-my $obj    = new IO::Adapter $map, $config;
+my $obj    = new FML::IO::Adapter $map, $config;
 </screen>
 HOOK で利用する際にも、つねに、この形で書いておくべきです。
 </para>

@@ -42,9 +42,9 @@ modlue D ---| er |--- cache with expiration
 </screen>
 An example of this persistent DB, thread DB, is 
 <link linkend="threadtrack.db">
-Mail::Message::DB
+FML::Message::DB
 </link>
-class.  Examples of cache database are Tie::JournaledDir and
+class.  Examples of cache database are FML::Tie::JournaledDir and
 FML::Cache::Ring classes.
 </para>
 
@@ -90,13 +90,13 @@ The type is time saving or space saving.
 
 <sect1 id="db.module.Tie.JournaledFile">
 	<title>
-	Tie::JournaledFile Class
+	FML::Tie::JournaledFile Class
 	</title>
 
 <para>
 This class appends data into a file.
-	<ulink url="../../en/modules/Tie/JournaledFile.txt">
-	Tie::JournaledFile
+	<ulink url="../../en/modules/FML/Tie/JournaledFile.txt">
+	FML::Tie::JournaledFile
 	</ulink>
 class provides this function.
 </para>

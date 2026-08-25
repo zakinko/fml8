@@ -81,8 +81,8 @@ sub convert
 	    for my $subdir (@subdir_list) {
 		# XXX-TODO: hmm, naming ? $obj->htmlify_dir(...).
 		eval q{
-		    use Mail::Message::ToHTML;
-		    my $obj = new Mail::Message::ToHTML $htmlifier_args;
+		    use FML::Message::ToHTML;
+		    my $obj = new FML::Message::ToHTML $htmlifier_args;
 		    $obj->htmlify_dir($subdir, $htmlifier_args);
 		};
 		croak($@) if $@;
@@ -91,8 +91,8 @@ sub convert
 	else {
 	    print STDERR "   hmm, looks not subdir style.\n" if $debug;
 	    eval q{
-		use Mail::Message::ToHTML;
-		my $obj = new Mail::Message::ToHTML $htmlifier_args;
+		use FML::Message::ToHTML;
+		my $obj = new FML::Message::ToHTML $htmlifier_args;
 		$obj->htmlify_dir($src_dir, $htmlifier_args);
 	    };
 	    croak($@) if $@;

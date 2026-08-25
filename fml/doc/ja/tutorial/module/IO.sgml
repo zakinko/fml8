@@ -4,13 +4,13 @@
 
 <chapter id="module.io.adapter">
 	<title>
-	IO へのアダプター層 (IO::Adapter クラス)
+	IO へのアダプター層 (FML::IO::Adapter クラス)
 	</title>
 
 
 <sect1 id="module.io.adapter.overview">
 	<title>
-	IO::Adapter の概要
+	FML::IO::Adapter の概要
 	</title>
 
 <para>
@@ -24,12 +24,12 @@ LDAP など、さまざまな形式で管理できます。
 <para>
 &fml8; でのメンバーリストの読み書き、
 たとえばメールアドレスの登録/削除は
-IO::Adapter という抽象クラスを通じて行ないます。
+FML::IO::Adapter という抽象クラスを通じて行ないます。
 ようは Unix における vfs/vnode インターフェイスの導入です。
 使い方は次のようになります。
 <screen>
-use IO::Adapter;
-$io = new IO::Adapter $map, $map_params;
+use FML::IO::Adapter;
+$io = new FML::IO::Adapter $map, $map_params;
 $io->open || croak("cannot open $map");
 while ($x = $io->get_next_key()) { ... }
 $io->close;
@@ -73,7 +73,7 @@ sql_password                                      = uja
 
 ... 略 ...
 </screen>
-このパラメータは new IO::Adapter を実行する際に、
+このパラメータは new FML::IO::Adapter を実行する際に、
 指定する必要があります(後述)。
 </para>
 
@@ -82,11 +82,11 @@ sql_password                                      = uja
 
 <sect1 id="module.io.adapter.methods">
 	<title>
-	IO::Adapter のメソッド
+	FML::IO::Adapter のメソッド
 	</title>
 
 <para>
-現在、IO::Adapter の提供する公式なメソッドは次の通りです。
+現在、FML::IO::Adapter の提供する公式なメソッドは次の通りです。
 <screen>
 new()
 open()
@@ -229,9 +229,9 @@ STR  => [STR, STR, ... ]
 <screen>
 wheel:*:0:root,rudo,kenken
 </screen>
-は IO::Adapter では unixgroup:wheel としてアクセスできます。
+は FML::IO::Adapter では unixgroup:wheel としてアクセスできます。
 <screen>
-$io = new IO::Adapter "unixgroup:wheel";
+$io = new FML::IO::Adapter "unixgroup:wheel";
 </screen>
 というオブジェクトに対し get_next_key() すると
 グループのメンバーが順に返されます。
@@ -311,14 +311,14 @@ Unix では該当するものが見つからないので .ini 風となりました。
 
 <para>
 RDBMS や LDAP に対し $config の情報が必要なため、
-IO::Adapter は
+FML::IO::Adapter は
 <screen>
-new IO::Adapter "mysql:members", $config;
+new FML::IO::Adapter "mysql:members", $config;
 </screen>
 のように呼び出す必要があります。
 よって、各ソフトウエアでは、つねに 
 <screen>
-new IO::Adapter $map, $config; 
+new FML::IO::Adapter $map, $config; 
 </screen>
 と書いておく必要があります。
 この $config は、
@@ -334,7 +334,7 @@ $config => {
 </screen>
 FML::Config は
 .cf から上のようなハッシュ・リファレンスを構成します。
-よって IO::Adapter で new() を呼び出す際には、
+よって FML::IO::Adapter で new() を呼び出す際には、
 つねに FML::Config オブジェクトを引数で渡すようにしてください。
 </para>
 

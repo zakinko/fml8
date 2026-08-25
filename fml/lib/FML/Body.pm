@@ -54,8 +54,8 @@ sub check_body_checksum
     my $body_file = $curproc->incoming_message_print_body_as_file();
 
     # calculate checksum of $body_file.
-    use Mail::Message::Checksum;
-    my $cksum = new Mail::Message::Checksum;
+    use FML::Message::Checksum;
+    my $cksum = new FML::Message::Checksum;
     my $md5   = $cksum->md5_file($body_file);
 
     # compare md5 value with the checksum database.
@@ -110,8 +110,8 @@ sub db_open
 	}
 
 	my %db = ();
-	use Tie::JournaledDir;
-	tie %db, 'Tie::JournaledDir', { dir => $dir };
+	use FML::Tie::JournaledDir;
+	tie %db, 'FML::Tie::JournaledDir', { dir => $dir };
 
 	$self->{ _db } = \%db;
 	return \%db;

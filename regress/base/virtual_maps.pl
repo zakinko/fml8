@@ -7,11 +7,11 @@ use strict;
 my $debug = defined $ENV{'debug'} ? 1 : 0;
 
 if (-f "/etc/postfix/virtual") {
-    print "IO::Adapter::find() for /etc/postfix/virtual\n";
+    print "FML::IO::Adapter::find() for /etc/postfix/virtual\n";
 
-    use IO::Adapter;
+    use FML::IO::Adapter;
 
-    my $map = new IO::Adapter ("file:/etc/postfix/virtual");
+    my $map = new FML::IO::Adapter ("file:/etc/postfix/virtual");
 
     if (defined $map) {
 	$map->open;

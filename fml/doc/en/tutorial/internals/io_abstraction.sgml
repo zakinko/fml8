@@ -31,19 +31,19 @@ are defined over v_op.
 
 <para>
 **v_op (vnode operation vector) corresponds to a method of object
-oriented programming. &fml8; provides IO::Adapter class as IO
+oriented programming. &fml8; provides FML::IO::Adapter class as IO
 abstraction layer.
 </para>
 
 
 <sect1 id="io.abstraction.overview">
 	<title>
-	Fundamentals Of IO::Adapter
+	Fundamentals Of FML::IO::Adapter
 	</title>
 
 <para>
 <link linkend="module.io.adapter">
-IO::Adapter
+FML::IO::Adapter
 </link>
 is most fundamental in &fml8; architecture.
 It is well considered and implemented.
@@ -52,7 +52,7 @@ It provides enough primitive methods.
 
 <para>
 <link linkend="module.io.adapter">
-IO::Adapter
+FML::IO::Adapter
 </link>
 class abstracts
 <screen>
@@ -73,7 +73,7 @@ KEY4 VALUE4-1 VALUE4-2 VALUE4-3
 </screen>
 
 <para>
-To maintain address list, least fundamental methods of IO::Adapter are
+To maintain address list, least fundamental methods of FML::IO::Adapter are
 <screen>
 open()
 close()
@@ -98,7 +98,7 @@ At least, enough to write user management codes.
 	</title>
 
 <para>
-Mentioned above, the fundamental methods of IO::Adapter are as
+Mentioned above, the fundamental methods of FML::IO::Adapter are as
 follows:
 <screen>
 open()
@@ -119,7 +119,7 @@ needed.
 The constructor is new() methond.
 For example, use like this;
 <screen>
-$obj = new IO::Adapter MAP;
+$obj = new FML::IO::Adapter MAP;
 </screen>
 The argument is a map which calls map dependent constructor.
 </para>
@@ -296,7 +296,7 @@ ADDRESS => {
 <para>
 Abstracted Cache IO layer is this type such as:
 <screen>
-FML::Error -> FML::Error::Cache -> Tie::JournaledDir
+FML::Error -> FML::Error::Cache -> FML::Tie::JournaledDir
 </screen>
 But ... dependent on Tie::* hmm ..
 </para>

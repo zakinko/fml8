@@ -44,8 +44,8 @@ while (<$fh>) {
 
 my $original_length = length($body);
 
-use Mail::Message;
-my $m = new Mail::Message { 
+use FML::Message;
+my $m = new FML::Message { 
     content_type   => ($content_type || 'multipart/mixed'),
     boundary       => $boundary,
     content        => \$body,

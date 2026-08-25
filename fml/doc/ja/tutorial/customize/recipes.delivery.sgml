@@ -116,8 +116,8 @@ $distribute_run_start_hook = q{
 	my $header  = $curproc->incoming_message_header();
 	my $subject = $header->get('subject') || '';
 
-	use Mail::Message::Subject;
-	my $sbj = new Mail::Message::Subject $subject;
+	use FML::Message::Subject;
+	my $sbj = new FML::Message::Subject $subject;
 	$sbj->mime_header_decode();
 	my $buf = $sbj->as_external_form();
 
@@ -202,7 +202,7 @@ $distribute_run_start_hook = q{
 <answer>
 
 <para>
-&fml8; の IO は IO::Adapter による抽象化をしています。
+&fml8; の IO は FML::IO::Adapter による抽象化をしています。
 たとえば受信者を、
 グループ fml に含まれるユーザ宛にするには、
 次のようにするだけで十分です。

@@ -29,19 +29,19 @@ Each resource defines each lock channel name.
 
 <para>
 For example,
-Mail::Delivery related class accesses the member list.
+FML::Delivery related class accesses the member list.
 It needs several locks. 
 </para>
 
 <para>
-Mail::Delivery::SMTP needs lock of member list.
+FML::Delivery::SMTP needs lock of member list.
 FML::Send and FML::Process::Delivery locks member list access 
-in callling Mail::Delivery::SMTP.
+in callling FML::Delivery::SMTP.
 </para>
 
 <para>
 Instead 
-Mail::Delivery::Queue just sees the mail queue.
+FML::Delivery::Queue just sees the mail queue.
 The function can access the queue concurrently, also.
 So this module does not need lock.
 </para>
@@ -74,7 +74,7 @@ Mutex lock in calling *_maps.
 </para>
 
 <para>
-READER WRITER LOCK in calling IO::Adapter.
+READER WRITER LOCK in calling FML::IO::Adapter.
 </para>
 
 </sect1>

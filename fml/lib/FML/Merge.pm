@@ -120,8 +120,8 @@ sub backup_old_config_files
 	    }
 	    elsif ($mode eq 'copy') {
 		printf STDERR "copying: %-30s -> %-30s\n", $src, $dst;
-		use IO::Adapter::AtomicFile;
-		IO::Adapter::AtomicFile->copy($src, $dst);
+		use FML::IO::Adapter::AtomicFile;
+		FML::IO::Adapter::AtomicFile->copy($src, $dst);
 		unless (-f $dst) {
 		    croak("$dst not created");
 		}
@@ -138,8 +138,8 @@ sub backup_old_config_files
 	my $src  = $m_config->backup_file_path($f);
 	my $dst  = $m_config->new_file_path($f);
 	printf STDERR "copying: %-30s -> %-30s\n", $src, $dst;
-	use IO::Adapter::AtomicFile;
-        IO::Adapter::AtomicFile->copy($src, $dst);
+	use FML::IO::Adapter::AtomicFile;
+        FML::IO::Adapter::AtomicFile->copy($src, $dst);
     }
 }
 
@@ -206,8 +206,8 @@ sub disable_old_include_files
     for my $f (@$files) {
 	my $file = $m_config->old_file_path($f);
 	print STDERR "disable: $file\n";
-	use IO::Adapter::AtomicFile;
-        IO::Adapter::AtomicFile->copy($file, "$file.bak");
+	use FML::IO::Adapter::AtomicFile;
+        FML::IO::Adapter::AtomicFile->copy($file, "$file.bak");
 	my $wh = new FileHandle "> $file.tmp";
 	if (defined $wh) {
 	    print $wh "exit 75\n"; # EX_TEMPFAIL

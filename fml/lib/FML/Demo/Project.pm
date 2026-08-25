@@ -153,8 +153,8 @@ sub _expand_date_list
     my $last_sec  = parsedate($last);
 
     for (my $sec = $first_sec; $sec <= $last_sec; $sec += 86400) {
-	use Mail::Message::Date;
-	my $date = new Mail::Message::Date $sec;
+	use FML::Message::Date;
+	my $date = new FML::Message::Date $sec;
 	my $yyyy = $date->YYYYxMMxDD($sec);
 	push(@$r, $yyyy);
     }

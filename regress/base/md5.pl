@@ -24,13 +24,13 @@ my $fh = new FileHandle $file;
 while (<$fh>) { $body .=  $_;}
 close($fh);
 
-use Mail::Message::Checksum;
-my $p = new Mail::Message::Checksum;
+use FML::Message::Checksum;
+my $p = new FML::Message::Checksum;
 
 my $internal = $p->md5( \$body );
 my $external = program($file);
 
-$tool->set_title("Mail::Message::Checksum::md5");
+$tool->set_title("FML::Message::Checksum::md5");
 $tool->diff($internal, $external);
 
 exit 0;

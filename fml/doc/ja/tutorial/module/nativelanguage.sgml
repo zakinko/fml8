@@ -94,13 +94,13 @@ MIMEエンコードはしていないので、
 たとえば次のようなモジュールがあります。
 <screen>
 FML::Language::Japanese::String.pm
-Mail::Bounce::Language::Japanese.pm
+FML::Bounce::Language::Japanese.pm
 </screen>
 前者は、FML モジュール群のために、
 日本語の文脈に依存した文字列処理関数
 (例: 日本語のメールでは引用に＞を使う…)
 を提供しています。
-後者は Mail::Bounce 階層以下のモジュールに対して、
+後者は FML::Bounce 階層以下のモジュールに対して、
 日本語に依存したエラーメール解析ルーチン
 (例: 日本の特定の ISP が特殊なフォーマットのエラーメールを返す…)
 を提供しています。

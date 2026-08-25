@@ -556,9 +556,9 @@ sub _deliver_article
     my ($curproc) = @_;
     my $cred    = $curproc->credential();
     my $config  = $curproc->config();                 # FML::Config   object
-    my $message = $curproc->article_message();        # Mail::Message object
+    my $message = $curproc->article_message();        # FML::Message object
     my $header  = $curproc->article_message_header(); # FML::Header   object
-    my $body    = $curproc->article_message_body();   # Mail::Message object
+    my $body    = $curproc->article_message_body();   # FML::Message object
 
     #
     # SANITY
@@ -582,9 +582,9 @@ sub _deliver_article
     # MAIN ### XXX [queue-based-distrbute] HACK ###
     #
     # 1. queue in (which is a little different from ordinary queue-in)
-    use Mail::Delivery::Queue;
+    use FML::Delivery::Queue;
     my $queue_dir = $config->{ mail_queue_dir };
-    my $queue     = new Mail::Delivery::Queue { directory => $queue_dir };
+    my $queue     = new FML::Delivery::Queue { directory => $queue_dir };
     my $qid       = $queue->id();
     my $fatal     = 0;
 
@@ -663,8 +663,8 @@ sub _deliver_article
     # delay loading of module
     my $service = {};
     eval q{
-	use Mail::Delivery;
-	$service = new Mail::Delivery {
+	use FML::Delivery;
+	$service = new FML::Delivery {
 	    log_info_function  => $fp_log_info,
 	    log_error_function => $fp_log_error,
 	    log_debug_function => $fp_log_debug,
@@ -725,8 +725,8 @@ sub _deliver_article
     }
 
     # XXX [queue-based-distrbute] HACK ###
-    # here, Mail::Delivery already processes whole or a part of delivery.
-    # So, we can remove queue since Mail::Delivery supports fallback
+    # here, FML::Delivery already processes whole or a part of delivery.
+    # So, we can remove queue since FML::Delivery supports fallback
     # and creats a new queue for recipients not sent to.
     if (defined $queue) {
 	$queue->remove();
@@ -768,7 +768,7 @@ sub _new_thread_check_post
     my $pcb = $curproc->pcb();
     my $hdr = $curproc->article_message_header();
 
-    use Mail::Message::Thread;
+    use FML::Message::Thread;
 
     # XXX we need to specify article_id here since
     # XXX analyzer routine has no clue for the current primary key.
@@ -777,7 +777,7 @@ sub _new_thread_check_post
     $tdb_args->{ id } = $article_id;
 
     # overwrite header info base on the article.
-    my $thread  = new Mail::Message::Thread $tdb_args;
+    my $thread  = new FML::Message::Thread $tdb_args;
     my $db      = $thread->db();
 
     for my $key (qw(subject)) {
@@ -813,7 +813,7 @@ sub _htmlify
     $curproc->umask_set_as_public();
 
     eval q{
-	use Mail::Message::ToHTML;
+	use FML::Message::ToHTML;
     };
     unless ($@) {
 	unless (-d $html_dir) {
@@ -822,7 +822,7 @@ sub _htmlify
 	}
 
 	eval q{
-	    my $obj = new Mail::Message::ToHTML $_tdb_args;
+	    my $obj = new FML::Message::ToHTML $_tdb_args;
 	    $obj->htmlify_file($article_file, $_tdb_args);
 	};
 	$curproc->logerror($@) if $@;

@@ -103,7 +103,7 @@ message queue of this process on memory.
 
 <para>
 The error/log messages queued in on memory are aggergated to one
-message at the last of the current process. Mail::Delivery class
+message at the last of the current process. FML::Delivery class
 handles the aggregation and send it. If needed, the aggregator handles
 text strings or multipart properly to build one message.
 </para>

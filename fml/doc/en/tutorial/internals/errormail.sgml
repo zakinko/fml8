@@ -37,12 +37,12 @@ messages returned to) calls /usr/local/libexec/fml/error.
 
 <para>
 /usr/local/libexec/fml/error reads a message, analyzes it and creates
-a chain of Mail::Message objects on memory. Mail::Bounce class
+a chain of FML::Message objects on memory. FML::Bounce class
 analyzes the detail of error based on the objects.
 </para>
 
 <para>
-Mail::Bounce analylzes which MTA generates the error, which address
+FML::Bounce analylzes which MTA generates the error, which address
 generates the error, and the error reason.
 </para>
 
@@ -134,11 +134,11 @@ directory.
 </para>
 
 <para>
-IO to cache uses Tie::JournaledDir class via FML::Error::Cache. 
+IO to cache uses FML::Tie::JournaledDir class via FML::Error::Cache. 
 </para>
 
 <para>
-FML::Error::Cache is a front end (adapter layer) for Tie::JournaledDir
+FML::Error::Cache is a front end (adapter layer) for FML::Tie::JournaledDir
 class. All IO should be done via methods provided by FML::Error::Cache.
 </para>
 

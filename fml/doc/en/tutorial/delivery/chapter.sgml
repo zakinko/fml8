@@ -16,20 +16,20 @@
 <para>
 One of purposes of &fml8; is unification and abstraction of member
 list operations. Mail distribution is based on the following module
-Mail::Delivery.
+FML::Delivery.
 </para>
 
 <para>
-Mail::Delivery class provides SMTP, ESMTP and LMTP delivery library
-interface. Mail::Delivery is an adapter layer for Mail::Delivery
+FML::Delivery class provides SMTP, ESMTP and LMTP delivery library
+interface. FML::Delivery is an adapter layer for FML::Delivery
 subclass ( SMTP ESMTP LMTP ).
 </para>
 
 <para>
 For example,
 <screen>
-    use Mail::Delivery::SMTP;
-    my $service = new Mail::Delivery::SMTP;
+    use FML::Delivery::SMTP;
+    my $service = new FML::Delivery::SMTP;
     if ($service->error) { Log($service->error); return;}
 
     $service->deliver(
@@ -45,7 +45,7 @@ For example,
 </screen>
 where $message is a 
 <link linkend="module.mail.message">
-Mail::Message
+FML::Message
 </link>
 object.
 </para>
@@ -56,7 +56,7 @@ object.
 <sect1>
 	<title>
 	<link linkend="module.mail.message">
-	Mail::Message
+	FML::Message
 	</link>
 	Object
 	</title>
@@ -72,7 +72,7 @@ header -> preamble -> part1 -> part2 -> trailor (multipart)
 
 <para>
 <link linkend="module.mail.message">
-Mail::Message
+FML::Message
 </link>
 class provides such data structure described above.
 </para>

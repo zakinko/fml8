@@ -40,7 +40,7 @@ needs.
 
 <para>
 3-1)
-IO::Adapter ignores a line beginning with '^#' as a comment.
+FML::IO::Adapter ignores a line beginning with '^#' as a comment.
 We should handle carefully it since
 "actives" file contains ^# lines as "off" address.
 </para>

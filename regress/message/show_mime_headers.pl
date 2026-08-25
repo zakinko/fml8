@@ -11,7 +11,7 @@
 use strict;
 use Carp;
 use lib qw(../../cpan/lib);
-use Mail::Message;
+use FML::Message;
 
 my $test_mode = $ENV{'test_mode'} ? 1 : 0;
 
@@ -20,7 +20,7 @@ my $tmp = "/tmp/buf$$";
 for my $f (@ARGV) {
     my $fh   = new FileHandle $f;
     my $wh   = new FileHandle "> $tmp";
-    my $obj  = Mail::Message->parse( { fd => $fh } );
+    my $obj  = FML::Message->parse( { fd => $fh } );
     my $head = $obj->whole_message_header();
     my $i    = 0;
 

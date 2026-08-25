@@ -76,14 +76,14 @@ sub _list_up_queue
     my $count     = 0;
     my $format    = "%-20s   %s\n";
 
-    use Mail::Delivery::Queue;
-    my $queue   = new Mail::Delivery::Queue { directory => $queue_dir };
+    use FML::Delivery::Queue;
+    my $queue   = new FML::Delivery::Queue { directory => $queue_dir };
     my $ra_list = $queue->list_all();
 
     for my $qid (@$ra_list) {
 	my $info = $queue->getidinfo($qid);
 
-	my $q = new Mail::Delivery::Queue {
+	my $q = new FML::Delivery::Queue {
 	    id        => $qid,
 	    directory => $queue_dir,
 	};

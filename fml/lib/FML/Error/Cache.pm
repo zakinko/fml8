@@ -62,8 +62,8 @@ sub new
 	$curproc->mkdir($db_dir, "mode=private");
     }
 
-    use Tie::JournaledDir;
-    my $obj = new Tie::JournaledDir { dir => $db_dir };
+    use FML::Tie::JournaledDir;
+    my $obj = new FML::Tie::JournaledDir { dir => $db_dir };
     $obj->expire();
 
     return bless $me, $type;
@@ -114,7 +114,7 @@ add data given as hash reference $argv into the database.
 	status  => STR,
     };
 
-C<Tie::JournaledDir> is a simple hash, so $argv is converted to the
+C<FML::Tie::JournaledDir> is a simple hash, so $argv is converted to the
 following a set of key ($address) and value.
 
      $address => "$unixtime status=$status reason=$reason"
@@ -218,7 +218,7 @@ error database (data cache).
 =cut
 
 
-# Descriptions: open the cache database for Tie::Journaled*.
+# Descriptions: open the cache database for FML::Tie::Journaled*.
 #    Arguments: OBJ($self)
 # Side Effects: set up $self->{ _db }.
 # Return Value: none
@@ -240,8 +240,8 @@ sub _open_cache
 	limit => $days,
     };
 
-    use Tie::JournaledDir;
-    tie %db, 'Tie::JournaledDir', $args;
+    use FML::Tie::JournaledDir;
+    tie %db, 'FML::Tie::JournaledDir', $args;
     $self->{ _db } = \%db;
 }
 
@@ -300,8 +300,8 @@ sub get_all_values_as_hash_ref
     my $config  = $curproc->config();
     my $dir     = $config->{ error_mail_analyzer_cache_dir };
 
-    use Tie::JournaledDir;
-    my $cache = new Tie::JournaledDir { dir => $dir };
+    use FML::Tie::JournaledDir;
+    my $cache = new FML::Tie::JournaledDir { dir => $dir };
     return $cache->get_all_values_as_hash_ref();
 }
 

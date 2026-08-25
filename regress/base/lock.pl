@@ -16,8 +16,8 @@ use FML::Test::Utils;
 my $tool = new FML::Test::Utils;
 $tool->set_title("file lock");
 
-use IO::Adapter;
-my $io = new IO::Adapter $map;
+use FML::IO::Adapter;
+my $io = new FML::IO::Adapter $map;
 my $r  = $io->lock( { file => $map } );
 
 if ($r) { 

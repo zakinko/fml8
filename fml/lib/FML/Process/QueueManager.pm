@@ -88,8 +88,8 @@ sub send
     my $fp_logerror = sub { $curproc->logerror(@_);};
     my $fp_logdebug = sub { $curproc->logdebug(@_);};
 
-    use Mail::Delivery::Queue;
-    my $queue = new Mail::Delivery::Queue { directory => $queue_dir };
+    use FML::Delivery::Queue;
+    my $queue = new FML::Delivery::Queue { directory => $queue_dir };
     $queue->set_log_function($fp_log);
     $queue->set_log_error_function($fp_logerror);
     $queue->set_log_debug_function($fp_logdebug);
@@ -114,7 +114,7 @@ sub send
     for my $qid (@$ra) {
 	last QUEUE if $curproc->is_process_time_limit();
 
-	my $q = new Mail::Delivery::Queue {
+	my $q = new FML::Delivery::Queue {
 	    id        => $qid,
 	    directory => $queue_dir,
 	};
@@ -190,8 +190,8 @@ sub _send
     my $recipient_map = $q->recipients_file_path($qid);
     my $sender        = $q->get_sender($qid);
 
-    use Mail::Message;
-    my $msg = Mail::Message->parse( { file => $qf_act } );
+    use FML::Message;
+    my $msg = FML::Message->parse( { file => $qf_act } );
 
     # XXX lock for recipient maps is NOT needed since already a copy.
     # XXX queue is already locked and need no lock for recipient maps here.
@@ -237,8 +237,8 @@ sub cleanup
     my $fp_logdebug = sub { $curproc->logdebug(@_);};
 
 
-    use Mail::Delivery::Queue;
-    my $queue = new Mail::Delivery::Queue { directory => $queue_dir };
+    use FML::Delivery::Queue;
+    my $queue = new FML::Delivery::Queue { directory => $queue_dir };
     $queue->set_log_function($fp_log);
     $queue->set_log_error_function($fp_logerror);
     $queue->set_log_debug_function($fp_logdebug);
@@ -249,7 +249,7 @@ sub cleanup
     my $now   = time;
 
     for my $qid (@$list) {
-	my $q = new Mail::Delivery::Queue {
+	my $q = new FML::Delivery::Queue {
 	    id        => $qid,
 	    directory => $queue_dir,
 	};

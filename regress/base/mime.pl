@@ -18,8 +18,8 @@ use FML::Test::Utils;
 my $tool = new FML::Test::Utils;
 $tool->set_title("mime");
 
-use Mail::Message::Encode;
-my $obj = new Mail::Message::Encode;
+use FML::Message::Encode;
+my $obj = new FML::Message::Encode;
 
 &try_mime(" ");
 &try_mime("¡¡");

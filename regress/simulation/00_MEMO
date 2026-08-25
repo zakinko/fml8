@@ -176,13 +176,13 @@
 [TODO]	charset と言語(japanese,english)との対応関係を一箇所にまとめて定義
 
 	[CHECK]
-		Mail/Message/Encode.pm
-		Mail/Message/ToHTML.pm
+		FML/Message/Encode.pm
+		FML/Message/ToHTML.pm
 
 	OUTPUT をどうすればよいか？で決まる処理はなんとかなる。
 	入力は自動判定になるが、出力は設定ファイルで決まる。
 
-		もんだいは Mail/Message/ToHTML.pm だけみたい
+		もんだいは FML/Message/ToHTML.pm だけみたい
 
 	問題は HTML 化のような入力が動的に変化する場合だ。
 	基本的に入力は自動判定ということで、処理は同様なのだが、
@@ -210,35 +210,35 @@
 
 [TODO]	remove $msg->{ next }
 
-	Mail/Message/ToHTML.pm
-	Mail/Message.pm
-	Mail/Bounce/Postfix19991231.pm
-	Mail/Bounce/Qmail.pm
+	FML/Message/ToHTML.pm
+	FML/Message.pm
+	FML/Bounce/Postfix19991231.pm
+	FML/Bounce/Qmail.pm
 
 
 [TODO]	string ? or str ?
 
-	Mail/Message/Encode.pm:sub decode_base64_string
+	FML/Message/Encode.pm:sub decode_base64_string
 	FML/Header.pm:sub delete_subject_tag_like_string
-	Mail/Message/Utils.pm:sub remove_subject_tag_like_string
-	Mail/Message/Encode.pm:sub decode_mime_string
-	Mail/Message/Encode.pm:sub encode_mime_string
+	FML/Message/Utils.pm:sub remove_subject_tag_like_string
+	FML/Message/Encode.pm:sub decode_mime_string
+	FML/Message/Encode.pm:sub encode_mime_string
 	FML/Filter/TextPlain.pm:sub reject_not_iso2022jp_japanese_string
-	Mail/Message/Encode.pm:sub is_iso2022jp_string
-	Mail/Message/Encode.pm:sub decode_qp_string
+	FML/Message/Encode.pm:sub is_iso2022jp_string
+	FML/Message/Encode.pm:sub decode_qp_string
 
-	Mail/Message/Encode.pm:sub convert_str_ref
-	Mail/Message/String.pm:sub as_str
-	Mail/Message/Address.pm:sub as_str
-	Mail/Message.pm:sub whole_message_as_str
-	Mail/Message.pm:sub whole_message_header_as_str
-	Mail/Message/Address.pm:sub substr
+	FML/Message/Encode.pm:sub convert_str_ref
+	FML/Message/String.pm:sub as_str
+	FML/Message/Address.pm:sub as_str
+	FML/Message.pm:sub whole_message_as_str
+	FML/Message.pm:sub whole_message_header_as_str
+	FML/Message/Address.pm:sub substr
 
-	Mail/Message.pm:sub errstr
+	FML/Message.pm:sub errstr
 	ErrorStatus.pm:sub errstr
 	FML/Filter/ErrorStatus.pm:sub errstr
-	IO/Adapter/ErrorStatus.pm:sub errstr
-	Mail/Delivery/ErrorStatus.pm:sub errstr
+	FML/IO/Adapter/ErrorStatus.pm:sub errstr
+	FML/Delivery/ErrorStatus.pm:sub errstr
 
 
 
@@ -268,10 +268,10 @@
 
 	* TODO
 
- 	FixIt                                    Mail/Bounce/FixBrokenAddress
+ 	FixIt                                    FML/Bounce/FixBrokenAddress
 
 	address_cleanup                          FML/Header
-	address_cleanup                          Mail/Bounce
+	address_cleanup                          FML/Bounce
 
 	---------->8---------->8---------->8---------->8---------->8
 	* けすべき
@@ -295,7 +295,7 @@
 
 [TODO]	ドキュメント( tutorial )
 
-	module/Mail::Message::ToHTML
+	module/FML::Message::ToHTML
 
 	usage/ がいまいち
 	fml bible のパートIIIの最初の部分のように編成し直すべき
@@ -313,26 +313,26 @@
 [TODO]	2008 module overhaul + 2005/05 のオーバホールの残り
 
    * 重たいので後回しにされてるもの
-	Mail/Delivery/Queue.pm
-	Mail/Delivery/SMTP.pm
-	Mail/Message.pm
+	FML/Delivery/Queue.pm
+	FML/Delivery/SMTP.pm
+	FML/Message.pm
 	FML/Filter/MimeComponent.pm
 
    * スレッド関連のモジュール
 	FML/CGI/Thread.pm
-	Mail/Message/ToHTML.pm
+	FML/Message/ToHTML.pm
 
    * IN/OUT のチェック
-	Mail/Message/ToHTML.pm
+	FML/Message/ToHTML.pm
 
-	Mail/Message/Print などに集結させるべきだろうか？
+	FML/Message/Print などに集結させるべきだろうか？
 		print_axss (against cross site scripting).
 
   * ちょっとコーディングスタイルが古いかな?
 
 	FML::Header
 	FML::Header::Subject
-	Mail::Delivery::* (?)
+	FML::Delivery::* (?)
 	FML::Filter::TextPlain
 
    * 使ってないモジュール?

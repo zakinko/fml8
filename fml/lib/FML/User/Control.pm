@@ -14,7 +14,7 @@ use Carp;
 use File::Spec;
 use FML::Credential;
 use FML::Restriction::Base;
-use IO::Adapter;
+use FML::IO::Adapter;
 
 
 # XXX_LOCK_CHANNEL: recipient_map_modify
@@ -126,7 +126,7 @@ sub user_add
 
 	    $trycount++;
 
-	    my $obj = new IO::Adapter $map, $config;
+	    my $obj = new FML::IO::Adapter $map, $config;
 	    $obj->touch(); # create a new map entry (e.g. file) if needed.
 	    $obj->add( $address );
 	    unless ($obj->error()) {
@@ -240,7 +240,7 @@ sub user_del
 
 	    $trycount++;
 
-	    my $obj = new IO::Adapter $map, $config;
+	    my $obj = new FML::IO::Adapter $map, $config;
 	    $obj->delete( $address_in_map );
 	    unless ($obj->error()) {
 		$obj->close();
@@ -400,7 +400,7 @@ sub _try_chaddr_in_map
 	    $msg_args->{ _arg_map }     = sprintf("TERM_NL(%s)",
 						  $curproc->map_to_term($map));
 
-	    my $obj = new IO::Adapter $map, $config;
+	    my $obj = new FML::IO::Adapter $map, $config;
 	    $obj->open();
 	    $obj->add( $new_address );
 	    unless ($obj->error()) {
@@ -427,7 +427,7 @@ sub _try_chaddr_in_map
 	    $msg_args->{ _arg_map }     = sprintf("TERM_NL(%s)",
 						  $curproc->map_to_term($map));
 
-	    my $obj = new IO::Adapter $map, $config;
+	    my $obj = new FML::IO::Adapter $map, $config;
 	    $obj->touch();
 
 	    $obj->open();
@@ -480,14 +480,14 @@ sub print_userlist
     $curproc->lock($lock_channel);
 
     for my $map (@$maplist) {
-	my $obj = new IO::Adapter $map, $config;
+	my $obj = new FML::IO::Adapter $map, $config;
 
 	if (defined $obj) {
 	    my $x = '';
 	    my $buf;
 	    $obj->open;
 
-	    # XXX-TODO: we need IO::Adapter->get_key_values_as_str ???
+	    # XXX-TODO: we need FML::IO::Adapter->get_key_values_as_str ???
 	  LINE:
 	    while ($x = $obj->get_key_values_as_array_ref()) {
 		$buf = join(" ", @$x) if ref($x) eq 'ARRAY';
@@ -537,7 +537,7 @@ sub get_user_list
     $curproc->lock($lock_channel);
 
     for my $map (@$maps) {
-	my $io  = new IO::Adapter $map, $config;
+	my $io  = new FML::IO::Adapter $map, $config;
 	my $key = '';
 	if (defined $io) {
 	    $io->open();
@@ -574,7 +574,7 @@ sub get_user_total
     $curproc->lock($lock_channel);
 
     for my $map (@$maps) {
-	my $io  = new IO::Adapter $map, $config;
+	my $io  = new FML::IO::Adapter $map, $config;
 	my $key = '';
 	if (defined $io) {
 	    $io->open();

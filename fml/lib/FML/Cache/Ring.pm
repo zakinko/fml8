@@ -157,8 +157,8 @@ sub _take_file_name
     elsif ($cache_type eq 'cyclic') {
 	my $seq_file = File::Spec->catfile($directory, $sequence_file_name);
 
-	use IO::Adapter;
-	my $io = new IO::Adapter $seq_file;
+	use FML::IO::Adapter;
+	my $io = new FML::IO::Adapter $seq_file;
 	my $id = $io->sequence_increment();
 
 	# the sequence $id is already incremetd.

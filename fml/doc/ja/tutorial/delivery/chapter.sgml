@@ -24,15 +24,15 @@
 </para>
 
 <para>
-配送には抽象化された Mail::Delivery クラスを次のように使っています。
+配送には抽象化された FML::Delivery クラスを次のように使っています。
 </para>
 
 <para>
-Mail::Delivery::* に属するクラスは
+FML::Delivery::* に属するクラスは
 SMTP および LMTP 配送へのインターフェイスを提供します。
 つまり
-Mail::Delivery は
-Mail::Delivery 以下の派生クラス
+FML::Delivery は
+FML::Delivery 以下の派生クラス
 SMTP、ESMTP
 へのインターフェイスを提供するアダプター層です。
 </para>
@@ -40,8 +40,8 @@ SMTP、ESMTP
 <para>
 たとえば次のように使います。
 <screen>
-    use Mail::Delivery::SMTP;
-    my $service = new Mail::Delivery::SMTP;
+    use FML::Delivery::SMTP;
+    my $service = new FML::Delivery::SMTP;
     if ($service->error) { Log($service->error); return;}
 
     $service->deliver(
@@ -57,7 +57,7 @@ SMTP、ESMTP
 </screen>
 ここで $message は
 <link linkend="module.mail.message">
-Mail::Message
+FML::Message
 </link>
 オブジェクトです。
 </para>
@@ -68,7 +68,7 @@ Mail::Message
 <sect1 id="delivery.message-object">
 	<title>
 	<link linkend="module.mail.message">
-	Mail::Message
+	FML::Message
 	</link>
 	オブジェクト
 	</title>
@@ -84,7 +84,7 @@ header -> preamble -> part1 -> part2 -> trailor (multipart)
 
 <para>
 <link linkend="module.mail.message">
-Mail::Message
+FML::Message
 </link>
 クラスはこのようなデータ構造を操作するメソッドを提供しています。
 </para>

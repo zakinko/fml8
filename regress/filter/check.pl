@@ -5,11 +5,11 @@
 
 use lib qw(../../fml/lib ../../cpan/lib ../../img/lib);
 use FileHandle;
-use Mail::Message;
+use FML::Message;
 
 for my $f (@ARGV) {
     my $fh      = new FileHandle $f;
-    my $message = Mail::Message->parse( { fd => $fh } );
+    my $message = FML::Message->parse( { fd => $fh } );
 
     if (defined $message) {
 	use File::Basename;

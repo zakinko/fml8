@@ -426,7 +426,7 @@ sub add_x_sequence
 =head2 rewrite_article_subject_tag($config, $rw_args)
 
 add subject tag like [ML_NAME:00010] e.g. [elena:00010] for elena ML.
-The actual function definitions exist in C<Mail::Message::Subject>.
+The actual function definitions exist in C<FML::Message::Subject>.
 
 =cut
 
@@ -462,9 +462,9 @@ sub rewrite_article_subject_tag
 
     # XXX-TODO: $article_subject_tag e.g. "\Lmlname\E" is expanded already.
     # XXX-TODO: we should include this exapansion method within this module?
-    use Mail::Message::Subject;
+    use FML::Message::Subject;
     my $str = $header->get('subject');
-    my $sbj = new Mail::Message::Subject $str;
+    my $sbj = new FML::Message::Subject $str;
 
     # mime decode
     $sbj->mime_header_decode();
@@ -589,8 +589,8 @@ sub rewrite_date
     my ($header, $config, $rw_args) = @_;
     my $orgdate = $header->get('date') || '';
 
-    use Mail::Message::Date;
-    my $nowdate = new Mail::Message::Date time;
+    use FML::Message::Date;
+    my $nowdate = new FML::Message::Date time;
     my $newdate = $nowdate->{ mail_header_style };
 
     $header->add('X-Date', $orgdate) if ($orgdate);
@@ -613,8 +613,8 @@ sub rewrite_stardate
 {
     my ($header, $config, $rw_args) = @_;
 
-    use Mail::Message::Date;
-    my $nowdate  = new Mail::Message::Date time;
+    use FML::Message::Date;
+    my $nowdate  = new FML::Message::Date time;
     my $stardate = $nowdate->stardate();
     if ($header->get('X-Stardate')) {
 	$header->replace('X-Stardate', $stardate);

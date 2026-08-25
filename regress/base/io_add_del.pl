@@ -10,10 +10,10 @@
 
 use strict;
 use Carp;
-use IO::Adapter;
+use FML::IO::Adapter;
 my $debug = defined $ENV{'debug'} ? 1 : 0;
 my $map   = shift || 'file:/var/spool/ml/elena/etc/passwd-admin';
-my $obj   = new IO::Adapter $map;
+my $obj   = new FML::IO::Adapter $map;
 my $key   = 'fukachan@sapporo.iij.ad.jp';
 
 _dump(1);

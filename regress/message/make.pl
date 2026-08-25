@@ -16,8 +16,8 @@ use lib qw(../../cpan/lib ../../fml/lib);
 # make a plain message;
 #
 
-use Mail::Message::Compose;
-my $msg = Mail::Message::Compose->new(
+use FML::Message::Compose;
+my $msg = FML::Message::Compose->new(
 				      From     =>'fukachan@fml.org',
 				      To       =>'rudo@nuinui.net',
 				      Cc       =>'kenken@nuinui.net',

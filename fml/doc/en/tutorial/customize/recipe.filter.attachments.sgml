@@ -10,7 +10,7 @@ How to write a hook to reject a message with danger attachment(s).
 
 <para>
 &fml8; analyzed the incoming message firstly and creates a chain of
-Mail::Message objects on memory. It is easy for &fml8; to analyze the
+FML::Message objects on memory. It is easy for &fml8; to analyze the
 chain to check the message content.
 </para>
 

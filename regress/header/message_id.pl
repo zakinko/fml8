@@ -51,8 +51,8 @@ sub message_io_test
     use FileHandle;
     my $fd = new FileHandle $msg;
 
-    use Mail::Message;
-    my $msg = Mail::Message->parse( {
+    use FML::Message;
+    my $msg = FML::Message->parse( {
 	fd           => $fd,
 	header_class => 'FML::Header',
     });
