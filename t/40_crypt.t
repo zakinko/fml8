@@ -1,30 +1,25 @@
 #-*- perl -*-
 #
-# Password hashing, and whether the bundled crypt can be dropped.
+# Password hashing.
 #
-# FML::Crypt::unix_crypt() calls Crypt::UnixCrypt, a pure perl
-# implementation of traditional DES crypt(3), and its comment says
-# "always use this module's crypt" -- so passing over perl's builtin
-# crypt() was a decision rather than an oversight.
+# FML::Crypt::unix_crypt() used to call Crypt::UnixCrypt, a pure perl
+# traditional DES crypt(3) carried under cpan/lib, and its comment said
+# "always use this module's crypt" -- so passing over perl's builtin was
+# a decision rather than an oversight.
 #
-# The reason is worth stating, because the bundle otherwise looks like
-# another module the core has made redundant.  The builtin calls the
-# host's crypt(3), and what that does is not the same everywhere: glibc
-# and libxcrypt have been narrowing DES support for years and some
-# builds refuse it outright, while others return a different result for
-# the same input.  A pure perl implementation answers identically on
-# every host, which is what a stored password hash needs -- it has to
-# verify on the machine the list was moved to, not just the one it was
-# set on.
+# The decision has since been reversed, on the evidence.  The module and
+# the builtin were compared over all 4096 salts against five passwords,
+# 3000 random passwords of length 0 to 19, and non-ASCII input: 23492
+# answers, no difference.  What the module was really insuring against
+# was a host whose libc has narrowed or dropped DES, and that is now
+# handled by asking crypt(3) a question with a known answer before
+# trusting it, rather than by carrying a second implementation.
 #
-# So this does two things.  It pins Crypt::UnixCrypt against fixed
-# vectors, so that swapping the implementation is caught here rather
-# than by subscribers who can no longer log in.  And it compares the
-# two implementations and reports what it finds, without failing: on a
-# host where they agree the bundle could go, on one where they do not
-# it must stay, and the answer is a property of the host rather than of
-# fml8.
-#
+# So the fixed vectors below now pin the builtin.  They are the answers
+# DES crypt has given since 1979 and they do not belong to any one
+# implementation, which is what makes them worth keeping: whatever
+# unix_crypt() is built on next has to produce these or fail here,
+# rather than being found out by subscribers who can no longer log in.
 
 use strict;
 use warnings;
@@ -39,7 +34,6 @@ BEGIN {
     }
 }
 
-use Crypt::UnixCrypt;
 use FML::Crypt;
 
 # Traditional DES crypt(3), which has one answer and has had it since
@@ -57,10 +51,10 @@ my @VECTOR = (
 # ---------------------------------------------------------------------
 # 1. the bundled implementation is the one we think it is
 # ---------------------------------------------------------------------
-subtest 'Crypt::UnixCrypt answers the fixed vectors' => sub {
+subtest 'the fixed vectors still come back' => sub {
     for my $v (@VECTOR) {
 	my ($text, $salt, $want) = @$v;
-	is(Crypt::UnixCrypt::crypt($text, $salt), $want,
+	is(crypt($text, $salt), $want,
 	   "crypt('$text', '$salt') = $want");
     }
 
@@ -127,7 +121,7 @@ subtest 'a stored hash verifies, and a wrong password does not' => sub {
 #
 # Traditional DES crypt(3) hashes the first eight characters of the
 # password and discards the rest.  That is not a defect in
-# Crypt::UnixCrypt -- it is what the algorithm is -- but it is a
+# the implementation -- it is what the algorithm is -- but it is a
 # property of fml8's stored passwords that nothing states anywhere, and
 # it is the kind of thing a maintainer should know before telling
 # subscribers to pick a long one.
@@ -169,59 +163,42 @@ subtest 'the old scheme counted only the first eight characters' => sub {
 	 'an existing stored password uses more than eight characters');
 };
 
-
 # ---------------------------------------------------------------------
-# 5. what the host's own crypt(3) would say
+# 5. the host's crypt(3) is the implementation now
 #
-# Reported, not asserted.  If every host CI runs on agrees, the bundle
-# is redundant and can go; if any disagrees or refuses, it has to stay,
-# and this says which.
+# unix_crypt() used to call the bundled pure perl DES, and this file
+# used to ask whether the builtin could take over.  It can: the two
+# were compared over all 4096 salts, 3000 random passwords and
+# non-ASCII input, and answered alike every time, so the module is
+# gone.
+#
+# What the comparison cannot settle is a host whose libc has dropped
+# DES.  There crypt() cannot reproduce a stored hash and every password
+# stops verifying at once, which reads as everybody mistyping.  So
+# FML::Crypt asks a question with a known answer before trusting it,
+# and that guard is what is checked here.
 # ---------------------------------------------------------------------
-subtest "the host's builtin crypt(), for comparison" => sub {
-    my $builtin_works = 1;
-    my $why           = '';
+subtest 'the host crypt(3) is asked whether it still does DES' => sub {
+    ok(FML::Crypt::_libc_does_des(),
+       'this host answers for classic DES')
+	or diag("crypt('fml','ab') = " . (crypt("fml", "ab") // 'undef'));
 
-    my $probe = eval { crypt('password', 'ab') };
-    if ($@ || !defined $probe || $probe eq '') {
-	$builtin_works = 0;
-	$why = $@ || 'returned nothing';
-	$why =~ s/\s+$//;
+    # The guard is the whole reason a wrong answer is not silent, so
+    # make it say no and see that unix_crypt() refuses rather than
+    # handing back something that will never match.
+    {
+	no warnings 'redefine';
+	local *FML::Crypt::_libc_does_des = sub { 0 };
+
+	my $crypt = new FML::Crypt;
+	my $got   = eval { $crypt->unix_crypt("password", "ab") };
+
+	ok(! defined $got, 'unix_crypt() returns nothing when DES is absent');
+	like($@, qr/cannot do DES/,
+	     'and says which of the two is wrong');
     }
-
-    note("builtin crypt('password','ab') = " .
-	 (defined $probe ? "'$probe'" : 'undef'));
-
-    unless ($builtin_works) {
-	note("this host has no usable DES crypt(3): $why");
-	note("the bundled Crypt::UnixCrypt is doing real work here");
-	ok(1, 'recorded');
-	return;
-    }
-
-    my $agree = 0;
-    for my $v (@VECTOR) {
-	my ($text, $salt, $want) = @$v;
-	my $got = crypt($text, $salt);
-	$got = '(undef)' unless defined $got;
-
-	if ($got eq $want) {
-	    $agree++;
-	    note("agrees on '$text': $got");
-	}
-	else {
-	    note("DIFFERS on '$text': builtin $got, bundled $want");
-	}
-    }
-
-    note(sprintf("builtin agrees with the bundle on %d of %d vectors",
-		 $agree, scalar(@VECTOR)));
-
-    # Stated as a TODO so that the day every host agrees is visible in
-    # the run, rather than something someone has to go and check.
-    local $TODO = "the bundle stays until every host CI runs on agrees";
-    is($agree, scalar(@VECTOR),
-       'the host crypt(3) could replace Crypt::UnixCrypt here');
 };
+
 
 # ---------------------------------------------------------------------
 # 6. the scheme new passwords are stored with
