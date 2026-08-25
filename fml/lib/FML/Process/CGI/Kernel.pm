@@ -130,10 +130,25 @@ sub _set_charset
 
     if ($charset) {
 	$curproc->langinfo_set_charset("template_file", $charset);
+
+	# XXX prepare() asks for the "cgi" category a few lines later,
+	# XXX and nothing ever gave that category a language:
+	# XXX langinfo_set_language_hint() was only ever called with
+	# XXX 'reply_message' and 'template_file'.  So the language the
+	# XXX browser asked for stopped here, every page went out
+	# XXX labelled $cgi_default_charset -- us-ascii -- while the body
+	# XXX beneath it is euc-jp, and $cgi_charset_ja and
+	# XXX $cgi_charset_en were never read by anything.  This is the
+	# XXX half of issue #8 that the warning hid.
+	my $code = $obj->message_charset_to_language($charset);
+	$curproc->langinfo_set_language_hint("cgi", $code);
     }
     else {
 	my $default = $obj->internal_default_charset();
 	$curproc->langinfo_set_charset("template_file", $default);
+
+	# XXX no language was asked for, so leave the "cgi" category
+	# XXX without a hint and let $cgi_default_charset answer for it.
     }
 }
 
