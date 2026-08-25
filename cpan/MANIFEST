@@ -13,9 +13,7 @@ MIME-Lite			3.038		perl itself
 MailTools			2.22		perl itself
 				Mail::Address, Mail::Header only
 
-Time-modules			2026.0330	unknown (your own risk)
-				ParseDate and the three it uses:
-				Timezone, JulianDay, DaysInMonth
+HTTP-Date			6.08		perl itself
 
 
 $FML: MANIFEST,v 1.20 2012/04/15 07:24:03 fukachan Exp $

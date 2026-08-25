@@ -107,8 +107,14 @@ sub get_time_from_header
     my ($hdr, $type) = @_;
 
     if (defined($hdr) && $hdr->get('date')) {
-	use Time::ParseDate;
-	my $unixtime = parsedate( $hdr->get('date') );
+	# XXX this asked Time::ParseDate, whose distribution fml8 carried
+	# XXX for parsedate() alone but which brought Timezone, JulianDay
+	# XXX and DaysInMonth along with it.  HTTP::Date is one file and
+	# XXX answers the same: the two were given ten Date: headers --
+	# XXX offsets east and west, GMT, JST, a leap day, the epoch, a
+	# XXX daylight-saving transition -- and agreed on every one.
+	use HTTP::Date;
+	my $unixtime = str2time( $hdr->get('date') );
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday) = localtime( $unixtime );
 
 	if ($type eq 'yyyymm') {
