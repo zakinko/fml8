@@ -47,7 +47,6 @@ _new_doc:
 	-fml/utils/bin/pm2txt.pl img/lib  Documentation/en/modules
 
 _html:
-	@ (cd cpan/dist/;   make html)
 	@ (cd img/dist/;    make html)
 
 ja.doc:
