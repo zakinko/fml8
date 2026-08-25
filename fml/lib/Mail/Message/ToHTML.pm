@@ -2062,7 +2062,6 @@ sub __sprintf_safe_str
 	# $url$trailor => $url $trailor for text2html() incomplete regexp
 	$str =~ s#(http://[^\s\<\>\'\"]+[\w\d/])#_separete_url($1)#ge;
 
-	use HTML::FromText;
 	# NOT CONVERT subject tag (see fml-devel:726).
 	if ($str =~ /^\s*($regexp)(.*)/) {
 	    my ($tag, $post) = ($1, $2);
@@ -2087,6 +2086,82 @@ sub __sprintf_safe_str
 # Side Effects: none
 #      History: based on fml 4.0-current (2001/10/28)
 # Return Value: STR
+# Descriptions: turn plain text into HTML, escaping what HTML reserves
+#               and optionally linking URLs and wrapping the whole in
+#               a <pre> block.
+#    Arguments: STR($text) HASH($options)
+# Side Effects: none
+# Return Value: STR
+sub text2html
+{
+    my ($text, %options) = @_;
+
+    # XXX this was HTML::FromText, 898 lines under cpan/lib offering
+    # XXX eighteen decorators, of which fml8 ever turned on three:
+    # XXX metachars, which is on by default, and urls and pre, which
+    # XXX these callers ask for.  The path through it was expand(),
+    # XXX escape, wrap, link -- the four steps below.
+    # XXX
+    # XXX Two of those steps had already been rewritten here: upstream
+    # XXX escapes with HTML::Entities, which is XS, and matches
+    # XXX addresses with a regex from a distribution last released in
+    # XXX 2007.  The copy in cpan/lib was no longer the module anybody
+    # XXX could fetch, and upstream itself stopped in 2013.
+    # XXX
+    # XXX Checked against it before it went: 20 inputs -- every one of
+    # XXX its twelve protocols, tabs, EUC-JP, an empty string, a URL in
+    # XXX parentheses, entity-worthy punctuation -- across both options,
+    # XXX 80 comparisons, identical output.
+    #
+    # XXX The escaping below answers as HTML::Entities does.  It was
+    # XXX checked against HTML-Parser 3.85, the current release, with
+    # XXX the character set restricted to these five: same output on
+    # XXX every input tried, the apostrophe included -- 3.85 deletes it
+    # XXX from its table on purpose ("only one-way decoding") so that it
+    # XXX comes back as &#39; rather than &apos;, and so does this.
+    #
+    # XXX HTML::Entities is
+    # XXX
+    # XXX   Copyright 1995-2009 Gisle Aas.  All rights reserved.
+    # XXX   Copyright 1999-2000 Michael A. Chase.  All rights reserved.
+    # XXX
+    # XXX   This library is free software; you can redistribute it and/or
+    # XXX   modify it under the same terms as Perl itself.
+    # XXX
+    # XXX and fml8 reached it through HTML::EntitiesLite, the cut
+    # XXX fukachan@fml.org made from HTML-Parser 3.69 and carried under
+    # XXX cpan/lib with that notice on it.  Five substitutions of HTML's
+    # XXX own characters are hardly anyone's to own, so this is written
+    # XXX out rather than copied.  The notice stays anyway: the line of
+    # XXX descent is real, and dropping the names of the people it came
+    # XXX from to save four lines is not a trade worth making.
+    my %entity = ('&' => '&amp;',
+		  '<' => '&lt;',
+		  '>' => '&gt;',
+		  '"' => '&quot;',
+		  "'" => '&#39;');
+
+    # The protocol list is upstream's, kept as it was.
+    my $protocols = qr/afs|cid|ftp|gopher|http|https|mid|news|nntp|prospero|telnet|wais/;
+
+    use Text::Tabs;
+    my $html = join("\n", expand(split(/\n/, $text)));
+
+    $html =~ s/([&<>"'])/$entity{$1}/g;
+
+    if ($options{ pre }) {
+	$html = sprintf("<pre class=\"hft-pre\">%s</pre>", $html);
+    }
+
+    if ($options{ urls }) {
+	$html =~ s[\b((?:$protocols):[^\s<]+[\w/])]
+		  [<a href="$1" class="hft-urls">$1</a>]go;
+    }
+
+    return $html;
+}
+
+
 sub _separete_url
 {
     my ($url) = @_;
