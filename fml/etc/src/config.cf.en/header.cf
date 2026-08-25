@@ -128,6 +128,13 @@ article_header_list_help	= $mail_header_default_list_help
 article_header_list_id		= $mail_header_default_list_id
 
 
+# Descriptions: list-archive of article header.
+#      History:
+#        Value: STR
+#     Examples: <${html_archive_url}>
+article_header_list_archive	= $mail_header_default_list_archive
+
+
 # Descriptions: list-owner of article header.
 #      History: none
 #        Value: STR
@@ -209,6 +216,15 @@ mail_header_default_x_ml_name		= $ml_name
 #        Value: STR
 #     Examples: $ml_name ML <$ml_name.$ml_domain>
 mail_header_default_list_id		= $ml_name ML <$ml_name.$ml_domain>
+
+
+# Descriptions: list-archive of mail header.
+#               RFC 2369 defines List-Archive; fml8 did not emit it.
+#               Empty unless the ML has a web archive, and an empty
+#               value means the field is not written at all.
+#        Value: STR
+#     Examples: <${html_archive_url}>
+mail_header_default_list_archive	= 
 
 
 # Descriptions: default list-owner header field.

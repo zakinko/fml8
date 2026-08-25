@@ -356,32 +356,60 @@ sub add_rfc2369
     my $ml_name    = $config->{ ml_name }    || '';
     my $ml_domain  = $config->{ ml_domain }  || '';
     my $post       = $config->{ article_post_address } || '';
-    my $_contact   = "contact maintainer <$maintainer>";
-    my $default    = $maintainer  ? $_contact          : 'unavailable';
+    my $archive    = $config->{ "${hdrtype}_list_archive" } ||
+		     $config->{ html_archive_url } || '';
+
+    # XXX RFC 2369 section 2 tells a client to ignore any of these fields
+    # XXX whose content does not begin with '<':
+    # XXX
+    # XXX   "if the content of the field ... begins with any character
+    # XXX    other than the opening angle bracket '<', the field SHOULD
+    # XXX    be ignored."
+    # XXX
+    # XXX so the strings this used to fall back to -- 'unavailable',
+    # XXX 'maintainer', and "contact maintainer <addr>", which puts a
+    # XXX comment before the bracket -- were all thrown away by the
+    # XXX reader.  A field nobody reads is worse than no field: it looks
+    # XXX like the list said something.
+    # XXX
+    # XXX So say nothing where there is nothing to say, and use the one
+    # XXX form the RFC does define for "you cannot post here":
+    # XXX
+    # XXX   List-Post: NO (posting not allowed on this list)
+    my $_contact   = $maintainer ? "<mailto:$maintainer>" : '';
+    my $default    = $_contact;
     my $list_id    = $_list_id || "$ml_name ML <$ml_name.$ml_domain>";
-    my $list_owner = $maintainer  ? $_list_owner       : 'maintainer';
-    my $list_post  = $post        ? $_list_post        : 'unavailable';
+    my $list_owner = $_list_owner || $_contact;
+    my $list_post  = $post ? $_list_post : 'NO (posting not allowed on this list)';
     my $list_help  = $use_command ? $_list_help        : $default;
     my $list_subs  = $use_command ? $_list_subscribe   : $default;
     my $list_unsub = $use_command ? $_list_unsubscribe : $default;
+    my $list_arch  = $archive ? sprintf("<%s>", $archive) : '';
 
     # See RFC2369 for more details
+    # XXX An empty value means "we have nothing to put here", and RFC 2369
+    # XXX section 3 says there MUST be no more than one of each field --
+    # XXX it does not ask for a field with nothing in it.  So skip them.
+    my @field = (
+		 [ 'List-Id',          $list_id    ],
+		 [ 'List-Owner',       $list_owner ],
+		 [ 'List-Post',        $list_post  ],
+		 [ 'List-Help',        $list_help  ],
+		 [ 'List-Subscribe',   $list_subs  ],
+		 [ 'List-Unsubscribe', $list_unsub ],
+		 [ 'List-Archive',     $list_arch  ],
+		 );
+
     if ($object_type eq 'MIME::Lite') {
 	my $msg = $rw_args->{ message };
-	$msg->attr('List-ID'          => $list_id);
-	$msg->attr('List-Owner'       => $list_owner);
-	$msg->attr('List-Post'        => $list_post);
-	$msg->attr('List-Help'        => $list_help);
-	$msg->attr('List-Subscribe'   => $list_subs);
-	$msg->attr('List-UnSubscribe' => $list_unsub);
+	for my $f (@field) {
+	    $msg->attr($f->[ 0 ] => $f->[ 1 ]) if $f->[ 1 ];
+	}
     }
     else {
-	$header->add('List-ID',          $list_id);
-	$header->add('List-Owner',       $list_owner);
-	$header->add('List-Post',        $list_post);
-	$header->add('List-Help',        $list_help);
-	$header->add('List-Subscribe',   $list_subs);
-	$header->add('List-UnSubscribe', $list_unsub);
+	for my $f (@field) {
+	    $header->add($f->[ 0 ], $f->[ 1 ]) if $f->[ 1 ];
+	}
     }
 }
 
