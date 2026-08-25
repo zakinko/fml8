@@ -7,11 +7,9 @@ Crypt-UnixCrypt			1.0		perl itself
 Email-Find			0.10		perl itself
 				Email::Find::addrspec only
 
-Exporter-Lite			0.08		perl itself
 
-
-HTML-CalendarMonthSimple	1.25		? (freesoftware, unlimited)
-HTML-FromText			2.05		perl itself
+HTML-CalendarMonthSimple	1.27		? (freesoftware, unlimited)
+HTML-FromText			2.07		perl itself
 
 Jcode				2.07		perl itself
 
