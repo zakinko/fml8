@@ -21,17 +21,65 @@ tmp_file=$tmp_dir/tmpfile.$$
 fml_sgml_dir=$fml_dir/doc/share/sgml
 fml_catalog_path=$fml_sgml_dir/catalog
 sgmltoolslite_catalog_path=$gnu_dir/dist/sgmltools-lite/dsssl/sgmltools.cat
-pkg_catalog=/usr/pkg/etc/sgml/catalog
+# XXX The catalog used to be looked for at /usr/pkg/etc/sgml/catalog
+# XXX alone, which is pkgsrc's prefix.  On anything else -- a Debian
+# XXX box, a Mac, a Linux container -- there is nothing there, so the
+# XXX catalog list silently contained one path that does not exist.
+pkg_catalog=""
+for d in /usr/pkg/etc/sgml /usr/local/etc/sgml /etc/sgml /opt/local/etc/sgml
+do
+   if [ -f $d/catalog ]; then
+	pkg_catalog=$d/catalog
+	break
+   fi
+done
+
 sgml_catalog_files=$SGML_CATALOG_FILES:$pkg_catalog:$sgmltoolslite_catalog_path
 sgml_search_path=$SGML_SEARCH_PATH:$fml_catalog_path:$cur_dir;
 
-for path in /usr/pkg/bin/openjade /usr/pkg/bin/lynx /usr/pkg/bin/w3m
+# XXX This used to test $openjade and friends by absolute
+# XXX path, so the documentation could only be built on a machine with
+# XXX pkgsrc.  Everywhere else it said
+# XXX
+# XXX     error: $openjade not found
+# XXX
+# XXX which reads as "openjade is missing" even when it is installed,
+# XXX somewhere else.  Ask PATH, and say what to install when the
+# XXX answer is no.
+missing=""
+for cmd in openjade lynx w3m
 do
-   if [ ! -x $path ];then
-	echo "error: $path not found"
-	exit 1
+   eval "path_$cmd=\"\""
+   for dir in `echo $PATH | tr ':' ' '`
+   do
+	if [ -x $dir/$cmd ]; then
+	   eval "path_$cmd=$dir/$cmd"
+	   break
+	fi
+   done
+
+   eval "found=\$path_$cmd"
+   if [ X"$found" = X ]; then
+	missing="$missing $cmd"
    fi
 done
+
+if [ X"$missing" != X ]; then
+   echo "error: not in PATH:$missing"
+   echo ""
+   echo "the documentation is built with openjade (an SGML/DSSSL"
+   echo "processor) and rendered to text with lynx or w3m."
+   echo ""
+   echo "    pkgsrc        pkg_add openjade lynx w3m"
+   echo "    Debian        apt install openjade lynx w3m"
+   echo "    Homebrew      brew install openjade lynx w3m"
+   echo ""
+   exit 1
+fi
+
+openjade=$path_openjade
+lynx=$path_lynx
+w3m=$path_w3m
 
 #
 # getopts
@@ -80,7 +128,7 @@ if [ "X$mode" = "Xhtml" -o "X$mode" = "Xonehtml" ];then
 
    dsssl=$gnu_dir/dist/sgmltools-lite/dsssl/html.dsl
 
-   /usr/pkg/bin/openjade $common_options \
+   $openjade $common_options \
 	-t sgml \
 	-c $fml_catalog_path  \
 	-d $dsssl#$mode \
@@ -91,24 +139,24 @@ elif [ "X$mode" = "Xlynx" ];then
 
    dsssl=$gnu_dir/dist/sgmltools-lite/dsssl/ascii-lynx.dsl
 
-   /usr/pkg/bin/openjade $common_options \
+   $openjade $common_options \
 	-t sgml \
 	-d $dsssl#html  \
 	> $out_html < $source
 
-   /usr/pkg/bin/lynx -dump -nolist -force_html $out_html > $out_txt
+   $lynx -dump -nolist -force_html $out_html > $out_txt
    mv $out_html $tmp_dir
 
 elif [ "X$mode" = "Xw3m" ];then
 
    dsssl=$gnu_dir/dist/sgmltools-lite/dsssl/ascii-w3m.dsl
 
-   /usr/pkg/bin/openjade $common_options \
+   $openjade $common_options \
 	-t sgml \
 	-d $dsssl#html  \
 	> $out_html < $source
 
-   /usr/pkg/bin/w3m -T text/html -dump $out_html > $out_txt
+   $w3m -T text/html -dump $out_html > $out_txt
    mv $out_html $tmp_dir
 
 else

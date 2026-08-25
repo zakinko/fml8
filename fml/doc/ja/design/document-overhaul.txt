@@ -1,0 +1,151 @@
+		ja/tutorial の overhaul をどこまでやるか
+
+			issue #1 への提案
+
+
+1. 問い
+
+issue #1 は本文が一行である。
+
+	overhaul mainly fml8/fml/doc/ja/.
+
+何が困っているのかが書かれていないので、まず測った。以下は実測と、
+そこから引ける範囲の案である。決めるのは深町さんである。
+
+
+2. 実測
+
+2.1 大きさと年齢
+
+	fml/doc/ja		197 ファイル
+	  tutorial		162  (うち sgml 159)
+	  todo			 17
+	  CHANGES / LOG		  3
+
+tutorial の 144 ファイルは 2018-09-17 に一斉に触られているが、
+commit の件名はすべて
+
+	reviewed. alignment cosmetics.
+
+で、中身は整形である。実際の内容は 2001〜2008 年のものが大半で、
+2008 年以降に内容が変わったファイルは 18 件しかない。
+
+2.2 指している先が消えているもの
+
+tutorial 162 ファイルを走査し、fml/lib と img/lib に実在しない
+モジュール名を探した。
+
+	17 種 / 21 箇所
+
+内訳の例。
+
+	FML::Process::Calender		devel/create_program.sgml
+					(Calendar の綴り違い)
+	FML::Process::Flow::ProcessStart	devel/create_program.sgml
+	FML::CGI::Menu			internals/cgi.examples.sgml
+	FML::CGI::Menu::Admin		internals/cgi.sgml
+	FML::CGI::Admin::Main		internals/cgi.sgml
+	FML::CGI::Admin::User		internals/cgi.sgml
+	FML::Process::Delivery		internals/lock.sgml
+	FML::Process::Mead		internals/bootloader.sgml
+	FML::Send			internals/lock.sgml
+
+つまり CGI の章と lock の章が、いま存在しないクラス構成を説明して
+いる。読んだ人がその名前を探しても見つからない。
+
+設定変数についても同じ走査をしたが、コード例の中の $curproc や
+$config、フックの名前が混ざるため、数として使えるものにならなかった。
+ここは目で見るしかない。
+
+2.3 生成できるか
+
+fml/doc/ja/Makefile から tutorial/Makefile、Makefile.template を経て
+fml/utils/bin/sgml_compile.sh に至る。そのシェルスクリプトが最初に
+やるのは、これである。
+
+	for path in /usr/pkg/bin/openjade /usr/pkg/bin/lynx /usr/pkg/bin/w3m
+	do
+	   if [ ! -x $path ];then
+		echo "error: $path not found"
+		exit 1
+	   fi
+	done
+
+/usr/pkg は pkgsrc の接頭辞で、パスが直接書かれている。手元の環境に
+openjade も lynx も w3m も無いので、この文書はいま生成できない。
+生成物が置かれるはずの Documentation/ja には 00_README と images しか
+無く、本文は一つも入っていない。
+
+つまり「文書が古い」の前に「文書が組み上がらない」がある。
+
+2.4 他の branch との重なり
+
+	rename-namespace	doc/ja の 19 ファイルを書き換える
+				(Mail::Message -> FML::Message)
+	unicode-phase1-sources	doc/ja の 175 ファイルを UTF-8 にする
+
+overhaul を先にやると、この二つと衝突する。
+
+
+3. 範囲の案
+
+三つに分ける。上から順に、後のものは前のものが済んでいないと意味が
+薄い。
+
+3.1 組み上がるようにする  (小さい / 機械的)
+
+	・sgml_compile.sh の /usr/pkg/bin 決め打ちをやめ、PATH から探す
+	・openjade / lynx / w3m が無いときに、何が要るかを言って止まる
+	・CI で「文書が組み上がること」だけを見るジョブを足す
+
+これをやらないと、以下の作業が正しくなったかどうかを確かめられない。
+逆にこれだけでも、文書を直す人が結果を見られるようになる。
+
+3.2 嘘を消す  (中くらい / 機械で見つけられる)
+
+	・実在しないモジュール名 17 種 / 21 箇所を直す
+	・CGI の章と lock の章は、指しているクラス構成が現在と違うので
+	  書き直しになる
+	・「実在しないモジュール名を書いたら CI が落ちる」ようにする。
+	  .github の module-paths ジョブは "X/Y.pm" の形しか見ないので、
+	  クラス名を見る検査を足す
+
+3.3 中身を今に合わせる  (大きい / 判断が要る)
+
+ここからは機械では決められない。何を書き直すかの一覧を作るところから
+になる。目についたものを挙げる。
+
+	・fml8 が実際に持っていない機能の説明が残っていないか
+	  (fml4 にあって fml8 に無いコマンドが 29 あることが
+	   fml4-parity で分かっている)
+	・2001 年当時の前提で書かれた章
+	  (メールの受け取り方、MTA の設定、文字コードの扱い)
+	・CGI の章。CGI.pm が core を離れた件、HTML の書き方
+	・パスワードの章。PBKDF2 に変わるなら書き直しが要る
+	・DMARC と SPF と DKIM。当時は無かった話が、いまは
+	  「届くかどうか」を決めている
+
+
+4. 順序の提案
+
+	1. rename-namespace と unicode-phase1-sources を先に入れる
+	   (doc/ja の 175 ファイルを触るので、これらが後から来ると
+	    overhaul の差分が読めなくなる)
+	2. 3.1 組み上がるようにする
+	3. 3.2 嘘を消す
+	4. 3.3 は範囲を決めてから
+
+1 を先にする理由は差分の読みやすさだけで、技術的な依存ではない。
+
+
+5. 決めてほしいこと
+
+	・3.3 をやるのか。やるならどの章から
+	・SGML を続けるのか。openjade は 2002 年で止まっている
+	  (続けるなら 3.1 で pkgsrc 依存を切る話になり、
+	   やめるなら形式の移行が別の作業として立つ)
+	・英語版 (fml/doc/en) をどうするか。いま 162 対 162 ではなく、
+	  ja にしかない章と en にしかない章がある
+
+
+$FML$
