@@ -67,6 +67,19 @@ my @CATEGORY = qw(cgi reply_message template_file log_file
 }
 
 
+# The same process, but with an Accept-Language: header on it.  That is
+# the branch langinfo_get_charset() takes first, and it reads the
+# category-$language configuration key rather than asking
+# Mail::Message::Charset.
+{
+    package t::AcceptJa;
+    use vars qw(@ISA);
+    @ISA = qw(t::Curproc);
+
+    sub langinfo_get_accept_language_list { return [ 'ja' ] }
+}
+
+
 # Descriptions: run $code with warnings collected rather than printed.
 #    Arguments: CODE($code)
 # Side Effects: none
@@ -288,6 +301,81 @@ subtest 'an unknown language hint falls back rather than emptying' => sub {
     isnt($charset, '', 'the charset is not empty');
     is($charset, 'euc-jp', 'it is the configured default');
     is(scalar(@$warn), 0, 'nothing warned') or diag("warnings: @$warn");
+};
+
+
+
+# ---------------------------------------------------------------------
+# 10. the two branches disagree with each other
+#
+# langinfo_get_charset() reaches its answer two ways and they do not
+# agree for the same language.
+#
+# Accept-Language: goes through the category's own configuration key,
+# "${category}_charset_${lang}", so 'ja' for the cgi category is
+# cgi_charset_ja, which fml/etc/src/config.cf.en/cgi.cf sets to euc-jp.
+#
+# The language_hint branch, taken when there is no Accept-Language, goes
+# through Mail::Message::Charset::language_to_message_charset() instead,
+# which knows nothing about categories and answers iso-2022-jp for 'ja'.
+#
+# So the same list, asked for the same language, gets euc-jp down one
+# path and iso-2022-jp down the other.
+#
+# This is recorded rather than repaired, and the reason is the reply
+# side.  There is no reply_message_charset_ja key -- the only
+# "${category}_charset_ja" keys that exist are cgi, log_file,
+# html_archive and report_mail -- so language_to_message_charset() is
+# the sole reason a Japanese reply mail goes out as iso-2022-jp.  Moving
+# the hint branch onto configuration keys would therefore change what
+# fml8 puts on the wire, which is a decision rather than a repair.
+# ---------------------------------------------------------------------
+subtest 'the hint branch and the Accept-Language branch disagree' => sub {
+    my %config = (
+	cgi_default_charset           => 'us-ascii',
+	cgi_charset_ja                => 'euc-jp',
+	cgi_charset_en                => 'us-ascii',
+	reply_message_default_charset => 'us-ascii',
+    );
+
+    # The configuration really does say what this claims.
+    is($config{ cgi_charset_ja }, 'euc-jp',
+       'cgi_charset_ja is euc-jp, as cgi.cf sets it');
+
+    # 1. the hint branch.
+    my $pcb = FML::PCB->new();
+    $pcb->set("language_hint", "cgi", "ja");
+
+    my ($by_hint, $warn_hint) = warnings_from(sub {
+	t::Curproc->new(\%config, $pcb)->langinfo_get_charset('cgi') });
+
+    is($by_hint, 'iso-2022-jp', 'a language hint of ja gives iso-2022-jp');
+    is(scalar(@$warn_hint), 0, 'and warns about nothing');
+
+    # 2. the Accept-Language branch, same language, same category.
+    my $pcb2 = FML::PCB->new();
+    my ($by_accept, $warn_accept) = warnings_from(sub {
+	t::AcceptJa->new(\%config, $pcb2)->langinfo_get_charset('cgi') });
+
+    is($by_accept, 'euc-jp', 'Accept-Language: ja gives cgi_charset_ja');
+    is(scalar(@$warn_accept), 0, 'and warns about nothing');
+
+    # 3. which is the point.
+    isnt($by_hint, $by_accept,
+	 'the same language gives a different charset down each path');
+
+    # The reply side is why the hint branch cannot simply be moved onto
+    # the configuration: there is no key for it to read.
+    my $pcb3 = FML::PCB->new();
+    $pcb3->set("language_hint", "reply_message", "ja");
+
+    my ($reply) = warnings_from(sub {
+	t::Curproc->new(\%config, $pcb3)->langinfo_get_charset('reply_message') });
+
+    is($reply, 'iso-2022-jp',
+       'a Japanese reply is iso-2022-jp, on that branch alone');
+    is($config{ reply_message_charset_ja }, undef,
+       'and there is no reply_message_charset_ja to read instead');
 };
 
 done_testing();
