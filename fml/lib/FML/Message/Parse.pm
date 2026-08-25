@@ -8,42 +8,42 @@
 #
 
 
-package Mail::Message::Parse;
+package FML::Message::Parse;
 
 use strict;
 use vars qw(@ISA);
 use Carp;
 
-use Mail::Message;
-@ISA = qw(Mail::Message);
+use FML::Message;
+@ISA = qw(FML::Message);
 
 
 # Descriptions: fake constructor.
-#               run Mail::Message->parse($args) in fact.
+#               run FML::Message->parse($args) in fact.
 #    Arguments: OBJ($self) HASH_REF($args)
 # Side Effects: none
 # Return Value: OBJ
 sub new
 {
     my ($self, $args) = @_;
-    return Mail::Message->parse($args);
+    return FML::Message->parse($args);
 }
 
 
 =head1 NAME
 
-Mail::Message::Parse - parse a mail message.
+FML::Message::Parse - parse a mail message.
 
 =head1 SYNOPSIS
 
-    use Mail::Message::Parse;
-    my $fh = new Mail::Message::Parse $args;
+    use FML::Message::Parse;
+    my $fh = new FML::Message::Parse $args;
 
-where C<$args> is same as one of C<Mail::Message>'s C<parse()>.
+where C<$args> is same as one of C<FML::Message>'s C<parse()>.
 
 =head1 DESCRIPTION
 
-just a wrapper for C<Mail::Message> parser function.
+just a wrapper for C<FML::Message> parser function.
 
 =head1 CODING STYLE
 
@@ -62,7 +62,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Parse first appeared in fml8 mailing list driver package.
+FML::Message::Parse first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

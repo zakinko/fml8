@@ -26,11 +26,11 @@ BEGIN {
     }
 }
 
-use Mail::Message::Encode;
-use Mail::Message::Charset;
+use FML::Message::Encode;
+use FML::Message::Charset;
 
-my $enc = new Mail::Message::Encode;
-my $cs  = new Mail::Message::Charset;
+my $enc = new FML::Message::Encode;
+my $cs  = new FML::Message::Charset;
 
 # "日本語" in each encoding, as octets.
 my %JP = (
@@ -74,7 +74,7 @@ subtest 'conversion out of the internal charset' => sub {
     # but can never emit it.
     my $out = $enc->convert($JP{euc}, 'utf8');
     {
-	local $TODO = 'Mail::Message::Encode cannot emit UTF-8 yet';
+	local $TODO = 'FML::Message::Encode cannot emit UTF-8 yet';
 	is($out, $JP{utf8}, 'euc-jp -> UTF-8');
     }
 };
@@ -205,7 +205,7 @@ subtest 'non-Japanese octets are not mistaken for Japanese' => sub {
 # default and the override.
 # ---------------------------------------------------------------------
 subtest 'external form charset is the default unless enforced' => sub {
-    use Mail::Message::Subject;
+    use FML::Message::Subject;
 
     my $mime = "=?UTF-8?B?W2VsZW5hOjAwMDAxXSDml6XmnKzoqp4=?=";  # [elena:00001] 日本語
     my $tag  = "[elena:%05d]";
@@ -219,10 +219,10 @@ subtest 'external form charset is the default unless enforced' => sub {
 	return $out;
     };
 
-    my $default = $strip->(new Mail::Message::Subject $mime);
+    my $default = $strip->(new FML::Message::Subject $mime);
     is($default, $JP{euc}, 'default is still EUC-JP (unchanged behaviour)');
 
-    my $sbj = new Mail::Message::Subject $mime;
+    my $sbj = new FML::Message::Subject $mime;
     $sbj->set_mime_charset('UTF-8');
     is($strip->($sbj), $JP{utf8}, 'set_mime_charset("UTF-8") is honoured');
 
@@ -235,13 +235,13 @@ subtest 'external form charset is the default unless enforced' => sub {
 # 8. guess_encoding()
 #
 # This used to call Unicode::Japanese, which was the only reason
-# Mail::Message::Encode::Perl needed anything outside the perl core.
+# FML::Message::Encode::Perl needed anything outside the perl core.
 # Encode::Guess replaces it and must agree on every case, and must say
 # "unknown" rather than inventing an answer when it cannot decide.
 # ---------------------------------------------------------------------
 subtest 'guess_encoding() needs nothing outside the core' => sub {
-    use Mail::Message::Encode::Perl;
-    my $e = new Mail::Message::Encode::Perl;
+    use FML::Message::Encode::Perl;
+    my $e = new FML::Message::Encode::Perl;
 
     is($e->guess_encoding($JP{utf8}), 'utf8',  'UTF-8');
     is($e->guess_encoding($JP{euc}),  'euc',   'EUC-JP');
@@ -254,12 +254,12 @@ subtest 'guess_encoding() needs nothing outside the core' => sub {
     is($e->guess_encoding("\xff\xfe\x00\x01"), 'unknown',
        'undecidable input is reported as unknown');
 
-    # %INC cannot answer this: the old Mail::Message::Encode is loaded by
+    # %INC cannot answer this: the old FML::Message::Encode is loaded by
     # other tests in this file and drags Jcode, and therefore
     # Unicode::Japanese, in behind it.  Ask the source instead.
     my $src = '';
     for my $dir (@INC) {
-	my $path = "$dir/Mail/Message/Encode/Perl.pm";
+	my $path = "$dir/FML/Message/Encode/Perl.pm";
 	next unless -f $path;
 	open(my $fh, '<', $path) or next;
 	local $/ = undef;
@@ -273,7 +273,7 @@ subtest 'guess_encoding() needs nothing outside the core' => sub {
     # mentions the module by name on purpose. Only look at code.
     my $code = join("\n", grep { !/^\s*#/ } split(/\n/, $src));
     unlike($code, qr/Unicode::Japanese/,
-	   'Mail::Message::Encode::Perl no longer uses Unicode::Japanese');
+	   'FML::Message::Encode::Perl no longer uses Unicode::Japanese');
 };
 
 done_testing();

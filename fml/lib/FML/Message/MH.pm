@@ -5,17 +5,17 @@
 # $FML: MH.pm,v 1.19 2004/07/23 13:16:45 fukachan Exp $
 #
 
-package Mail::Message::MH;
+package FML::Message::MH;
 use strict;
 
 =head1 NAME
 
-Mail::Message::MH - utilities to handle MH style format.
+FML::Message::MH - utilities to handle MH style format.
 
 =head1 SYNOPSIS
 
-   use Mail::Message::MH;
-   my $mh = new Mail::Message::MH;
+   use FML::Message::MH;
+   my $mh = new FML::Message::MH;
 
 =head1 DESCRIPTION
 
@@ -135,7 +135,7 @@ sub _expand_range
 #
 if ($0 eq __FILE__) {
     eval q{
-	my $mh = new Mail::Message::MH;
+	my $mh = new FML::Message::MH;
 	for (qw(1,2,3 4,2,1 1,10,last:20 100 100-110 first-110 190-last first
 	      first:10 last last:10)) {
 	    print "\n[$_] => ";
@@ -163,7 +163,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::MH first appeared in fml8 mailing list driver package.
+FML::Message::MH first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

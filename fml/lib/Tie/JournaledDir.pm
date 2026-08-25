@@ -155,8 +155,8 @@ sub _file_name
 	$fn = $unit * int(time / $unit) - ($i * $unit);
     }
     elsif ($unit eq 'day') {
-	use Mail::Message::Date;
-	my $date = new Mail::Message::Date time;
+	use FML::Message::Date;
+	my $date = new FML::Message::Date time;
 	$fn = $date->YYYYMMDD( time - $i * 24 * 3600 );
     }
     else {

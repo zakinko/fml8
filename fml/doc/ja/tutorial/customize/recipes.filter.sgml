@@ -112,7 +112,7 @@ multipart/*	!text/plain	reject
 <para>
 &fml8; は、
 あらかじめ入力されたメッセージを解析し、
-メモリ上に鎖状の Mail::Message オブジェクトの形で持っています。
+メモリ上に鎖状の FML::Message オブジェクトの形で持っています。
 そこで、
 MIME/Multipart 
 の各部分のヘッダを取り出して、正規表現で順に確認すればよいだけです。

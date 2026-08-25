@@ -148,15 +148,15 @@ sub _expand_date_list
     my ($self, $first, $last) = @_;
     my $r = [];
 
-    # XXX was Time::ParseDate; see Mail::Message::Utils for why this
+    # XXX was Time::ParseDate; see FML::Message::Utils for why this
     # XXX is HTTP::Date now.
     use HTTP::Date;
     my $first_sec = str2time($first);
     my $last_sec  = str2time($last);
 
     for (my $sec = $first_sec; $sec <= $last_sec; $sec += 86400) {
-	use Mail::Message::Date;
-	my $date = new Mail::Message::Date $sec;
+	use FML::Message::Date;
+	my $date = new FML::Message::Date $sec;
 	my $yyyy = $date->YYYYxMMxDD($sec);
 	push(@$r, $yyyy);
     }

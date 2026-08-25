@@ -90,10 +90,10 @@ sub rewrite_article_subject_tag_obsolete
     $self->_cutoff_reply(\$subject);
 
     # XXX encode_mime_string() lives in Encode::Obsolete now, not in
-    # XXX Mail::Message::Encode, so this used to die with "Can't locate
+    # XXX FML::Message::Encode, so this used to die with "Can't locate
     # XXX object method".
-    use Mail::Message::Encode::Obsolete;
-    my $obj = new Mail::Message::Encode::Obsolete;
+    use FML::Message::Encode::Obsolete;
+    my $obj = new FML::Message::Encode::Obsolete;
 
     # add(prepend) the rewrited tag with mime encoding.
     # XXX $in_code is the charset the subject arrived in, and it is
@@ -138,8 +138,8 @@ sub decode
     }
 
     if ($subject =~ /=\?([-\w\d]+)\?/i) {
-	use Mail::Message::Charset;
-	my $mc    = new Mail::Message::Charset;
+	use FML::Message::Charset;
+	my $mc    = new FML::Message::Charset;
 	my $lang  = $mc->message_charset_to_language($1);
 	$in_code  = $mc->language_to_message_charset($lang)  || '';
 	$out_code = $mc->language_to_internal_charset($lang) || '';
@@ -150,10 +150,10 @@ sub decode
 
     # decode mime
     # XXX decode_mime_string() lives in Encode::Obsolete now, not in
-    # XXX Mail::Message::Encode, so this used to die with "Can't locate
+    # XXX FML::Message::Encode, so this used to die with "Can't locate
     # XXX object method" for every input, plain ASCII included.
-    use Mail::Message::Encode::Obsolete;
-    my $obj  = new Mail::Message::Encode::Obsolete;
+    use FML::Message::Encode::Obsolete;
+    my $obj  = new FML::Message::Encode::Obsolete;
     $subject = $obj->decode_mime_string($subject, $out_code);
 
     return ($subject, $tag, $in_code, $out_code);
@@ -250,15 +250,15 @@ sub is_reply
     #
     # XXX WE NEED $subject IS DECODED ALREADY.
     #
-    # XXX-TODO: Mail::Message::Subject class should provide this function ?
+    # XXX-TODO: FML::Message::Subject class should provide this function ?
     #
 
     return 1 if $subject =~ /^\s*Re:/io;
 
     # XXX-TODO: care for not Japanese string!
     eval q{
-	use Mail::Message::Language::Japanese::Subject;
-	my $sbj = new Mail::Message::Language::Japanese::Subject;
+	use FML::Message::Language::Japanese::Subject;
+	my $sbj = new FML::Message::Language::Japanese::Subject;
 	return 1 if $sbj->is_reply($subject);
     };
 
@@ -280,8 +280,8 @@ sub _cutoff_reply
     #
 
     # XXX-TODO: care for not Japanese string!
-    use Mail::Message::Language::Japanese::Subject;
-    my $obj = new Mail::Message::Language::Japanese::Subject;
+    use FML::Message::Language::Japanese::Subject;
+    my $obj = new FML::Message::Language::Japanese::Subject;
     $$r_subject = $obj->cutoff_reply_tag($$r_subject);
 }
 

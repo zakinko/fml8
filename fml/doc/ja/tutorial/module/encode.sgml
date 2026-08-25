@@ -4,13 +4,13 @@
 
 <chapter id="module.mail.message.encode">
 	<title>
-	Mail::Message::Encode クラス
+	FML::Message::Encode クラス
 	</title>
 
 
 <sect1 id="module.mail.message.encode.examplee">
 	<title>
-	[見本] Mail::Message::Encode の使い方
+	[見本] FML::Message::Encode の使い方
 	</title>
 
 <para>
@@ -23,12 +23,12 @@ fml-help ML's Count: 02012, 02013, 02016 など
 
    * fml 8.0 風の使い方 
 
-	use Mail::Message::Encode;
-	my $encode  = new Mail::Message::Encode;
+	use FML::Message::Encode;
+	my $encode  = new FML::Message::Encode;
 	my $str_euc = $encode->convert( $s, 'euc-jp' );
 	my $str_euc = $encode->convert( $s, 'euc-jp', 'iso-2022-jp' );
 
-	my $encode  = new Mail::Message::Encode;
+	my $encode  = new FML::Message::Encode;
 	my $status  = $encode->convert_str_ref( \$s, 'euc-jp' );
 	my $status  = $encode->convert_str_ref( \$s, 'euc-jp', 'jis' );
 
@@ -37,7 +37,7 @@ fml-help ML's Count: 02012, 02013, 02016 など
 
    * fml 4.0 互換風の使い方
 
-	ues Mail::Message::Encode qw(STR2EUC);
+	ues FML::Message::Encode qw(STR2EUC);
 	my $euc_s = STR2EUC( $s );
 </screen>
 
@@ -46,7 +46,7 @@ fml-help ML's Count: 02012, 02013, 02016 など
 
 <sect1 id="module.mail.message.encode.specification">
 	<title>
-	Mail::Message::Encode の仕様(あらすじ)
+	FML::Message::Encode の仕様(あらすじ)
 	</title>
 
 <para>
@@ -137,7 +137,7 @@ sub run_in_code
     my ($self, $proc, $s, $args, $out_code, $in_code) = @_;
     my $proc_status = undef;
 
-    my $obj         = new Mail::Message::Encode;
+    my $obj         = new FML::Message::Encode;
     my $conv_status = $obj->convert_str_ref(\$s, $out_code, $in_code);
 
     # XXX-TODO: validate $proc name regexp.

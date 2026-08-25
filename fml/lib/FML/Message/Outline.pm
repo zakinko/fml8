@@ -5,13 +5,13 @@
 # $FML: Outline.pm,v 1.1 2005/09/11 13:12:46 fukachan Exp $
 #
 
-package Mail::Message::Outline;
+package FML::Message::Outline;
 use strict;
-use Mail::Message::Language::Japanese::Outline;
+use FML::Message::Language::Japanese::Outline;
 
 =head1 NAME
 
-Mail::Message::Outline - handle outline or outline.
+FML::Message::Outline - handle outline or outline.
 
 =head1 SYNOPSIS
 
@@ -40,8 +40,8 @@ sub outline
     # 1. prepend subject.
     if ($is_hdr eq 'yes' && defined $header) {
 	my $subject = $header->get('subject') || '';
-	use Mail::Message::Subject;
-	my $subj = new Mail::Message::Subject $subject;
+	use FML::Message::Subject;
+	my $subj = new FML::Message::Subject $subject;
 	$subj->mime_header_decode();
 	$result .= $subj->as_external_form();
     }
@@ -111,8 +111,8 @@ sub _is_citation_or_signature
 {
     my ($self, $buf) = @_;
 
-    use Mail::Message::String;
-    my $string = new Mail::Message::String $buf;
+    use FML::Message::String;
+    my $string = new FML::Message::String $buf;
     $string->charcode_convert_to_internal_code();
     return 1 if $string->is_citation();
     return 1 if $string->is_signature();
@@ -177,7 +177,7 @@ sub has_closing_phrase
 	    $buf =~ s/[\s\n]*$//o;
 
 	    if ($buf) {
-		$string = new Mail::Message::String $buf;
+		$string = new FML::Message::String $buf;
 		$string->charcode_convert_to_internal_code();
 		$buf = $string->as_str();
 		if ($buf =~ /$regexp/) { return 1;}
@@ -233,7 +233,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Outline first appeared in fml8 mailing list driver package.
+FML::Message::Outline first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

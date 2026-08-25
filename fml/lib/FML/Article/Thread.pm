@@ -95,8 +95,8 @@ sub new
 	$tdb_args->{ id } = $max_id;
     }
 
-    use Mail::Message::Thread;
-    my $thread  = new Mail::Message::Thread $tdb_args;
+    use FML::Message::Thread;
+    my $thread  = new FML::Message::Thread $tdb_args;
     $me->{ _thread_object } = $thread;
 
     # initialize $article object.
@@ -113,7 +113,7 @@ sub new
 =head2 add_article($id, $msg)
 
 check the content of specified article $id to update UDB where $msg is
-a Mail::Message object.
+a FML::Message object.
 
 This routine is expected to be called within FML::Process::Distribute.
 So, $msg must be already defined.
@@ -162,8 +162,8 @@ sub check_if_article_is_reply_message
     
     # 1) get subject. mime-decode it if needed.
     my $subject = $header->get('subject');
-    use Mail::Message::Subject;
-    my $subj = new Mail::Message::Subject $subject;
+    use FML::Message::Subject;
+    my $subj = new FML::Message::Subject $subject;
     $subj->mime_header_decode();
     
     # 2) it looks the subject has a reply tag ?
@@ -278,7 +278,7 @@ sub check_thread_status
 }
 
 
-# Descriptions: parse article (file) $id and return Mail::Message object.
+# Descriptions: parse article (file) $id and return FML::Message object.
 #    Arguments: OBJ($self) NUM($id)
 # Side Effects: none
 # Return Value: OBJ
@@ -289,13 +289,13 @@ sub _init_message
     my $thread  = $self->{ _thread_object };
     my $article = $self->{ _article_object };
 
-    # parse article (file) and return Mail::Message object.
+    # parse article (file) and return FML::Message object.
     my $article_path = $article->filepath($id);
     use FileHandle;
     my $fh = new FileHandle $article_path;
     if (defined $fh) {
-	use Mail::Message;
-	return Mail::Message->parse(  { fd => $fh } );
+	use FML::Message;
+	return FML::Message->parse(  { fd => $fh } );
     }
 
     return undef;
@@ -348,8 +348,8 @@ sub _change_thread_status
     my $thread  = $self->{ _thread_object };
     my $article = $self->{ _article_object };
 
-    use Mail::Message::MH;
-    my $mh      = new Mail::Message::MH;
+    use FML::Message::MH;
+    my $mh      = new FML::Message::MH;
     my $range   = $thread_args->{ range } || 'last:10';
     my $head_id = $thread_args->{ last_id };
     my $id_list = $mh->expand($range, 1, $head_id);
@@ -529,8 +529,8 @@ sub _generate_summary
     use FileHandle;
     my $fh = new FileHandle $article_path;
     if (defined $fh) {
-	use Mail::Message;
-	my $msg = Mail::Message->parse(  { fd => $fh } );
+	use FML::Message;
+	my $msg = FML::Message->parse(  { fd => $fh } );
 	$buf = $msg->$fp();
 
 	# cache on.

@@ -7,7 +7,7 @@
 # $FML: Encode.pm,v 1.24 2011/08/25 00:39:58 fukachan Exp $
 #
 
-package Mail::Message::Encode;
+package FML::Message::Encode;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
@@ -27,16 +27,16 @@ use MIME::QuotedPrint;
 
 =head1 NAME
 
-Mail::Message::Encode - encode/decode/charset conversion routines.
+FML::Message::Encode - encode/decode/charset conversion routines.
 
 =head1 SYNOPSIS
 
-    use Mail::Message::Encode;
-    my $code = Mail::Message::Encode->detect_code($str);
+    use FML::Message::Encode;
+    my $code = FML::Message::Encode->detect_code($str);
 
 It is not recommended but if you use old style, import required function:
 
-    use Mail::Message::Encode qw(STR2EUC);
+    use FML::Message::Encode qw(STR2EUC);
     my $euc_string = STR2EUC($string);
 
 
@@ -129,7 +129,7 @@ sub detect_code
 	return $self->_guess_code($str);
     }
     else {
-	carp("Mail::Message::Encode: unknown language");
+	carp("FML::Message::Encode: unknown language");
 	return 'unknown';
     }
 }
@@ -142,7 +142,7 @@ sub detect_code
 my @guess_suspects = qw(euc-jp shiftjis 7bit-jis);
 
 # XXX Encode's names for them against the ones this module has always
-# XXX returned, and which Mail::Message::Charset and the callers below
+# XXX returned, and which FML::Message::Charset and the callers below
 # XXX still expect.
 my %guess_name_map = (
 		      'utf8'     => 'utf8',
@@ -255,7 +255,7 @@ sub convert_str_ref
 	}
     }
     else {
-	croak("Mail::Message::Encode: unknown language");
+	croak("FML::Message::Encode: unknown language");
     }
 
     return 0;
@@ -347,7 +347,7 @@ sub _recode
 run $proc($s) under $out_code environment.
 So, execute $proc like this.
 
-    my $obj         = new Mail::Message::Encode;
+    my $obj         = new FML::Message::Encode;
     my $conv_status = $obj->convert_str_ref($s, $out_code, $in_code);
 
     &$proc($s, $args);
@@ -368,7 +368,7 @@ sub run_in_code
     my ($self, $proc, $s, $args, $out_code, $in_code) = @_;
     my $proc_status = undef;
 
-    my $obj         = new Mail::Message::Encode;
+    my $obj         = new FML::Message::Encode;
     my $conv_status = $obj->convert_str_ref(\$s, $out_code, $in_code);
 
     # XXX-TODO: validate $proc name regexp.
@@ -470,7 +470,7 @@ convert $str to japanese SJIS code.
 sub STR2EUC
 {
     my ($str) = @_;
-    my $obj = new Mail::Message::Encode;
+    my $obj = new FML::Message::Encode;
     $obj->convert( $str, 'euc-jp' );
 }
 
@@ -482,7 +482,7 @@ sub STR2EUC
 sub STR2SJIS
 {
     my ($str) = @_;
-    my $obj = new Mail::Message::Encode;
+    my $obj = new FML::Message::Encode;
     $obj->convert( $str, 'sjis-jp' );
 }
 
@@ -494,7 +494,7 @@ sub STR2SJIS
 sub STR2JIS
 {
     my ($str) = @_;
-    my $obj = new Mail::Message::Encode;
+    my $obj = new FML::Message::Encode;
     $obj->convert( $str, 'jis-jp' );
 }
 
@@ -518,12 +518,12 @@ sub decode_base64_string
 	$str_out = eval { decode_base64($str) };
 	return $str if $@ || ! defined $str_out;
 
-	# XXX-TODO: use Mail::Message::Charset ?
+	# XXX-TODO: use FML::Message::Charset ?
 	$in_code   = $self->detect_code($str_out);
 	$out_code ||= 'euc-jp'; # euc-jp by default. XXX was |= (string bit-or).
     }
     else {
-	croak("Mail::Message::Encode: unknown language");
+	croak("FML::Message::Encode: unknown language");
     }
 
     return $self->convert($str_out, $out_code, $in_code);
@@ -544,12 +544,12 @@ sub decode_qp_string
 	$str_out = eval { decode_qp($str) };
 	return $str if $@ || ! defined $str_out;
 
-	# XXX-TODO: use Mail::Message::Charset ?
+	# XXX-TODO: use FML::Message::Charset ?
 	$in_code   = $self->detect_code($str_out);
 	$out_code ||= 'euc-jp'; # euc-jp by default. XXX was |= (string bit-or).
     }
     else {
-	croak("Mail::Message::Encode: unknown language");
+	croak("FML::Message::Encode: unknown language");
     }
 
     return $self->convert($str_out, $out_code, $in_code);
@@ -603,7 +603,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Encode first appeared in fml8 mailing list driver package.
+FML::Message::Encode first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

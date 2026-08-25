@@ -7,28 +7,28 @@
 # $FML$
 #
 
-package Mail::Message::Encode::Obsolete;
+package FML::Message::Encode::Obsolete;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
-# XXX these routines were moved here out of Mail::Message::Encode but
+# XXX these routines were moved here out of FML::Message::Encode but
 # XXX they still call new(), convert(), detect_code(), raw_decode_base64()
 # XXX and raw_decode_qp() on $self, and read $self->{ _language }.  None
 # XXX of that came along, so this package was not usable on its own.
 # XXX Inherit from where they came from until the routines are dropped.
-use Mail::Message::Encode;
-@ISA = qw(Mail::Message::Encode);
+use FML::Message::Encode;
+@ISA = qw(FML::Message::Encode);
 
 =head1 NAME
 
-Mail::Message::Encode::Obsolete - obsolete encode/decode routines.
+FML::Message::Encode::Obsolete - obsolete encode/decode routines.
 
 =head1 SYNOPSIS
 
 =head1 DESCRIPTION
 
-Temporarily obsolete functions in Mail::Message::Encode are moved to here.
+Temporarily obsolete functions in FML::Message::Encode are moved to here.
 
 =head1 MIME ENCODE/DECODE
 
@@ -60,7 +60,7 @@ sub encode_mime_string
 	$str = $self->convert($str, $out_code, $in_code);
     }
     else {
-	croak("Mail::Message::Encode: unknown language");
+	croak("FML::Message::Encode: unknown language");
     }
 
     if ($encode eq 'base64') {
@@ -78,7 +78,7 @@ sub encode_mime_string
 	};
     }
     else {
-	croak("Mail::Message::Encode: unknown encoding");
+	croak("FML::Message::Encode: unknown encoding");
     }
 
     return $str_out ? $str_out : $str_orig;
@@ -140,12 +140,12 @@ sub decode_mime_string
 	# XXX Whereas, w3m looks to be able to read it ?
 	$str_out   =~ s/^\e\$\(B/\e\$B/; # make mule read this string.
 
-	# XXX-TODO: use Mail::Message::Charset ?
+	# XXX-TODO: use FML::Message::Charset ?
 	$in_code   = $self->detect_code($str_out);
 	$out_code ||= 'euc-jp'; # euc-jp by default.
     }
     else {
-	croak("Mail::Message::Encode: unknown language");
+	croak("FML::Message::Encode: unknown language");
     }
 
     return $self->convert($str_out, $out_code, $in_code);
@@ -208,7 +208,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Encode first appeared in fml8 mailing list driver package.
+FML::Message::Encode first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

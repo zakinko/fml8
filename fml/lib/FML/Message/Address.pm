@@ -7,7 +7,7 @@
 # $FML: Address.pm,v 1.7 2005/08/19 12:17:13 fukachan Exp $
 #
 
-package Mail::Message::Address;
+package FML::Message::Address;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
@@ -16,7 +16,7 @@ use Mail::Address;
 
 =head1 NAME
 
-Mail::Message::Address - manipulate address type string.
+FML::Message::Address - manipulate address type string.
 
 =head1 SYNOPSIS
 
@@ -182,7 +182,7 @@ if ($0 eq __FILE__) {
 	    printf $format, "FILE", $file;
 	    printf $format, "STR",  $str;
 	    if ($str) {
-		my $m_addr = new Mail::Message::Address $str;
+		my $m_addr = new FML::Message::Address $str;
 		printf $format, "ADDRESS", $m_addr->address();
 		printf $format, "substr",  $m_addr->substr(0, 15);
 	    }
@@ -208,7 +208,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Address appeared in fml8 mailing list driver package.
+FML::Message::Address appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

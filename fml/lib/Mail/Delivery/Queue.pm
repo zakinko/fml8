@@ -24,8 +24,8 @@ Mail::Delivery::Queue - handle mail queue system.
 
 =head1 SYNOPSIS
 
-    use Mail::Message;
-    $msg = new Mail::Message;
+    use FML::Message;
+    $msg = new FML::Message;
 
     use Mail::Delivery::Queue;
     my $queue = new Mail::Delivery::Queue { directory => "/some/where" };
@@ -851,7 +851,7 @@ sub close
 C<in()> creates a queue file in C<new/> directory
 (C<queue_directory/new/>.
 
-C<$msg> is C<Mail::Message> object by default.
+C<$msg> is C<FML::Message> object by default.
 If C<$msg> object has print() method,
 arbitrary C<$msg> is acceptable.
 
@@ -2063,8 +2063,8 @@ if ($0 eq __FILE__) {
     $queue->set_log_function($fp);
 
     print "\n1. queue_id = ", $queue->id(), "\n";
-    use Mail::Message;
-    my $msg = Mail::Message->parse({ file => "../testmails/text=plain" });
+    use FML::Message;
+    my $msg = FML::Message->parse({ file => "../testmails/text=plain" });
     $queue->add($msg);
 
     my $ra = $queue->list_all() || [];

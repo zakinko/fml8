@@ -7,7 +7,7 @@
 # $FML: DB.pm,v 1.27 2005/08/31 03:47:47 fukachan Exp $
 #
 
-package Mail::Message::DB;
+package FML::Message::DB;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD
 	    $NULL_VALUE
@@ -121,7 +121,7 @@ my $is_demand_copying = 1;
 
 =head1 NAME
 
-Mail::Message::DB - DB interface
+FML::Message::DB - DB interface
 
 =head1 SYNOPSIS
 
@@ -137,8 +137,8 @@ Mail::Message::DB - DB interface
     };
 
     # Firstly, prepare db object.
-    use Mail::Message::DB;
-    my $db = new Mail::Message::DB $_db_args;
+    use FML::Message::DB;
+    my $db = new FML::Message::DB $_db_args;
     $db->set_key($id) if $id;
 
   ... unlock by something ...
@@ -159,7 +159,7 @@ Please lock before use of this module.
 	key          => 100,      # article sequence number
     };
 
-In fml 8 case, Mail::Message::DB object is initialized for each ML
+In fml 8 case, FML::Message::DB object is initialized for each ML
 (so, each domain).  C<db_name> (mailing list identifier) does not nees
 the full mail address such as C<elena@fml.org> since fml8 uses
 different $db_base_dir for each domain.
@@ -604,8 +604,8 @@ sub get_tohtml_thread_summary
     my $next_thread_id = $summary->{ next_thread_id };
 
     #
-    # XXX-TODO: we should get back this method to Mail::Message::ToHTML ?
-    # XXX-TODO: or Mail::Message::Thread ? but looks difficult ...
+    # XXX-TODO: we should get back this method to FML::Message::ToHTML ?
+    # XXX-TODO: or FML::Message::Thread ? but looks difficult ...
     #
 
     unless (defined $next_thread_id || $next_thread_id) {
@@ -758,8 +758,8 @@ sub get_thread_data
     my $cache  = {};
 
     # range
-    use Mail::Message::MH;
-    my $mh      = new Mail::Message::MH;
+    use FML::Message::MH;
+    my $mh      = new FML::Message::MH;
     my $range   = $thread_args->{ range } || 'last:10';
     my $head_id = $thread_args->{ last_id };
     my $id_list = $mh->expand($range, 1, $head_id);
@@ -918,13 +918,13 @@ sub _decode_mime_string
 {
     my ($self, $str, $out_code, $in_code) = @_;
     
-    use Mail::Message::Encode::Perl;
-    my $encoder = new Mail::Message::Encode::Perl;
+    use FML::Message::Encode::Perl;
+    my $encoder = new FML::Message::Encode::Perl;
     return $encoder->mime_header_decode_as_octets($str);
 
     # [OBSOLETE]
-    # use Mail::Message::Encode;
-    # my $encode = new Mail::Message::Encode;
+    # use FML::Message::Encode;
+    # my $encode = new FML::Message::Encode;
     # return $encode->decode_mime_string($str, $out_code, $in_code);
 }
 
@@ -962,8 +962,8 @@ sub _who_of_address
 {
     my ($self, $address) = @_;
 
-    use Mail::Message::Utils;
-    return Mail::Message::Utils::from_address_to_name($address);
+    use FML::Message::Utils;
+    return FML::Message::Utils::from_address_to_name($address);
 }
 
 
@@ -975,8 +975,8 @@ sub _get_time_from_header
 {
     my ($self, $hdr, $type) = @_;
 
-    use Mail::Message::Utils;
-    return Mail::Message::Utils::get_time_from_header($hdr, $type);
+    use FML::Message::Utils;
+    return FML::Message::Utils::get_time_from_header($hdr, $type);
 }
 
 
@@ -1473,14 +1473,14 @@ if ($0 eq __FILE__) {
 	key          => 100,      # article sequence number
     };
 
-    my $udb = new Mail::Message::DB $args;
+    my $udb = new FML::Message::DB $args;
 
     for my $file (@ARGV) {
 	use File::Basename;
 	my $id = basename($file);
 
-	use Mail::Message;
-	my $msg = Mail::Message->parse( { file => $file } );
+	use FML::Message;
+	my $msg = FML::Message->parse( { file => $file } );
 	$udb->set_key($id);
 	$udb->add($msg);
     }
@@ -1506,7 +1506,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::DB first appeared in fml8 mailing list driver package.
+FML::Message::DB first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 This class is renamed from C<Mail::HTML::Lite> 1.40 (2001-2002).

@@ -5,23 +5,23 @@
 # $FML: Subject.pm,v 1.7 2005/08/20 01:25:16 fukachan Exp $
 #
 
-package Mail::Message::Subject;
+package FML::Message::Subject;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
-# base class is "Mail::Message::String".
-use Mail::Message::String;
-@ISA = qw(Mail::Message::String);
+# base class is "FML::Message::String".
+use FML::Message::String;
+@ISA = qw(FML::Message::String);
 
 
 =head1 NAME
 
-Mail::Message::Subject - utilities to manipulate subject string.
+FML::Message::Subject - utilities to manipulate subject string.
 
 =head1 SYNOPSIS
 
-    my $subject = new Mail::Message::Subject $header->get('subject');
+    my $subject = new FML::Message::Subject $header->get('subject');
     $subject->mime_header_decode();
     if ($subject->has_reply_tag()) {
 	$subject->delete_dup_reply_tag();
@@ -68,8 +68,8 @@ sub delete_dup_reply_tag
     # XXX-TODO: call this module if $subject is Japanese or English.
     # XXX-TODO: but what should we do when the code is not the two above ?
     if (1) {
-	use Mail::Message::Language::Japanese::Subject;
-	my $sbj  = new Mail::Message::Language::Japanese::Subject;
+	use FML::Message::Language::Japanese::Subject;
+	my $sbj  = new FML::Message::Language::Japanese::Subject;
 	$subject = $sbj->cutoff_reply_tag($subject);
 	$self->set($subject);
     }
@@ -91,8 +91,8 @@ sub has_reply_tag
     # XXX anyway, we use this method always :-)
     # XXX-TODO: care for not Japanese string!
     if (1 || $charset =~ /iso-2022-jp/io) {
-	use Mail::Message::Language::Japanese::Subject;
-	my $sbj  = new Mail::Message::Language::Japanese::Subject;
+	use FML::Message::Language::Japanese::Subject;
+	my $sbj  = new FML::Message::Language::Japanese::Subject;
 	if ($sbj->is_reply($subject)) {
 	    return 1;
 	}
@@ -192,7 +192,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Subject first appeared in fml8 mailing list driver package.
+FML::Message::Subject first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 C<Subject_to_unixtime> is imported from fml 4.0-current libmti.pl.

@@ -10,7 +10,7 @@
 # is loaded, which for most of fml8 is at the moment a mail arrives.
 #
 # That is not a theoretical worry.  When Jcode went, one module still
-# had "use Jcode" in it: Mail::Message::Language::Japanese::Subject.
+# had "use Jcode" in it: FML::Message::Language::Japanese::Subject.
 # grep(1) did not report it, because that file is EUC-JP and grep calls
 # such files binary and skips them without saying so.  Three modules
 # under fml/lib are invisible to grep for that reason, and one of them

@@ -124,8 +124,8 @@ sub _set_charset
 
 
     # XXX-TODO: $obj ? -> $charset ?
-    use Mail::Message::Charset;
-    my $obj     = new Mail::Message::Charset;
+    use FML::Message::Charset;
+    my $obj     = new FML::Message::Charset;
     my $charset = $obj->language_to_internal_charset($lang);
 
     if ($charset) {
@@ -650,8 +650,8 @@ sub run_cgi_date
 {
     my ($curproc) = @_;
 
-    use Mail::Message::Date;
-    my $date = new Mail::Message::Date time;
+    use FML::Message::Date;
+    my $date = new FML::Message::Date time;
     print $date->mail_header_style();
 }
 

@@ -12,7 +12,7 @@ package FML::Parse;
 use strict;
 use Carp;
 use FML::Header;
-use Mail::Message;
+use FML::Message;
 use FML::Config;
 
 
@@ -28,7 +28,7 @@ FML::Parse - parse the incoming message.
 
 FML::Parse parses the incoming message. C<new()> analyses the data
 injected from STDIN channel, by default, and split it to a set of mail
-header and body objects. C<new()> returns a C<Mail::Message> object
+header and body objects. C<new()> returns a C<FML::Message> object
 chain.
 
 =head1 METHODS
@@ -63,8 +63,8 @@ sub _parse
 {
     my ($self, $curproc, $fd) = @_;
 
-    use Mail::Message;
-    my $msg = Mail::Message->parse( {
+    use FML::Message;
+    my $msg = FML::Message->parse( {
 	fd           => $fd,
 	header_class => 'FML::Header',
     });
@@ -91,7 +91,7 @@ sub _parse
 
 =head1 SEE ALSO
 
-L<Mail::Message>,
+L<FML::Message>,
 L<Mail::Header>,
 L<FML::Header>,
 L<FML::Config>

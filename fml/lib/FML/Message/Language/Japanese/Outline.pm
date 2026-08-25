@@ -13,14 +13,14 @@
 ###                                                   ###
 
 
-package Mail::Message::Language::Japanese::Outline;
+package FML::Message::Language::Japanese::Outline;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK);
 use Carp;
 
 =head1 NAME
 
-Mail::Message::Language::Japanese::Outline - functions for Japanese outline.
+FML::Message::Language::Japanese::Outline - functions for Japanese outline.
 
 =head1 SYNOPSIS
 
@@ -51,7 +51,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Language::Japanese::Outline
+FML::Message::Language::Japanese::Outline
 first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 

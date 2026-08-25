@@ -7,23 +7,23 @@
 # $FML: String.pm,v 1.9 2004/07/23 15:59:16 fukachan Exp $
 #
 
-package Mail::Message::String;
+package FML::Message::String;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD $debug);
 use Carp;
-use Mail::Message::Encode::Perl;
+use FML::Message::Encode::Perl;
 
 $debug = 0;
 
 
 =head1 NAME
 
-Mail::Message::String - base class of string used in message (header).
+FML::Message::String - base class of string used in message (header).
 
 =head1 SYNOPSIS
 
-    use Mail::Message::String $subject;
-    my $sbj = new Mail::Message::String $subject;
+    use FML::Message::String $subject;
+    my $sbj = new FML::Message::String $subject;
     $sbj->mime_header_decode();
 
      ... delte tag et.al. ...
@@ -126,7 +126,7 @@ return the internal data as the external form string.
 
 # Descriptions: return the internal data as the external form string.
 #               the charset is the one set by set_mime_charset() if any,
-#               the default of Mail::Message::Encode::Perl otherwise.
+#               the default of FML::Message::Encode::Perl otherwise.
 #    Arguments: OBJ($self)
 # Side Effects: none
 # Return Value: STR
@@ -137,8 +137,8 @@ sub as_external_form
     my $str     = $self->{ _string } || '';
     my $charset = $self->{ _enforced_mime_charset } || '';
 
-    use Mail::Message::Encode::Perl;
-    my $encoder = new Mail::Message::Encode::Perl;
+    use FML::Message::Encode::Perl;
+    my $encoder = new FML::Message::Encode::Perl;
     $encoder->convert_from_internal_to_external_form($str, $charset);
 }
 
@@ -149,7 +149,7 @@ sub as_external_form
 
 enforce the charset of the external form.
 if not set, as_external_form() uses the default charset of
-C<Mail::Message::Encode::Perl>.
+C<FML::Message::Encode::Perl>.
 
 =head2 get_mime_charset()
 
@@ -217,8 +217,8 @@ sub mime_header_encode
     my ($self, $pif_str) = @_;
     my $str = $self->as_str();
 
-    use Mail::Message::Encode::Perl;
-    my $encoder = new Mail::Message::Encode::Perl;
+    use FML::Message::Encode::Perl;
+    my $encoder = new FML::Message::Encode::Perl;
     $str        = $encoder->mime_header_encode($str);
     $self->set($str);
     
@@ -236,8 +236,8 @@ sub mime_header_decode
     my ($self, $out_code, $in_code) = @_;
     my $str = $self->as_str();
 
-    use Mail::Message::Encode::Perl;
-    my $encoder     = new Mail::Message::Encode::Perl;
+    use FML::Message::Encode::Perl;
+    my $encoder     = new FML::Message::Encode::Perl;
     my $dec_pif_str = $encoder->mime_header_decode($str);
     $self->set($dec_pif_str);
     
@@ -248,7 +248,7 @@ sub mime_header_decode
 =head1 CHAR CODE CONVERSION UTILITIES
 
 We need to identify internal and external char codes in fml8.
-It is defined in C<Mail::Message::Charset>.
+It is defined in C<FML::Message::Charset>.
 
 For example, if the original data is "=?iso-2022-jp?....", external
 code is "iso-2022-jp" but internal code is "euc-jp".
@@ -296,8 +296,8 @@ sub charcode_convert
     # speculate internal code we should use for this string.
     $out_code ||= $self->_speculate_internal_code();
 
-    use Mail::Message::Encode;
-    my $encode = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $encode = new FML::Message::Encode;
     $encode->convert_str_ref(\$str, $out_code, $in_code);
     $self->set($str);
     return $str;
@@ -348,8 +348,8 @@ sub get_charcode
     # init
     $str ||= $self->as_str();
 
-    use Mail::Message::Encode;
-    my $encode = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $encode = new FML::Message::Encode;
     return $encode->detect_code($str);
 }
 
@@ -364,8 +364,8 @@ sub _speculate_internal_code
     my $hint_code = $self->{ _orig_mime_charset };
 
     # speculate fml internal code: iso-2022-jp -> euc-jp.
-    use Mail::Message::Charset;
-    my $charset  = new Mail::Message::Charset;
+    use FML::Message::Charset;
+    my $charset  = new FML::Message::Charset;
     my $language = $charset->message_charset_to_language($hint_code);
     return $charset->language_to_internal_charset($language);
 }
@@ -382,10 +382,10 @@ sub _speculate_external_charset
 
     # speculate public code: euc-jp -> iso-2022-jp.
     # we should ignore =?sjis? or =?euc? but use iso-2022-jp as output.
-    use Mail::Message::Encode;
-    use Mail::Message::Charset;
-    my $encode  = new Mail::Message::Encode;
-    my $charset = new Mail::Message::Charset;
+    use FML::Message::Encode;
+    use FML::Message::Charset;
+    my $encode  = new FML::Message::Encode;
+    my $charset = new FML::Message::Charset;
 
     # XXX internal code to natural charset we should use in message header.
     # XXX So, if "=?sjis=..." is input, we return it as "=?iso-2022-jp...".
@@ -489,8 +489,8 @@ sub is_signature
     }
 
     # XXX Japanese specific condition
-    use Mail::Message::Encode;
-    my $obj = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $obj = new FML::Message::Encode;
     $data   = $obj->convert( $data, 'euc-jp' );
 
     # "2-byte @"domain where "@" is a 2-byte "@" character.
@@ -519,7 +519,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::String appeared in fml8 mailing list driver package.
+FML::Message::String appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

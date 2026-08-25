@@ -86,9 +86,9 @@ sub process
     my ($self, $curproc, $command_context) = @_;
 
     # attach thread library.
-    use Mail::Message::Thread;
+    use FML::Message::Thread;
     my $thargs = $curproc->article_thread_init();
-    my $thread = new Mail::Message::Thread $thargs;
+    my $thread = new FML::Message::Thread $thargs;
 
     $self->_dispatch($curproc, $command_context, $thread);
 }

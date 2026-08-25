@@ -36,7 +36,7 @@ BEGIN {
     }
 }
 
-use Mail::Message;
+use FML::Message;
 use FML::Filter::TextPlain;
 
 my $TMPDIR = tempdir(CLEANUP => 1);
@@ -50,8 +50,8 @@ my %HELLO = (
 );
 
 
-# Descriptions: build a mail with $body and return the Mail::Message.
-#               Mail::Message->parse() wants a real handle, so the mail
+# Descriptions: build a mail with $body and return the FML::Message.
+#               FML::Message->parse() wants a real handle, so the mail
 #               goes through a file.
 #    Arguments: STR($body) STR($charset)
 # Side Effects: writes a temporary file.
@@ -76,7 +76,7 @@ sub mail_with_body
 
     open(my $rh, '<', $path) or die "cannot read $path: $!";
     binmode($rh);
-    my $msg = Mail::Message->parse({ fd => $rh });
+    my $msg = FML::Message->parse({ fd => $rh });
 
     return $msg->whole_message_body();
 }
@@ -251,7 +251,7 @@ subtest 'a mail with no text part is not judged' => sub {
     close($wh);
 
     open(my $rh, '<', $path) or die "cannot read $path: $!";
-    my $msg = Mail::Message->parse({ fd => $rh });
+    my $msg = FML::Message->parse({ fd => $rh });
 
     my $r = $filter->body_check($msg->whole_message_body());
 

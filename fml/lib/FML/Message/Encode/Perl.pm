@@ -7,7 +7,7 @@
 # $FML$
 #
 
-package Mail::Message::Encode::Perl;
+package FML::Message::Encode::Perl;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
@@ -22,24 +22,24 @@ use Encode::MIME::Header;
 # XXX-TODO: files on disk already, so flipping it mixes encodings in one
 # XXX-TODO: archive; that migration has to be decided separately.  Callers
 # XXX-TODO: that know better can override per object with
-# XXX-TODO: Mail::Message::String::set_mime_charset().
+# XXX-TODO: FML::Message::String::set_mime_charset().
 my $default_external_charset = "EUC-JP";
 
 =head1 NAME
 
-Mail::Message::Encode::Perl - Perl (character-oriented) based Encoding
+FML::Message::Encode::Perl - Perl (character-oriented) based Encoding
 
 =head1 SYNOPSIS
 
-    use Mail::Message::Encode::Perl;
-    my $obj = new Mail::Message::Encode::Perl;
+    use FML::Message::Encode::Perl;
+    my $obj = new FML::Message::Encode::Perl;
 
     my $pif_str = $obj->mime_header_decode($str);
     # ("[BSG:75] Re: Exodus Part II", "UTF-8", "base64")
 
     # ... several works ... 
     $pif_str  =~ s/Re: //;
-    Mail::Message::Subject->rewrite_XXX($pif_str);
+    FML::Message::Subject->rewrite_XXX($pif_str);
 
     $mime_str = $obj->mime_header_encode($pif_str);
     print $mime_str;
@@ -229,7 +229,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Encode first appeared in fml8 mailing list driver package.
+FML::Message::Encode first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

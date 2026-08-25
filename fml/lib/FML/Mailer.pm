@@ -26,7 +26,7 @@ FML::Mailer - utilities for sending mails.
 	message   => $message,
     });
 
-where C<$message> is a C<Mail::Message> object to send.
+where C<$message> is a C<FML::Message> object to send.
 If you want to sent to plural recipinets,
 specify the recipients as ARRAY REFERENCE at C<recipients> parameter.
 
@@ -48,7 +48,7 @@ If you send a file, you can specify the filename as a data to send.
 
 =head1 DESCRIPTION
 
-This module sends Mail::Message object(s).
+This module sends FML::Message object(s).
 
 =head1 METHODS
 
@@ -81,7 +81,7 @@ $send_args (HASH_REF) can take the following arguments:
    sender             STR
    recipient          STR
    recipients         ARRAY_REF
-   message            Mail::Message OBJ
+   message            FML::Message OBJ
    file               STR
 
 =cut
@@ -156,10 +156,10 @@ sub send
     if (defined($send_args->{ file })) {
 	my $file = $send_args->{ file };
 	if ($file && -f $file) {
-	    use Mail::Message;
+	    use FML::Message;
 	    use FileHandle;
 	    my $fh   = new FileHandle $file;
-	    $message = Mail::Message->parse( { fd => $fh } );
+	    $message = FML::Message->parse( { fd => $fh } );
 	}
 	else {
 	    $curproc->logerror("FML::Mailer: no such file ($file)");

@@ -6,16 +6,16 @@
 # $FML: Date.pm,v 1.32 2012/04/15 06:42:52 fukachan Exp $
 #
 
-package Mail::Message::Date;
+package FML::Message::Date;
 
 =head1 NAME
 
-Mail::Message::Date - utilities for date and time.
+FML::Message::Date - utilities for date and time.
 
 =head1 SYNOPSIS
 
-   use Mail::Message::Date;
-   $date = new Mail::Message::Date time;
+   use FML::Message::Date;
+   $date = new FML::Message::Date time;
 
    # get the date in $style format
    $date->{ log_file_style }
@@ -88,7 +88,7 @@ sub new
     # XXX recomputes from "$time || $self->{ _default_unixtime } || time"
     # XXX and that key was never set here, so $date->log_file_style()
     # XXX silently answered for the current time instead.  The SYNOPSIS
-    # XXX shows exactly that call after "new Mail::Message::Date time".
+    # XXX shows exactly that call after "new FML::Message::Date time".
     $date_set->{ _default_unixtime } = $time;
 
     return bless $date_set, $self;
@@ -144,7 +144,7 @@ sub _date
 
 =head2 set($date)
 
-    $date = new Mail::Message::Date;
+    $date = new FML::Message::Date;
     $date->set("Tue Dec 30 17:06:34 JST 2003");
     $date->to_unixtime();
 
@@ -422,8 +422,8 @@ C<date_to_unixtime($date)> returns
 
 You can use like this.
 
-    use Mail::Message::Date;
-    $dp = Mail::Message::Date;
+    use FML::Message::Date;
+    $dp = FML::Message::Date;
     $unixtime = $dp->date_to_unixtime( $date );
 
 =cut
@@ -614,7 +614,7 @@ if ($0 eq __FILE__) {
 
     print "// 2. date -> unixtime -> date\n";
     my $dstr = 'Tue, 03 Feb 2004 10:33:24 +0900';
-    my $date = new Mail::Message::Date;
+    my $date = new FML::Message::Date;
 
     print "//    \$date->set(\"$dstr\"); \$date->unixtime(); ... \n";
     print $dstr, "\n";
@@ -650,7 +650,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Date first appeared in fml8 mailing list driver package.
+FML::Message::Date first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 C<date_to_unixtime> is imported from fml 4.0-current libmti.pl.

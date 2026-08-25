@@ -117,7 +117,7 @@ $curproc->reply_message( {
 <para>
 FML::Process::QueueManager により
 (1) 特定のキューファイルがメールキューディレクトリから pickup され、
-(2) Mail::Message で parse され、
+(2) FML::Message で parse され、
 (3) FML::Mailer 経由で Mail::Delivery が実際のメール配送処理を行ないます。
 <screen>
 Mail::Delivery::Queue

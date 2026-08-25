@@ -7,7 +7,7 @@
 # $FML: ToHTML.pm,v 1.85 2006/06/15 10:35:24 tmu Exp $
 #
 
-package Mail::Message::ToHTML;
+package FML::Message::ToHTML;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD $hints);
 use Carp;
@@ -15,7 +15,7 @@ use Carp;
 my $is_strict_warn = 0;
 my $debug = 0;
 my $URL   =
-    "<A HREF=\"http://www.fml.org/software/\">Mail::Message::ToHTML</A>";
+    "<A HREF=\"http://www.fml.org/software/\">FML::Message::ToHTML</A>";
 
 my $version = q$FML: ToHTML.pm,v 1.85 2006/06/15 10:35:24 tmu Exp $;
 my $versionid = 0;
@@ -26,14 +26,14 @@ if ($version =~ /,v\s+([\d\.]+)\s+/) {
 
 =head1 NAME
 
-Mail::Message::ToHTML - convert text format mail to HTML format
+FML::Message::ToHTML - convert text format mail to HTML format
 
 =head1 SYNOPSIS
 
   ... lock by something ...
 
-  use Mail::Message::ToHTML;
-  my $obj = new Mail::Message::ToHTML {
+  use FML::Message::ToHTML;
+  my $obj = new FML::Message::ToHTML {
       charset   => "euc-jp",
       directory => "/var/www/htdocs/ml/elena",
   };
@@ -114,8 +114,8 @@ sub new
     # global hints
     $hints                        = $args->{ hints } || {};
 
-    use Mail::Message::Thread;
-    my $t = new Mail::Message::Thread $args;
+    use FML::Message::Thread;
+    my $t = new FML::Message::Thread $args;
     $me->{ _thread_object } = $t;
 
     return bless $me, $type;
@@ -161,10 +161,10 @@ sub htmlify_rfc822_message
     my ($self, $args) = @_;
 
     # prepare source
-    use Mail::Message;
+    use FML::Message;
     use FileHandle;
     my $rh   = new FileHandle $args->{ src };
-    my $msg  = Mail::Message->parse( { fd => $rh } );
+    my $msg  = FML::Message->parse( { fd => $rh } );
     my $hdr  = $msg->whole_message_header;
     my $body = $msg->whole_message_body;
     $self->{ _current_msg  } = $msg;
@@ -208,10 +208,10 @@ sub htmlify_rfc822_message
     $self->html_start($wh, { message => $msg });
     $self->mhl_preamble($wh);
 
-    # analyze $msg, chain of Mail::Message objects.
-    # See Mail::Message class for more detail.
+    # analyze $msg, chain of FML::Message objects.
+    # See FML::Message class for more detail.
     # XXX we use $m->{ next } here, but we should avoid this style and
-    # XXX prepare access method for it in Mail::Message class.
+    # XXX prepare access method for it in FML::Message class.
     my ($m, $type, $attach);
   CHAIN:
     for ($m = $msg; defined($m) ; $m = $m->{ 'next' }) {
@@ -225,7 +225,7 @@ sub htmlify_rfc822_message
 	    next CHAIN;
 	}
 
-	# header (Mail::Message object uses this special type)
+	# header (FML::Message object uses this special type)
 	if ($type eq 'text/rfc822-headers') {
 	    $self->mhl_separator($wh);
 	    my $charset = $self->{ _charset };
@@ -243,7 +243,7 @@ sub htmlify_rfc822_message
 		my $outf = _gen_attachment_filename($dst, $attach, 'html');
 		my $args = $self->{ _args };
 		$args->{ attachment } = 1; # clarify not top level content.
-		my $text = new Mail::Message::ToHTML $args;
+		my $text = new FML::Message::ToHTML $args;
 		$text->htmlify_rfc822_message({
 		    parent_id => $id,
 		    src => $tmpf,
@@ -405,8 +405,8 @@ sub _html_file_subdir_name
 
     if ($subdir_style eq 'yyyymm') {
 	my $hdr = $self->{ _current_hdr  };
-	use Mail::Message::Utils;
-	$subdir = Mail::Message::Utils::get_time_from_header($hdr, 'yyyymm');
+	use FML::Message::Utils;
+	$subdir = FML::Message::Utils::get_time_from_header($hdr, 'yyyymm');
 
 	use File::Spec;
 	my $xsubdir = File::Spec->catfile($html_base_dir, $subdir);
@@ -570,10 +570,10 @@ sub mhl_separator
 }
 
 
-my $preamble_begin = "<!-- __PREAMBLE_BEGIN__ by Mail::Message::ToHTML -->";
-my $preamble_end   = "<!-- __PREAMBLE_END__   by Mail::Message::ToHTML -->";
-my $footer_begin   = "<!-- __FOOTER_BEGIN__ by Mail::Message::ToHTML -->";
-my $footer_end     = "<!-- __FOOTER_END__   by Mail::Message::ToHTML -->";
+my $preamble_begin = "<!-- __PREAMBLE_BEGIN__ by FML::Message::ToHTML -->";
+my $preamble_end   = "<!-- __PREAMBLE_END__   by FML::Message::ToHTML -->";
+my $footer_begin   = "<!-- __FOOTER_BEGIN__ by FML::Message::ToHTML -->";
+my $footer_end     = "<!-- __FOOTER_END__   by FML::Message::ToHTML -->";
 
 
 # Descriptions: prepare information area before main message appears.
@@ -861,13 +861,13 @@ sub _text_safe_print
     my $encoding = $args->{ encoding } || '7bit';
 
     if ($encoding eq 'base64') {
-	use Mail::Message::Encode;
-	my $encode = new Mail::Message::Encode;
+	use FML::Message::Encode;
+	my $encode = new FML::Message::Encode;
 	$buf = $encode->decode_base64_string($buf);
     }
     elsif ($encoding eq 'quoted-printable') {
-	use Mail::Message::Encode;
-	my $encode = new Mail::Message::Encode;
+	use FML::Message::Encode;
+	my $encode = new FML::Message::Encode;
 	$buf = $encode->decode_qp_string($buf);
     }
 
@@ -887,7 +887,7 @@ sub _text_safe_print
 sub _text_raw_print
 {
     my ($self, $args) = @_;
-    my $msg  = $args->{ message }; # Mail::Message object
+    my $msg  = $args->{ message }; # FML::Message object
     my $type = $msg->data_type;
     my $enc  = $msg->encoding_mechanism;
     my $buf  = $msg->message_text();
@@ -920,7 +920,7 @@ sub _text_raw_print
 sub _binary_print
 {
     my ($self, $args) = @_;
-    my $msg  = $args->{ message }; # Mail::Message object
+    my $msg  = $args->{ message }; # FML::Message object
     my $type = $msg->data_type;
     my $enc  = $msg->encoding_mechanism || '';
     my $mask = umask();
@@ -936,8 +936,8 @@ sub _binary_print
 	    $fh->autoflush(1);
 	    binmode($fh);
 
-	    use Mail::Message::Encode;
-	    my $encode = new Mail::Message::Encode;
+	    use FML::Message::Encode;
+	    my $encode = new FML::Message::Encode;
 	    if ($enc eq 'base64') {
 		print $fh $encode->raw_decode_base64( $msg->message_text() );
 	    }
@@ -1020,7 +1020,7 @@ sub cache_message_info
 }
 
 
-# Descriptions: return Mail::Message::DB object.
+# Descriptions: return FML::Message::DB object.
 #    Arguments: OBJ($self)
 # Side Effects: none
 # Return Value: OBJ
@@ -2043,7 +2043,7 @@ sub _sprintf_safe_str
 
 
 # Descriptions: return safe $str modified by text2html().
-#               $str language code is modified by Mail::Message::Encode.
+#               $str language code is modified by FML::Message::Encode.
 #    Arguments: NUM($attr_pre) HANDLE($wh) STR($str) STR($code)
 # Side Effects: none
 # Return Value: STR or UNDEF
@@ -2229,8 +2229,8 @@ sub _address_to_gecos
 {
     my ($self, $address) = @_;
 
-    use Mail::Message::Utils;
-    return Mail::Message::Utils::from_address_to_name($address);
+    use FML::Message::Utils;
+    return FML::Message::Utils::from_address_to_name($address);
 }
 
 
@@ -2268,8 +2268,8 @@ sub _decode_mime_string
     my $code    = _charset_to_code($charset) || 'euc';
 
     if (defined($str) && $str) {
-	use Mail::Message::Subject;
-	my $sbj = new Mail::Message::Subject $str;
+	use FML::Message::Subject;
+	my $sbj = new FML::Message::Subject $str;
 	$sbj->mime_header_decode();
 	return $sbj->as_external_form();
     }
@@ -2287,8 +2287,8 @@ sub _convert
 {
     my ($self, $str, $out_code, $in_code) = @_;
 
-    use Mail::Message::Encode;
-    my $encode = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $encode = new FML::Message::Encode;
     return $encode->convert($str, $out_code, $in_code);
 }
 
@@ -2301,8 +2301,8 @@ sub __nc_convert
 {
     my ($str, $out_code, $in_code) = @_;
     
-    use Mail::Message::Encode;
-    my $encode = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $encode = new FML::Message::Encode;
     return $encode->convert($str, $out_code, $in_code);
 }
 
@@ -2350,7 +2350,7 @@ sub htmlify_file
 
     use File::Basename;
     my $id   = basename($file);
-    my $html = new Mail::Message::ToHTML $args;
+    my $html = new FML::Message::ToHTML $args;
 
     if ($debug) {
 	printf STDERR "htmlify_file( id=%-6s src=%s )\n", $id, $file;
@@ -2495,7 +2495,7 @@ if ($0 eq __FILE__) {
 
 	    if (-f $x) {
 		eval q{
-		    my $obj = new Mail::Message::ToHTML $opts;
+		    my $obj = new FML::Message::ToHTML $opts;
 		    $obj->htmlify_file($x, {
 			output_dir  => "/tmp/htdocs",
 			directory   => $dir,
@@ -2507,7 +2507,7 @@ if ($0 eq __FILE__) {
 		print STDERR $@ if $@;
 	    }
 	    elsif (-d $x) {
-		my $obj = new Mail::Message::ToHTML $opts;
+		my $obj = new FML::Message::ToHTML $opts;
 		$obj->htmlify_dir($x, {
 		    output_dir  => "/tmp/htdocs",
 		    directory => $dir,
@@ -2552,7 +2552,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::ToHTML first appeared in fml8 mailing list driver package.
+FML::Message::ToHTML first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 This class is renamed from C<Mail::HTML::Lite> 1.40 (2001-2002).

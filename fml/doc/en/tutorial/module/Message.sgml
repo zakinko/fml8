@@ -5,22 +5,22 @@
 
 <chapter id="module.mail.message">
 	<title>
-	Mail::Message Module
+	FML::Message Module
 	</title>
 
 <sect1 id="module.mail.message.overview">
 	<title>
-	Mail::Message Overview
+	FML::Message Overview
 	</title>
 
 <para>
-Mail::Message object provides several methods to analyze a message and
+FML::Message object provides several methods to analyze a message and
 manipulate messages or parts of a message.
 </para>
 
 <para>
 Precisely speaking, this module analyzes the specified mail message
-and build a chain of Mail::Message objects.
+and build a chain of FML::Message objects.
 <screen>
 If not multipart
 
@@ -30,27 +30,27 @@ else if multipart
 
    header -> preamble -> part1 -> part2 -> ... -> trailor
 </screen>
-The link between objects is double link list. Mail::Message class
+The link between objects is double link list. FML::Message class
 provides several methods to manipulate these structures.
 </para>
 
 <para>
-Each part of this chain is a Mail::Message object. In other words, one
-mail message consits of a chain of plural Mail::Message objects in
+Each part of this chain is a FML::Message object. In other words, one
+mail message consits of a chain of plural FML::Message objects in
 &fml8; internal.
 </para>
 
 <para>
-For example, "header" is a Mail::Message, which type is
+For example, "header" is a FML::Message, which type is
 text/rfc822-headers and the data is stored as Mail::Header
-object. Instead "part1" is a Mail::Message object, which type is
+object. Instead "part1" is a FML::Message object, which type is
 text/plain and the data is reference to the message string.
 </para>
 
 <para>
 References:
-<ulink url="../../en/modules/Mail/Message.txt">
-Mail::Message module manual.
+<ulink url="../../en/modules/FML/Message.txt">
+FML::Message module manual.
 </ulink>
 </para>
 
@@ -59,7 +59,7 @@ Mail::Message module manual.
 
 <sect1 id="module.mail.message.parse">
 	<title>
-	Mail::Message Module: Analyze
+	FML::Message Module: Analyze
 	</title>
 
 <para>
@@ -91,7 +91,7 @@ the whole message (content-type in the mail header).
 
 <sect1 id="module.mail.message.create">
 	<title>
-	Mail::Message Module: Create A New Object
+	FML::Message Module: Create A New Object
 	</title>
 
 <para>
@@ -111,7 +111,7 @@ Please do not use these methods.
 </para>
 
 <para>
-To create a new MIME/mulitpart message, use Mail::Message::Compose. It
+To create a new MIME/mulitpart message, use FML::Message::Compose. It
 is MIME::Lite class in fact :-)
 </para>
 
@@ -120,7 +120,7 @@ is MIME::Lite class in fact :-)
 
 <sect1 id="module.mail.message.headerop">
 	<title>
-	Mail::Message Module: Header Manipulations
+	FML::Message Module: Header Manipulations
 	</title>
 
 <para>
@@ -140,7 +140,7 @@ dup_header0 ---
 
 <para>
 whole_message_header() returns the header object of the chain. The
-return value is a Mail::Message object not string.
+return value is a FML::Message object not string.
 </para>
 
 <para>
@@ -153,7 +153,7 @@ It tells whether this message is text or multipart.
 
 <sect1 id="module.mail.message.bodyop">
 	<title>
-	Mail::Message Module: Manipulate Messabe Body
+	FML::Message Module: Manipulate Messabe Body
 	</title>
 
 <para>
@@ -191,11 +191,11 @@ system checks the first text field in a lot of cases.
 
 <sect1 id="module.mail.message.search">
 	<title>
-	Mail::Message Module: Search
+	FML::Message Module: Search
 	</title>
 
 <para>
-find() searches the specified type of Mail::Message in the object
+find() searches the specified type of FML::Message in the object
 chain and returns the first matched object.
 </para>
 
@@ -204,7 +204,7 @@ chain and returns the first matched object.
 
 <sect1 id="module.mail.message.print">
 	<title>
-	Mail::Message Module: Print
+	FML::Message Module: Print
 	</title>
 
 <para>
@@ -224,7 +224,7 @@ codes.
 
 <sect1 id="module.mail.message.utils">
 	<title>
-	Mail::Message Module: Utility Functions
+	FML::Message Module: Utility Functions
 	</title>
 
 <sect2>
@@ -272,7 +272,7 @@ encoding mechanism.
 
 <sect2>
 	<title>
-	Mail::Message Internals
+	FML::Message Internals
 	</title>
 
 <para>
@@ -305,8 +305,8 @@ Respectively, alias of message_fields($size) and message_text($size).
 
 <para>
 
-<ulink url="../../en/modules/Mail/Message.txt">
-Mail::Message manual
+<ulink url="../../en/modules/FML/Message.txt">
+FML::Message manual
 </ulink>
 </para>
 </sect1>

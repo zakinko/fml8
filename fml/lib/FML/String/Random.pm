@@ -104,8 +104,8 @@ sub identifier
     my ($id_01) = sprintf("%s %s %s", rand(time), $$, $buf);
     my ($id_02) = sprintf("%s %s %s", $$, $buf, rand(time));
 
-    use Mail::Message::Checksum;
-    my $cksum  = new Mail::Message::Checksum;
+    use FML::Message::Checksum;
+    my $cksum  = new FML::Message::Checksum;
     my $sum    = $cksum->md5( \$id_01 );
     my $sum_ya = $cksum->md5( \$id_02 );
     my $pebot  = int(rand(32));

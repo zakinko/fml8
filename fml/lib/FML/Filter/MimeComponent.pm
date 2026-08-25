@@ -91,7 +91,7 @@ sub new
 
 =head2 mime_component_check($msg)
 
-C<$msg> is C<Mail::Message> object.
+C<$msg> is C<FML::Message> object.
 
 C<Usage>:
 
@@ -133,7 +133,7 @@ sub mime_component_check
 	$data_type = $mp->data_type();
 
 	# ignore the header part of the whole RFC822 message.
-	#        and parts of Mail::Message internal use.
+	#        and parts of FML::Message internal use.
 	next MSG if ($data_type eq "text/rfc822-headers");
 	next MSG if ($data_type =~ /multipart\./);
 
@@ -243,7 +243,7 @@ sub mime_component_check
 #    Arguments: OBJ($self) OBJ($msg) ARRAY_REF($rule)
 #               OBJ($mp) STR($whole_type)
 # Side Effects: "reject" and "permit" affects nothing.
-#               "cutoff" changes the chain of Mail::Message OBJs.
+#               "cutoff" changes the chain of FML::Message OBJs.
 # Return Value: STR
 sub _rule_match
 {
@@ -338,7 +338,7 @@ sub __basic_regexp_match
 }
 
 
-# Descriptions: cut off $mp from a chain of Mail::Message objects.
+# Descriptions: cut off $mp from a chain of FML::Message objects.
 #    Arguments: OBJ($self) OBJ($mp)
 # Side Effects: change a chain of objects.
 # Return Value: none
@@ -421,8 +421,8 @@ sub _rfc822_mime_component_check
 
 	my $rh = new FileHandle $tmpf;
 	if (defined $rh) {
-	    use Mail::Message;
-	    my $msg0 = new Mail::Message->parse( { fd => $rh } );
+	    use FML::Message;
+	    my $msg0 = new FML::Message->parse( { fd => $rh } );
 	    $self->mime_component_check($msg0);
 	}
     }
@@ -501,7 +501,7 @@ sub read_filter_rule_file
 
 
 # Descriptions: dump message structure
-#               (a chain of Mail::Message objects).
+#               (a chain of FML::Message objects).
 #    Arguments: OBJ($self) OBJ($msg)
 # Side Effects: none
 # Return Value: none
@@ -526,9 +526,9 @@ sub dump_message_structure
     if ($debug > 7) {
 	for ($mp = $msg, $i = 1; $mp; $mp = $mp->{ next }, $i++) {
 	    my ($p, $c, $n) = ("$mp->{ prev }", "$mp", "$mp->{ next }");
-	    $p =~ s/Mail::Message=HASH\((\S+)\)/$1/;
-	    $c =~ s/Mail::Message=HASH\((\S+)\)/$1/;
-	    $n =~ s/Mail::Message=HASH\((\S+)\)/$1/;
+	    $p =~ s/FML::Message=HASH\((\S+)\)/$1/;
+	    $c =~ s/FML::Message=HASH\((\S+)\)/$1/;
+	    $n =~ s/FML::Message=HASH\((\S+)\)/$1/;
 	    __dprint(sprintf("%2d %25s | %10s | %10s | %10s",
 			     $i, $mp->data_type(), $p, $c, $n));
 	}
@@ -584,7 +584,7 @@ if ($0 eq __FILE__) {
     eval q{
 	use FileHandle;
 	use File::Basename;
-	use Mail::Message;
+	use FML::Message;
 	use Getopt::Long;
 	my $opt = {};
 	GetOptions($opt, qw(debug! -c=s));
@@ -604,7 +604,7 @@ if ($0 eq __FILE__) {
 
 	for my $argv (@ARGV) {
 	    print STDERR ">>> ", basename($argv), "\n";
-	    my $msg = Mail::Message->parse( { file => $argv });
+	    my $msg = FML::Message->parse( { file => $argv });
 	    my $obj = new FML::Filter::MimeComponent;
 	    my $fh  = new FileHandle $argv;
 	    $obj->mime_component_check($msg);

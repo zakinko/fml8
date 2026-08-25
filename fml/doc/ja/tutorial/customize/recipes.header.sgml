@@ -669,7 +669,7 @@ In-Reply-To: または References: ヘッダがないなら拒否する HOOK です。
 	my $in_reply_to = $header->get("In-Reply-To") || '';
 	my $references  = $header->get("References")  || '';
 
-	my $_subject = new Mail::Message::Subject $subject;
+	my $_subject = new FML::Message::Subject $subject;
 	if ($_subject->has_reply_tag()) {
 	    unless ($in_reply_to || $references) {
 		$curproc->log("reject invalid reply message");

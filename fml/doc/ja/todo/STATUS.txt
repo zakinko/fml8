@@ -624,7 +624,7 @@ III部　fmlのカスタマイズ
 
 	[TODO] permission はこれでいい？
 
-	[TODO]	Mail::Message::ToHTML
+	[TODO]	FML::Message::ToHTML
 		X-Sequence: fml-devel 515
 
 		2) indexの要、不要について

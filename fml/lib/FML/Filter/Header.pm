@@ -98,7 +98,7 @@ sub set_rules
 
 =head2 header_check($msg);
 
-C<$msg> is C<Mail::Message> object.
+C<$msg> is C<FML::Message> object.
 
 C<Usage>:
 

@@ -2,7 +2,7 @@
 #
 # fml8 issue #8: "Use of uninitialized value $language in lc".
 #
-# Mail::Message::Charset has three lookup helpers and all three called
+# FML::Message::Charset has three lookup helpers and all three called
 # lc() on their argument without asking whether there was one.  The CGI
 # path has no "language_hint" in the PCB, so undef reached lc() and every
 # hit on menu.cgi logged a warning naming Charset.pm line 254.
@@ -28,11 +28,11 @@ BEGIN {
     }
 }
 
-use Mail::Message::Charset;
+use FML::Message::Charset;
 use FML::PCB;
 use FML::Process::Utils;
 
-my $CS = new Mail::Message::Charset;
+my $CS = new FML::Message::Charset;
 
 # The categories fml8 asks about.
 my @CATEGORY = qw(cgi reply_message template_file log_file
@@ -70,7 +70,7 @@ my @CATEGORY = qw(cgi reply_message template_file log_file
 # The same process, but with an Accept-Language: header on it.  That is
 # the branch langinfo_get_charset() takes first, and it reads the
 # category-$language configuration key rather than asking
-# Mail::Message::Charset.
+# FML::Message::Charset.
 {
     package t::AcceptJa;
     use vars qw(@ISA);
@@ -316,7 +316,7 @@ subtest 'an unknown language hint falls back rather than emptying' => sub {
 # cgi_charset_ja, which fml/etc/src/config.cf.en/cgi.cf sets to euc-jp.
 #
 # The language_hint branch, taken when there is no Accept-Language, goes
-# through Mail::Message::Charset::language_to_message_charset() instead,
+# through FML::Message::Charset::language_to_message_charset() instead,
 # which knows nothing about categories and answers iso-2022-jp for 'ja'.
 #
 # So the same list, asked for the same language, gets euc-jp down one
@@ -392,7 +392,7 @@ subtest 'the hint branch and the Accept-Language branch disagree' => sub {
 # in _inject_charset_hints(), which is called from one place, inside
 # incoming_message_parse() -- and every process that calls that one is a
 # mail process: Command, CreateOnPost, Distribute, Emulate, Error, Fake.
-# _inject_charset_hints() takes a Mail::Message, and a CGI request has
+# _inject_charset_hints() takes a FML::Message, and a CGI request has
 # no message to give it.
 #
 # So on a CGI request all three sources are empty -- no charset in the

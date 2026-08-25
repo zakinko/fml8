@@ -45,9 +45,9 @@ Mail::Delivery::SMTP - interface for SMTP service
 
 To initialize,
 
-    use Mail::Message;
+    use FML::Message;
 
-      ... make $message (Mail::Message object) ...
+      ... make $message (FML::Message object) ...
 
     use Mail::Delivery::SMTP;
     my $fp  = sub { $curproc->log(@_);}; # pointer to the log function
@@ -72,7 +72,7 @@ To start delivery, use deliver() method in this way.
                           message         => $message,
                       });
 
-C<message> is a C<Mail::Message> object.
+C<message> is a C<FML::Message> object.
 You can specify the recipient list as an ARRAY REFERENCE.
 
     # reference to an array of recipients
@@ -345,7 +345,7 @@ You can specify the following parameter at C<$args> HASH REFERENCE.
     recipient_maps     $recipient_maps
     recipient_limit    recipients in one SMTP transactions
     header             FML::Header object
-    body               Mail::Message object
+    body               FML::Message object
 
 C<smtp_servers> is a list of MTA's (Mail Transport Agents).
 The syntax of each MTA is C<host:port> or C<address:port> style.
@@ -376,8 +376,8 @@ which corresponds to the limit by C<Postfix>.
 
 C<header> is an C<FML::Header> object.
 
-C<body> is a C<Mail::Message> object.
-See L<Mail::Message> for more details.
+C<body> is a C<FML::Message> object.
+See L<FML::Message> for more details.
 
 =cut
 
@@ -1120,7 +1120,7 @@ sub _send_body_to_mta
 	return;
     }
 
-    # XXX $msg is Mail::Message object.
+    # XXX $msg is FML::Message object.
     my $fp = $self->get_smtp_log_function();
     $msg->set_log_function($fp, $fp);
     $msg->set_print_mode('smtp');

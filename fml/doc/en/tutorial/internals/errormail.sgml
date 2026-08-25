@@ -37,7 +37,7 @@ messages returned to) calls /usr/local/libexec/fml/error.
 
 <para>
 /usr/local/libexec/fml/error reads a message, analyzes it and creates
-a chain of Mail::Message objects on memory. Mail::Bounce class
+a chain of FML::Message objects on memory. Mail::Bounce class
 analyzes the detail of error based on the objects.
 </para>
 

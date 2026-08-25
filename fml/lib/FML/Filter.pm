@@ -31,7 +31,7 @@ FML::Filter - entry point for FML::Filter::* modules.
 
     ... under reconstruction now. synopsis disabled once ...
 
-where C<$message> is C<Mail::Message> object.
+where C<$message> is C<FML::Message> object.
 
 =head1 DESCRIPTION
 

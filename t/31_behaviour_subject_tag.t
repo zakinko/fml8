@@ -33,7 +33,7 @@ BEGIN {
 }
 
 use ParityFML4;
-use Mail::Message::Subject;
+use FML::Message::Subject;
 
 plan skip_all => "no fml4 checkout (set FML4_DIR, or put one at ../fml4)"
     unless ParityFML4::fml4_dir();
@@ -187,7 +187,7 @@ subtest 'fml8 strips a tag fml4 produced' => sub {
 	my $fml8_tag = sprintf("%s%s%s%%d%s",
 			       $l->{ begin }, $ML, $l->{ sep }, $l->{ end });
 
-	my $s = new Mail::Message::Subject "$fml4_tag hello";
+	my $s = new FML::Message::Subject "$fml4_tag hello";
 	$s->delete_tag($fml8_tag);
 	my $out = $s->as_str();
 	$out =~ s/^\s+//;
@@ -215,7 +215,7 @@ subtest "fml8 leaves another list's tag alone" => sub {
 	my $fml8_tag = sprintf("%s%s%s%%d%s",
 			       $l->{ begin }, $ML, $l->{ sep }, $l->{ end });
 
-	my $s = new Mail::Message::Subject "$other hello";
+	my $s = new FML::Message::Subject "$other hello";
 	$s->delete_tag($fml8_tag);
 	my $out = $s->as_str();
 	$out =~ s/^\s+//;

@@ -71,7 +71,7 @@ It contains several references to other data structures.
 	config           => C<FML::Config OBJECT>,
 
 	# struct incoming_message holds the mail input from STDIN.
-	incoming_message => C<Mail::Message OBJECT>,
+	incoming_message => C<FML::Message OBJECT>,
 
 	...
     };

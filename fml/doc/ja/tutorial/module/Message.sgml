@@ -4,16 +4,16 @@
 
 <chapter id="module.mail.message">
 	<title>
-	Mail::Message モジュール
+	FML::Message モジュール
 	</title>
 
 <sect1 id="module.mail.message.overview">
 	<title>
-	Mail::Message の概要
+	FML::Message の概要
 	</title>
 
 <para>
-Mail::Message クラスはメールの解析と、
+FML::Message クラスはメールの解析と、
 解析されたデータ構造へのさまざまな操作手段を提供します。
 </para>
 
@@ -28,13 +28,13 @@ header -> preamble -> part1 -> part2 -> trailor
 </screen>
 のようにオブジェクトが数珠つなぎとなったデータ構造を作ります。
 ちなみに、鎖と鎖の間は double link list です。
-Mail::Message のクラスは、
+FML::Message のクラスは、
 このようなデータ構造に対して、
 さまざまな操作を行なうメソッドを提供しています。
 </para>
 
 <para>
-この鎖の部分部分それぞれが Mail::Message オブジェクトです。
+この鎖の部分部分それぞれが FML::Message オブジェクトです。
 つまり一通のメールは、
 メールヘッダから始まるオブジェクトの鎖として表現されます。
 </para>
@@ -46,7 +46,7 @@ header -> preamble -> part1 -> part2 -> trailor
 </screen>
 を例に取りましょう。
 この左端(メールヘッダ)は、
-Mail::Message のタイプが text/rfc822-headers で、
+FML::Message のタイプが text/rfc822-headers で、
 その data が Mail::Header オブジェクトになります。
 一方 part1 は
 text/plain
@@ -58,7 +58,7 @@ text/plain
 <para>
 参照:
 <ulink url="../../en/modules/Mail/Message.txt">
-Mail::Message モジュールのマニュアル(英語)
+FML::Message モジュールのマニュアル(英語)
 </ulink>
 </para>
 
@@ -67,7 +67,7 @@ Mail::Message モジュールのマニュアル(英語)
 
 <sect1 id="module.mail.message.parse">
 	<title>
-	Mail::Message モジュール: 解析する
+	FML::Message モジュール: 解析する
 	</title>
 
 <para>
@@ -100,7 +100,7 @@ data_type_list() は鎖の列の情報を ARRAY REFERENCE の形で返します。
 
 <sect1 id="module.mail.message.create">
 	<title>
-	Mail::Message モジュール: 新しいメッセージを作る
+	FML::Message モジュール: 新しいメッセージを作る
 	</title>
 
 <para>
@@ -121,7 +121,7 @@ build_mime_header($args)
 
 <para>
 MIME/mulitpart の「作成」には
-Mail::Message::Compose クラスを使っています。
+FML::Message::Compose クラスを使っています。
 そして、このクラスの実態は CPAN の MIME::Lite そのものです :-)
 </para>
 
@@ -130,7 +130,7 @@ Mail::Message::Compose クラスを使っています。
 
 <sect1 id="module.mail.message.headerop">
 	<title>
-	Mail::Message モジュール: ヘッダの操作
+	FML::Message モジュール: ヘッダの操作
 	</title>
 
 <para>
@@ -181,7 +181,7 @@ whole_message_header_data_type()
 
 <sect1 id="module.mail.message.bodyop">
 	<title>
-	Mail::Message モジュール: メッセージ本文の操作
+	FML::Message モジュール: メッセージ本文の操作
 	</title>
 
 <para>
@@ -224,7 +224,7 @@ __last_message()
 <para>
 find_first_plaintext_message($args)
 は、
-鎖の中で最初の plain/text タイプの Mail::Message オブジェクトを返します。
+鎖の中で最初の plain/text タイプの FML::Message オブジェクトを返します。
 フィルタリングでは最初の
 plain/text タイプのメッセージ部分に着目することが多いため、
 この関数を使うと便利です。
@@ -235,13 +235,13 @@ plain/text タイプのメッセージ部分に着目することが多いため、
 
 <sect1 id="module.mail.message.search">
 	<title>
-	Mail::Message モジュール: オブジェクトの検索
+	FML::Message モジュール: オブジェクトの検索
 	</title>
 
 <para>
 find()
 メソッドは、
-特定のタイプの Mail::Message オブジェクトを探し、
+特定のタイプの FML::Message オブジェクトを探し、
 最初に見つけたオブジェクトを返します。
 注意: ヘッダの Content-Type: を返すわけではありません。
 </para>
@@ -251,7 +251,7 @@ find()
 
 <sect1 id="module.mail.message.print">
 	<title>
-	Mail::Message モジュール: メッセージを表示する。
+	FML::Message モジュール: メッセージを表示する。
 	</title>
 
 <para>
@@ -276,7 +276,7 @@ reset_print_mode()
 
 <sect1 id="module.mail.message.utils">
 	<title>
-	Mail::Message モジュール: 便利な関数
+	FML::Message モジュール: 便利な関数
 	</title>
 
 <sect2>
@@ -286,7 +286,7 @@ reset_print_mode()
 
 <para>
 size()
-は(鎖の一つ一つの Mail::Message)オブジェクトのサイズを返します。
+は(鎖の一つ一つの FML::Message)オブジェクトのサイズを返します。
 注意: メール全体のサイズを返すわけではありません。
 なお、
 header_size()
@@ -321,7 +321,7 @@ envelope_sender()
 <para>
 data_type()
 メソッドは
-Mail::Message オブジェクトのタイプ(文字列)を返します。
+FML::Message オブジェクトのタイプ(文字列)を返します。
 これは、
 メール全体のタイプ（マルチパートとか text/plain)ではなく、
 鎖の各部分のオブジェクト・タイプであることに注意して下さい。
@@ -330,7 +330,7 @@ Mail::Message オブジェクトのタイプ(文字列)を返します。
 <para>
 encoding_mechanism()
 メソッドは
-Mail::Message
+FML::Message
 オブジェクトのエンコーディングメカニズム(文字列)を返します。
 エンコーディングされていない場合 undef が返ります。
 これは、
@@ -343,13 +343,13 @@ Mail::Message
 
 <sect2>
 	<title>
-	Mail::Message オブジェクト内部の構造を知る
+	FML::Message オブジェクト内部の構造を知る
 	</title>
 
 <para>
 num_paragraphs()
 メソッドは、
-その Mail::Message オブジェクトの中に
+その FML::Message オブジェクトの中に
 何個のパラグラフがあるか(数字)を返します。
 </para>
 
@@ -394,7 +394,7 @@ message_text($size)
 <para>
 
 <ulink url="../../en/modules/Mail/Message.txt">
-Mail::Message モジュールマニュアル(英語)
+FML::Message モジュールマニュアル(英語)
 </ulink>
 </para>
 </sect1>

@@ -40,7 +40,7 @@ plan skip_all => "no source tree here" unless @ROOT;
 my @EUC_JP_SOURCE = qw(
     fml/lib/FML/Demo/Language/Japanese.pm
     fml/lib/Mail/Bounce/Language/Japanese.pm
-    fml/lib/Mail/Message/Language/Japanese/Subject.pm
+    fml/lib/FML/Message/Language/Japanese/Subject.pm
     fml/utils/bin/listup_recipes.pl
     fml/utils/bin/version_replace.pl
     fml/doc/en/tutorial/changes/conv2sgml.pl

@@ -190,8 +190,8 @@ sub _send
     my $recipient_map = $q->recipients_file_path($qid);
     my $sender        = $q->get_sender($qid);
 
-    use Mail::Message;
-    my $msg = Mail::Message->parse( { file => $qf_act } );
+    use FML::Message;
+    my $msg = FML::Message->parse( { file => $qf_act } );
 
     # XXX lock for recipient maps is NOT needed since already a copy.
     # XXX queue is already locked and need no lock for recipient maps here.

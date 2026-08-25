@@ -14,7 +14,7 @@
 # whatever charset it arrived in.  Silently: no error, no log, just the
 # wrong octets.
 #
-# The same typo was in Mail::Message::Encode::Obsolete, one line away
+# The same typo was in FML::Message::Encode::Obsolete, one line away
 # from a correct ||= in the same file.
 #
 # These tests pass an explicit $out_code, which is the case that was
@@ -35,9 +35,9 @@ BEGIN {
     }
 }
 
-use Mail::Message::Encode;
+use FML::Message::Encode;
 
-my $ENC = new Mail::Message::Encode;
+my $ENC = new FML::Message::Encode;
 
 # "日本語" as octets, in each encoding.
 my %JP = (
@@ -224,8 +224,8 @@ subtest 'every source charset reaches every requested one' => sub {
 # be broken while it sits there.
 # ---------------------------------------------------------------------
 subtest 'Encode::Obsolete honours $out_code too' => sub {
-    require Mail::Message::Encode::Obsolete;
-    my $obj = new Mail::Message::Encode::Obsolete;
+    require FML::Message::Encode::Obsolete;
+    my $obj = new FML::Message::Encode::Obsolete;
 
     # An encoded word carrying "日本語" in ISO-2022-JP.
     my $mime = "=?ISO-2022-JP?B?" .

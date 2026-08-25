@@ -186,7 +186,7 @@
 
 2011/08/25	
 
-   Mail::Message::Encode 
+   FML::Message::Encode 
 	bugfix quoted-printable pattern at decode_mime_utf8_to_euc().
 
 2010/11/28
@@ -271,7 +271,7 @@
 
 2009/06/10
 
-   Mail::Message::Date 
+   FML::Message::Date 
 	bugfix case timezone +0000
 
 2008/11/30
@@ -856,7 +856,7 @@
 
 2006/05/22
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	_update_montly_thread_index_master() rewrite same logic
 	using _update_id_montly_index_master()
 
@@ -899,7 +899,7 @@
 	
 2006/05/11
 
-   Mail::Message::Checksum 
+   FML::Message::Checksum 
 	restructured.
 	define md5_str_ref() too, same as md5().
 	implement md5_file()
@@ -1105,8 +1105,8 @@
 
    FML::Filter::TextPlain 
    Mail::Bounce::DSN Postfix19991231 Qmail SimpleMatch 
-   Mail::Message 
-   Mail::Message::ToHTML Outline 
+   FML::Message 
+   FML::Message::ToHTML Outline 
 	nuke ambiguous method and variable name.
 	num_paragraph() -> paragraph_total() (XXX see "Code Complete").
 	each variable holding this return value is fixed to $total.
@@ -1114,7 +1114,7 @@
    FML::Command::User::get 
 	clean up variable name style.
 	
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	fix variable name syntax::_num_attachment ->  _num_attachments
 	
    Mail::Delivery::SMTP 
@@ -1267,7 +1267,7 @@
 
 2006/03/29
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	change monthly_index.html's table output in 
 	_update_id_montly_index_master().
 	see also fml-devel 798.
@@ -1473,7 +1473,7 @@
    FML::MTA::Control 
    FML::MTA::Control::Postfix Procmail Qmail Sendmail 
    FML::Process::Error Kernel Utils 
-   Mail::Message::Utils 
+   FML::Message::Utils 
 	fix method name::remove -> delete
 	
    Mail::Delivery::Queue 
@@ -1856,7 +1856,7 @@
 
    FML::Filter::TextPlain 
 	is_signature() and is_citation() switched to
-	Mail::Message::String based.
+	FML::Message::String based.
 	
    FML::Article::Thread 
 	eval use ..
@@ -1879,14 +1879,14 @@
    variables
 	rename: $*_overview -> $*_outline
 	
-   Mail::Message::Thread 
+   FML::Message::Thread 
 	define DESTROY()
 	
-   Mail::Message 
-   Mail::Message::Outline 
-   Mail::Message::Language::Japanese::Outline 
-	move thread outline generator codes to Mail::Message::Outline.
-	correct error messages (Mail::Message).
+   FML::Message 
+   FML::Message::Outline 
+   FML::Message::Language::Japanese::Outline 
+	move thread outline generator codes to FML::Message::Outline.
+	correct error messages (FML::Message).
 	
    FML::Process::Distribute 
    FML::Article::Outline 
@@ -1922,12 +1922,12 @@
 
 2005/08/31
 
-   Mail::Message 
+   FML::Message 
 	implement new method prepend(), append() and
 	whole_message_body_tail(). 
 	fix charset() logic to handle plural header field lines.
 	
-   Mail::Message::DB 
+   FML::Message::DB 
 	implement find_head_key().
 	add() updates article_summary database, too.
 	
@@ -1940,7 +1940,7 @@
 
 2005/08/27	
 
-   Mail::Message::DB 
+   FML::Message::DB 
 	define open() and close()
 	
    FML::Filter::TextPlain 
@@ -1948,10 +1948,10 @@
 	
 2005/08/25
 
-   Mail::Message::Thread ToHTML 
+   FML::Message::Thread ToHTML 
 	renamed::db->analyze() => db->add()
 	
-   Mail::Message::DB 
+   FML::Message::DB 
 	renamed methonds:
 	o analyze  -> add
 	o db_open  -> _db_open
@@ -1997,8 +1997,8 @@
 
    FML::Filter::MimeComponent 
    FML::Header::Subject 
-   Mail::Message::Language::Japanese::Subject 
-   Mail::Message::Subject 
+   FML::Message::Language::Japanese::Subject 
+   FML::Message::Subject 
 	cut_off -> cutoff
 	
    FML::Config 
@@ -2013,7 +2013,7 @@
 
 2005/08/19
 
-   Mail::Message::DB ToHTML Utils 
+   FML::Message::DB ToHTML Utils 
 	convension::from_to_name -> from_address_to_name
 	
    FML::Filter 
@@ -2059,7 +2059,7 @@
                  SimpleMatch Smtpfeed
    Mail::Delivery::Queue 
    Mail::Bounce 
-   Mail::Message::DB Address 
+   FML::Message::DB Address 
 	XXX_clean_up() -> XXX_cleanup()
 
 2005/08/18
@@ -2077,7 +2077,7 @@
 	
    FML::Header::Subject 
 	exclude explicit code e.g. euc-jp and use
-	Mail::Message::Charset instead. 
+	FML::Message::Charset instead. 
 
    FML::MTA::Control::Postfix 
 	fix typo
@@ -2092,7 +2092,7 @@
    FML::Process::Distribute 
 	$curproc->thread_db_args(); -> $curproc->article_thread_init();
 	
-   Mail::Message::Encode 
+   FML::Message::Encode 
 	str_dump() -> dump_string()
 	
    FML::CGI::Calendar Thread 
@@ -2210,7 +2210,7 @@
    Mail::Delivery::Queue 
 	FNF: content_dup2() -> dup_content()
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	fixed function name:
 	o htmlfy_rfc822_message() -> htmlify_rfc822_message().
 	o html_begin() ->  html_start()
@@ -2227,17 +2227,17 @@
 
 2005/08/06
 
-   Mail::Message::Utils 
-	define get_time_from_header() method (moved from Mail::Message::DB).
+   FML::Message::Utils 
+	define get_time_from_header() method (moved from FML::Message::DB).
 	
-   Mail::Message::ToHTML 
-	switched to use Mail::Message::Utils::get_time_from_header.
+   FML::Message::ToHTML 
+	switched to use FML::Message::Utils::get_time_from_header.
 	
-   Mail::Message::DB 
+   FML::Message::DB 
 	overhaul:
 	[sg]et_db_module_name() -> [sg]et_db_module_class().
 	get_time_from_header() -> _get_time_from_header().
-	mov get_time_from_header() to Mail::Message::Utils class.
+	mov get_time_from_header() to FML::Message::Utils class.
 	clean up. remove not used variable.
 	fix db_close().
 	fix comments.
@@ -2411,11 +2411,11 @@
 
 2005/05/30
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
    FML::Filter::TextPlain 
-	use Mail::Message::Encode not MIME::Base64.
+	use FML::Message::Encode not MIME::Base64.
 	
-   Mail::Message::Encode 
+   FML::Message::Encode 
 	switch to use MIME::Base64::Perl not MIME::Base64 module.
 	define raw_decode_{base64,qp}().
 
@@ -2516,7 +2516,7 @@
 	
    FML::Process::DocViewer 
    IO::Adapter::AtomicFile 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
    FML::Command::DirUtils 
    FML::Config::Convert 
    FML::Filter::MimeComponent 
@@ -2525,7 +2525,7 @@
    FML::MTA::Control::Procmail 
    FML::Process::DocViewer 
    IO::Adapter::AtomicFile 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	FNF: not use str.str
 
    FML::Filter::External::clamscan 
@@ -2588,7 +2588,7 @@
 	
    FML::Process::CGI::Kernel 
 	remove the duplicated code.
-	use Mail::Message::Date instead of `date`.
+	use FML::Message::Date instead of `date`.
 	fix comments.
 	
    FML::Restriction::Command 
@@ -2602,10 +2602,10 @@
    Mail::Delivery::Net::INET4 
 	set timeout for socket(2).
 	
-   Mail::Message::Encode 
+   FML::Message::Encode 
 	use Jcode always.
 	
-   Mail::Message::MH 
+   FML::Message::MH 
 	sort the output for a,b,c style input.
 
    FML::Filter::External Header Size TextPlain 

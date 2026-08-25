@@ -5,17 +5,17 @@
 # $FML: Language.pm,v 1.5 2004/07/23 13:16:44 fukachan Exp $
 #
 
-package Mail::Message::Language;
+package FML::Message::Language;
 use strict;
 
 =head1 NAME
 
-Mail::Message::Language - handle *-Language: field.
+FML::Message::Language - handle *-Language: field.
 
 =head1 SYNOPSIS
 
-   use Mail::Message::Language;
-   my $mh = new Mail::Message::Language;
+   use FML::Message::Language;
+   my $mh = new FML::Message::Language;
 
 =head1 DESCRIPTION
 
@@ -25,7 +25,7 @@ Mail::Message::Language - handle *-Language: field.
 
 return list of languages to accept as ARRAY_REF.
 
-XXX THIS CLASS IS USED ONLY WITHIN Mail::Message CLASS.
+XXX THIS CLASS IS USED ONLY WITHIN FML::Message CLASS.
 
 =cut
 

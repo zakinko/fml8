@@ -5,17 +5,17 @@
 # $FML: Charset.pm,v 1.4 2004/02/26 12:59:07 fukachan Exp $
 #
 
-package Mail::Message::Charset;
+package FML::Message::Charset;
 use strict;
 
 =head1 NAME
 
-Mail::Message::Charset - charset map.
+FML::Message::Charset - charset map.
 
 =head1 SYNOPSIS
 
-    use Mail::Message::Charset;
-    my $mh = new Mail::Message::Charset;
+    use FML::Message::Charset;
+    my $mh = new FML::Message::Charset;
 
 =head1 DESCRIPTION
 

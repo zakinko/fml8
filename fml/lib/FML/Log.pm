@@ -126,11 +126,11 @@ sub Log
 
     # reference to "date" object
     eval q{
-	use Mail::Message::Date;
-	$rdate = new Mail::Message::Date;
+	use FML::Message::Date;
+	$rdate = new FML::Message::Date;
     };
     if ($@) {
-	croak("Mail::Message::Date not found");
+	croak("FML::Message::Date not found");
     }
 
     # open the $file by using FileHandle.pm
@@ -220,7 +220,7 @@ sub LogError
 
 =head1 SEE ALSO
 
-L<Mail::Message::Date>,
+L<FML::Message::Date>,
 L<FML::Config>,
 L<FML::Credential>,
 

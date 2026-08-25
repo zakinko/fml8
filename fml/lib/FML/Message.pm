@@ -7,7 +7,7 @@
 # $FML: Message.pm,v 1.105 2006/04/15 06:33:01 fukachan Exp $
 #
 
-package Mail::Message;
+package FML::Message;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD
 	    $debug_thread_unsafe_id
@@ -15,7 +15,7 @@ use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD
 	    $override_print_mode
 	    $override_log_function);
 use Carp;
-use Mail::Message::String;
+use FML::Message::String;
 
 
 my $debug = 0;
@@ -31,24 +31,24 @@ my %virtual_data_type =
 
 =head1 NAME
 
-Mail::Message -- manipulate mail messages (parse, analyze and compose)
+FML::Message -- manipulate mail messages (parse, analyze and compose)
 
 =head1 SYNOPSIS
 
 To parse the stdin and print it,
 
-    use Mail::Message;
-    my $m = Mail::Message->parse({ fh => *STDIN{IO} });
+    use FML::Message;
+    my $m = FML::Message->parse({ fh => *STDIN{IO} });
     $m1->print;
 
 to parse file C<$filename>,
 
-    use Mail::Message;
-    my $m = Mail::Message->parse({ file => $filename });
+    use FML::Message;
+    my $m = FML::Message->parse({ file => $filename });
 
 to make a message of the body part,
 
-    my $msg = new Mail::Message {
+    my $msg = new FML::Message {
 	boundary  => $mime_boundary,
 	data_type => $data_type_defined_in_header_content_type,
 	data      => \$message_body,
@@ -58,7 +58,7 @@ Please specify SCALAR REFERENCE as C<data>.
 
 To make a message of the header,
 
-    my $msg = new Mail::Message {
+    my $msg = new FML::Message {
 	boundary  => $mime_boundary,
 	data_type => 'text/rfc822-headers',
 	data      => $header,
@@ -77,18 +77,18 @@ Please specify C<Mail::Header> or C<FML::Header> object as C<data>.
 
 C<A mail message> has the data to send and some delivery information
 in the header.
-C<Mail::Message> objects construct a chain of header and data.
-C<Mail::Message> object holds them and other control information such
-as the reference to the next C<Mail::Message> object, et. al.
+C<FML::Message> objects construct a chain of header and data.
+C<FML::Message> object holds them and other control information such
+as the reference to the next C<FML::Message> object, et. al.
 
-C<Mail::Message> provides useful functions to analyze a mail message.
+C<FML::Message> provides useful functions to analyze a mail message.
 such as to analyze MIME information,
 to check and get information on message (part) size et. al.
 It can handle MIME multipart.
 
-C<Mail::Message> also can compose a multipart message in primitive
+C<FML::Message> also can compose a multipart message in primitive
 way.
-It is useful for you to use C<Mail::Message::Compose> class to handle
+It is useful for you to use C<FML::Message::Compose> class to handle
 MIME multipart in more clever way.
 It is an adapter for C<MIME::Lite> class.
 
@@ -96,7 +96,7 @@ It is an adapter for C<MIME::Lite> class.
 
 One mail consists of a message or messages.
 They are all plain text or a set of plain text, images, html and so on.
-C<Mail::Message> is a chain which represents
+C<FML::Message> is a chain which represents
 a set of several kinds of messages.
 
 
@@ -135,7 +135,7 @@ message for convenience.
 
    key                value
    -----------------------------------------------------
-   version            Mail::Message object version
+   version            FML::Message object version
    next               pointer to the next message
    prev               pointer to the previous message
    base_data_type     type of the whole message
@@ -193,7 +193,7 @@ Consider the following multipart message.
    --boundary--
       ... trailor ...
 
-C<Mail::Message> parser interpetes it as follows:
+C<FML::Message> parser interpetes it as follows:
 
       base_data_type                 data_type
    ----------------------------------------------------------
@@ -206,7 +206,7 @@ C<Mail::Message> parser interpetes it as follows:
    6: multipart/mixed                multipart.trailer
 
 C<multipart.something> is a faked type to treat both real content,
-MIME delimiters and others in the same Mail::Message framework.
+MIME delimiters and others in the same FML::Message framework.
 
 
 =head1 METHODS to create a message object
@@ -242,7 +242,7 @@ you will get the whole set of a chain and a body message.
 #               call $self->_build_message($args) if $args is given.
 #    Arguments: OBJ($self) HASH_REF($args)
 # Side Effects: none
-# Return Value: OBJ(Mail::Message object)
+# Return Value: OBJ(FML::Message object)
 sub new
 {
     my ($self, $args) = @_;
@@ -300,7 +300,7 @@ sub _build_message
 }
 
 
-# Descriptions: build a Mail::Message object template
+# Descriptions: build a FML::Message object template
 #    Arguments: OBJ($self) HASH_REF($args)
 # Side Effects: set up default values within $self if needed
 # Return Value: none
@@ -412,8 +412,8 @@ sub dup_header
 
     # if the head object is rfc822 header, dup the header.
     if ($self->{ data_type } eq 'text/rfc822-headers') {
-	my $dupmsg  = new Mail::Message; # make a new object
-	my $dupmsg2 = new Mail::Message; # make a new object
+	my $dupmsg  = new FML::Message; # make a new object
+	my $dupmsg2 = new FML::Message; # make a new object
 	my $body    = $self->{ next };
 
 	# 1. copy header and the first body part
@@ -457,7 +457,7 @@ You can specify file not file descriptor.
 
 # Descriptions: parse given file (file path or descriptor)
 #               create header OBJ and body OBJ chain.
-#               combine them into one chain of Mail::Message OBJ,
+#               combine them into one chain of FML::Message OBJ,
 #               so that we get
 #                  header -> body1 -> body2 -> ... body-end
 #               object chain.
@@ -489,7 +489,7 @@ sub parse
     $me->_parse($fd, $result);
 
     # make a Mail::Messsage object for the (whole) mail header
-    # $me becomes a Mail::Message;
+    # $me becomes a FML::Message;
     $me->_parse_header($result);
     $me->_build_header_object($args, $result);
 
@@ -641,7 +641,7 @@ sub _build_body_object
 
     # XXX we use data_type (type defined in Content-Type: field) here.
     # XXX "base_data_type" is used only internally.
-    return new Mail::Message {
+    return new FML::Message {
 	# XXX We need to pass the top header part (head of the chain)
 	# XXX for the main text/* part to know its charset and encoding.
 	# XXX This info is needed only in text/* case not multipart/*.
@@ -703,7 +703,7 @@ sub append
 }
 
 
-# Descriptions: build a Mail::Message object.
+# Descriptions: build a FML::Message object.
 #    Arguments: OBJ($self) HASH_REF($data)
 # Side Effects: none
 # Return Value: OBJ
@@ -712,7 +712,7 @@ sub __build_simple_message
     my ($self, $data) = @_;
     my $dp = undef;
 
-    if (ref($data) eq 'Mail::Message') {
+    if (ref($data) eq 'FML::Message') {
 	return $data;
     }
     else {
@@ -724,7 +724,7 @@ sub __build_simple_message
 	$my_charset =~ tr/A-Z/a-z/;
 	$charset    =~ tr/A-Z/a-z/;
 	if ($type eq 'text/plain' && $my_charset eq $charset) {
-	    return new Mail::Message {
+	    return new FML::Message {
 		data_type => $type,
 		data      => \$buf,
 	    };
@@ -752,13 +752,13 @@ alias of C<whole_message_body_head()>.
 
 =head2 whole_message_body_head()
 
-return the first or the head Mail::Message object in a chain for the
+return the first or the head FML::Message object in a chain for the
 body part of the message C<$self>.
 
 =cut
 
 
-# Descriptions: get header OBJ (Mail::Header not Mail::Message)
+# Descriptions: get header OBJ (Mail::Header not FML::Message)
 #               in the head of chain.
 #               HEADER(THIS PART) -> body1 -> body2 -> ...
 #    Arguments: OBJ($self)
@@ -789,7 +789,7 @@ sub whole_message_header_as_str
 #               header -> body1 (HERE) -> body2 -> ...
 #    Arguments: OBJ($self)
 # Side Effects: none
-# Return Value: OBJ(Mail::Message)
+# Return Value: OBJ(FML::Message)
 sub whole_message_body_head
 {
     my ($self) = @_;
@@ -802,7 +802,7 @@ sub whole_message_body_head
 #               header -> body1 (HERE) -> body2 -> ... -> body_last
 #    Arguments: OBJ($self)
 # Side Effects: none
-# Return Value: OBJ(Mail::Message)
+# Return Value: OBJ(FML::Message)
 sub whole_message_body_tail
 {
     my ($self) = @_;
@@ -814,7 +814,7 @@ sub whole_message_body_tail
 #               header -> body1 (HERE) -> body2 -> ...
 #    Arguments: OBJ($self)
 # Side Effects: none
-# Return Value: OBJ(Mail::Message)
+# Return Value: OBJ(FML::Message)
 sub whole_message_body
 {
     my ($self) = @_;
@@ -981,7 +981,7 @@ sub _header_data_type
 
 =head2 find($args)
 
-return the first C<Mail::Message> object with the specified attrribute.
+return the first C<FML::Message> object with the specified attrribute.
 You can specify C<data_type> in C<$args> HASH REFERENCE.
 For example,
 
@@ -1001,7 +1001,7 @@ C<$m> is the first "text/*" object in a chain of C<$msg> object.
 #               data_type_regexp.
 #    Arguments: OBJ($self) HASH_REF($args)
 # Side Effects: none
-# Return Value: OBJ(Mail::Message)
+# Return Value: OBJ(FML::Message)
 sub find
 {
     my ($self, $args) = @_;
@@ -1038,13 +1038,13 @@ sub find
 =head2 __head_message()
 
 no argument.
-It return the head object of a chain of C<Mail::Message> objects.
+It return the head object of a chain of C<FML::Message> objects.
 Usually it is the header part.
 
 =head2 __last_message()
 
 no argument.
-It return the last object of a chain of C<Mail::Message> objects.
+It return the last object of a chain of C<FML::Message> objects.
 Usually it is the last message in the body part.
 
 =cut
@@ -1528,7 +1528,7 @@ sub build_mime_multipart_chain
 
     for my $m (@$msglist) {
 	# delimeter: --boundary
-	my $msg = new Mail::Message {
+	my $msg = new FML::Message {
 	    boundary       => $boundary,
 	    base_data_type => $base_data_type,
 	    data_type      => $virtual_data_type{'delimeter'},
@@ -1550,7 +1550,7 @@ sub build_mime_multipart_chain
     }
 
     # close delimeter: --boundary--
-    my $msg = new Mail::Message {
+    my $msg = new FML::Message {
 	boundary       => $boundary,
 	base_data_type => $base_data_type,
 	data_type      => $virtual_data_type{'close-delimeter'},
@@ -1868,9 +1868,9 @@ sub _data_type
 }
 
 
-# Descriptions: get header part in $data, which is data in Mail::Message.
+# Descriptions: get header part in $data, which is data in FML::Message.
 #               this header is not header for the whole message but
-#               each header in Mail::Message.
+#               each header in FML::Message.
 #               each message has each mime header, e.g. for MIME/multipart.
 #    Arguments: REF_STR($data) NUM($pos_begin) NUM($pos_end)
 # Side Effects: none
@@ -1941,9 +1941,9 @@ sub build_mime_header
 #     {Content-Type: ...
 #
 #       ... body ...}
-# Descriptions: make a new Mail::Message object.
+# Descriptions: make a new FML::Message object.
 #    Arguments: OBJ($self) HASH_REF($args)
-# Side Effects: create a new Mail::Message object.
+# Side Effects: create a new FML::Message object.
 # Return Value: OBJ
 sub _alloc_new_part
 {
@@ -2044,8 +2044,8 @@ sub _set_pos
 =cut
 
 # thread outline generator.
-use Mail::Message::Outline;
-push(@ISA, "Mail::Message::Outline");
+use FML::Message::Outline;
+push(@ISA, "FML::Message::Outline");
 
 
 =head2 one_line_summary($params)
@@ -2113,7 +2113,7 @@ sub size
     # fundamental check
     unless (defined($rc) && ref($rc) eq 'SCALAR') {
 	# XXX simple check (needed ?)
-	# confess("Mail::Message->size() is given invalid object ($self)\n");
+	# confess("FML::Message->size() is given invalid object ($self)\n");
 	return 0;
     }
 
@@ -2233,13 +2233,13 @@ sub charset
 
 =head2 encoding_mechanism()
 
-return encoding type for specified Mail::Message not whole mail.
+return encoding type for specified FML::Message not whole mail.
 The return value is one of base64, quoted-printable or undef.
 
 =cut
 
 
-# Descriptions: return encoding type for specified Mail::Message not
+# Descriptions: return encoding type for specified FML::Message not
 #               whole mail.
 #    Arguments: OBJ($self)
 # Side Effects: none
@@ -2280,7 +2280,7 @@ return value is ARRAY
 
    ($offset_begin, $offset_end)
 
-on the Mail::Message object.
+on the FML::Message object.
 
 =cut
 
@@ -2640,7 +2640,7 @@ sub find_first_plaintext_message
 
 return the chain of message objects as ARRAY_REF of OBJ's like this:
 
-   [ Mail::Message, Mail::Message, ... ]
+   [ FML::Message, FML::Message, ... ]
 
 =cut
 
@@ -2790,18 +2790,18 @@ return list of languages to accept as ARRAY_REF such as [ 'ja', 'en',
 
 
 # Accept-Language: handling
-use Mail::Message::Language;
-push(@ISA, "Mail::Message::Language");
+use FML::Message::Language;
+push(@ISA, "FML::Message::Language");
 
 
 =head1 METHODS to make a whole mail message
 
-Please use C<Mail::Message::Compose> class.
+Please use C<FML::Message::Compose> class.
 This is an adapter for C<MIME::Lite>, so
 your request is forwarded to C<MIME::Lite> class :-)
 
-    use Mail::Message::Compose;
-    $msg = Mail::Message::Compose->new(
+    use FML::Message::Compose;
+    $msg = FML::Message::Compose->new(
        From     => 'fukachan@fml.org',
        To       => 'rudo@nuinui.net',
        Cc       => 'kenken@nuinui.net',
@@ -2894,7 +2894,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message first appeared in fml8 mailing list driver package.
+FML::Message first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

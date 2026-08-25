@@ -31,7 +31,7 @@ BEGIN {
     }
 }
 
-use Mail::Message;
+use FML::Message;
 use Mail::Bounce;
 
 my $DIR = 'regress/errormails';
@@ -100,7 +100,7 @@ sub analyze
     my $fh = new FileHandle $path;
     return undef unless defined $fh;
 
-    my $msg = Mail::Message->parse( { fd => $fh } );
+    my $msg = FML::Message->parse( { fd => $fh } );
     my $b   = new Mail::Bounce;
     $b->analyze($msg);
 
@@ -449,7 +449,7 @@ subtest 'an ordinary mail is not read as a bounce' => sub {
 	close($wh);
 
 	my $fh  = new FileHandle $path;
-	my $msg = Mail::Message->parse( { fd => $fh } );
+	my $msg = FML::Message->parse( { fd => $fh } );
 	my $b   = new Mail::Bounce;
 	eval { $b->analyze($msg) };
 

@@ -3,7 +3,7 @@
 # FML::Header::Subject regression tests.
 #
 # encode_mime_string() and decode_mime_string() were moved out of
-# Mail::Message::Encode into Mail::Message::Encode::Obsolete, but the two
+# FML::Message::Encode into FML::Message::Encode::Obsolete, but the two
 # call sites here were left pointing at the old package, so every call
 # died with "Can't locate object method".  Encode::Obsolete itself had no
 # constructor and no parent either, so it could not have served them.
@@ -31,7 +31,7 @@ BEGIN {
 }
 
 use FML::Header::Subject;
-use Mail::Message::Encode::Obsolete;
+use FML::Message::Encode::Obsolete;
 
 # The obsolete path calls into the bundled IM package: decode_mime_string()
 # goes through IM::EncDec and encode_mime_string() through IM::Iso2022jp.
@@ -61,8 +61,8 @@ my $SBJ_UTF8 = "=?UTF-8?B?W2VsZW5hOjAwMDAxXSDml6XmnKzoqp4=?=";
 # ---------------------------------------------------------------------
 # 1. Encode::Obsolete must be usable on its own
 # ---------------------------------------------------------------------
-subtest 'Mail::Message::Encode::Obsolete is a usable object' => sub {
-    my $obj = eval { new Mail::Message::Encode::Obsolete };
+subtest 'FML::Message::Encode::Obsolete is a usable object' => sub {
+    my $obj = eval { new FML::Message::Encode::Obsolete };
     ok(!$@, 'new() does not die') or diag($@);
     ok(defined $obj, 'constructor returns an object');
 
@@ -80,16 +80,16 @@ subtest 'Mail::Message::Encode::Obsolete is a usable object' => sub {
 # 2. the methods the call sites need actually resolve
 # ---------------------------------------------------------------------
 subtest 'the relocated methods resolve' => sub {
-    my $obj = new Mail::Message::Encode::Obsolete;
+    my $obj = new FML::Message::Encode::Obsolete;
     can_ok($obj, 'encode_mime_string');
     can_ok($obj, 'decode_mime_string');
     can_ok($obj, 'decode_mime_utf8_to_euc');
 
     # They are gone from where the call sites used to look.
-    use Mail::Message::Encode;
-    my $old = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $old = new FML::Message::Encode;
     ok(!$old->can('decode_mime_string'),
-       'decode_mime_string is no longer in Mail::Message::Encode');
+       'decode_mime_string is no longer in FML::Message::Encode');
 };
 
 
@@ -152,7 +152,7 @@ subtest 'decode() reports the wire and internal charsets' => sub {
 # XXX patching a tree that the next sync overwrites.
 # ---------------------------------------------------------------------
 subtest 'encode_mime_string() produces an encoded word' => sub {
-    my $obj = new Mail::Message::Encode::Obsolete;
+    my $obj = new FML::Message::Encode::Obsolete;
 
   SKIP: {
 	skip("IM::Iso2022jp does not load here, so this branch is a no-op: " .

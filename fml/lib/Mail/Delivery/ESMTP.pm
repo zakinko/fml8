@@ -33,9 +33,9 @@ Mail::Delivery::ESMTP - Extended SMTP class.
 
 =head1 SYNOPSIS
 
-    use Mail::Message;
+    use FML::Message;
 
-      ... make Mail::Message object ...
+      ... make FML::Message object ...
 
     use Mail::Delivery;
     $service = new Mail::Delivery { protocol => 'ESMTP' };

@@ -3,7 +3,7 @@
 # Do fml4 and fml8 turn the same octets into the same octets?
 #
 # t/2*_parity_*.t compare what the two can be asked.  This one compares
-# what they answer: fml4's jcode.pl and fml8's Mail::Message::Encode are
+# what they answer: fml4's jcode.pl and fml8's FML::Message::Encode are
 # both run on the same input and their output is compared byte for byte.
 #
 # Charset conversion is where fml is reported to mangle mail, and it is
@@ -37,7 +37,7 @@ BEGIN {
 }
 
 use ParityFML4;
-use Mail::Message::Encode;
+use FML::Message::Encode;
 
 plan skip_all => "no fml4 checkout (set FML4_DIR, or put one at ../fml4)"
     unless ParityFML4::fml4_dir();
@@ -50,7 +50,7 @@ plan skip_all => "fml4 will not run here"
 my $LOAD_ERROR = ParityFML4::fml4_load_error("module/Japanese/jcode.pl");
 plan skip_all => $LOAD_ERROR if $LOAD_ERROR;
 
-my $ENC = new Mail::Message::Encode;
+my $ENC = new FML::Message::Encode;
 
 # The same text in each encoding, as octets.
 my %JP = (
@@ -241,7 +241,7 @@ subtest 'UTF-8 input: fml8 understands it, fml4 does not' => sub {
        'fml8 converts UTF-8 into the internal EUC-JP');
 
     # And back out, which it still cannot do.
-    local $TODO = 'Mail::Message::Encode cannot emit UTF-8 yet';
+    local $TODO = 'FML::Message::Encode cannot emit UTF-8 yet';
     is(unpack("H*", $ENC->convert($JP{euc}, 'utf8')), $hex,
        'fml8 converts EUC-JP into UTF-8');
 };

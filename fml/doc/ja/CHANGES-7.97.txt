@@ -147,7 +147,7 @@
 
 2004/12/08
 
-   Mail::Message 
+   FML::Message 
 	implement message_chain_as_array_ref() method.
 
 2004/12/05
@@ -257,7 +257,7 @@
 
 2004/11/14
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	add monthly thread index
 
    FML::Restriction::Post 
@@ -284,7 +284,7 @@
 
    クリーニング中…
 
-   Mail::Message::Thread 
+   FML::Message::Thread 
 	bug fix comment::fixed return value
 	
    FML::Article::Thread 
@@ -525,14 +525,14 @@
    FML::Process::Utils 
 	thread_db_args() returns htmlifier parameters with subject tag hints.
 	
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	handle subject tag separetely in string escaping.
 	
-   Mail::Message 
+   FML::Message 
 	implement get_print_mode()
 	
    Mail::Delivery::SMTP 
-	override print mode of Mail::Message object to "raw" in fallbacking.
+	override print mode of FML::Message object to "raw" in fallbacking.
 
 2004/07/23
 
@@ -648,11 +648,11 @@
 	FML::User::Info 
 		fix typo
 		
-	Mail::Message::Date 
+	FML::Message::Date 
 		fix comments.
 		modify variable name to clarify the role.
 		
-	Mail::Message::Encode 
+	FML::Message::Encode 
 		bug fix arguments.
 		
 	FML::Process::CGI::Kernel 
@@ -689,7 +689,7 @@
 
 2004/07/07
 
-   Mail::Message::Address 
+   FML::Message::Address 
 	put back initializtion code to 1.3 one.
 	
 2004/07/06
@@ -701,7 +701,7 @@
 2004/07/01
 
    FML::Process::Distribute 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	reduce error messages
 
 2004/06/30
@@ -727,7 +727,7 @@
    オーバーホール
 	FML::Command::Admin::chaddr off 
 	FML::Command::User::admin digest unsubscribe 
-	Mail::Message::Address 
+	FML::Message::Address 
 	Mail::Delivery 
 	Mail::Delivery::ESMTP ErrorStatus QueueUtils 
 	Mail::Delivery::Net::INET4 INET6 
@@ -801,7 +801,7 @@
    FML::Process::Kernel 
 	TERM_NL() macro support in message translation.
 
-   Mail::Message 
+   FML::Message 
    Mail::Delivery::Queue SMTP 
    FML::Process::Distribute 
 	queue system debug::trace number of bytes written.
@@ -834,7 +834,7 @@
 
 2004/06/23
 
-   Mail::Message::Subject 
+   FML::Message::Subject 
 	bug fix::delete_dup_reply_tag() runs always. (fml-devel: 711)
 
 2004/06/17
@@ -860,7 +860,7 @@
 	書いておきます。参照して下さい。
 
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	bugfix @indexs use my $indexs = \@indexs;
 	
    FML::Process::Kernel 
@@ -868,14 +868,14 @@
 
 2004/06/13
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	set $main::opt_mimedecodequoted at
 	_print_li_filename(),_format_safe_header()
 	
-   Mail::Message::DB 
+   FML::Message::DB 
 	null check $key at _db_set()
 	
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	select index files using @indexs
 
 2004/06/09
@@ -999,7 +999,7 @@
 	
 	rename valid() -> valid_active_queue() to clarify the role.
 	
-   Mail::Message 
+   FML::Message 
 	\*HANDLE -> *HANDLE{IO}.
 	imlement error*().
 	write error track.
@@ -1355,7 +1355,7 @@
 
 2004/04/15
 
-   Mail::Message 
+   FML::Message 
 	Content-Type case-insensitive in _data_type()
 	
    File::CacheDir 
@@ -1461,7 +1461,7 @@
 
    スレッド操作の再構成
 
-   Mail::Message 
+   FML::Message 
 	implement methods to detect the end of thread:
 	has_closing_phrase()
 	set_closing_phrase_rules($rules)
@@ -1470,13 +1470,13 @@
 	implement one_line_summary($params) and summary($params) to return
 	summarized content.
 	
-   Mail::Message::String 
+   FML::Message::String 
 	implement is_citation(), is_signature().
 	
-   Mail::Message::MH 
+   FML::Message::MH 
 	check if the sequence is positive value.
 	
-   Mail::Message::Thread 
+   FML::Message::Thread 
 	implement get_thread_data(), get_thread_member_as_array_ref().
 	
 	define new db::thread_status article_status
@@ -1484,7 +1484,7 @@
 	implement new methods::set_thread_status(), get_thread_status(),
 	set_article_status() and get_article_status().
 
-   Mail::Message::DB 
+   FML::Message::DB 
 	implement get_thread_data() which return thread data around the
 	specified key.
 	
@@ -1493,9 +1493,9 @@
 	implement new methods::set_thread_status(), get_thread_status(),
 	set_article_status() and get_article_status().
 	
-	bug fix handling of range expanded by Mail::Message::MH module.
+	bug fix handling of range expanded by FML::Message::MH module.
 	
-   Mail::Message::{DB,Thread} 
+   FML::Message::{DB,Thread} 
 	define {set,get}_article_summary() and article_summary db to handle
 	article summary easily.
 	
@@ -1504,8 +1504,8 @@
 	as possible.
 	
    FML::Header::Subject 
-   Mail::Message::Subject 
-	fix usage of Mail::Message::Language::Japanese::Subject.
+   FML::Message::Subject 
+	fix usage of FML::Message::Language::Japanese::Subject.
 	
    FML::Article::Thread 
 	re-implemented for further plan to purge Mail::ThreadTrack.
@@ -1515,7 +1515,7 @@
 
 2004/03/24
 
-   Mail::Message::DB IMPLEMENTATION TODO ToHTML 
+   FML::Message::DB IMPLEMENTATION TODO ToHTML 
 	clean up campaign around thread function.
 	rename function name:
 	o thread_summary        -> get_thread_summary
@@ -1788,7 +1788,7 @@
 
 2004/02/29
 
-   Mail::Message::Language 
+   FML::Message::Language 
 	accept_language_list() return [] not [*] if not found.
 
 2004/02/27
@@ -1831,7 +1831,7 @@
 
 	more proper charset handling based on Content-Type::field.
 	
-	change Mail::Message::Encode to Mail::Message::String in
+	change FML::Message::Encode to FML::Message::String in
 	message handling. 
 
 	implement get_preferred_languages() method.
@@ -1844,13 +1844,13 @@
    FML::Error::Cache 
 	firstly, constructor() expires too old cache.
 	
-   Mail::Message 
+   FML::Message 
 	enhance trap regexp for charset=...
 	
-   Mail::Message::Charset 
+   FML::Message::Charset 
 	fix comments
 	
-   Mail::Message::Language 
+   FML::Message::Language 
 	handle X-Accept-Language:
 
    Tie::JournaledDir 
@@ -1861,7 +1861,7 @@
    FML::Article::Spool 
 	check input data more.
 	
-   Mail::Message::String 
+   FML::Message::String 
 	add new methods:
 	+charcode_convert_to_internal_code().
 	+charcode_convert_to_external_charset().
@@ -1884,16 +1884,16 @@
    FML::Header 
 	expand special regexp in tag before tag substitution.
 	
-   Mail::Message::Subject 
+   FML::Message::Subject 
 	update $subject only if subject is rewritten.
 	
    FML::Article::Summary 
-	switch to new Mail::Message::* framework.
+	switch to new FML::Message::* framework.
 	
-   Mail::Message::Charset 
+   FML::Message::Charset 
 	implement message_charset_to_language() method.
 	
-   Mail::Message::String 
+   FML::Message::String 
 	use mothod-style more even internally.
 	speculate in and out code::charset as could as possible.
 	implement method::charcode_convert(), get_charcode().
@@ -1903,16 +1903,16 @@
    FML::Command::User::chaddr 
 	vaildate address type variables.
 	
-   Mail::Message::String 
+   FML::Message::String 
 	change in-core internal variables.
 	implement set(), get(), set_mime_charset(), get_mime_charset
 	and unfold().
 	
-   Mail::Message::Address 
+   FML::Message::Address 
 	modify on-memory variable naming.
 	implement as_str(), substr().
 	
-   Mail::Message::Date 
+   FML::Message::Date 
 	new() can handle both unix time and Date::style string.
 	
 	implement set(), unixtime().
@@ -1924,7 +1924,7 @@
 	
    FML::Article::Summary 
    FML::Header 
-	modified to use new Mail::Message::* framekwork.
+	modified to use new FML::Message::* framekwork.
 
 2004/02/03
 
@@ -2195,7 +2195,7 @@
 	bugfix default $use_address_mask and $address_mask_type in
 	thread_db_args()
 	
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	add from-address for not use address_mask in
 	_print_li_filename()
 	
@@ -2253,7 +2253,7 @@
 
 2003/12/10
 
-   Mail::Message::DB 
+   FML::Message::DB 
 	quick hack for trouble making html indexs and working
 	distribute.
 
@@ -2380,7 +2380,7 @@
 	+ $user_db_gecos_maps
 	+ $user_db_subscribe_date_maps
 	
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	try to mask raw addresses in signature.
 	rename::_who_of_address() -> _address_to_gecos()
 	
@@ -2435,7 +2435,7 @@
 
 2003/11/08
 
-   Mail::Message::Encode 
+   FML::Message::Encode 
 	disable Encode use even on >= 5.008 since we are not ready.
 
 	perl 5.8 では Encode をつかうべきなんだろうけど、今は Jcode を
@@ -2447,8 +2447,8 @@
 
 2003/11/07
 
-   Mail::Message::ToHTML
-	Mail::Message::ToHTML の拡張 
+   FML::Message::ToHTML
+	FML::Message::ToHTML の拡張 
 	add $versionid
 	add new comment tag at html_begin() for file magic
 	change @header_field remove same information (X-xxx) and add
@@ -2557,8 +2557,8 @@
 	remove duplicated $default_directory_mode.
 
    FML::Process::CGI::Kernel 
-   Mail::Message::Charset 
-	Mail::Message::Charset has tables on code, charset and languge.
+   FML::Message::Charset 
+	FML::Message::Charset has tables on code, charset and languge.
 	FML::Process::CGI::Kernel is modified to use it.
 
    FML::Command::Admin::log 
@@ -2589,8 +2589,8 @@
 	language_of_cgi_message() -> get_charset("cgi")
 	
    FML::Process::Kernel 
-   Mail::Message 
-   Mail::Message::Language 
+   FML::Message 
+   FML::Message::Language 
 	consider Accept-Language::(but not used yet now ;-).
 	
    FML::Process::CGI::Utils 
@@ -2641,7 +2641,7 @@
    FML::Process::CGI::Kernel Utils 
 	define cgi_var_language() and use it
 	
-   Mail::Message::DB 
+   FML::Message::DB 
 	oops, remove debug message output
 	
    FML::Filter::MimeComponent 
@@ -2661,7 +2661,7 @@
 2003/10/06
 
    FML::Process::Distribute 
-   Mail::Message::DB ToHTML 
+   FML::Message::DB ToHTML 
 	handle article subject specilly where the key in db is
 	"article_subject".
 	
@@ -2671,7 +2671,7 @@
 
 2003/09/30
 
-   Mail::Message::DB 
+   FML::Message::DB 
 	create article_$header db too.
 
    FML::Restriction::Base 
@@ -2815,7 +2815,7 @@
 	use $curproc->ui_message() instead of "print STDERR ...".
 	
    FML::Filter::MimeComponent3 
-   Mail::Message 
+   FML::Message 
 	fix variable initialization to avoid undefined reference warning.
 	
    FML::Process::Configure 
@@ -2835,8 +2835,8 @@
 
 2003/09/08
 
-   Mail::Message
-   Mail::Message::{ToHTML,Encode}
+   FML::Message
+   FML::Message::{ToHTML,Encode}
 	=?shift_jis? ... メールの取り扱いを修正
 	各オブジェクトにおける charset と encoding の扱いを修正
 
@@ -2884,7 +2884,7 @@
 
 2003/08/24
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	print STDERR ... if $debug.
 	
    FML::Config 
@@ -2906,7 +2906,7 @@
 	define $curproc->log, logwarn, logerror and log_message() methods.
 	modified to use $curproc->log*() interface.
 	
-   Mail::Message::Checksum 
+   FML::Message::Checksum 
 	use croak() not FML::Log()
 	
    FML::Process::Kernel 
@@ -2927,7 +2927,7 @@
 2003/08/20
 
    FML::Process::Utils 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	define the detail of address masking against spammers.
 	$use_html_archive_address_mask	=	yes
 	$html_archive_address_mask_type	=	all
@@ -2955,7 +2955,7 @@
    FML::Process::Kernel 
 	check whether $ml_home_dir not exists in _init_lock().
 
-   Mail::Message 
+   FML::Message 
 	modify logic to find the start point of multipart.
 	correct handling of the first dash-boundary.
 	XXX this logic is effective but wrong.
@@ -2963,7 +2963,7 @@
 2003/08/15
 
    FML::Process::Utils 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	test html_archive_address_mask mask or nomask
 	address_mask use To and Cc
 
@@ -2995,7 +2995,7 @@
 
   Document translation to English completed up to 70 % ?
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	reduce warning if missing from or subject at sub
 	_print_li_filename()
 
@@ -3016,18 +3016,18 @@
 
 2003/07/22
 
-   Mail::Message::Language::Japanese::Subject 
+   FML::Message::Language::Japanese::Subject 
 	nuke todo::method-ify done.
 	
-   Mail::Message::Date 
+   FML::Message::Date 
 	implement speculate_timezone() to remove hard-coded timezone
 	+0900 :-). 
 	
    FML::Process::Kernel 
-	use our own Date::field when we use Mail::Message::Compose
+	use our own Date::field when we use FML::Message::Compose
 	(MIME::Lite). 
 	
-   Mail::Message::Encode 
+   FML::Message::Encode 
 	detect_code() should not call croak() but return 'unknown'.
 	we can handle Japanes and English, so fixed comments.
 
@@ -3048,31 +3048,31 @@
 	
    Mail::ThreadTrack::Analyze 
    FML::Article::Summary 
-   Mail::Message::Date 
-	method-ify date_to_unixtime() of Mail::Message::Date.
+   FML::Message::Date 
+	method-ify date_to_unixtime() of FML::Message::Date.
 	
-   Mail::Message::Checksum Utils 
-	import search_program() into Mail::Message::Utils module.
+   FML::Message::Checksum Utils 
+	import search_program() into FML::Message::Utils module.
 	modified Checksum to use it.
 	
    FML::Header::Subject 
-   Mail::Message::Language::Japanese::Subject 
+   FML::Message::Language::Japanese::Subject 
 	method-ify cut_off_reply_tag()
 
 2003/07/20
 
-   Mail::Message::DB 
+   FML::Message::DB 
 	comment on analyze()
 
 	restrict demand copying only for the previous messages before
 	the current one.
 
-   Mail::Message::ToHTML 
-   Mail::Message::Thread 
+   FML::Message::ToHTML 
+   FML::Message::Thread 
 	moved analyzer dispatcher to ::Thread module to use analyzer
 	independetly.
 
-   Mail::Message::Thread 
+   FML::Message::Thread 
 	analyze() accpets $id if specified.
 	
    FML::Process::{Distribute,Utils} 
@@ -3081,7 +3081,7 @@
 
 2003/07/19
 
-   Mail::Message
+   FML::Message
 	merge udb branch to switch to the new thread engine
 	fixed to co-work with udb well.
 
@@ -3090,7 +3090,7 @@
 
 2003/07/03
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	change regexp $url$trailor
 
 2003/06/29
@@ -3109,10 +3109,10 @@
 
 2003/06/24
 
-   Mail::Message[udb]::ToHTML 
+   FML::Message[udb]::ToHTML 
 	pass $old_db_base_dir to DB module
 
-   Mail::Message[udb]::DB 
+   FML::Message[udb]::DB 
 	save all values of fields.
 	
 	for filtering system, save other header fields::return_path posted
@@ -3129,12 +3129,12 @@
 	remove $system_message_charset and $system_message_subject,
 	which are not used.
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	bugfix at debug
 
 2003/06/21
 
-   Mail::Message 
+   FML::Message 
 	bug fixed::message_text() should be able to handle differenct
 	type $data. 
 
@@ -3146,7 +3146,7 @@
 
 2003/06/14
 
-   Mail::Message::DB [udb]
+   FML::Message::DB [udb]
 	implement separete method _save_header_info() to handle header info.
 	
 	implement get_as_array_ref() and get_table_as_hash_ref().
@@ -3156,8 +3156,8 @@
 	thread_summary() return more info::id, html_*
 	move thread_summary generator wrapper from ToHTML to DB
 	
-   Mail::Message::ToHTML [udb]
-	modified to use Mail::Message::Encode::decode_mime_string().
+   FML::Message::ToHTML [udb]
+	modified to use FML::Message::Encode::decode_mime_string().
 	rewritten based on new DB module.
 	remove ndb_key(), which is not used.
 	fix filename to use db value.
@@ -3168,12 +3168,12 @@
 	$self->{ _thread_list }->{ $id }       (STR) changed to
 	$self->{ _hint_ref_key_list }->{ $id } (ARRAY_REF).
 
-   Mail::Message::{DB,ToHTML,Utils} [udb]
-	implement Mail::Message::Utils::from_to_name() and modified modules to
+   FML::Message::{DB,ToHTML,Utils} [udb]
+	implement FML::Message::Utils::from_to_name() and modified modules to
 	use it.
 	
-   Mail::Message::Utils [udb]
-	fixed to use Mail::Message::Encode
+   FML::Message::Utils [udb]
+	fixed to use FML::Message::Encode
 
 2003/06/11
 
@@ -3182,7 +3182,7 @@
 
 2003/06/06
 
-   Mail::Message::MH 
+   FML::Message::MH 
 	against longloop for underrun and overrun
 
 2003/06/04
@@ -3191,18 +3191,18 @@
 
 2003/06/03
 
-   Mail::Message[udb]::DB 
+   FML::Message[udb]::DB 
 	monthly_to_key_list -> month_to_key_list
 	
-   Mail::Message[udb]::ToHTML 
+   FML::Message[udb]::ToHTML 
 	remove _address_clean_up(), which is not used.
 
 2003/06/02
 
-   Mail::Message::IMPLEMENTATION [udb branch]
+   FML::Message::IMPLEMENTATION [udb branch]
 	update idea::sync with current implementation
 	
-   Mail::Message::ToHTML [udb branch]
+   FML::Message::ToHTML [udb branch]
 	modified to use DB::thread_summary($id).
 	rename method to be more easy for eyes.
 	remove not used variables.
@@ -3214,12 +3214,12 @@
 	別ブランチでやってるので source-changes ML にしか動きが見えな
 	いとは思う。
 
-   Mail::Message::ToHTML [udb branch]
-   Mail::Message::DB [udb branch]
+   FML::Message::ToHTML [udb branch]
+   FML::Message::DB [udb branch]
 	move main db manipulation code from ToHTML to DB.
 	XXX caution::but the index generator not works now.
 
-   Mail::Message::DB [udb branch]
+   FML::Message::DB [udb branch]
 	implement thread_summary().
 
 2003/05/28
@@ -3242,7 +3242,7 @@
 
 2003/05/27
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	print text in "unknown MIME encoding" case.
 	try to validate key and value in hash operation but ... (?)
 
@@ -3265,7 +3265,7 @@
 
 2003/05/16
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	bug fix masking of raw From::address
 
 2003/05/14
@@ -3309,7 +3309,7 @@
    FML::Filter 
 	add $msg_args at article_filter_reject_notice()
 
-   Mail::Message 
+   FML::Message 
 	whole_message_as_str():
 	o indent is null by default.
 	o fix the trailing indent replace.
@@ -3345,7 +3345,7 @@
 	forward the rejected message by string or multipart?
 	It is determined by $article_filter_reject_notice_data_type.
 	
-   Mail::Message 
+   FML::Message 
 	implement whole_message_header_as_str()
 
 	remove whole_message_as_string_ref().
@@ -3380,7 +3380,7 @@
 2003/04/21
 
    FML::Header 
-	obsolete mime_boundary() (same Mail::Message
+	obsolete mime_boundary() (same FML::Message
 	_header_mime_boundary())
 
 2003/04/20
@@ -3419,7 +3419,7 @@
    FML::Command::Admin::newml 
 	mkdir $ml_home_prefix if not found
 
-   Mail::Message 
+   FML::Message 
 	_header_mime_boundary() boundary detect no quote string case
 
 2003/04/16
@@ -3582,7 +3582,7 @@
 	finalize() is only used for debug now.
 
    FML::Header::Subject 
-   Mail::Message::Date 
+   FML::Message::Date 
 	validate input
 	
    FML::Article::Summary 
@@ -3699,7 +3699,7 @@
    FML::Article 
 	bug fix::try to mkdir $dir ($subdir) when $use_subdir enabled.
 	
-   Mail::Message::Spool 
+   FML::Message::Spool 
 	bug fix::check value not by defined()
 
 2003/02/18
@@ -3778,7 +3778,7 @@
 
 2003/02/13
 
-   Mail::Message 
+   FML::Message 
 	use module global print_mode parameter not private one within
 	object.
 
@@ -3806,7 +3806,7 @@
    Mail::ThreadTrack::Print::{HTML,Text} 
    Mail::Delivery::Queue 
    Mail::ThreadTrack::Print::Message 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	FNF: not use $_
 
 2003/02/10
@@ -3823,7 +3823,7 @@
 
 2003/02/07
 
-   Mail::Message::ToHTML 
+   FML::Message::ToHTML 
 	quick hack at sub sub _print_inline_object_link() URL Link
 
 2003/02/05
@@ -4008,7 +4008,7 @@
 
 	とりあえず、この機能はデフォルトで on です。
 
-   Mail::Message
+   FML::Message
 	fix next/prev link of object chain
 	implemenet is_multipart() method
 	
@@ -4163,10 +4163,10 @@
 2002/12/30
 
    Mail::Delivery::SMTP
-   Mail::Message
-	enhance Mail::Message::set_log_function() to override the global log
-	function within Mail::Message name space.  Thie enables all objects
-	within the current Mail::Message space uses the same log function.
+   FML::Message
+	enhance FML::Message::set_log_function() to override the global log
+	function within FML::Message name space.  Thie enables all objects
+	within the current FML::Message space uses the same log function.
 	
 	We need this function to enforce all objects in a chain to use the
 	same log output channel.
@@ -4315,7 +4315,7 @@
 	
    FML::Log
 	clean up commnets.
-	croak() if loading Mail::Message::Date fails.
+	croak() if loading FML::Message::Date fails.
 	
    FML::MTAControl::Procmail
 	fix comments and documents.
@@ -4486,7 +4486,7 @@
    Mail::Delivery::Queue
 	input of recipients can be duplicated
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	bug fix function call::f() => $obj->f()
 
 2002/11/18
@@ -4564,7 +4564,7 @@
    FML::Command::Admin::newml
 	prinf "a b c" -> a, b, c
 	
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	umask escaping like splx():
 	mask = umask();
 	umask( ...) ; # set up umask here
@@ -4647,13 +4647,13 @@
 
 2002/10/12
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	rename index.html to index_all.html
 	add sub create_top_index()
 
 2002/10/06
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	add index reverse code at _update_id_monthly_index()
 
 2002/10/04
@@ -4663,11 +4663,11 @@
 	
    FML::Command::HTMLify
    FML::Process::Distribute
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	enabled to handle order in index.html by
 	$html_archive_index_order_type.
 	
-	Mail::Message::ToHTML
+	FML::Message::ToHTML
 	o htmlify_{file,dir}() is changted to normal methods for passing
 	arguments.
 	
@@ -4723,7 +4723,7 @@
    File::CacheDir
    Mail::ThreadTrack
    Mail::Delivery::Queue
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
    Mail::ThreadTrack::DB
 	we should not use hard-coded file::dir mode
 	
@@ -4748,13 +4748,13 @@
 2002/09/23
 
    FML::Filter::BodyCheck
-	should not import STR2EUC from Mail::Message::Encode
-	bug fixed to use Mail::Message::Encode->convert()
+	should not import STR2EUC from FML::Message::Encode
+	bug fixed to use FML::Message::Encode->convert()
 
 2002/09/14
 
    FML::Filter::BodyCheck
-	add use Mail::Message::Encode at reject_japanese_command_syntax()
+	add use FML::Message::Encode at reject_japanese_command_syntax()
 	because rejected by filter due to Undefined subroutine
 	&FML::Filter::BodyCheck::STR2EUC called
 	
@@ -4866,13 +4866,13 @@
 	with some width.
 	rename::simple_count_by_day -> error_continuity
 
-   Mail::Message::Encode
+   FML::Message::Encode
 	add is_iso2022jp_string()
 	
    FML::Command::Admin::log
    FML::Filter::BodyCheck
    FML::Process::Kernel
-	switch FML::Language to Mail::Message::Encode
+	switch FML::Language to FML::Message::Encode
 
    FML::Language::ISO2022JP
    FML::Language::Japanese::{String,Utils}
@@ -4935,12 +4935,12 @@
 	bug fix $fh-close() under defined($fh) is confirmed
 	use "postconf -d" to expand variables
 
-   Mail::Message::Encode
-   remove FML::Encode and Mail::Message::Decode
-	merge FML::Encode Mail::Message::Decode into Mail::Message::Encode
+   FML::Message::Encode
+   remove FML::Encode and FML::Message::Decode
+	merge FML::Encode FML::Message::Decode into FML::Message::Encode
 
    FML::Header::Subject
-	switched to use of Mail::Message::Encode
+	switched to use of FML::Message::Encode
 
 2002/08/11
 
@@ -5248,14 +5248,14 @@
 
 2002/07/17
 
-   Mail::Message::MH
+   FML::Message::MH
 	add debug
 	define new()
 	bug fix first:\d+
 	handle a,b,c pattern
 
    FML::Command::SendFile
-	use Mail::Message::MH
+	use FML::Message::MH
 
    FML::Command::UserControl
    FML::Command::Admin::log
@@ -5670,7 +5670,7 @@
    FML::Header::Subject
 	add mime decode for subject
 
-   Mail::Message::Decode Encode
+   FML::Message::Decode Encode
 	FNF-ify, fix documents and @EXPORTS
 
 2002/05/22
@@ -5744,7 +5744,7 @@
    FML::Command::DataCheck
 	fix parse_command_arguments() arguments
 
-   Mail::Message::MH
+   FML::Message::MH
 	fix wrong last:\d+ counting logic
 
 2002/05/18
@@ -5752,7 +5752,7 @@
    FML::Process::Command
 	reconstruct command check logic (1)
 
-   Mail::Message
+   FML::Message
 	implement message_text_as_array_ref()
 
    updated IM to im-141 + local patch (tats20020413.diff)
@@ -5780,7 +5780,7 @@
    FML::Process::CGI::Kernel
 	pick up address_selected not address
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	not reset @AnyDBM_File::ISA.
 	It is better for us to use the default @ISA
 
@@ -5804,7 +5804,7 @@
    FML::Language::Japanese::Utils
 	_look_not_iso2022jp_string::add trivial check
 
-   Mail::Message
+   FML::Message
 	fix::parser() should handle header only message.
 	no no no, not reset $data_ptr unless body
 	nuke \s*$
@@ -5825,7 +5825,7 @@
    FML::Process::Kernel
 	check $curproc->is_refused() more before action at each step
 
-   Mail::Message
+   FML::Message
 	fix comment.
 	add loop label.
 	FNF.
@@ -5842,7 +5842,7 @@
    FML::Process::Kernel
 	disable debug message
 
-   Mail::Message
+   FML::Message
 	check more data by defined()
 
    FML::Process::Kernel
@@ -5888,7 +5888,7 @@
    FML::Process::Alias
 	new utility::fmlalias e.g. shows not only fml but all alias entries
 
-   Mail::Message
+   FML::Message
 	check defined($InComingMessage) before $body_size estimation
 
 2002/04/24
@@ -5936,7 +5936,7 @@
    FML::Command::HTMLify
 	bug fix subdirs sorting algorithm
 
-   Mail::Message::Spool
+   FML::Message::Spool
 	check value of $args->{ use_subdir }
 
    FML::Article
@@ -5947,16 +5947,16 @@
    FML::Command::Admin::newml
 	install .htaccess only for the first time
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	you can specify $ENV{MAX}
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	for () { fork() && call htmlify_file() }
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	htmlify_dir() accepts options::$has_fork and $max (for debug)
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	sort years in monthly.index
 	bug fix the scan range for each subdir
 
@@ -5995,12 +5995,12 @@
    FML::Process::Switch
 	stop $ml_home_dir search when we can get it.
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	bug fix::check the source file existence more severely
 
 2002/04/18
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	check $args->{ file } more severely in _update_relation()
 
    FML::Process::Distribute
@@ -6044,7 +6044,7 @@
    FML::Process::Distribute
 	umask and permission control for html archives
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	BEGIN { @AnyDBM_File::ISA = qw(DB_File GDBM_File NDBM_File); }
 
    FML::Process::HTMLify
@@ -6052,7 +6052,7 @@
 
 2002/04/14
 
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
 	fix $subdir handling on month boundary
 	validate $curid ($self->{ _current_id})
 	validate or warn input into Jcode
@@ -6069,15 +6069,15 @@
    FML::Process::Command
 	select the error message by the $xxx_restrictions error reason
 
-   Mail::Message
+   FML::Message
 	implement whole_message_as_string_ref()
 
    FML::Process::Command
-	reply_message( OBJ(Mail::Message) ) when the message is rejected by
+	reply_message( OBJ(FML::Message) ) when the message is rejected by
 	$command_restrictions.
 
    FML::Process::Kernel
-	o reply_message() can handle OBJ(Mail::Message).
+	o reply_message() can handle OBJ(FML::Message).
 	o save error reason at pcb area when the message is rejected by
 	xxx_restrictions.
 
@@ -6150,7 +6150,7 @@
 
    remove "recipients" file from default $recipient_maps
 
-   Mail::Message::Spool
+   FML::Message::Spool
 	define dirpath()
 
    FML::Article
@@ -6209,19 +6209,19 @@
 	$message_message_dir -> $message_template_dir
    FML::Command::Admin::htmlify
    FML::Process::{Distribute,HTMLify}
-   Mail::Message::ToHTML
+   FML::Message::ToHTML
    Mail::HTML::Lite
-	rename class::Mail::HTML::Lite -> Mail::Message::ToHTML
+	rename class::Mail::HTML::Lite -> FML::Message::ToHTML
 	change .ht* database names
 
    FML::Article
-   Mail::Message::Spool
+   FML::Message::Spool
    Mail::ThreadTrack
    Mail::ThreadTrack::DB Print.pm
    Mail::ThreadTrack::Print::HTML Text.pm
-	use Mail::Message::Spool::filepath() for the article file path.
-	use $self->filepath() which is  based on Mail::Message::Spool
-	Mail::Message::Spool::spool arg changes::$spool_dir -> $base_dir
+	use FML::Message::Spool::filepath() for the article file path.
+	use $self->filepath() which is  based on FML::Message::Spool
+	FML::Message::Spool::spool arg changes::$spool_dir -> $base_dir
 
    Mail::HTML::Lite
 	rename message_file*() -> html_file*()
@@ -6692,7 +6692,7 @@
 
 2002/01/16
 
-   change Mail::Message naming convention.
+   change FML::Message naming convention.
 	   FML::Article Parse
 	   FML::Filter::BodyCheck HeaderCheck TrafficMonitor
 	   FML::Process::Command Distribute Kernel
@@ -6742,11 +6742,11 @@
    final clean up campaign in 2001
    	クリーニングキャンペーン 2001 final はいまだに続いているぞ;-)
 
-   Mail::Message
+   FML::Message
    FML::parse
 	rfc822_message_FUNCTION()
 
-	メッセージ全体( Mail::Message の chain 全体)に対する
+	メッセージ全体( FML::Message の chain 全体)に対する
 	メソッドには rfc822_message_ を頭につけるように名前をあわせる
 
    File::SimpleLock
@@ -6771,11 +6771,11 @@
 		FML::MIME
 		FML::Language::Japanese::Subject
 
-	FML::MIME は Mail::Message::Decode および
-	Mail::Message::Encode の２つにわかれたよ
+	FML::MIME は FML::Message::Decode および
+	FML::Message::Encode の２つにわかれたよ
 
    renamed
-	FML::Checksum -> Mail::Message::Checksum
+	FML::Checksum -> FML::Message::Checksum
 
 2001/12/22
 
@@ -6803,8 +6803,8 @@
 
    FML::Messages
    IO::Adapter::LDAP
-   Mail::Message::Date
-   Mail::Message::Language::Japanese::Subject
+   FML::Message::Date
+   FML::Message::Language::Japanese::Subject
 	nuke "require Exporter, which is not needed
 
    INSTALL.sh
@@ -6849,9 +6849,9 @@
 
    FML::Log
    Tie::JournaledDir
-	FML::Date -> Mail::Message::Date
+	FML::Date -> FML::Message::Date
 
-   Mail::Message::Date
+   FML::Message::Date
 	remove MTI.. message
 
    update comments
@@ -7133,7 +7133,7 @@
 
 2001/11/08
 
-   Mail::Message::Language::Japanese::Subject
+   FML::Message::Language::Japanese::Subject
 	nuke new(), not used
 
    Mail::ThreadTrack
@@ -7149,7 +7149,7 @@
    Mail::ThreadTrack::Print::Message
 	ignore ^= line in message summary
 
-   Mail::Message::Date
+   FML::Message::Date
 	validate $in $shift_m
 
    Mail::ThreadTrack
@@ -7327,7 +7327,7 @@
 
 2001/10/29
 
-   Mail::Message
+   FML::Message
 	_get_mime_header() checks offset boundary
 	return default pair if overrun.
 
@@ -7374,11 +7374,11 @@
 	use _PRINT_DEBUG(), define _print_safe_{str,buf}() to be easy for eyes
 	_print() -> _print_raw_str()
 
-   Mail::Message
+   FML::Message
 	oops, should be s::::::mi to trap encodinge
 
    FML::Filter::BodyCheck
-   Mail::Message
+   FML::Message
    Mail::Bounce::DSN
    Mail::HTML::Lite
 	change method: data() -> data_in_body_part()
@@ -7475,7 +7475,7 @@
 
 	more and more debug info
 
-   Mail::Message
+   FML::Message
 
 	bug fix::$InComingMessage should not local scope. modify it to
 	SCALAR REF
@@ -7493,7 +7493,7 @@
    import HTML::FromText 1.005
 
    Mail::Bounce
-	Mail::Message::get_data_type_list() is changed. To sync with it,
+	FML::Message::get_data_type_list() is changed. To sync with it,
 	use $msg->get_data_type_list( { debug => 1 } ) for debug.
 
 2001/10/18
@@ -7794,24 +7794,24 @@
 
 2001/09/23
 
-   Mail::Message
-	implement get_encoding_mechanism() in Mail::Message.
+   FML::Message
+	implement get_encoding_mechanism() in FML::Message.
 
 	implement get_offset(): return offset information in the data.
 	return value is	ARRAY.
 
-	return encoding type for specified Mail::Message not whole mail.
+	return encoding type for specified FML::Message not whole mail.
 	The return value is one of base64, quoted-printable or undef.
 
 	Modified Files:
 		fml/lib/Mail/Message.pm
-		fml/doc/ja/tutorial/module/Mail::Message.sgml
+		fml/doc/ja/tutorial/module/FML::Message.sgml
 		regress/message/dump.pl
 
    チュートリアル
 	module  に関する新パートの創設
 	module/ ディレクトリを創設
-		Mail::Message
+		FML::Message
 		IO::Adapter
 	のプロトタイプを用意する。
 	このディレクトリでは各モジュールの詳細な使い方について
@@ -8003,7 +8003,7 @@
 
 2001/08/02
 
-   Mail::Message
+   FML::Message
 	bug fix wrong handling of "\n" at the last of part
 
 2001/07/31

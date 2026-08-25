@@ -8,7 +8,7 @@
 #
 
 
-package Mail::Message::Compose;
+package FML::Message::Compose;
 
 use strict;
 use vars qw(@ISA);
@@ -19,11 +19,11 @@ use MIME::Lite;
 
 =head1 NAME
 
-Mail::Message::Compose - message composer.
+FML::Message::Compose - message composer.
 
 =head1 SYNOPSIS
 
-See C<Mail::Message>.
+See C<FML::Message>.
 
 =head1 DESCRIPTION
 
@@ -46,7 +46,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Compose first appeared in fml8 mailing list driver package.
+FML::Message::Compose first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

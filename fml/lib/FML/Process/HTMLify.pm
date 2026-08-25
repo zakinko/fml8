@@ -26,7 +26,7 @@ FML::Process::HTMLify -- convert articles to html format.
 
 =head1 SYNOPSIS
 
-See C<Mail::Message::ToHTML> module.
+See C<FML::Message::ToHTML> module.
 
 =head1 DESCRIPTION
 
@@ -103,7 +103,7 @@ call &FML::Command::HTMLify::convert().
 =cut
 
 
-# Descriptions: convert text format article to HTML by Mail::Message::ToHTML.
+# Descriptions: convert text format article to HTML by FML::Message::ToHTML.
 #    Arguments: OBJ($curproc) HASH_REF($args)
 # Side Effects: load modules, create HTML files and directories
 # Return Value: none

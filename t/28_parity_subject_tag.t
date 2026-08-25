@@ -35,7 +35,7 @@ BEGIN {
 }
 
 use ParityFML4;
-use Mail::Message::Subject;
+use FML::Message::Subject;
 
 my $FML4 = ParityFML4::fml4_dir();
 plan skip_all => "no fml4 checkout (set FML4_DIR, or put one at ../fml4)"
@@ -137,7 +137,7 @@ subtest 'fml8 strips the tag every fml4 layout produces' => sub {
 			       $p->{ begin }, $ML, $p->{ sep }, $SEQ,
 			       $p->{ end });
 
-	my $s = new Mail::Message::Subject "$fml4_tag hello";
+	my $s = new FML::Message::Subject "$fml4_tag hello";
 	$s->delete_tag($tag);
 	my $out = $s->as_str();
 	$out =~ s/^\s+//;
@@ -163,7 +163,7 @@ subtest 'fml8 leaves other lists\' tags alone' => sub {
 			    $p->{ begin }, 'mirei', $p->{ sep }, $SEQ,
 			    $p->{ end });
 
-	my $s = new Mail::Message::Subject "$other hello";
+	my $s = new FML::Message::Subject "$other hello";
 	$s->delete_tag($tag);
 	my $out = $s->as_str();
 	$out =~ s/^\s+//;
@@ -183,7 +183,7 @@ subtest 'fml8 leaves other lists\' tags alone' => sub {
 subtest 'fml8 tags can pad, which fml4 could not' => sub {
     my $tag = "[$ML:%05d]";
 
-    my $s = new Mail::Message::Subject "[$ML:00100] hello";
+    my $s = new FML::Message::Subject "[$ML:00100] hello";
     $s->delete_tag($tag);
     my $out = $s->as_str();
     $out =~ s/^\s+//;
@@ -191,7 +191,7 @@ subtest 'fml8 tags can pad, which fml4 could not' => sub {
     is($out, 'hello', 'a zero padded tag is stripped');
 
     # and the unpadded form of the same list is still recognised
-    my $s2 = new Mail::Message::Subject "[$ML:100] hello";
+    my $s2 = new FML::Message::Subject "[$ML:100] hello";
     $s2->delete_tag($tag);
     my $out2 = $s2->as_str();
     $out2 =~ s/^\s+//;
@@ -210,17 +210,17 @@ subtest 'fml8 tags can pad, which fml4 could not' => sub {
 # ---------------------------------------------------------------------
 subtest 'duplicated reply tags are still collapsed' => sub {
     for my $in ('Re: Re: hello', 'Re: Re: Re: hello') {
-	my $s = new Mail::Message::Subject $in;
+	my $s = new FML::Message::Subject $in;
 	$s->delete_dup_reply_tag();
 	my $out = $s->as_str();
 
 	is($out, 'Re: hello', "\"$in\" -> \"$out\"");
     }
 
-    my $s = new Mail::Message::Subject 'Re: hello';
+    my $s = new FML::Message::Subject 'Re: hello';
     ok($s->has_reply_tag(), 'a single Re: is recognised');
 
-    my $p = new Mail::Message::Subject 'hello';
+    my $p = new FML::Message::Subject 'hello';
     ok(!$p->has_reply_tag(), 'a plain subject has none');
 };
 

@@ -1,6 +1,6 @@
 #-*- perl -*-
 #
-# Mail::Message::Date.
+# FML::Message::Date.
 #
 # This module writes the Date: header on every article fml8 sends, the
 # timestamps in every log line, and the YYYYMMDD names the spool and the
@@ -9,7 +9,7 @@
 # It has two documented ways of being read, and they disagreed.  Its own
 # SYNOPSIS says
 #
-#	$date = new Mail::Message::Date time;
+#	$date = new FML::Message::Date time;
 #	$date->{ log_file_style }
 #	$date->log_file_style
 #
@@ -35,7 +35,7 @@ BEGIN {
     }
 }
 
-use Mail::Message::Date;
+use FML::Message::Date;
 
 # 2001-09-09 01:46:40 UTC.  A round number, and far enough from now that
 # "now" cannot be mistaken for it.
@@ -54,13 +54,13 @@ my $D = $L[3];
 # The defect, stated directly.
 # ---------------------------------------------------------------------
 subtest 'new($time) is a date for $time, not for now' => sub {
-    my $d = Mail::Message::Date->new($T);
+    my $d = FML::Message::Date->new($T);
 
     is($d->as_unixtime(), $T, 'as_unixtime() is the time given');
     is($d->YYYYMMDD(), sprintf("%04d%02d%02d", $Y, $M, $D),
        'YYYYMMDD() is that day');
 
-    isnt($d->YYYYMMDD(), Mail::Message::Date->new()->YYYYMMDD(),
+    isnt($d->YYYYMMDD(), FML::Message::Date->new()->YYYYMMDD(),
 	 'and it is not today');
 };
 
@@ -72,7 +72,7 @@ subtest 'new($time) is a date for $time, not for now' => sub {
 # used only one of them would have passed either way.
 # ---------------------------------------------------------------------
 subtest 'the hash form and the method form agree' => sub {
-    my $d = Mail::Message::Date->new($T);
+    my $d = FML::Message::Date->new($T);
 
     for my $style (qw(log_file_style mail_header_style YYYYMMDD
 		      current_time precise_current_time)) {
@@ -88,7 +88,7 @@ subtest 'the hash form and the method form agree' => sub {
 # the log timestamps are read back by the log viewer.
 # ---------------------------------------------------------------------
 subtest 'every style has the documented shape' => sub {
-    my $d = Mail::Message::Date->new($T);
+    my $d = FML::Message::Date->new($T);
 
     like($d->mail_header_style(),
 	 qr/^(?:Sun|Mon|Tue|Wed|Thu|Fri|Sat),[ ]\d{1,2}[ ]
@@ -114,7 +114,7 @@ subtest 'every style has the documented shape' => sub {
 # everything above.
 # ---------------------------------------------------------------------
 subtest 'every style describes the same instant' => sub {
-    my $d = Mail::Message::Date->new($T);
+    my $d = FML::Message::Date->new($T);
 
     my $ymd = sprintf("%04d%02d%02d", $Y, $M, $D);
 
@@ -136,7 +136,7 @@ subtest 'every style describes the same instant' => sub {
 # so it must not have been broken by making the constructor work.
 # ---------------------------------------------------------------------
 subtest 'an explicit argument overrides the object' => sub {
-    my $d     = Mail::Message::Date->new($T);
+    my $d     = FML::Message::Date->new($T);
     my $other = $T + 86_400 * 100;
 
     my @o = localtime($other);
@@ -155,7 +155,7 @@ subtest 'an explicit argument overrides the object' => sub {
 # ---------------------------------------------------------------------
 subtest 'new() with no argument is now' => sub {
     my $before = time;
-    my $d      = Mail::Message::Date->new();
+    my $d      = FML::Message::Date->new();
     my $after  = time;
 
     my $got = $d->as_unixtime();
@@ -175,7 +175,7 @@ subtest 'new() with no argument is now' => sub {
 # possible range of formats.  These are the ones fml8 meets.
 # ---------------------------------------------------------------------
 subtest 'date_to_unixtime() reads real Date: headers' => sub {
-    my $d = Mail::Message::Date->new();
+    my $d = FML::Message::Date->new();
 
     my %case = (
 	'RFC 5322 with +0000'  => [ 'Sun, 9 Sep 2001 01:46:40 +0000', $T ],
@@ -205,9 +205,9 @@ subtest 'date_to_unixtime() reads real Date: headers' => sub {
 subtest 'set() and new() give the same object' => sub {
     my $header = 'Sun, 9 Sep 2001 01:46:40 +0000';
 
-    my $a = Mail::Message::Date->new($T);
+    my $a = FML::Message::Date->new($T);
 
-    my $b = Mail::Message::Date->new();
+    my $b = FML::Message::Date->new();
     $b->set($header);
 
     for my $style (qw(log_file_style mail_header_style YYYYMMDD
@@ -218,7 +218,7 @@ subtest 'set() and new() give the same object' => sub {
     is($b->as_unixtime(), $a->as_unixtime(), 'and so does as_unixtime()');
 
     # And the constructor accepts the header form directly.
-    my $c = Mail::Message::Date->new($header);
+    my $c = FML::Message::Date->new($header);
     is($c->as_unixtime(), $T, 'new($header_string) parses it');
     is($c->YYYYMMDD(), $a->YYYYMMDD(), 'and gives the same day');
 };
@@ -240,7 +240,7 @@ subtest 'old and future dates are handled' => sub {
 
     for my $name (sort keys %case) {
 	my $t = $case{ $name };
-	my $d = Mail::Message::Date->new($t);
+	my $d = FML::Message::Date->new($t);
 
 	my @l = localtime($t);
 	is($d->YYYYMMDD(),
@@ -258,7 +258,7 @@ subtest 'old and future dates are handled' => sub {
 # is one that other mailers will misread.
 # ---------------------------------------------------------------------
 subtest 'the timezone offset is well formed' => sub {
-    my $d   = Mail::Message::Date->new($T);
+    my $d   = FML::Message::Date->new($T);
     my $hdr = $d->mail_header_style();
 
     my ($sign, $hh, $mm) = $hdr =~ /([-+])(\d\d)(\d\d)$/;

@@ -2,7 +2,7 @@
 #
 # Command mail body handling.
 #
-# Mail::Message::message_text() returns the part as it stands on the
+# FML::Message::message_text() returns the part as it stands on the
 # wire, so a command mail sent with Content-Transfer-Encoding: base64
 # used to give the command loop one line of base64.  Nothing matched a
 # command, so the mail was isolated rather than obeyed.  That is fml8
@@ -28,7 +28,7 @@ BEGIN {
     }
 }
 
-use Mail::Message;
+use FML::Message;
 use MIME::Base64 ();
 use MIME::QuotedPrint ();
 use FML::Process::Command;
@@ -61,14 +61,14 @@ sub first_plaintext_part
 	     . "\n"
 	     . $payload;
 
-    # Mail::Message->parse() wants a real handle, not an in-memory one.
+    # FML::Message->parse() wants a real handle, not an in-memory one.
     my $path = sprintf("%s/mail.%d", $TMPDIR, $SEQ++);
     open(my $wh, '>', $path) or die "cannot write $path: $!";
     print $wh $mail;
     close($wh);
 
     open(my $rh, '<', $path) or die "cannot read $path: $!";
-    my $msg = Mail::Message->parse({ fd => $rh });
+    my $msg = FML::Message->parse({ fd => $rh });
 
     return $msg->whole_message_body->find_first_plaintext_message();
 }

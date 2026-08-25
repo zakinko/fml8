@@ -40,7 +40,7 @@ FML::Article - manipulate an ML article and related information.
 C<$article> object is just a container which holds
 C<header> and C<body> objects as hash keys.
 The C<header> is an C<FML::Header> object,
-the C<body> is a C<Mail::Message> object
+the C<body> is a C<FML::Message> object
 which is the head object of a message object chain.
 
 C<new()> method sets up the $curproc as
@@ -469,8 +469,8 @@ sub _filepath
     my $use_subdir  = $config->{ spool_type } eq 'subdir' ? 1 : 0;
     my $unit        = $config->{ spool_subdir_unit };
 
-    use Mail::Message::Spool;
-    my $spool    = new Mail::Message::Spool;
+    use FML::Message::Spool;
+    my $spool    = new FML::Message::Spool;
     my $mms_args = {
 	base_dir    => $spool_dir,
 	id          => $id,
@@ -504,7 +504,7 @@ if ($0 eq __FILE__) {
 =head1 SEE ALSO
 
 L<FML::Header>,
-L<Mail::Message>
+L<FML::Message>
 
 =head1 CODING STYLE
 

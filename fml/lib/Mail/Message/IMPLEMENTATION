@@ -1,12 +1,12 @@
-  Mail::Message::DB
-	new Mail::Message::DB { ml_name => , seq => }
+  FML::Message::DB
+	new FML::Message::DB { ml_name => , seq => }
 	add( $msg )
 	get($table, $key)
 	set($table, $key, 4value)
 
 		get_thread_summary($key)
 
- $msg ---> Mail::Message::ToHTML
+ $msg ---> FML::Message::ToHTML
                 |     A
                 |     |
         new()   |     |
@@ -14,7 +14,7 @@
     set()       |     | get()
                 |     |
                 V     |
-            Mail::Message::DB =========== tie() ===> AnyDBM
+            FML::Message::DB =========== tie() ===> AnyDBM
             A      + update .db files via tie()
   add($msg) |      + thread analyze
             | 
@@ -28,6 +28,6 @@
 
 
 
-  $msg  Mail::Message OBJECT
+  $msg  FML::Message OBJECT
   ===>  method using tie()
   --->  method not Tie::*

@@ -1201,7 +1201,7 @@ and
    $curproc->{'incoming_message'}->{ body }.
 
 The C<header> is C<FML::Header> object.
-The C<body> is C<Mail::Message> object.
+The C<body> is C<FML::Message> object.
 
 =cut
 
@@ -1375,8 +1375,8 @@ sub _inject_charset_hints
 	#   iso-2022-jp -> japanese -> iso-2022-jp
 	#   sjis        -> japanese -> iso-2022-jp
 	#   euc-jp      -> japanese -> iso-2022-jp
-	use Mail::Message::Charset;
-	my $char = new Mail::Message::Charset;
+	use FML::Message::Charset;
+	my $char = new FML::Message::Charset;
 	my $lang = $char->message_charset_to_language($charset);
 
 	$curproc->logdebug("hints: \"$charset\" => lang=\"$lang\" as a hint.");
@@ -2202,8 +2202,8 @@ sub _reply_message_nl
 	}
 
 	eval q{
-	    use Mail::Message::String;
-	    my $str = new Mail::Message::String $buf;
+	    use FML::Message::String;
+	    my $str = new FML::Message::String $buf;
 	    $str->charcode_convert_to_external_charset();
 	    $buf = $str->as_str();
 
@@ -2424,8 +2424,8 @@ sub _get_preferred_charsets
     my $lang_order = $curproc->_get_preferred_languages();
     my $list       = [];
 
-    use Mail::Message::Charset;
-    my $c = new Mail::Message::Charset;
+    use FML::Message::Charset;
+    my $c = new FML::Message::Charset;
     for my $lang (@$lang_order) {
 	my $x = $c->language_to_message_charset($lang);
 	push(@$list, $x);
@@ -2605,8 +2605,8 @@ sub queue_in
     my $hdr_to       = '';
     my $smtp_sender  = '';
 
-    use Mail::Message::Date;
-    my $_nowdate     = new Mail::Message::Date time;
+    use FML::Message::Date;
+    my $_nowdate     = new FML::Message::Date time;
     my $our_date     = $_nowdate->{ mail_header_style };
     my $stardate     = $_nowdate->stardate();
 
@@ -2688,14 +2688,14 @@ sub queue_in
     # start building a message
     #
     eval q{
-	use Mail::Message::Compose;
+	use FML::Message::Compose;
     };
     croak($@) if $@;
 
     if ($is_multipart) {
 	my $_to = $hdr_to || $rcptkey;
 	eval q{
-	    $msg = new Mail::Message::Compose
+	    $msg = new FML::Message::Compose
 		From          => $sender,
 		To            => $_to,
 		Subject       => $subject,
@@ -2758,7 +2758,7 @@ sub queue_in
 
 	    next QUEUE unless $r eq $rcptkey;
 
-	    if ($t eq 'Mail::Message') {
+	    if ($t eq 'FML::Message') {
 		$curproc->_append_rfc822_message($q, $msg);
 	    }
 	    else {
@@ -2790,7 +2790,7 @@ sub queue_in
 
 	    next QUEUE unless $r eq $rcptkey;
 
-	    if ($t eq 'Mail::Message') {
+	    if ($t eq 'FML::Message') {
 		# XXX-TODO: meaningless ?
 		$curproc->_append_rfc822_message($q, $msg);
 	    }
@@ -2806,7 +2806,7 @@ sub queue_in
 
 	my $_to = $hdr_to || $rcptkey;
 	eval q{
-	    $msg = new Mail::Message::Compose
+	    $msg = new FML::Message::Compose
 		From          => $sender,
 		To            => $_to,
 		Subject       => $subject,
@@ -3263,8 +3263,8 @@ sub reply_message_prepare_template
     if (defined($rh) && defined($wh)) {
 	my $obj = undef;
 	eval q{
-	    use Mail::Message::Encode;
-	    $obj = new Mail::Message::Encode;
+	    use FML::Message::Encode;
+	    $obj = new FML::Message::Encode;
 	};
 
 	# XXX-TODO: NL
@@ -3278,7 +3278,7 @@ sub reply_message_prepare_template
 	    }
 	}
 	else {
-	    $curproc->logerror("Mail::Message::Encode object undef");
+	    $curproc->logerror("FML::Message::Encode object undef");
 	}
 
 	close($wh);

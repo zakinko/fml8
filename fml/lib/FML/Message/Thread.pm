@@ -7,7 +7,7 @@
 # $FML: Thread.pm,v 1.8 2005/08/25 13:39:45 fukachan Exp $
 #
 
-package Mail::Message::Thread;
+package FML::Message::Thread;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
@@ -15,7 +15,7 @@ use File::Spec;
 
 =head1 NAME
 
-Mail::Message::Thread - Thread interface
+FML::Message::Thread - Thread interface
 
 =head1 SYNOPSIS
 
@@ -54,7 +54,7 @@ sub new
 }
 
 
-# Descriptions: initialize Mail::Message::DB object.
+# Descriptions: initialize FML::Message::DB object.
 #    Arguments: OBJ($self) HASH_REF($args)
 # Side Effects: DB object created.
 # Return Value: OBJ
@@ -81,8 +81,8 @@ sub _init_db
     };
 
     # Firstly, prepare db object.
-    use Mail::Message::DB;
-    my $db = new Mail::Message::DB $_db_args;
+    use FML::Message::DB;
+    my $db = new FML::Message::DB $_db_args;
     $db->set_key($id) if $id;
 
     return $db;
@@ -282,7 +282,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Thread first appeared in fml8 mailing list driver package.
+FML::Message::Thread first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 This class is renamed from C<Mail::HTML::Lite> 1.40 (2001-2002).

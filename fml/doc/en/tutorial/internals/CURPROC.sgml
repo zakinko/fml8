@@ -21,9 +21,9 @@ __print_style        => SCALAR
 __start_time         => SCALAR
 
 article              => HASH {
-                        body                 => Mail::Message
+                        body                 => FML::Message
                         header               => FML::Header
-                        message              => Mail::Message
+                        message              => FML::Message
                      }
 
 config               => FML::Config
@@ -31,9 +31,9 @@ config               => FML::Config
 credential           => FML::Credential
 
 incoming_message     => HASH {
-                        body                 => Mail::Message
+                        body                 => FML::Message
                         header               => FML::Header
-                        message              => Mail::Message
+                        message              => FML::Message
                      }
 
 log_message_queue    => FML::Log::Print::Simple

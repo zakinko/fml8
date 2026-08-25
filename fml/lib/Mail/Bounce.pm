@@ -20,8 +20,8 @@ Mail::Bounce - analyze error message.
 
 =head1 SYNOPSIS
 
-    use Mail::Message;
-    my $msg = Mail::Message->parse( { fd => \*STDIN } );
+    use FML::Message;
+    my $msg = FML::Message->parse( { fd => \*STDIN } );
 
     use Mail::Bounce;
     my $bouncer = new Mail::Bounce;
@@ -44,7 +44,7 @@ Mail::Bounce - analyze error message.
 
 =head1 DESCRIPTION
 
-try to analyze the given error message, which is a Mail::Message
+try to analyze the given error message, which is a FML::Message
 object.
 
 For non DSN pattern,
@@ -106,7 +106,7 @@ sub new
 
 =head2 analyze($msg)
 
-C<$msg> is a C<Mail::Message> object.
+C<$msg> is a C<FML::Message> object.
 This routine is a top level switch which provides the entrance
 for C<Mail::Bounce::> modules, for example, C<Mail::Bounce::DSN>.
 

@@ -7,19 +7,19 @@
 # $FML: Utils.pm,v 1.14 2005/08/19 11:15:24 fukachan Exp $
 #
 
-package Mail::Message::Utils;
+package FML::Message::Utils;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
 =head1 NAME
 
-Mail::Message::Utils - utility functions for Mail::Message.
+FML::Message::Utils - utility functions for FML::Message.
 
 =head1 SYNOPSIS
 
-   use Mail::Message::Utils;
-   return Mail::Message::Utils::delete_subject_tag_like_string($str);
+   use FML::Message::Utils;
+   return FML::Message::Utils::delete_subject_tag_like_string($str);
 
 =head1 DESCRIPTION
 
@@ -70,8 +70,8 @@ sub from_address_to_name
     use Mail::Address;
     my (@addrs) = Mail::Address->parse($address);
 
-    use Mail::Message::Encode::Perl;
-    my $encoder = new Mail::Message::Encode::Perl;
+    use FML::Message::Encode::Perl;
+    my $encoder = new FML::Message::Encode::Perl;
 
     for my $addr (@addrs) {
 	if (defined( $addr->phrase() )) {
@@ -198,7 +198,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Utils first appeared in fml8 mailing list driver package.
+FML::Message::Utils first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

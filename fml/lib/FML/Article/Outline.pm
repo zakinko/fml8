@@ -65,8 +65,8 @@ sub add_outline
     my $charset = $curproc->langinfo_get_charset("reply_message");
 
     # e.g. "iso-2022-jp" => "ja",
-    use Mail::Message::Charset;
-    my $cobj = new Mail::Message::Charset;
+    use FML::Message::Charset;
+    my $cobj = new FML::Message::Charset;
     my $lang = $cobj->message_charset_to_language($charset);
 
     if ($config->yes('use_article_thread_outline')) {
@@ -100,8 +100,8 @@ sub _fix_charset
 {
     my ($self, $s, $charset) = @_;
 
-    use Mail::Message::String;
-    my $str = new Mail::Message::String $s;
+    use FML::Message::String;
+    my $str = new FML::Message::String $s;
     $str->charcode_convert($charset);
     return $str->as_str();
 }

@@ -5,24 +5,24 @@
 # $FML: Spool.pm,v 1.12 2004/01/24 09:04:00 fukachan Exp $
 #
 
-package Mail::Message::Spool;
+package FML::Message::Spool;
 
 use strict;
 use Carp;
 
 =head1 NAME
 
-Mail::Message::Spool - utilities to handle directory such as article spool.
+FML::Message::Spool - utilities to handle directory such as article spool.
 
 =head1 SYNOPSIS
 
-   use Mail::Message::Spool;
-   my $spool = new Mail::Message::Spool;
+   use FML::Message::Spool;
+   my $spool = new FML::Message::Spool;
    my $file  = $spool->filepath($args);
 
 =head1 DESCRIPTION
 
-C<Mail::Message::Spool> class provides utility functions to handle a
+C<FML::Message::Spool> class provides utility functions to handle a
 directory such as article spool.
 
 =head1 METHODS
@@ -137,7 +137,7 @@ sub dirpath
 # test
 #
 if ($0 eq __FILE__) {
-    my $obj = new Mail::Message::Spool;
+    my $obj = new FML::Message::Spool;
 
     for my $is_hash (0, 1) {
 	print "\nhashed ? ", ($is_hash ? "yes" : "no"), "\n\n";
@@ -174,7 +174,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Spool first appeared in fml8 mailing list driver package.
+FML::Message::Spool first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 =cut

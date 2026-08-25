@@ -45,7 +45,7 @@ For example,
 </screen>
 where $message is a 
 <link linkend="module.mail.message">
-Mail::Message
+FML::Message
 </link>
 object.
 </para>
@@ -56,7 +56,7 @@ object.
 <sect1>
 	<title>
 	<link linkend="module.mail.message">
-	Mail::Message
+	FML::Message
 	</link>
 	Object
 	</title>
@@ -72,7 +72,7 @@ header -> preamble -> part1 -> part2 -> trailor (multipart)
 
 <para>
 <link linkend="module.mail.message">
-Mail::Message
+FML::Message
 </link>
 class provides such data structure described above.
 </para>

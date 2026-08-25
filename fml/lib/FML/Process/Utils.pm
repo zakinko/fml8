@@ -121,23 +121,23 @@ available all processes which eats message via STDIN.
 The following functions return the whole or a part of the incoming
 message corresponding to the current process.
 
-The message is a chain of C<Mail::Message> objects such as
+The message is a chain of C<FML::Message> objects such as
 
    header -> body
 
    header -> multipart-preamble -> multipart-separator -> part1 -> ...
 
-See L<Mail::Message> for more details.
+See L<FML::Message> for more details.
 
 =head2 incoming_message_header()
 
 return the header part for the incoming message.
-It is the head of a chain of Mail::Message objects.
+It is the head of a chain of FML::Message objects.
 
 =head2 incoming_message_body()
 
 return the body part for the incoming message.
-It is the 2nd part of a chain of Mail::Message objects and after.
+It is the 2nd part of a chain of FML::Message objects and after.
 For example,
 
    body
@@ -868,8 +868,8 @@ sub ml_home_dir_deleted_path
     my $count  = 0;
     my $result = '';
 
-    use Mail::Message::Date;
-    my $date  = new Mail::Message::Date time;
+    use FML::Message::Date;
+    my $date  = new FML::Message::Date time;
     my $yymd  = $date->{ YYYYMMDD };
 
     use File::Spec;
@@ -2124,8 +2124,8 @@ sub langinfo_get_charset
 
 	unless ($found) {
 	    # Content-Type:
-	    use Mail::Message::Charset;
-	    my $c    = new Mail::Message::Charset;
+	    use FML::Message::Charset;
+	    my $c    = new FML::Message::Charset;
 	    my $hint = $curproc->langinfo_get_language_hint($category);
 
 	    # XXX the PCB has no "language_hint" for this category in some
@@ -2234,8 +2234,8 @@ sub article_thread_init
     unless (-d $udb_dir) { $curproc->mkdir($udb_dir);}
 
     # hints
-    use Mail::Message::Subject;
-    my $subj = new Mail::Message::Subject;
+    use FML::Message::Subject;
+    my $subj = new FML::Message::Subject;
     my $subject_tag_regexp = $subj->regexp_compile($subject_tag);
 
     # XXX-TODO: care for non Japanese.

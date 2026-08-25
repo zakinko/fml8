@@ -52,7 +52,7 @@ $ml-admin アドレス宛のメールは
 /usr/local/libexec/fml/distribute などと同様に 
 /usr/local/libexec/fml/error 
 は標準入力からメールを読みこみ、
-それを解析し、Mail::Message オブジェクトの鎖を作ります。
+それを解析し、FML::Message オブジェクトの鎖を作ります。
 そして Mail::Bounce クラスがエラー内容の解析をします。
 </para>
 

@@ -1,6 +1,6 @@
 #-*- perl -*-
 #
-# Mail::Message::Checksum.
+# FML::Message::Checksum.
 #
 # cksum2() opened its argument like this:
 #
@@ -34,10 +34,10 @@ BEGIN {
     }
 }
 
-use Mail::Message::Checksum;
+use FML::Message::Checksum;
 
 my $TMPDIR = tempdir(CLEANUP => 1);
-my $CK     = new Mail::Message::Checksum;
+my $CK     = new FML::Message::Checksum;
 
 
 # Descriptions: write $data to $path and return $path.

@@ -159,14 +159,14 @@ subtest 'rubbish is survived' => sub {
 # ---------------------------------------------------------------------
 # 6. the adapter fml8 wraps around it
 #
-# Mail::Message::Address is object composition rather than inheritance,
+# FML::Message::Address is object composition rather than inheritance,
 # on purpose -- there is an XXX in it saying so -- and it forwards
 # through AUTOLOAD.  So the forwarding is what to check.
 # ---------------------------------------------------------------------
-subtest 'Mail::Message::Address forwards to Mail::Address' => sub {
-    require Mail::Message::Address;
+subtest 'FML::Message::Address forwards to Mail::Address' => sub {
+    require FML::Message::Address;
 
-    my $a = new Mail::Message::Address 'Taro Yamada <taro@example.co.jp>';
+    my $a = new FML::Message::Address 'Taro Yamada <taro@example.co.jp>';
 
     ok(defined $a, 'the adapter constructs');
     is($a->as_str(), 'taro@example.co.jp', 'as_str() is the bare address');
@@ -177,7 +177,7 @@ subtest 'Mail::Message::Address forwards to Mail::Address' => sub {
     is($a->host,    'example.co.jp',      'host() is forwarded');
 
     # cleanup() strips angle brackets the parser left behind.
-    my $b = new Mail::Message::Address '<taro@example.jp>';
+    my $b = new FML::Message::Address '<taro@example.jp>';
     $b->cleanup();
     is($b->as_str(), 'taro@example.jp', 'cleanup() removes < and >');
 
@@ -195,11 +195,11 @@ subtest 'Mail::Message::Address forwards to Mail::Address' => sub {
 # arrives in a From:.
 # ---------------------------------------------------------------------
 subtest 'the adapter on unparseable input' => sub {
-    require Mail::Message::Address;
+    require FML::Message::Address;
 
     for my $in ('', ' ', '@', 'not an address') {
 	my $shown = $in eq '' ? '(empty)' : $in;
-	my $obj   = eval { new Mail::Message::Address $in };
+	my $obj   = eval { new FML::Message::Address $in };
 
 	local $TODO = 'new() calls ->address on $addrs[0] without checking it';
 	is($@, '', "[$shown]: the adapter does not die");
@@ -208,7 +208,7 @@ subtest 'the adapter on unparseable input' => sub {
 
 
 # ---------------------------------------------------------------------
-# 7. Mail::Header, which is what Mail::Message parses into
+# 7. Mail::Header, which is what FML::Message parses into
 # ---------------------------------------------------------------------
 subtest 'Mail::Header reads a header the way fml8 expects' => sub {
     my @hdr = split(/\n/, <<'END_OF_HEADER');

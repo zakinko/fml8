@@ -75,7 +75,7 @@ sub all_sources
 #               comments, POD and quoted strings removed.
 #
 #               Removing the quoted parts matters: "find paragraph
-#               boundary if could" is a default message in Mail::Message
+#               boundary if could" is a default message in FML::Message
 #               and would otherwise be read as a statement modifier.
 #    Arguments: STR($path)
 # Side Effects: none
@@ -240,7 +240,7 @@ subtest 'no "my $x = ... if COND"' => sub {
 # cpan/lib is a vendor drop: the repair for a defect there is a newer
 # release, not an edit, so this is recorded rather than failed.  It is
 # not hidden either -- MIME::Lite::HTML is reached through
-# Mail::Message::Compose, so this is code fml8 can run.
+# FML::Message::Compose, so this is code fml8 can run.
 # ---------------------------------------------------------------------
 subtest 'the bundled modules are checked too, and recorded' => sub {
     my $hit = scan_for($RE_MY_IF, qr{^cpan/lib/});
@@ -283,7 +283,7 @@ subtest 'no string bitwise-or where a default was meant' => sub {
 # ---------------------------------------------------------------------
 # 5. open($fh, $fh)
 #
-# Mail::Message::Checksum::cksum2() passed the file name as both the
+# FML::Message::Checksum::cksum2() passed the file name as both the
 # handle and the path.  Perl reads the first argument as a symbolic
 # filehandle reference, which "use strict refs" makes fatal, so the
 # routine died on every call.
@@ -303,7 +303,7 @@ subtest 'no open() using one variable as both handle and path' => sub {
 # Three modules under fml/lib are EUC-JP, and grep(1) decides they are
 # binary and skips them without saying so.  The CI workflow greps, so
 # those three have never been checked by it -- and one of them,
-# Mail::Message::Language::Japanese::Subject, is the module that still
+# FML::Message::Language::Japanese::Subject, is the module that still
 # carried "use Jcode" when everything else had stopped.  A guard that
 # silently cannot see part of the tree is worse than no guard, because
 # it reports success.

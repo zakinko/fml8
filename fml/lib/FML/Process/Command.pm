@@ -386,8 +386,8 @@ sub _command_lines
     if ($encoding eq 'base64' || $encoding eq 'quoted-printable') {
 	$curproc->logdebug("command: decode $encoding body");
 
-	use Mail::Message::Encode;
-	my $encode = new Mail::Message::Encode;
+	use FML::Message::Encode;
+	my $encode = new FML::Message::Encode;
 	if ($encoding eq 'base64') {
 	    $buf = $encode->raw_decode_base64($buf);
 	}

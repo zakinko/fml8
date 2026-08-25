@@ -233,8 +233,8 @@ sub _expand_range
 {
     my ($self, $fn) = @_;
 
-    use Mail::Message::MH;
-    my $mh = new Mail::Message::MH;
+    use FML::Message::MH;
+    my $mh = new FML::Message::MH;
 
     if ($fn =~ /(\d+)\-(\d+)/) {
 	return $mh->expand($fn, 1, $2);

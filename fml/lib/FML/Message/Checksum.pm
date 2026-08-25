@@ -7,19 +7,19 @@
 # $FML: Checksum.pm,v 1.15 2006/05/11 14:52:35 fukachan Exp $
 #
 
-package Mail::Message::Checksum;
+package FML::Message::Checksum;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
 =head1 NAME
 
-Mail::Message::Checksum - utilities for checksum.
+FML::Message::Checksum - utilities for checksum.
 
 =head1 SYNOPSIS
 
-   use Mail::Message::Checksum;
-   $cksum  = new Mail::Message::Checksum;
+   use FML::Message::Checksum;
+   $cksum  = new FML::Message::Checksum;
    $md5sum = $cksum->md5( \$string );
 
 =head1 METHODS
@@ -91,9 +91,9 @@ sub _init_external
     else {
 	# XXX-TODO: method-ify
 	eval q{
-	    use Mail::Message::Utils;
-	    my $prog = Mail::Message::Utils::search_program('md5') ||
-	      Mail::Message::Utils::search_program('md5sum');
+	    use FML::Message::Utils;
+	    my $prog = FML::Message::Utils::search_program('md5') ||
+	      FML::Message::Utils::search_program('md5sum');
 
 	    if (defined $prog) {
 		$self->{ _program } = $prog;
@@ -492,7 +492,7 @@ sub get_mode
 if ($0 eq __FILE__) {
    # 1. call with string reference.
    for my $mode (qw(internal external)) {
-       my $cksum = new Mail::Message::Checksum;
+       my $cksum = new FML::Message::Checksum;
        print STDERR "1. STR REF ($mode) ... ";
        $cksum->set_mode($mode);
        my $sys_md5 = `head -1 /etc/passwd | md5`;
@@ -505,7 +505,7 @@ if ($0 eq __FILE__) {
 
    # 2. file or stream.
    for my $mode (qw(internal external)) {
-       my $cksum = new Mail::Message::Checksum;
+       my $cksum = new FML::Message::Checksum;
        print STDERR "2. FILE    ($mode) ... ";
        $cksum->set_mode($mode);
        my $sys_md5 = `cat /etc/passwd | md5`;
@@ -535,7 +535,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Checksum first appeared in fml8 mailing list driver package.
+FML::Message::Checksum first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
 Algorithm used here is based on NetBSD cksum library (C program).

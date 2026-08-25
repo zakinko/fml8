@@ -97,7 +97,7 @@ $curproc->reply_message( {
 
 <para>
 FML::Process::QueueManager picks up one queue from the queue directory.
-Mail::Message parses it.
+FML::Message parses it.
 Mail::Delivery processes the real delivery via FML::Mailer.
 <screen>
 Mail::Delivery::Queue

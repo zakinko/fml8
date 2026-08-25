@@ -150,8 +150,8 @@ sub _get_valid_article_list
 	return [];
     }
 
-    use Mail::Message::MH;
-    my $mh      = new Mail::Message::MH;
+    use FML::Message::MH;
+    my $mh      = new FML::Message::MH;
     my $last_id = $curproc->article_get_max_id();
 
     # XXX expand() validates $fn. o.k.

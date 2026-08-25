@@ -1,7 +1,7 @@
 		スレッドについて
 
 
-○ Mail::Message::DB::_analyze_thread()
+○ FML::Message::DB::_analyze_thread()
 
 スレッドの依存関係を調べる処理は _thread_analyze() が真髄の一つです。
 この関数は 
@@ -74,7 +74,7 @@ ref_key_list = {
 
 
 
-○ Mail::Message::ToTHML::_print_thread()
+○ FML::Message::ToTHML::_print_thread()
 
 これが実際にスレッドの依存関係を HTML 化する関数です。
 

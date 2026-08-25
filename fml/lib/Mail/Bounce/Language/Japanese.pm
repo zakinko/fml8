@@ -91,8 +91,8 @@ sub _japanese_address_match
     my $rbuf   = $args->{ buf };
     my $buf    = $$rbuf;
 
-    use Mail::Message::Encode;
-    my $encode = new Mail::Message::Encode;
+    use FML::Message::Encode;
+    my $encode = new FML::Message::Encode;
     $encode->convert_str_ref(\$buf, 'euc-jp');
 
     print STDERR "rbuf={$buf}\n" if $debug;

@@ -13,15 +13,15 @@
 ###                                                   ###
 
 
-package Mail::Message::Language::Japanese::Subject;
+package FML::Message::Language::Japanese::Subject;
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK);
 use Carp;
 # XXX this module reached Jcode directly, which was the last call
-# XXX to it outside Mail::Message::Encode itself.  Encode is core
-# XXX and Mail::Message::Encode already speaks it, so go through
+# XXX to it outside FML::Message::Encode itself.  Encode is core
+# XXX and FML::Message::Encode already speaks it, so go through
 # XXX that rather than adding a second charset path.
-use Mail::Message::Encode;
+use FML::Message::Encode;
 
 my $_encode = undef;
 
@@ -35,18 +35,18 @@ sub _convert
 {
     my ($str_ref, $code) = @_;
 
-    $_encode ||= new Mail::Message::Encode;
+    $_encode ||= new FML::Message::Encode;
     $_encode->convert_str_ref($str_ref, $code);
 }
 
 =head1 NAME
 
-Mail::Message::Language::Japanese::Subject - functions for Japanese subject.
+FML::Message::Language::Japanese::Subject - functions for Japanese subject.
 
 =head1 SYNOPSIS
 
- use Mail::Message::Language::Japanese::Subject;
- $is_reply = Mail::Message::Language::Japanese::Subject::is_reply($subject);
+ use FML::Message::Language::Japanese::Subject;
+ $is_reply = FML::Message::Language::Japanese::Subject::is_reply($subject);
 
 =head1 DESCRIPTION
 
@@ -188,7 +188,7 @@ redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 HISTORY
 
-Mail::Message::Language::Japanese::Subject
+FML::Message::Language::Japanese::Subject
 first appeared in fml8 mailing list driver package.
 See C<http://www.fml.org/> for more details.
 
