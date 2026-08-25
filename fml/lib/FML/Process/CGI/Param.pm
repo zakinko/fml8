@@ -13,7 +13,7 @@ use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
 # load standard CGI routines
-use CGI qw/:standard/;
+use FML::CGI::Compat;
 
 =head1 NAME
 

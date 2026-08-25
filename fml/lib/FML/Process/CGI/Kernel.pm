@@ -14,7 +14,7 @@ use Carp;
 use File::Spec;
 
 # load standard CGI routines
-use CGI qw/:standard/;
+use FML::CGI::Compat;
 
 use FML::Process::Kernel;
 use FML::Process::CGI::Utils;

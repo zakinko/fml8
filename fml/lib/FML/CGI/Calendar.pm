@@ -12,7 +12,7 @@ use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 
-use CGI qw/:standard/; # load standard CGI routines
+use FML::CGI::Compat;
 use FML::Process::CGI;
 @ISA = qw(FML::Process::CGI);
 

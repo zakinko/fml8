@@ -11,7 +11,7 @@ package FML::CGI::Thread;
 use strict;
 use Carp;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
-use CGI qw/:standard/; # load standard CGI routines
+use FML::CGI::Compat;
 
 use FML::Process::CGI;
 @ISA = qw(FML::Process::CGI);
