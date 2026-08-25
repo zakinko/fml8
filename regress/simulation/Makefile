@@ -88,7 +88,6 @@ _link:
 	ln -s ../../fml/lib/Mail
 	ln -s ../../fml/libexec
 	ln -s /var/spool/ml/elena/log
-	ln -s ../../cpan/doc doc-devel
 	ln -s ../../fml/doc/ja/tutorial tutorial
 	ln -s ../../fml/doc/ja/todo     TODO
 	ln -s ../../fml/doc/ja/recipes  recipies
