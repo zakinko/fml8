@@ -310,10 +310,24 @@ subtest 'a header value keeps its octets' => sub {
 # Mail::Header's own documentation says it "does not always follow the
 # RFCs strict enough, does not help you with character encodings", and
 # points at Mail::Message::Head as "much newer and therefore better".
-# Taking that advice is not free: Mail-Message wants Log::Report,
-# User::Identity, URI, IO-stringy and TimeDate behind it, some 223
-# modules against the seven cpan/lib now holds, and it requires
-# Mail::Address, so MailTools would not even leave.
+# The advice is the author's own -- MARKOV maintains both -- and it
+# cannot be taken.
+#
+# Mail-Message pulls Log::Report, String::Print, User::Identity, URI,
+# IO-stringy and TimeDate behind it, 223 modules against the seven
+# cpan/lib holds, and it requires Mail::Address, so MailTools would not
+# even leave.  That is only the size of it.  The reason is one module
+# further down:
+#
+#     Mail::Message -> Log::Report -> String::Print -> Unicode::GCString
+#
+# and Unicode::GCString is Unicode-LineBreak, which is C.  String::Print
+# line 23 is "use Unicode::GCString ()", not a require inside an eval, so
+# there is no path around it -- Log::Report::Optional and its Minimal
+# variant reach the same line through Log::Report::Util.  fml8 bundles
+# pure perl; this would make a compiler a requirement for installing a
+# mailing list manager.  Unicode-LineBreak last moved in 2018, which is
+# older than the module all this was meant to get away from.
 #
 # So the question is not whether Mail::Header is imperfect in general.
 # It is whether fml8 stands anywhere near the imperfection.  These are
