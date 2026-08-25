@@ -11,9 +11,9 @@ use Email::Find::addrspec 0.09  qw[$Addr_spec_re];
 use Exporter 5.58         qw[import];
 # XXX HTML::Entities comes from HTML-Parser, which is XS, so fml8
 # XXX cannot carry it the way it carries the rest of cpan/lib.
-# XXX HTML::EntitiesLite is the pure perl cut of it that
-# XXX fukachan\@fml.org made from HTML-Parser 3.69 for this reason,
-# XXX and this line is his substitution, carried forward from 2.05.
+# XXX fukachan\@fml.org substituted HTML::EntitiesLite here in 2.05
+# XXX for that reason and the substitution is carried forward; what
+# XXX HTML::EntitiesLite contains has since been rewritten.
 use HTML::EntitiesLite      qw[encode_entities];
 use Scalar::Util 1.12     qw[blessed];
 use Text::Tabs 98.1128    qw[expand];
