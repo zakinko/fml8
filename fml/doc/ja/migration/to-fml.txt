@@ -1,0 +1,198 @@
+		他の ML から fml へようこそ
+
+		何を持ってくればよいか
+
+
+1. fml が向いている場合
+
+	・議論のための ML で、メールが主でウェブは従
+	・購読者がメールクライアントで読む
+	・運用する人が少人数で、機械が一台
+	・日本語のメールを扱う
+	・依存を増やしたくない
+
+fml が持っているもの:
+
+	同梱で完結する		perl と MTA 以外に要らない。データベースも
+				常駐プロセスも要らない
+	コマンドメール		# subscribe のような、メールだけで完結する
+				操作。他の実装はほとんど捨てた
+	日本語			メッセージ、文書、Subject の扱いが最初から
+				日本語を想定している
+	1 記事 1 ファイル	spool/N という形。grep も cp も効く
+
+fml が持っていないもの (2026 年時点):
+
+	RFC 8058 のワンクリック解除
+	DKIM 署名 (MTA 側でやる)
+	DMARC 対策の From: 書き換え
+	検索付きのウェブアーカイブ
+	ブラウザからの管理 (CGI はあるが古い)
+
+このうち DKIM は MTA でやるのが本来の形なので、fml が持っていない
+ことは欠点ではない。RFC 6377 section 5.8 も「ML は配布用に組み立てた
+あとで署名せよ」と書いていて、それは MTA の仕事である。
+
+
+2. 持ってくるもの
+
+どの実装から来ても、必要なのは二つだけである。
+
+	会員のアドレス一覧	1 行 1 アドレスのテキスト
+	過去の記事		1 通 1 ファイル、または mbox
+
+fml 側の置き場所:
+
+	$ml_home_dir/members		会員
+	$ml_home_dir/recipients		配送先 (通常 members と同じ)
+	$ml_home_dir/spool/N		記事。N は 1 から始まる連番
+	$ml_home_dir/config.cf		設定
+
+members は 1 行 1 アドレス。コメント (#) と空行は無視される。
+
+
+3. 実装ごとの取り出し方
+
+GNU Mailman 3
+
+	会員	mailman members &lt;list&gt;
+		そのまま members に置ける
+	記事	HyperKitty から mbox を落とす
+		&lt;base&gt;/archives/list/&lt;list&gt;/export/&lt;name&gt;.mbox.gz
+		または Core の prototype アーカイバの .mbox
+	注意	From: が書き換えられている可能性がある。Mailman の
+		dmarc_mitigate_action が munge_from だと
+		"Taro via list &lt;list@example.jp&gt;" になり、元の
+		アドレスは Reply-To か Cc にある。X-Original-From が
+		あればそれを見る
+
+Mailman 2
+
+	会員	list_members &lt;list&gt;
+	記事	/var/lib/mailman/archives/private/&lt;list&gt;.mbox/&lt;list&gt;.mbox
+	注意	Mailman 3 と同じ From: 書き換えの可能性。
+		mbox の From_ 行が壊れていることがあるので、
+		HyperKitty の contrib/cleanarch3 のような道具を通す
+
+Sympa
+
+	会員	sympa review &lt;list&gt;
+		または subscriber_table を直接引く
+	記事	&lt;listdir&gt;/arctxt/ に 1 通 1 ファイルで入っている。
+		fml の spool と同じ構造なので、そのままコピーできる
+	注意	dmarc_protection で From: が書き換えられている場合、
+		X-Original-From を見る
+
+mlmmj
+
+	会員	subscribers.d/ 以下を cat する。頭文字で分かれている
+		  cat &lt;listdir&gt;/subscribers.d/* | sort -u
+	記事	&lt;listdir&gt;/archive/N。fml の spool と同じ形。
+		2.0.0 以降は archive/YYYY/MM/N の場合がある
+	注意	fml といちばん近いので移行は楽。control/ の設定は
+		config.cf に手で写す
+
+Google Groups
+
+	会員	管理コンソールからメンバー一覧を CSV で出す
+	記事	Google Takeout。ただしオーナーの group だけ。
+		形式は明記されていない (mbox という報告が多いが
+		Google の文書には書かれていない)
+	注意	元の DKIM 署名は残っていない。Google が必ず捨てて
+		自分のものに差し替えるため。From: も p=reject /
+		p=quarantine のドメインからの投稿は
+		"'Taro' via list" に書き換えられている
+
+Discourse
+
+	会員	staged user を含む一覧を API で取る。
+		ただし Discourse の購読はアカウントであってアドレス
+		ではないので、そのまま ML の会員にはならない
+	記事	API で topic ごとに取るしかない。mbox 出力は無い
+	注意	Discourse は転送しない実装なので、元のメールは
+		残っていない。From: は常にサイトのアドレスで、
+		Message-Id も Discourse が発行したものである。
+		つまり「元のメール」は復元できない
+
+listmonk
+
+	会員	CSV で出せる
+	記事	一方向の配信専用なので、購読者の投稿という概念が無い
+
+
+4. 入れ方
+
+会員:
+
+	sort -u exported.txt | grep -v '^#' | grep -v '^$' \
+		> $ml_home_dir/members
+	cp $ml_home_dir/members $ml_home_dir/recipients
+
+または makefml を通す:
+
+	makefml add &lt;ml&gt; &lt;address&gt;
+
+一件ずつなので数が多いと遅いが、fml 側の整合性検査を通るので安全である。
+
+記事:
+
+mbox から 1 通 1 ファイルに割る。
+
+	perl -ne '
+	    if (/^From /) { $n++; open(O, ">", "spool/$n") }
+	    print O $_ if $n;
+	' list.mbox
+
+すでに 1 通 1 ファイルなら (Sympa の arctxt/、mlmmj の archive/)
+番号を振り直してコピーするだけである。
+
+	i=1; for f in $(ls -v arctxt/); do
+		cp arctxt/$f $ml_home_dir/spool/$i; i=$((i+1))
+	done
+
+HTML アーカイブを作るなら fmlhtmlify を通す。
+
+
+5. 移行のときに直しておくとよいもの
+
+From: が書き換えられた記事
+
+	Mailman や Sympa の DMARC 対策を通った記事は、From: が
+	ML のアドレスになっている。そのままアーカイブに入れると
+	投稿者が全員 ML 自身になる。X-Original-From が残っていれば
+	戻せる。
+
+	perl -i -pe '
+	    if (/^X-Original-From:\s*(.*)/) { $orig = $1 }
+	    s/^From:.*/From: $orig/ if $orig && /^From:/;
+	' spool/*
+
+	Discourse の mbox importer が
+	fix_mailman_via_addresses という設定を持っているのは
+	同じ問題のためである。
+
+Subject の tag
+
+	移行元の tag ([oldlist:123] など) が本文の Subject に
+	残っている。fml 側の article_subject_tag と重なると
+	二重になるので、アーカイブに入れる前に落とすか、
+	そのまま残して過去の記録とするかを決める。
+
+記事番号
+
+	移行元の番号は引き継げない。過去の「[oldlist:123] を参照」
+	という記述はどこも指さなくなる。番号を合わせたい場合は
+	spool の連番を移行元に合わせ、$ml_home_dir/seq を
+	その次の数にする。
+
+
+6. 移行後にやること
+
+	・両方に配送する期間を作る。移行元の会員に fml の投稿用
+	  アドレスを足すのが簡単
+	・List-Unsubscribe の宛先が変わるので購読者に知らせる
+	・移行元を止める。ただし会員一覧とアーカイブは消さない
+	・DKIM を MTA 側で設定する。fml は署名しない
+
+
+$FML$

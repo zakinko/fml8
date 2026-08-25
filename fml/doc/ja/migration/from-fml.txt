@@ -1,0 +1,185 @@
+			fml から他の ML へ
+
+		どこへ移せるか、何が失われるか
+
+
+1. まず、移さなくてよい場合
+
+移行の相談で一番多い理由は「fml は古いから」だが、それだけなら
+移す必要は無いことが多い。2026 年時点で fml に無くて実際に困るのは
+次の一点だけである。
+
+	RFC 8058 のワンクリック解除 (List-Unsubscribe-Post)
+
+これは Gmail が 2024 年 2 月から一括送信者に求めているもので、
+5,000 通/日を個人 Gmail 宛に送る場合に効く。ただし
+
+	・対象は「宣伝・購読メール」で、議論用 ML は通常あたらない
+	・欠けても即拒否ではなく、救済措置の対象外になる
+	・Yahoo は mailto: 形式で要件を満たすと明言している
+	・Google 自身が「転送・ML のメールに DMARC alignment は要らない」
+	  と書いている
+
+そして重要なのは、GNU Mailman 3 も RFC 8058 を実装していない
+(2023 年の issue #1099 が今も開いている)。移った先で解決するとは
+限らない。
+
+移す理由になるのは、たいてい次のどれかである。
+
+	・Web で読める検索付きアーカイブが要る
+	・ブラウザから管理したい人が複数いる
+	・メールではなくフォーラムとして使いたい
+	・自分で運用したくない
+
+
+2. 行き先ごとの向き不向き
+
+GNU Mailman 3
+	議論用 ML としては最も近い。Web アーカイブ (HyperKitty) に
+	全文検索があり、REST API がある。DMARC 対策の From: 書き換えを
+	持つ。ただし 2024 年 10 月以降リリースが無く、RFC 8058 は未実装。
+	Python + PostgreSQL + Django で、fml より運用の面積が大きい。
+
+Sympa
+	機能はいちばん多い。RFC 8058 を実装している唯一の主要実装で、
+	DKIM 署名と ARC 封印も持つ。scenario という独自の権限記述言語が
+	あり、細かく書ける代わりに学習が要る。Web アーカイブの検索は
+	索引を持たず毎回 grep するので、大きなアーカイブでは重い。
+
+mlmmj
+	fml と設計思想がいちばん近い。C で書かれ、DB もデーモンも要らず、
+	設定はディレクトリ内のファイルの有無で表す。2022 年に開発が復活し
+	活発。ただし DKIM も ARC も無く、RFC 8058 も無い。Web アーカイブも
+	外部ツール任せ。日本語の listtexts が無い。
+
+Discourse
+	ML ではなくフォーラムである。メールで参加する機能 (mailing list
+	mode) はあるが既定で無効で、公式も「Watching」で代替することを
+	勧めている。移行すると失うものが多い (5 章)。
+
+listmonk
+	一方向の配信専用。投稿を購読者に配り直す機能が無い。
+	ニュースレターには良いが ML の代わりにはならない。
+
+Google Groups
+	運用から解放される。ただし「直接追加」は確認手続き無しで、
+	購読者の同意を取らずに登録できる。元の DKIM 署名は必ず捨てられ、
+	Google のものに差し替わる。
+
+
+3. 持っていくもの
+
+fml のデータは三つに分かれている。
+
+	$ml_home_dir/members		会員。1 行 1 アドレス
+	$ml_home_dir/recipients		配送先
+	$ml_home_dir/spool/N		記事。1 通 1 ファイル、N は連番
+	$ml_home_dir/config.cf		設定
+
+members の 1 行はアドレスのみ、または「アドレス 属性」である。
+コメント行 (#) と空行を除けば、そのまま他の実装に食わせられる。
+
+	sort -u $ml_home_dir/members | grep -v '^#' | grep -v '^$'
+
+記事は 1 通 1 ファイルなので、mbox にするなら連結する。From_ 行を
+足す必要がある実装が多い。
+
+	for f in $(ls -v $ml_home_dir/spool/); do
+		printf 'From nobody %s\n' "$(date -r $ml_home_dir/spool/$f)"
+		sed 's/^From /&gt;From /' $ml_home_dir/spool/$f
+		echo
+	done > list.mbox
+
+sed の行は mbox 形式の要求である。本文の行頭に From が来ると次の
+メールの始まりと誤読されるので、&gt; を前に置く。
+
+
+4. 行き先ごとの入れ方
+
+GNU Mailman 3
+	会員	mailman addmembers &lt;file&gt; &lt;list&gt;
+		(1 行 1 アドレス。fml の members がそのまま使える)
+	記事	hyperkitty_import -l &lt;addr&gt; list.mbox
+		そのあと update_index_one_list &lt;addr&gt; で索引を作る
+	設定	mailman import21 は fml ではなく Mailman 2.1 の
+		config.pck 専用。fml からは手で写す
+
+Sympa
+	会員	sympa add &lt;list&gt; &lt;file&gt;、または include_file で
+		ファイルを直接参照させる (fml の members を指せる)
+	記事	arctxt/ に 1 通 1 ファイルで置き、sympa rebuildarc &lt;list&gt;
+		fml の spool と構造が同じなので、そのままコピーできる
+	設定	手で写す
+
+mlmmj
+	会員	subscribers.d/ に頭文字で分けて置く。
+		mlmmj-sub -L &lt;listdir&gt; -a &lt;addr&gt; を回すのが確実
+	記事	archive/N に置く。fml の spool と同じ形なので
+		そのままコピーできる
+	設定	control/ 以下のファイルとして手で作る
+
+Discourse
+	会員	無い。Discourse の購読はアカウントであってアドレスでは
+		ないため。staged user として作られる
+	記事	script/import_scripts/mbox.rb
+		settings.yml で fix_mailman_via_addresses を有効にすること。
+		Mailman が From: を書き換えた過去のアーカイブでは、これが
+		無いと全記事が ML のアドレスからの投稿になる
+	注意	返信の入れ子は失われる。importer は topic_id しか設定せず
+		reply_to_post_number を設定しない
+
+Google Groups
+	会員	CSV で一括追加。ただし確認手続きは無い
+	記事	Groups Migration API。RFC 822 のまま 1 通ずつ投入。
+		1 通 25MB まで、10 QPS、1 日 50 万件
+
+
+5. 何が失われるか
+
+行き先を問わず失われるもの:
+
+	コマンドメール		fml の # コマンドに相当するものは
+				どこにも無い。Mailman 3 は confirm /
+				join / leave / who / help の 5 つだけ。
+				Discourse は unsubscribe と mute だけ
+
+	設定ファイル		fml の config.cf から自動で変換する道具は
+				存在しない。どの実装へも手で写す
+
+	記事番号		fml の連番は移行先で保たれない。
+				過去の「[elena:123]」という参照が
+				どこも指さなくなる
+
+Discourse に移る場合、さらに:
+
+	反射の仕組み		Discourse は転送しない。すべての outbound は
+				DB から生成される通知で、From: は常に
+				サイトのアドレス。投稿者のアドレスは
+				From: に現れない
+
+	Reply-To の制御		Reply-To は返信キーを運ぶ機構なので、
+				ML のアドレスに向けるという設定ができない
+
+	ダイジェスト		RFC 1153 や multipart/digest ではなく、
+				「見逃した投稿の要約」という別物になる
+
+	スレッド		References から作らず、Discourse 自身が
+				発行した Message-Id から組み立てる
+
+listmonk に移る場合は、そもそも投稿の配り直しが無いので ML ではなくなる。
+
+
+6. 移行の順番
+
+	1. members を写して、新しい方に配送させずに置く
+	2. アーカイブを入れる。ここでいちばん時間がかかる
+	3. 両方に配送する期間を作る (fml の members に新 ML のアドレスを
+	   足すのが簡単)
+	4. 購読者に切り替えを知らせる。List-Unsubscribe の宛先が変わる
+	5. fml 側を停止する。ただし members と spool は消さない
+
+3 の期間を作らずに切り替えると、届かなかった人がどこにも問い合わせ先を
+持たない状態になる。
+
+
+$FML$
