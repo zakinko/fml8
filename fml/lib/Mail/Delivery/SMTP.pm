@@ -612,7 +612,24 @@ sub _fallback_into_queue
     my $queue = $args->{ queue } || undef;
 
     # ASSERT
-    my $retry_count  = $queue->get_retry_count()     || 0;
+    # XXX $args->{queue} is the queue this delivery came *out* of, and
+    # XXX it is only there when this run is a retry.  A first attempt --
+    # XXX FML::Process::Distribute::_deliver_article() delivering
+    # XXX straight through -- passes none, which the same function
+    # XXX admits two lines further down with
+    # XXX
+    # XXX     $curproc->lock($lock_channel) unless defined $queue;
+    # XXX
+    # XXX so this called get_retry_count() on undef and died.  The
+    # XXX function that exists to save a message when the MTA is
+    # XXX refusing it died at exactly the moment it was needed, and the
+    # XXX message was lost rather than queued.
+    # XXX
+    # XXX No queue means nothing has been retried yet, so the count is
+    # XXX zero and the guard below cannot fire -- which is right: a
+    # XXX first attempt is exactly the case that should fall through
+    # XXX and be queued.
+    my $retry_count  = defined $queue ? ($queue->get_retry_count() || 0) : 0;
     my $in_queue_dir = $self->_is_map_in_queue($map) || 0;
     my $map_position = $self->get_map_position($map) || 0;
     if ($in_queue_dir && $retry_count > 0 && $map_position == 0) {
