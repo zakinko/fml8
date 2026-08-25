@@ -16,7 +16,7 @@ Jcode				2.07		perl itself
 MIME-Base64-Perl		1.0		perl itself
 MIME-Lite			3.038		perl itself
 
-MailTools			2.19		perl itself
+MailTools			2.22		perl itself
 				Mail::Address, Mail::Header only
 
 Socket6				0.28		WIDE (BSD flabour)
