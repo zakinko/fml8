@@ -2038,15 +2038,24 @@ sub langinfo_set_language_hint
 
 
 # Descriptions: get the current charset hint.
+#               return undef if there is no PCB yet.
 #    Arguments: OBJ($curproc) STR($category)
 # Side Effects: none
-# Return Value: none
+# Return Value: STR or undef
 sub langinfo_get_language_hint
 {
     my ($curproc, $category) = @_;
     my $pcb = $curproc->pcb();
 
-    $pcb->get("language_hint", $category);
+    # XXX this called $pcb->get() with no check, so it died with "Can't
+    # XXX call method get on an undefined value" whenever there was no
+    # XXX PCB yet.  langinfo_get_charset() is the caller and guards its
+    # XXX own use of the PCB with defined($pcb), then reaches this one
+    # XXX in the branch it takes when that guard fails -- so the routine
+    # XXX defended against a missing PCB and died of it two lines later.
+    return undef unless defined $pcb;
+
+    return $pcb->get("language_hint", $category);
 }
 
 
@@ -2115,10 +2124,33 @@ sub langinfo_get_charset
 
 	unless ($found) {
 	    # Content-Type:
-	    use Mail::Message::Charset;
-	    my $c    = new Mail::Message::Charset;
 	    my $hint = $curproc->langinfo_get_language_hint($category);
-	    $charset = $c->language_to_message_charset($hint);
+
+	    # XXX the PCB holds no "language_hint" for this category in
+	    # XXX some contexts -- the CGI path is one, see issue #8 --
+	    # XXX so $hint arrived here undef and went into lc().
+	    if (defined $hint && $hint ne '') {
+		# XXX the Accept-Language: branch above answers a category
+		# XXX from ${category}_charset_$lang, so this one has to
+		# XXX agree with it.  It asked language_to_message_charset()
+		# XXX instead, which names the charset mail travels in:
+		# XXX iso-2022-jp for Japanese, whatever the category says.
+		# XXX $template_file_charset_ja is euc-jp, and that value is
+		# XXX used as a directory name under $message_template_dir,
+		# XXX so a Japanese message asked for a directory that has
+		# XXX never existed and no Japanese template was read at all.
+		# XXX Prefer the category's own key, and keep the old answer
+		# XXX for a category that has none.
+		my $key = sprintf("%s_charset_%s", $category, $hint);
+
+		use Mail::Message::Charset;
+		my $c = new Mail::Message::Charset;
+		$charset = $config->{ $key } ||
+			   $c->language_to_message_charset($hint);
+	    }
+	    else {
+		$charset = $default;
+	    }
 	}
     }
 
