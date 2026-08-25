@@ -23,7 +23,7 @@ MailTools			2.19		perl itself
 
 Socket6				0.28		WIDE (BSD flabour)
 
-Time-modules			2013.0912	unknown (your own risk)
+Time-modules			2026.0330	unknown (your own risk)
 				ParseDate and the three it uses:
 				Timezone, JulianDay, DaysInMonth
 
