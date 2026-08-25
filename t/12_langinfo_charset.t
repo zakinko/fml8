@@ -306,35 +306,37 @@ subtest 'an unknown language hint falls back rather than emptying' => sub {
 
 
 # ---------------------------------------------------------------------
-# 10. the two branches disagree with each other
+# 10. the two branches agree with each other
 #
-# langinfo_get_charset() reaches its answer two ways and they do not
+# langinfo_get_charset() reaches its answer two ways, and they did not
 # agree for the same language.
 #
 # Accept-Language: goes through the category's own configuration key,
 # "${category}_charset_${lang}", so 'ja' for the cgi category is
 # cgi_charset_ja, which fml/etc/src/config.cf.en/cgi.cf sets to euc-jp.
 #
-# The language_hint branch, taken when there is no Accept-Language, goes
-# through Mail::Message::Charset::language_to_message_charset() instead,
-# which knows nothing about categories and answers iso-2022-jp for 'ja'.
+# The language_hint branch, taken when there is no Accept-Language,
+# went through language_to_message_charset() instead, which knows
+# nothing about categories and answers iso-2022-jp for 'ja'.
 #
-# So the same list, asked for the same language, gets euc-jp down one
-# path and iso-2022-jp down the other.
+# That mattered beyond tidiness.  The charset of the template_file
+# category is used as a directory name under $message_template_dir, and
+# the directories that ship are euc-jp and us-ascii.  A Japanese
+# message therefore asked for a .../iso-2022-jp/... that has never
+# existed, message_nl() found no file, and no Japanese template was
+# read at all.
 #
-# This is recorded rather than repaired, and the reason is the reply
-# side.  There is no reply_message_charset_ja key -- the only
-# "${category}_charset_ja" keys that exist are cgi, log_file,
-# html_archive and report_mail -- so language_to_message_charset() is
-# the sole reason a Japanese reply mail goes out as iso-2022-jp.  Moving
-# the hint branch onto configuration keys would therefore change what
-# fml8 puts on the wire, which is a decision rather than a repair.
+# The hint branch now prefers the category's own key and keeps the old
+# answer for a category that has none.  reply_message has none, so a
+# Japanese reply still goes out as iso-2022-jp.
 # ---------------------------------------------------------------------
-subtest 'the hint branch and the Accept-Language branch disagree' => sub {
+subtest 'both branches answer one language the same way' => sub {
     my %config = (
 	cgi_default_charset           => 'us-ascii',
 	cgi_charset_ja                => 'euc-jp',
 	cgi_charset_en                => 'us-ascii',
+	template_file_default_charset => 'euc-jp',
+	template_file_charset_ja      => 'euc-jp',
 	reply_message_default_charset => 'us-ascii',
     );
 
@@ -349,7 +351,7 @@ subtest 'the hint branch and the Accept-Language branch disagree' => sub {
     my ($by_hint, $warn_hint) = warnings_from(sub {
 	t::Curproc->new(\%config, $pcb)->langinfo_get_charset('cgi') });
 
-    is($by_hint, 'iso-2022-jp', 'a language hint of ja gives iso-2022-jp');
+    is($by_hint, 'euc-jp', 'a language hint of ja gives cgi_charset_ja');
     is(scalar(@$warn_hint), 0, 'and warns about nothing');
 
     # 2. the Accept-Language branch, same language, same category.
@@ -361,21 +363,33 @@ subtest 'the hint branch and the Accept-Language branch disagree' => sub {
     is(scalar(@$warn_accept), 0, 'and warns about nothing');
 
     # 3. which is the point.
-    isnt($by_hint, $by_accept,
-	 'the same language gives a different charset down each path');
+    is($by_hint, $by_accept,
+       'the same language gives the same charset down either path');
 
-    # The reply side is why the hint branch cannot simply be moved onto
-    # the configuration: there is no key for it to read.
+    # 4. the template directory that actually exists on disk.
     my $pcb3 = FML::PCB->new();
-    $pcb3->set("language_hint", "reply_message", "ja");
+    $pcb3->set("language_hint", "template_file", "ja");
+
+    my ($template) = warnings_from(sub {
+	t::Curproc->new(\%config, $pcb3)->langinfo_get_charset('template_file') });
+
+    is($template, 'euc-jp',
+       'a Japanese template is looked for in the euc-jp directory');
+    isnt($template, 'iso-2022-jp',
+	 'not in an iso-2022-jp directory, which fml8 does not ship');
+
+    # 5. a category with no key of its own keeps the old answer, so the
+    #    charset a Japanese reply travels in does not move.
+    my $pcb4 = FML::PCB->new();
+    $pcb4->set("language_hint", "reply_message", "ja");
 
     my ($reply) = warnings_from(sub {
-	t::Curproc->new(\%config, $pcb3)->langinfo_get_charset('reply_message') });
+	t::Curproc->new(\%config, $pcb4)->langinfo_get_charset('reply_message') });
 
     is($reply, 'iso-2022-jp',
-       'a Japanese reply is iso-2022-jp, on that branch alone');
+       'a Japanese reply is still iso-2022-jp');
     is($config{ reply_message_charset_ja }, undef,
-       'and there is no reply_message_charset_ja to read instead');
+       'there being no reply_message_charset_ja to read instead');
 };
 
 
