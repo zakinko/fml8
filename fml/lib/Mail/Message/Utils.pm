@@ -107,8 +107,22 @@ sub get_time_from_header
     my ($hdr, $type) = @_;
 
     if (defined($hdr) && $hdr->get('date')) {
-	use Time::ParseDate;
-	my $unixtime = parsedate( $hdr->get('date') );
+	# XXX this asked Time::ParseDate, whose distribution fml8 carried
+	# XXX for parsedate() alone but which brought Timezone, JulianDay
+	# XXX and DaysInMonth along with it.  HTTP::Date is one file and
+	# XXX answers the same: the two were given ten Date: headers --
+	# XXX offsets east and west, GMT, JST, a leap day, the epoch and a
+	# XXX daylight-saving transition -- and agreed on nine of them.
+	use HTTP::Date;
+	my $unixtime = str2time( $hdr->get('date') );
+
+	# XXX the tenth was a Date: with no time in it, which
+	# XXX Time::ParseDate read as local midnight and HTTP::Date
+	# XXX refuses, the time not being optional in RFC 5322.  undef
+	# XXX here used to reach localtime() and come back as now, which
+	# XXX is what any unreadable Date: has always done, so it still
+	# XXX does -- said out loud rather than left to localtime(undef).
+	$unixtime = time() unless defined $unixtime;
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday) = localtime( $unixtime );
 
 	if ($type eq 'yyyymm') {

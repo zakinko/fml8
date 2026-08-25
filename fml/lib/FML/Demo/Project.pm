@@ -148,9 +148,11 @@ sub _expand_date_list
     my ($self, $first, $last) = @_;
     my $r = [];
 
-    use Time::ParseDate;
-    my $first_sec = parsedate($first);
-    my $last_sec  = parsedate($last);
+    # XXX was Time::ParseDate; see Mail::Message::Utils for why this
+    # XXX is HTTP::Date now.
+    use HTTP::Date;
+    my $first_sec = str2time($first);
+    my $last_sec  = str2time($last);
 
     for (my $sec = $first_sec; $sec <= $last_sec; $sec += 86400) {
 	use Mail::Message::Date;
