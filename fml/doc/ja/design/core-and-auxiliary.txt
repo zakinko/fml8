@@ -1,0 +1,116 @@
+			core と auxiliary の線引き
+
+			issue #4 への提案
+
+
+1. 問い
+
+issue #4 は「何が core で何が auxiliary かをはっきりさせよう」であり、
+auxiliary/ という置き場所を作ってそこへ移そう、という話である。
+
+置き場所より先に、線をどこに引くかを決めないと動かせない。以下は
+実測に基づく提案で、決めるのは深町さんである。
+
+
+2. 実測
+
+fml/lib には 292 モジュールある。そのうち、記事を受け取って配って
+コマンドを処理するのに実際に読まれるのは 61 である。
+
+	FML::Process::Distribute の閉包		52
+	+ Command				56
+	+ Digest				 3
+	+ Error					 -
+	----------------------------------------------
+	合計					61
+
+残り 231 のうち大半は FML::Command 配下 (104) で、これは
+コマンドが呼ばれたときにだけ読まれる。数が多いのは一コマンド一
+ファイルだからで、本業の外にあるという意味ではない。
+
+
+3. 線の引き方
+
+「メーリングリストが動くのに要るか」で引くと、境界がコマンドの
+真ん中を通ってしまう。subscribe は要るが fmlsch は要らない、と
+言うときの「要る」が同じ意味になっていない。
+
+提案する基準は二つである。
+
+	(a) それが無いと、メールが届かないか、届いた記事が失われるか、
+	    会員名簿が壊れるか。 -> core
+
+	(b) それが無くても、メーリングリストとしては成立する。
+	    無い状態を「壊れている」とは呼ばない。 -> auxiliary
+
+この基準だと、CGI もアーカイブも auxiliary に落ちる。落ちてよい。
+fml4 は CGI 無しで十年動いていた。
+
+
+4. 提案
+
+core
+
+	配送		distribute, digest, error, createonpost
+	コマンド	command, makefml, fml
+	設定		fmlconf
+	配送機構	FML::Delivery, FML::MTA, FML::Bounce
+	会員		FML::IO::Adapter (map の読み書き)
+	メッセージ	FML::Message 一式
+
+auxiliary
+
+	HTML 化		fmlhtmlify, FML::Process::HTMLify,
+			FML::Message::ToHTML (2,563 行)
+	CGI		FML::CGI 一式, FML::Process::CGI 一式 (23 ファイル)
+	PGP		fmlpgp*, fmlgpg*, FML::Process::PGP
+	fml4 互換	fml.pl, msend.pl, mead.pl, FML::Process::Emulate,
+			FML::Merge (fml4 の設定を読む)
+	道具		fmladdr, fmlalias, fmldoc, fetchfml
+	obsolete	fmlerror, fmlspool, fmlsummary, fmlsuper,
+			fmlthread, faker -> FML::Process::Obsolete
+
+3rdparty (別 issue #6 で移動済み)
+
+	fmlsch, fmlproj, FML::Demo 一式
+
+
+5. 移動の前に片付けること
+
+配線が二箇所切れている。t/70_wiring.t が TODO として固定した。
+
+	fmlserv		install.cf.in が作り、fml/etc/modules が
+			FML::Process::ListServer を指すが、そのクラスが
+			無い。fml4 の libexec/fmlserv.pl は実在するので、
+			移植されないまま配線だけ残ったもの
+
+	remind		install.cf.in にだけ名前がある。fml8 にも fml4 にも
+			実体が無い
+
+どちらもインストールは成功し、その名前を叩いた人だけが起動時に落ちる。
+線を引く前に、この二つを「実装する」のか「配線を外す」のかを決めたい。
+
+
+6. auxiliary/ の置き場所
+
+3rdparty/ で決めた形をそのまま使うのが素直である。
+
+	lib/バージョン/auxiliary/
+
+@INC は fml8 本体の後ろ。理由は 3rdparty/index.ja.html に書いた
+とおりで、auxiliary が本体のクラスを黙って置き換えられないようにする
+ためである。
+
+ただし 3rdparty/ と違い、auxiliary/ は fml8 自身が配るものなので、
+インストールしないという選択肢を用意するかどうかは別に決めが要る。
+
+
+7. 数
+
+	core			61 モジュール
+	auxiliary		約 60 (CGI 23, ToHTML 一式, PGP, 互換, 道具)
+	FML::Command 配下	104 (コマンドが呼ばれたときだけ)
+	その他			約 67
+
+
+$FML$
