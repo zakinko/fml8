@@ -365,8 +365,16 @@ subtest 'every bundled module is loadable' => sub {
     };
     $walk->('cpan/lib') if -d 'cpan/lib';
 
-    cmp_ok(scalar(@bundled), '>', 5,
+    # XXX this was "more than five", written when cpan/lib held sixty
+    # XXX and the worry was the walk finding nothing.  The clearing out
+    # XXX has taken it to five, so the number to guard is the other end:
+    # XXX every module here should be one fml8 asks for, and a new one
+    # XXX appearing is worth a look.
+    cmp_ok(scalar(@bundled), '>', 0,
 	   sprintf("cpan/lib carries %d modules", scalar(@bundled)));
+    cmp_ok(scalar(@bundled), '<=', 5,
+	   'and no more than the five that are left')
+	or diag("bundled: @bundled");
 
     # Only the ones fml8 actually asks for: cpan/lib holds whole
     # distributions, and a module nothing uses failing to load is a

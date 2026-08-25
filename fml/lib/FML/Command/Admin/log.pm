@@ -252,15 +252,11 @@ sub _html_to_text
 {
     my ($str) = @_;
 
-    eval q{
-	use HTML::FromText;
-    };
-    unless ($@) {
-	return text2html($str, urls => 1, pre => 0);
-    }
-    else {
-	croak($@);
-    }
+    # XXX this used HTML::FromText, which fml8 no longer carries; see
+    # XXX FML::Message::ToHTML::text2html() for what replaced it and why.
+    use FML::Message::ToHTML;
+
+    return FML::Message::ToHTML::text2html($str, urls => 1, pre => 0);
 }
 
 
