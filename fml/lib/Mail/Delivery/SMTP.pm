@@ -406,6 +406,10 @@ sub deliver
     $self->set_smtp_default_timeout($args->{ default_io_timeout } || 10);
     $self->_set_queue_directory($args->{ queue_dir } || '');
 
+    # RFC 8058. undef unless the list turned it on.
+    $self->{ _one_click }        = $args->{ one_click }        || undef;
+    $self->{ _one_click_mailto } = $args->{ one_click_mailto } || '';
+
     # temporary hash to check whether the map/mta is used already.
     my %used_mta   = ();
     my %used_map   = ();
@@ -1021,6 +1025,12 @@ sub _send_recipient_list_by_recipient_map
 
 	$num_recipients++;
 
+	# XXX Remember it: RFC 8058 wants a List-Unsubscribe that names
+	# XXX this recipient, so the header written after DATA depends on
+	# XXX who the RCPT TO was.  Only meaningful when the transaction
+	# XXX carries one recipient; see _rewrite_header_per_recipient().
+	$self->{ _last_recipient } = $rcpt;
+
 	$self->_send_command("RCPT TO:<$rcpt>");
 	$self->_read_reply;
 
@@ -1053,6 +1063,74 @@ sub _send_recipient_list_by_recipient_map
 	$self->_send_command("RSET");
 	$self->_read_reply;
     }
+}
+
+
+# Descriptions: give this copy a List-Unsubscribe that names its recipient.
+#
+#               RFC 8058 section 3.1 requires the URI in List-Unsubscribe
+#               to identify both the list and the recipient, because the
+#               POST that follows carries nothing else -- no cookies, no
+#               authorization, no body beyond the one key/value pair.
+#               So the header cannot be written once for a transaction
+#               that has many RCPT TO.
+#
+#               fml8 normally sends up to $smtp_recipient_limit
+#               recipients per DATA.  When one-click is on, the limit is
+#               forced to 1 in FML::Process::Distribute, which is what
+#               makes $self->{_last_recipient} the recipient of this
+#               copy rather than merely the last of several.  This
+#               refuses to write the header if that is not the case.
+#
+#    Arguments: OBJ($self) OBJ($header)
+# Side Effects: none. returns a copy when it rewrites.
+# Return Value: OBJ
+sub _rewrite_header_per_recipient
+{
+    my ($self, $header) = @_;
+    my $unsub = $self->{ _one_click } || undef;
+
+    return $header unless defined $unsub;
+
+    my $rcpt = $self->{ _last_recipient } || '';
+    return $header unless $rcpt;
+
+    # XXX More than one RCPT TO in this transaction means the copy is
+    # XXX shared, and a per-recipient URL would name the wrong person.
+    # XXX Leaving the header as it is loses one-click for this delivery;
+    # XXX writing it would unsubscribe somebody else.
+    my $n = $self->{ _num_recipients_in_this_transaction } || 1;
+    if ($n > 1) {
+	$self->logwarn("one-click: $n recipients in one transaction, skipped");
+	return $header;
+    }
+
+    my $url = $unsub->url($rcpt);
+    return $header unless $url;
+
+    # XXX Do not write on the caller's header: the same object is used
+    # XXX for the next recipient.
+    my $copy = $header->dup();
+
+    $copy->delete('List-Unsubscribe');
+    $copy->delete('List-Unsubscribe-Post');
+
+    # XXX RFC 8058 section 3.1 allows other URIs beside the HTTPS one,
+    # XXX and section 5's own example leads with the mailto:.  Keep the
+    # XXX mail route for clients that have no browser.
+    my $mailto = $self->{ _one_click_mailto } || '';
+    if ($mailto) {
+	$copy->add('List-Unsubscribe', sprintf("<%s>, <%s>", $mailto, $url));
+    }
+    else {
+	$copy->add('List-Unsubscribe', sprintf("<%s>", $url));
+    }
+
+    # XXX Exactly this one pair, per the ABNF in section 5.  A comment
+    # XXX or any other text here makes the field unparsable.
+    $copy->add('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
+
+    return $copy;
 }
 
 
@@ -1094,6 +1172,8 @@ sub _send_header_to_mta
 	$self->logerror("_send_header_to_mta: header undefined");
 	return;
     }
+
+    $header = $self->_rewrite_header_per_recipient($header);
 
     my $h = $header->as_string($socket);
     $h =~ s/\n/\r\n/g;

@@ -91,3 +91,33 @@ outgoing_mail_cache_dir	= $var_dir/mail/outgoing
 #        Value: NUM
 #     Examples: 128
 outgoing_mail_cache_size	=	128
+
+# Descriptions: emit RFC 8058 one-click unsubscribe ?
+#               Requires $unsubscribe_one_click_url to be set, and
+#               forces one recipient per SMTP transaction -- see
+#               FML::Process::Distribute.  Off by default because that
+#               multiplies the number of transactions by the number of
+#               members.
+#      History:
+#        Value: YES_OR_NO
+#     Examples: no
+use_rfc8058_one_click		=	no
+
+
+# Descriptions: where the one-click POST lands.
+#               MUST be https: RFC 8058 section 3.1.  Left empty means
+#               the feature stays off however use_rfc8058_one_click is
+#               set, since there is nowhere to send people.
+#      History:
+#        Value: STR
+#     Examples: https://lists.example.jp/cgi-bin/fml/unsubscribe.cgi
+unsubscribe_one_click_url	=
+
+
+# Descriptions: the secret one-click tokens are signed with.
+#               Empty means one is derived from the list's own names and
+#               paths, which is weaker but works without being told.
+#      History:
+#        Value: STR
+#     Examples:
+unsubscribe_token_secret	=

@@ -693,6 +693,21 @@ sub _deliver_article
 	# XXX-TODO ?
     }
 
+    # XXX RFC 8058 wants a List-Unsubscribe that names the recipient,
+    # XXX so one copy can no longer be addressed to many.  Forcing
+    # XXX the limit to 1 is what makes that true, and it is why the
+    # XXX feature is off by default: a list of ten thousand goes
+    # XXX from ten SMTP transactions to ten thousand.  Sympa, the
+    # XXX only other implementation of RFC 8058, requires the same
+    # XXX thing under the name personalization_feature.
+    my $one_click       = undef;
+    my $recipient_limit = $config->{ smtp_recipient_limit };
+    if ($config->yes('use_rfc8058_one_click')) {
+	use FML::Unsubscribe;
+	$one_click       = new FML::Unsubscribe $curproc;
+	$recipient_limit = 1;
+    }
+
     $curproc->lock($lock_channel) unless defined $queue;
     $service->deliver(
 		      {
@@ -700,7 +715,11 @@ sub _deliver_article
 
 			  'smtp_sender'     => $config->{'smtp_sender'},
 			  'recipient_maps'  => $recipient_maps,
-			  'recipient_limit' => $config->{smtp_recipient_limit},
+			  'recipient_limit' => $recipient_limit,
+
+			  'one_click'       => $one_click,
+			  'one_click_mailto'
+			      => $config->{ article_header_list_unsubscribe } || '',
 
 			  'message'         => $message,
 
