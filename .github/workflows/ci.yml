@@ -1,0 +1,146 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: "t/ (perl ${{ matrix.perl }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: [ '5.26', '5.36', '5.40' ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up perl ${{ matrix.perl }}
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+
+      # Across versions on purpose.  What the bundle was replaced with
+      # is core -- Time::Local for the offsets, crypt(3) for the
+      # passwords -- and core moves under fml8 without fml8 asking.
+      - name: prove
+        run: prove -v -Ifml/lib -Icpan/lib t/
+
+  loads:
+    name: "every module still loads without the bundle it lost"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # This branch takes modules out of cpan/lib.  The way that
+      # goes wrong is subtractive -- something still requires what is no
+      # longer there -- and the failure surfaces at run time, in whatever
+      # command happened to be the first to need it.
+      #
+      # So load every module in the tree with only cpan/lib and the core
+      # on @INC.  Two modules draw charts and want GD, which fml8 has
+      # never bundled; a failure that says GD.pm is not this branch's,
+      # so it is read out of the answer rather than named, and a module
+      # that starts wanting GD later needs no edit here.
+      - name: require every module under fml/lib
+        run: |
+          set -u
+          perl -e '
+            use strict;
+            use warnings;
+
+            my @f = `find fml/lib -name "*.pm" -type f`;
+            chomp @f;
+
+            my ($ok, @bad, @nogd) = (0);
+            for my $p (sort @f) {
+                (my $mod = $p) =~ s{^fml/lib/}{};
+                $mod =~ s{/}{::}g;
+                $mod =~ s/\.pm$//;
+
+                my $out = `$^X -Ifml/lib -Icpan/lib -e "require $mod; 1" 2>&1`;
+                if ($? == 0)                          { $ok++ }
+                elsif ($out =~ /Can.t locate GD\.pm/) { push @nogd, $mod }
+                else                                  { push @bad, "$mod: $out" }
+            }
+
+            printf "loaded %d modules, %d skipped for want of GD\n",
+                $ok, scalar(@nogd);
+            print "  skipped: $_\n" for @nogd;
+
+            if (@bad) {
+                print "::error::these no longer load:\n";
+                print "  $_\n" for @bad;
+                exit 1;
+            }
+          '
+
+  module-paths:
+    name: "no code names a module file that is not there"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # A rename gets caught by the compile check when it is written as
+      # a class -- use Mail::Message::Encode::Perl stops resolving and
+      # perl says so.  Written as a path it does not: "$dir/Mail/Message/
+      # Encode/Perl.pm" is a string until something opens it, and a test
+      # that cannot find the file may simply decide there is nothing to
+      # check.
+      #
+      # That happened.  Moving fml8's message classes out of
+      # Mail::Message left two tests and one document pointing at paths
+      # that no longer existed, and only one of the two failed loudly.
+      #
+      # So look for strings shaped like a module file and ask whether
+      # the file is there.  Comments are exempt: an XXX-TODO naming a
+      # module somebody meant to write is not a broken reference.
+      - name: scan for module paths that resolve to nothing
+        run: |
+          set -u
+          perl -e '
+            use strict;
+            use warnings;
+
+            my @f = `find fml/lib t libexec bin sbin -type f \\( -name "*.pm" -o -name "*.t" -o -name "*.pl" \\) 2>/dev/null`;
+            chomp @f;
+
+            my (%seen, @bad);
+            for my $p (@f) {
+                open(my $fh, "<", $p) or next;
+                binmode($fh);
+                my $ln = 0;
+                while (my $line = <$fh>) {
+                    $ln++;
+                    next if $line =~ /^\s*#/;
+                    $line =~ s/#.*$//;
+
+                    while ($line =~ m{([A-Z][A-Za-z0-9_]*(?:/[A-Z][A-Za-z0-9_]*)+\.pm)}g) {
+                        my $rel = $1;
+                        next if $seen{"$p|$rel"}++;
+
+                        my $found = 0;
+                        for my $dir (qw(fml/lib cpan/lib img/lib)) {
+                            $found = 1 if -f "$dir/$rel";
+                        }
+                        unless ($found) {
+                            (my $mod = $rel) =~ s{/}{::}g;
+                            $mod =~ s/\.pm$//;
+                            $found = 1 if system($^X, "-e", "require $mod; 1") == 0;
+                        }
+
+                        push @bad, "$p:$ln: $rel" unless $found;
+                    }
+                }
+                close($fh);
+            }
+
+            if (@bad) {
+                print "a module file is named here but is not in the tree:\n";
+                print "  $_\n" for @bad;
+                exit 1;
+            }
+            print "every module path in code resolves\n";
+          '
+
