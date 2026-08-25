@@ -7,7 +7,6 @@ package HTML::FromText;
 # ABSTRACT: converts plain text to HTML
 
 
-use Email::Find::addrspec 0.09  qw[$Addr_spec_re];
 use Exporter 5.58         qw[import];
 use Scalar::Util 1.12     qw[blessed];
 use Text::Tabs 98.1128    qw[expand];
@@ -244,8 +243,43 @@ sub urls {
 
 sub email {
     my ($self) = @_;
-    $self->{html} =~ s[($Addr_spec_re)]
-                      [<a href="mailto:$1" class="hft-email">$1</a>]og;
+
+    # XXX $Addr_spec_re came from Email::Find::addrspec, a distribution
+    # XXX whose whole content is this one pattern and whose last release
+    # XXX was 2007.  It is built here instead, from the same RFC 822 and
+    # XXX RFC 1035 grammar the original quotes, so that fml8 does not
+    # XXX carry a distribution for a single regular expression.
+    #
+    # XXX Note that fml8 never reaches this: the email decorator is off
+    # XXX by default and none of the four text2html() calls in the tree
+    # XXX turn it on.  The pattern is kept because the method is part of
+    # XXX what HTML::FromText offers, not because anything here uses it.
+    my $esc         = q{\\\\};
+    my $period      = q{\.};
+    my $space       = q{\040};
+    my $open_br     = q{\[};
+    my $close_br    = q{\]};
+    my $nonASCII    = q{\x80-\xff};
+    my $ctrl        = q{\000-\037};
+    my $cr_list     = q{\n\015};
+    my $qtext       = qq{[^$esc$nonASCII$cr_list"]};
+    my $dtext       = qq{[^$esc$nonASCII$cr_list$open_br$close_br]};
+    my $quoted_pair = qq{$esc\[^$nonASCII]};
+    my $atom_char   = qq{[^($space)<>\@,;:".$esc$open_br$close_br$ctrl$nonASCII]};
+    my $atom        = qq{$atom_char+(?!$atom_char)};
+    my $quoted_str  = qq{"$qtext*(?:$quoted_pair$qtext*)*"};
+    my $word        = qq{(?:$atom|$quoted_str)};
+    my $local_part  = qq{$word(?:$period$word)*};
+
+    my $label       = q{[A-Za-z\d](?:[A-Za-z\d-]*[A-Za-z\d])?};
+    my $domain_ref  = qq{$label(?:$period$label)*};
+    my $domain_lit  = qq{$open_br(?:$dtext|$quoted_pair)*$close_br};
+    my $domain      = qq{(?:$domain_ref|$domain_lit)};
+
+    my $addr_spec   = qr{$local_part\s*\@\s*$domain};
+
+    $self->{html} =~ s[($addr_spec)]
+                      [<a href="mailto:$1" class="hft-email">$1</a>]g;
 }
 
 
