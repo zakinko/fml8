@@ -12,7 +12,7 @@ use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK $AUTOLOAD);
 use Carp;
 use lib qw(../../fml/lib ../../cpan/lib ../../img/lib);
-use Time::DaysInMonth;
+use Time::Local;
 
 =head1 NAME
 
@@ -159,7 +159,7 @@ sub _generate_column_list
     my (@datelist) = ();
     for my $year ($min_year .. $max_year) {
 	for my $month ( 1 .. 12 ) {
-	    my $days = days_in($year, $month);
+	    my $days = _days_in($year, $month);
 	    for my $day ( 1 .. $days ) {
 		if ($self->_is_in_date_range($year, $month, $day,
 					     $min_date, $max_date)) {
@@ -574,6 +574,26 @@ Calendar::Lite later. In 2004, it is renamed to FML::Demo::Chart
 again since this module must depend FML::* classes.
 
 =cut
+
+
+
+# Descriptions: return how many days the given month has.
+#    Arguments: NUM($year) NUM($month)
+# Side Effects: none
+# Return Value: NUM
+sub _days_in
+{
+    my ($year, $month) = @_;
+
+    # XXX days_in() came from Time::DaysInMonth, which fml8 no longer
+    # XXX carries.  Ask for midnight on the first of the next month and
+    # XXX step back a day; the core does the leap year arithmetic.
+    use Time::Local;
+    my $next = timegm(0, 0, 0, 1, $month % 12, $year + ($month == 12 ? 1 : 0));
+    my @t    = gmtime($next - 86400);
+
+    return $t[3];
+}
 
 
 1;
